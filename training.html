@@ -529,14 +529,14 @@
       <!-- Desktop Glass Navigation (hidden on mobile) -->
       <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
         <ul class="flex items-center gap-1 sm:gap-2">
+          <li><a href="index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+              data-section="about">About</a></li>
           <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="services">Services</a></li>
           <li><a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="training">Training</a></li>
           <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="projects">Projects</a></li>
-          <li><a href="index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
-              data-section="about">About</a></li>
         </ul>
       </nav>
 
@@ -570,215 +570,69 @@
     </div>
   </header>
 
-<div id="mobile-menu" class="mobile-menu lg:hidden">
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="mobile-menu lg:hidden">
+    <a href="index.html#about" data-section="about">About</a>
     <a href="services.html" data-section="services">Services</a>
     <a href="training.html" data-section="training">Training</a>
     <a href="projects.html" data-section="projects">Projects</a>
-    <a href="index.html#about" data-section="about">About</a>
     <a href="mailto:hello@clinchworks.in" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
       →</a>
   </div>
 
-<div class="pt-24 min-h-screen">
 
-  <section class="relative py-16 sm:py-24 lg:py-32">
-    <div class="max-w-5xl mx-auto px-5 sm:px-6">
-      <div class="section-reveal visible">
-        <div class="accent-line mb-4"></div>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
-          Training Programs
-        </h1>
-        <p class="mt-4 sm:mt-6 text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--text-faint);">
-          We believe in training by building real systems. Skip the boilerplate and textbook theory. Engage with practical implementation, debugging hard systems, and mastering production readiness.
-        </p>
+  
+<div class="pt-24 min-h-screen">
+<section class="relative pb-16 sm:pb-24 lg:pb-32">
+  <div class="max-w-5xl mx-auto px-5 sm:px-6">
+    <div class="section-reveal">
+      <div class="accent-line mb-4"></div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
+        Training Programs
+      </h1>
+      <p class="mt-4 sm:mt-6 text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--text-faint);">
+        We believe in training by building real systems. Skip the boilerplate and textbook theory. Engage with practical implementation, debugging hard systems, and mastering production readiness.
+      </p>
+    </div>
+
+    <div class="mt-12 sm:mt-20 flex flex-col gap-8 sm:gap-12">
+      <div class="service-card section-reveal rounded-2xl p-8 sm:p-10">
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="md:w-1/3">
+              <h3 class="font-bold text-2xl mb-2" style="color: var(--text-primary);">Engineering Bootcamp</h3>
+              <span class="text-xs font-mono px-3 py-1 rounded-full" style="background: var(--tag-bg); color: var(--tag-text);">12 Weeks</span>
+            </div>
+            <div class="md:w-2/3">
+              <p class="text-sm leading-relaxed mb-6" style="color: var(--text-faint);">
+                An intensive course covering modern web stacks from database design to frontend architectures. You will deploy real applications out onto production clouds. Let us teach you how to think dynamically and execute effectively.
+              </p>
+              <a href="mailto:hello@clinchworks.in?subject=Enroll%20Engineering%20Bootcamp" class="inline-block text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="color: var(--bg-primary); background: var(--accent); border: 1px solid var(--accent);">
+                Enroll Now
+              </a>
+            </div>
+        </div>
       </div>
 
-      <div class="mt-12 sm:mt-20 flex flex-col gap-8 sm:gap-12">
-        <div class="service-card section-reveal visible rounded-2xl p-8 sm:p-10">
-          <div class="flex flex-col md:flex-row gap-8 items-start">
-             <div class="md:w-1/3">
-                <h3 class="font-bold text-2xl mb-2" style="color: var(--text-primary);">Engineering Bootcamp</h3>
-                <span class="text-xs font-mono px-3 py-1 rounded-full" style="background: var(--tag-bg); color: var(--tag-text);">12 Weeks</span>
-             </div>
-             <div class="md:w-2/3">
-                <p class="text-sm leading-relaxed mb-6" style="color: var(--text-faint);">
-                  An intensive course covering modern web stacks from database design to frontend architectures. You will deploy real applications out onto production clouds. Let us teach you how to think dynamically and execute effectively.
-                </p>
-                <a href="mailto:hello@clinchworks.in?subject=Enroll%20Engineering%20Bootcamp" class="inline-block text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="color: var(--bg-primary); background: var(--accent); border: 1px solid var(--accent);">
-                  Enroll Now
-                </a>
-             </div>
-          </div>
-        </div>
-
-        <div class="service-card section-reveal visible rounded-2xl p-8 sm:p-10">
-          <div class="flex flex-col md:flex-row gap-8 items-start">
-             <div class="md:w-1/3">
-                <h3 class="font-bold text-2xl mb-2" style="color: var(--text-primary);">Cyber Security Fundamentals</h3>
-                <span class="text-xs font-mono px-3 py-1 rounded-full" style="background: var(--tag-bg); color: var(--tag-text);">8 Weeks</span>
-             </div>
-             <div class="md:w-2/3">
-                <p class="text-sm leading-relaxed mb-6" style="color: var(--text-faint);">
-                  Red team tactics and blue team strategies. Learn vulnerability research, penetration testing, standard offensive workflows and how to secure critical defense systems. Threat models are real, so are these lessons.
-                </p>
-                <a href="mailto:hello@clinchworks.in?subject=Enroll%20Security" class="inline-block text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="background: transparent; color: var(--cta-text); border: 1px solid var(--cta-border);">
-                  Request Syllabus
-                </a>
-             </div>
-          </div>
+      <div class="service-card section-reveal rounded-2xl p-8 sm:p-10">
+        <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="md:w-1/3">
+              <h3 class="font-bold text-2xl mb-2" style="color: var(--text-primary);">Cyber Security Fundamentals</h3>
+              <span class="text-xs font-mono px-3 py-1 rounded-full" style="background: var(--tag-bg); color: var(--tag-text);">8 Weeks</span>
+            </div>
+            <div class="md:w-2/3">
+              <p class="text-sm leading-relaxed mb-6" style="color: var(--text-faint);">
+                Red team tactics and blue team strategies. Learn vulnerability research, penetration testing, standard offensive workflows and how to secure critical defense systems. Threat models are real, so are these lessons.
+              </p>
+              <a href="mailto:hello@clinchworks.in?subject=Enroll%20Security" class="inline-block text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="background: transparent; color: var(--cta-text); border: 1px solid var(--cta-border);">
+                Request Syllabus
+              </a>
+            </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 </div>
 
-<footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
-          <div
-            class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-            <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
-            <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
-          </div>
-        </footer>
-
-
-        <!-- ========================================
-       JAVASCRIPT
-  ======================================== -->
-        <script>
-          (function () {
-            'use strict';
-
-            // === Theme Toggle ===
-            const themeToggle = document.getElementById('theme-toggle');
-            const html = document.documentElement;
-
-            function setTheme(theme) {
-              if (theme === 'dark') {
-                html.setAttribute('data-theme', 'dark');
-              } else {
-                html.removeAttribute('data-theme');
-              }
-              localStorage.setItem('clinch-theme', theme);
-            }
-
-            function getCurrentTheme() {
-              return html.hasAttribute('data-theme') ? 'dark' : 'light';
-            }
-
-            themeToggle.addEventListener('click', () => {
-              setTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
-            });
-
-            // === Mobile Menu ===
-            const hamburger = document.getElementById('hamburger');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-
-            hamburger.addEventListener('click', () => {
-              hamburger.classList.toggle('active');
-              mobileMenu.classList.toggle('open');
-              document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-            });
-
-            function closeMobileMenu() {
-              hamburger.classList.remove('active');
-              mobileMenu.classList.remove('open');
-              document.body.style.overflow = '';
-            }
-
-            mobileLinks.forEach(link => {
-              link.addEventListener('click', (e) => {
-                const href = link.getAttribute('href');
-                if (!href || (!href.startsWith('mailto') && !href.startsWith('http'))) {
-                  closeMobileMenu();
-                }
-                if (href && href.startsWith('#')) {
-                  e.preventDefault();
-                  const targetId = href.substring(1);
-                  const targetEl = document.getElementById(targetId);
-                  if (targetEl) {
-                    setTimeout(() => {
-                      const headerHeight = header.offsetHeight;
-                      window.scrollTo({ top: targetEl.offsetTop - headerHeight - 20, behavior: 'smooth' });
-                    }, 100);
-                  }
-                }
-              });
-            });
-
-            // === Header scroll effect ===
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
-              if (window.scrollY > 40) {
-                header.classList.add('scrolled');
-              } else {
-                header.classList.remove('scrolled');
-              }
-            }, { passive: true });
-
-            // === Section reveal ===
-            const revealObserver = new IntersectionObserver(
-              (entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); },
-              { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-            );
-            document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
-
-            // === Nav active state ===
-            const navItems = document.querySelectorAll('.top-nav-item');
-            const mobileNavItems = mobileMenu.querySelectorAll('a[data-section]');
-            const sections = document.querySelectorAll('section[id]');
-
-            function updateActiveNav() {
-              let current = '';
-              const scrollPos = window.scrollY + window.innerHeight / 2;
-              sections.forEach(s => {
-                if (scrollPos >= s.offsetTop && scrollPos < s.offsetTop + s.offsetHeight) {
-                  current = s.getAttribute('id');
-                }
-              });
-              navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
-              mobileNavItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
-            }
-
-            window.addEventListener('scroll', updateActiveNav, { passive: true });
-            updateActiveNav();
-
-            // === Smooth scroll for desktop nav ===
-            navItems.forEach(item => {
-              item.addEventListener('click', (e) => {
-                const href = item.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                  e.preventDefault();
-                  const target = document.getElementById(href.substring(1));
-                  if (target) {
-                    window.scrollTo({ top: target.offsetTop - header.offsetHeight - 20, behavior: 'smooth' });
-                  }
-                }
-              });
-            });
-
-            // === Smooth scroll for other anchor links ===
-            document.querySelectorAll('a[href^="#"]').forEach(link => {
-              if (link.closest('#top-nav') || link.closest('#mobile-menu')) return;
-              link.addEventListener('click', (e) => {
-                const href = link.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                  e.preventDefault();
-                  const target = document.getElementById(href.substring(1));
-                  if (target) window.scrollTo({ top: target.offsetTop - header.offsetHeight - 20, behavior: 'smooth' });
-                }
-              });
-            });
-
-            // Close mobile menu on resize to desktop
-            window.addEventListener('resize', () => {
-              if (window.innerWidth >= 1024) closeMobileMenu();
-            });
-
-          })();
-        </script>
-
-</body>
-
-</html>
+>
