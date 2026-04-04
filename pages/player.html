@@ -25,12 +25,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
       (function () {
         const saved = localStorage.getItem('clinch-theme');
         if (saved === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          if (!saved) localStorage.setItem('clinch-theme', 'light');
         }
       })();
   </script>
@@ -129,6 +133,7 @@
       const courseId = params.get('id');
       let currentModuleIndex = 0;
       let courseData = null;
+      let studentName = '';
 
       const btnPrev = document.getElementById('btn-prev');
       const btnNext = document.getElementById('btn-next');
@@ -136,6 +141,14 @@
       const modContent = document.getElementById('module-content');
       const progress = document.getElementById('progress');
       const courseName = document.getElementById('course-name');
+
+      // --- Prompt for student name on first entry ---
+      studentName = localStorage.getItem('clinch-student-name');
+      if (!studentName) {
+        const input = prompt('Enter name that should be showed on certificate:');
+        studentName = (input && input.trim()) ? input.trim() : 'ClinchWorks Student';
+        localStorage.setItem('clinch-student-name', studentName);
+      }
 
       try {
         const response = await fetch('../courses.json');
@@ -158,7 +171,7 @@
         const module = courseData.modules[currentModuleIndex];
         modTitle.textContent = module.title;
         modTitle.classList.remove('reveal');
-        void modTitle.offsetWidth; // trigger reflow
+        void modTitle.offsetWidth;
         modTitle.classList.add('reveal');
         
         modContent.innerHTML = module.content.split('\n').map(p => `<p class="mb-4">${p}</p>`).join('');
@@ -192,53 +205,164 @@
         }
       };
 
-      function generateCertificate() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({
-          orientation: 'landscape',
-          unit: 'mm',
-          format: 'a4'
-        });
+      async function generateCertificate() {
+        // Show loading state
+        btnNext.textContent = 'Generating Certificate...';
+        btnNext.disabled = true;
+        btnNext.style.opacity = '0.6';
 
-        // Dark Theme Background
-        doc.setFillColor(15, 15, 15);
-        doc.rect(0, 0, 297, 210, 'F');
-        
-        // Gold Border
-        doc.setDrawColor(201, 168, 76);
-        doc.setLineWidth(2);
-        doc.rect(10, 10, 277, 190);
+        try {
+          // Build dynamic values
+          const today = new Date();
+          const formattedDate = today.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+          const certID = 'CW-' + today.getFullYear() + '-' + String(Math.floor(1000 + Math.random() * 9000));
 
-        // Content
-        doc.setTextColor(201, 168, 76);
-        doc.setFontSize(40);
-        doc.text("Certificate of Completion", 148.5, 60, { align: 'center' });
-        
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(20);
-        doc.text("This is proudly presented to", 148.5, 90, { align: 'center' });
-        
-        doc.setFontSize(30);
-        doc.text("ClinchWorks Student", 148.5, 110, { align: 'center' });
-        
-        doc.setFontSize(20);
-        doc.text(`for successfully completing the course`, 148.5, 130, { align: 'center' });
-        
-        doc.setTextColor(201, 168, 76);
-        doc.setFontSize(28);
-        doc.text(courseData.title, 148.5, 150, { align: 'center' });
-        
-        doc.setTextColor(150, 150, 150);
-        doc.setFontSize(14);
-        doc.text(`Completed on: ${new Date().toLocaleDateString()}`, 148.5, 180, { align: 'center' });
-        
-        doc.save(`certificate-${courseId}.pdf`);
+          // --- STEP 1: Fetch the external certificate.html ---
+          if (!document.getElementById('cert-render-container')) {
+            const certResponse = await fetch('../certificate.html');
+            const certHTML = await certResponse.text();
 
-        // Change UI after download
-        modTitle.textContent = "Congratulations!";
-        modContent.innerHTML = `<p>You have successfully completed ${courseData.title}. Your certificate has been downloaded.</p><p class="mt-8"><a href="training.html" style="color: var(--accent);">Back to Programs</a></p>`;
-        btnPrev.style.display = 'none';
-        btnNext.style.display = 'none';
+            // Parse fetched HTML
+            const parser = new DOMParser();
+            const certDoc = parser.parseFromString(certHTML, 'text/html');
+
+            // Extract the <style> block from certificate.html
+            const certStyle = certDoc.querySelector('style');
+
+            // Extract the .certificate div (the entire renderable certificate)
+            const certDiv = certDoc.querySelector('.certificate');
+
+            if (!certStyle || !certDiv) {
+              throw new Error('certificate.html is missing required elements (.certificate div or <style>)');
+            }
+
+            // Create hidden off-screen container
+            const container = document.createElement('div');
+            container.id = 'cert-render-container';
+            container.style.cssText = 'position:absolute; left:-9999px; top:-9999px; z-index:-1;';
+
+            // Inject the Poppins font link (required by certificate.html)
+            const fontLink = document.createElement('link');
+            fontLink.rel = 'stylesheet';
+            fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap';
+            document.head.appendChild(fontLink);
+
+            // Inject scoped style into container
+            // CRITICAL: Strip the body{} rule to prevent it from overriding the player page theme.
+            // Scope all remaining CSS selectors under #cert-render-container so they can't leak.
+            const rawCSS = certStyle.textContent;
+            const scopedCSS = rawCSS
+              .replace(/body\s*\{[^}]*\}/gi, '')  // Remove body{} rule entirely
+              .replace(/(\.[\w-]+)/g, '#cert-render-container $1');  // Scope class selectors
+            const scopedStyle = document.createElement('style');
+            scopedStyle.textContent = scopedCSS;
+            container.appendChild(scopedStyle);
+
+            // Inject the certificate div
+            container.appendChild(certDiv);
+
+            document.body.appendChild(container);
+          }
+
+          // --- STEP 2: Dynamic data replacement ---
+          const certContainer = document.getElementById('cert-render-container');
+          const certElement = certContainer.querySelector('.certificate');
+
+          // Replace student name: "Ganesh" → user input
+          const nameEl = certElement.querySelector('.name');
+          if (nameEl) nameEl.textContent = studentName;
+
+          // Replace course title: "Cyber Security & Ethical Hacking" → course title
+          const courseEl = certElement.querySelector('.course');
+          if (courseEl) courseEl.textContent = courseData.title;
+
+          // Replace certificate ID: "CW-2026-0001" → dynamic ID
+          const certIdEl = certElement.querySelector('.cert-id');
+          if (certIdEl) certIdEl.textContent = 'ID: ' + certID;
+
+          // Replace badge with course level + category
+          const badgeEl = certElement.querySelector('.badge');
+          if (badgeEl) badgeEl.textContent = (courseData.category || 'TRAINING').toUpperCase() + ' | ' + (courseData.level || 'CERTIFIED').toUpperCase();
+
+          // Add completion date below the description
+          const descEl = certElement.querySelector('.desc');
+          if (descEl) {
+            descEl.innerHTML = 'This certifies that the above individual has successfully completed '
+              + 'the training program and demonstrated practical competency in real-world scenarios.'
+              + '<br><span style="display:inline-block; margin-top:8px; font-size:13px; opacity:0.8;">Date: ' + formattedDate + '</span>';
+          }
+
+          // --- STEP 3: Wait for fonts to load ---
+          await document.fonts.ready;
+          await new Promise(resolve => setTimeout(resolve, 400));
+
+          // --- STEP 4: Render certificate to canvas via html2canvas ---
+          // Use null to let html2canvas inherit the certificate's own CSS background
+          const canvas = await html2canvas(certElement, {
+            scale: 3,
+            useCORS: true,
+            backgroundColor: null,
+            logging: false
+          });
+
+          // --- STEP 5: Generate PDF via jsPDF ---
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4'
+          });
+
+          // Calculate aspect ratio to fit certificate perfectly
+          const pageW = 297;
+          const pageH = 210;
+          const certRatio = canvas.width / canvas.height;
+          const pageRatio = pageW / pageH;
+          let drawW, drawH, drawX, drawY;
+
+          if (certRatio > pageRatio) {
+            drawW = pageW;
+            drawH = pageW / certRatio;
+            drawX = 0;
+            drawY = (pageH - drawH) / 2;
+          } else {
+            drawH = pageH;
+            drawW = pageH * certRatio;
+            drawX = (pageW - drawW) / 2;
+            drawY = 0;
+          }
+
+          // Fill background to match certificate's own designed background
+          const certBg = getComputedStyle(certElement).backgroundColor;
+          const rgbMatch = certBg.match(/\d+/g);
+          if (rgbMatch && rgbMatch.length >= 3) {
+            pdf.setFillColor(parseInt(rgbMatch[0]), parseInt(rgbMatch[1]), parseInt(rgbMatch[2]));
+          } else {
+            pdf.setFillColor(17, 24, 39); // fallback to certificate's default #111827
+          }
+          pdf.rect(0, 0, pageW, pageH, 'F');
+
+          pdf.addImage(imgData, 'PNG', drawX, drawY, drawW, drawH);
+          pdf.save('certificate-' + courseId + '.pdf');
+
+          // --- STEP 6: Success UI ---
+          modTitle.textContent = 'Certificate Issued';
+          modContent.innerHTML = '<div style="text-align:center;">'
+            + '<p style="font-size:1.25rem; margin-bottom:1.5rem;">Congratulations, ' + studentName + '.</p>'
+            + '<p style="color:var(--text-faint);">Your verified certificate for <strong>' + courseData.title + '</strong> has been generated and downloaded.</p>'
+            + '<p style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-faint); opacity:0.7;">Certificate ID: ' + certID + '</p>'
+            + '<div style="margin-top:2rem;"><a href="training.html" style="color:var(--accent); font-weight:600;">← Browse More Programs</a></div>'
+            + '</div>';
+          btnPrev.style.display = 'none';
+          btnNext.style.display = 'none';
+
+        } catch (err) {
+          console.error('Certificate generation failed:', err);
+          btnNext.textContent = 'Error — Click to Retry';
+          btnNext.disabled = false;
+          btnNext.style.opacity = '1';
+        }
       }
     })();
   </script>
