@@ -7,12 +7,23 @@ const path = require('path');
 
 if (!fs.existsSync('src/components/layout.html')) {
     const html = fs.readFileSync('index.html', 'utf8');
-    const heroStartIdx = html.indexOf('\n  <!-- ========================================\n       HERO');
-    const footerStartIdx = html.indexOf('\n  <!-- ========================================\n       FOOTER');
+    const heroStartIdx = html.indexOf('  <!-- ========================================\r\n       HERO');
+    const footerStartIdx = html.indexOf('  <!-- ========================================\r\n       FOOTER');
 
-    const preHero = html.slice(0, heroStartIdx);
-    const mainBody = html.slice(heroStartIdx, footerStartIdx);
-    const footerAndScripts = html.slice(footerStartIdx);
+    // Fallbacks for LF vs CRLF
+    const actualHeroIdx = heroStartIdx !== -1 ? heroStartIdx : html.indexOf('  <!-- ========================================\n       HERO');
+    const actualFooterIdx = footerStartIdx !== -1 ? footerStartIdx : html.indexOf('  <!-- ========================================\n       FOOTER');
+
+    if (actualHeroIdx === -1 || actualFooterIdx === -1) {
+        console.error("Index not found! hero: " + actualHeroIdx + " footer: " + actualFooterIdx);
+        process.exit(1);
+    }
+
+    const preHero = html.slice(0, actualHeroIdx);
+    const mainBody = html.slice(actualHeroIdx, actualFooterIdx);
+    const footerAndScripts = html.slice(actualFooterIdx);
+
+
 
     let layout = preHero + '\n  <!-- CONTENT_PLACEHOLDER -->\n' + footerAndScripts;
     layout = layout.replace(/<title>.*?<\/title>/, '<title>{{TITLE}}</title>');
