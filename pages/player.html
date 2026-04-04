@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Player — Clinch Works</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+      (function () {
+        const saved = localStorage.getItem('clinch-theme');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+
+<body>
+
+  <header id="header" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative">
+      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/images/logo.png" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide transition-colors ml-1" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
+        <ul class="flex items-center gap-1 sm:gap-2">
+          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="about">About</a></li>
+          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="services">Services</a></li>
+          <li class="relative group">
+            <a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="training">Training <span class="text-xs opacity-50 ml-1">▼</span></a>
+            <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[99]">
+              <div class="glass-strong rounded-xl p-2 w-48 shadow-xl flex flex-col gap-1" style="background: var(--bg-primary); border: 1px solid var(--border-color);">
+                <a href="domain.html?category=Programming" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Programming</a>
+                <a href="domain.html?category=Cyber%20Security" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Cyber Security</a>
+              </div>
+            </div>
+          </li>
+          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3 z-10 lg:absolute lg:right-8">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+          <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg>
+        </button>
+        <button id="hamburger" class="hamburger lg:hidden" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu lg:hidden">
+    <a href="../index.html#about" data-section="about">About</a>
+    <a href="services.html" data-section="services">Services</a>
+    <a href="training.html" data-section="training">Training</a>
+    <div class="flex flex-col w-full items-center gap-1 my-1">
+      <a href="domain.html?category=Programming" class="text-sm py-2" style="color: var(--text-secondary);">— Programming</a>
+      <a href="domain.html?category=Cyber%20Security" class="text-sm py-2" style="color: var(--text-secondary);">— Cyber Security</a>
+    </div>
+    <a href="projects.html" data-section="projects">Projects</a>
+  </div>
+
+  <div class="pt-24 min-h-screen">
+    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
+      <div class="max-w-4xl mx-auto px-5 sm:px-6">
+        <div id="player-container" class="section-reveal visible">
+          <div class="flex justify-between items-center mb-8">
+            <h2 id="course-name" class="text-sm font-mono" style="color: var(--accent);">Course System</h2>
+            <div id="progress" class="text-xs font-mono" style="color: var(--text-faint);">Module 1 of 1</div>
+          </div>
+          
+          <div class="service-card rounded-2xl p-8 sm:p-12 mb-10 min-h-[400px]">
+            <h1 id="module-title" class="text-3xl font-bold mb-6" style="color: var(--text-primary);">Loading...</h1>
+            <div id="module-content" class="prose prose-invert max-w-none text-base leading-relaxed" style="color: var(--text-faint);">
+              Initializing modules...
+            </div>
+          </div>
+          
+          <div class="flex justify-between items-center">
+            <button id="btn-prev" class="px-6 py-3 rounded-lg border font-medium text-sm transition-all hover:bg-white/5" style="border-color: var(--cta-border); color: var(--text-primary);">
+              Previous
+            </button>
+            <button id="btn-next" class="btn-contact px-10 py-3 rounded-lg font-bold text-sm transition-all" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
+              Next Module
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/script.js"></script>
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get('id');
+      let currentModuleIndex = 0;
+      let courseData = null;
+
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const modTitle = document.getElementById('module-title');
+      const modContent = document.getElementById('module-content');
+      const progress = document.getElementById('progress');
+      const courseName = document.getElementById('course-name');
+
+      try {
+        const response = await fetch('../courses.json');
+        const data = await response.json();
+        courseData = data.courses.find(c => c.id === courseId);
+        
+        if (!courseData) {
+          modTitle.textContent = "Course Not Found";
+          return;
+        }
+
+        courseName.textContent = courseData.title;
+        renderModule();
+
+      } catch (e) {
+        console.error('Failed to load course player', e);
+      }
+
+      function renderModule() {
+        const module = courseData.modules[currentModuleIndex];
+        modTitle.textContent = module.title;
+        modTitle.classList.remove('reveal');
+        void modTitle.offsetWidth; // trigger reflow
+        modTitle.classList.add('reveal');
+        
+        modContent.innerHTML = module.content.split('\n').map(p => `<p class="mb-4">${p}</p>`).join('');
+        progress.textContent = `Module ${currentModuleIndex + 1} of ${courseData.modules.length}`;
+        
+        btnPrev.disabled = currentModuleIndex === 0;
+        btnPrev.style.opacity = btnPrev.disabled ? 0.3 : 1;
+
+        if (currentModuleIndex === courseData.modules.length - 1) {
+          btnNext.textContent = "Complete Course";
+          btnNext.onclick = generateCertificate;
+        } else {
+          btnNext.textContent = "Next Module";
+          btnNext.onclick = nextModule;
+        }
+      }
+
+      function nextModule() {
+        if (currentModuleIndex < courseData.modules.length - 1) {
+          currentModuleIndex++;
+          renderModule();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+
+      btnPrev.onclick = () => {
+        if (currentModuleIndex > 0) {
+          currentModuleIndex--;
+          renderModule();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      };
+
+      function generateCertificate() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+          orientation: 'landscape',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        // Dark Theme Background
+        doc.setFillColor(15, 15, 15);
+        doc.rect(0, 0, 297, 210, 'F');
+        
+        // Gold Border
+        doc.setDrawColor(201, 168, 76);
+        doc.setLineWidth(2);
+        doc.rect(10, 10, 277, 190);
+
+        // Content
+        doc.setTextColor(201, 168, 76);
+        doc.setFontSize(40);
+        doc.text("Certificate of Completion", 148.5, 60, { align: 'center' });
+        
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(20);
+        doc.text("This is proudly presented to", 148.5, 90, { align: 'center' });
+        
+        doc.setFontSize(30);
+        doc.text("ClinchWorks Student", 148.5, 110, { align: 'center' });
+        
+        doc.setFontSize(20);
+        doc.text(`for successfully completing the course`, 148.5, 130, { align: 'center' });
+        
+        doc.setTextColor(201, 168, 76);
+        doc.setFontSize(28);
+        doc.text(courseData.title, 148.5, 150, { align: 'center' });
+        
+        doc.setTextColor(150, 150, 150);
+        doc.setFontSize(14);
+        doc.text(`Completed on: ${new Date().toLocaleDateString()}`, 148.5, 180, { align: 'center' });
+        
+        doc.save(`certificate-${courseId}.pdf`);
+
+        // Change UI after download
+        modTitle.textContent = "Congratulations!";
+        modContent.innerHTML = `<p>You have successfully completed ${courseData.title}. Your certificate has been downloaded.</p><p class="mt-8"><a href="training.html" style="color: var(--accent);">Back to Programs</a></p>`;
+        btnPrev.style.display = 'none';
+        btnNext.style.display = 'none';
+      }
+    })();
+  </script>
+</body>
+</html>

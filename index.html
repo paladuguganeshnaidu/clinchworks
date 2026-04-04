@@ -85,8 +85,16 @@
             </div>
           </li>
           
-          <li><a href="pages/training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
-              data-section="training">Training</a></li>
+          <li class="relative group">
+            <a href="pages/training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+              data-section="training">Training <span class="text-xs opacity-50 ml-1">▼</span></a>
+            <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[99]">
+              <div class="glass-strong rounded-xl p-2 w-48 shadow-xl flex flex-col gap-1" style="background: var(--bg-primary); border: 1px solid var(--border-color);">
+                <a href="pages/domain.html?category=Programming" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Programming</a>
+                <a href="pages/domain.html?category=Cyber%20Security" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Cyber Security</a>
+              </div>
+            </div>
+          </li>
           <li><a href="pages/projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="projects">Projects</a></li>
         </ul>
@@ -127,6 +135,10 @@
     <a href="index.html#about" data-section="about">About</a>
     <a href="pages/services.html" data-section="services">Services</a>
     <a href="pages/training.html" data-section="training">Training</a>
+    <div class="flex flex-col w-full items-center gap-1 mb-1">
+      <a href="pages/domain.html?category=Programming" class="text-sm py-2" style="color: var(--text-secondary);">— Programming</a>
+      <a href="pages/domain.html?category=Cyber%20Security" class="text-sm py-2" style="color: var(--text-secondary);">— Cyber Security</a>
+    </div>
     <a href="pages/projects.html" data-section="projects">Projects</a>
     <a href="pages/contact.html" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
       →</a>
