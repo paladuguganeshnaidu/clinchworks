@@ -517,7 +517,7 @@
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative">
 
       <!-- Logo + Company Name (left) -->
-      <a href="#hero" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
+      <a href="index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
         <div
           class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <img src="logo.png" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
@@ -529,13 +529,13 @@
       <!-- Desktop Glass Navigation (hidden on mobile) -->
       <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
         <ul class="flex items-center gap-1 sm:gap-2">
-          <li><a href="#services" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="services">Services</a></li>
-          <li><a href="#training" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+          <li><a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="training">Training</a></li>
-          <li><a href="#projects" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="projects">Projects</a></li>
-          <li><a href="#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+          <li><a href="index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="about">About</a></li>
         </ul>
       </nav>
@@ -571,10 +571,10 @@
   </header>
 
 <div id="mobile-menu" class="mobile-menu lg:hidden">
-    <a href="#services" data-section="services">Services</a>
-    <a href="#training" data-section="training">Training</a>
-    <a href="#projects" data-section="projects">Projects</a>
-    <a href="#about" data-section="about">About</a>
+    <a href="services.html" data-section="services">Services</a>
+    <a href="training.html" data-section="training">Training</a>
+    <a href="projects.html" data-section="projects">Projects</a>
+    <a href="index.html#about" data-section="about">About</a>
     <a href="mailto:hello@clinchworks.in" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
       →</a>
   </div>
@@ -673,7 +673,7 @@
             // === Mobile Menu ===
             const hamburger = document.getElementById('hamburger');
             const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = mobileMenu.querySelectorAll('a[href^="#"]');
+            const mobileLinks = mobileMenu.querySelectorAll('a');
 
             hamburger.addEventListener('click', () => {
               hamburger.classList.toggle('active');
@@ -689,15 +689,20 @@
 
             mobileLinks.forEach(link => {
               link.addEventListener('click', (e) => {
-                e.preventDefault();
-                closeMobileMenu();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetEl = document.getElementById(targetId);
-                if (targetEl) {
-                  setTimeout(() => {
-                    const headerHeight = header.offsetHeight;
-                    window.scrollTo({ top: targetEl.offsetTop - headerHeight - 20, behavior: 'smooth' });
-                  }, 100);
+                const href = link.getAttribute('href');
+                if (!href || (!href.startsWith('mailto') && !href.startsWith('http'))) {
+                  closeMobileMenu();
+                }
+                if (href && href.startsWith('#')) {
+                  e.preventDefault();
+                  const targetId = href.substring(1);
+                  const targetEl = document.getElementById(targetId);
+                  if (targetEl) {
+                    setTimeout(() => {
+                      const headerHeight = header.offsetHeight;
+                      window.scrollTo({ top: targetEl.offsetTop - headerHeight - 20, behavior: 'smooth' });
+                    }, 100);
+                  }
                 }
               });
             });
@@ -742,10 +747,13 @@
             // === Smooth scroll for desktop nav ===
             navItems.forEach(item => {
               item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.getElementById(item.getAttribute('href').substring(1));
-                if (target) {
-                  window.scrollTo({ top: target.offsetTop - header.offsetHeight - 20, behavior: 'smooth' });
+                const href = item.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                  e.preventDefault();
+                  const target = document.getElementById(href.substring(1));
+                  if (target) {
+                    window.scrollTo({ top: target.offsetTop - header.offsetHeight - 20, behavior: 'smooth' });
+                  }
                 }
               });
             });
