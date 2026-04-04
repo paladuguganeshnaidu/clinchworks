@@ -55,7 +55,7 @@
       class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative">
 
       <!-- Logo + Company Name (left) -->
-      <a href="../home.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
+      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
         <div
           class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <img src="../assets/images/logo.png" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
@@ -67,14 +67,14 @@
       <!-- Desktop Glass Navigation (hidden on mobile) -->
       <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
         <ul class="flex items-center gap-1 sm:gap-2">
-          <li><a href="../home.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
-              data-section="about">About</a></li>
           <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="services">Services</a></li>
           <li><a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="training">Training</a></li>
           <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="projects">Projects</a></li>
+          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+              data-section="about">About</a></li>
         </ul>
       </nav>
 
@@ -108,69 +108,222 @@
     </div>
   </header>
 
-  <!-- Mobile Menu Overlay -->
   <div id="mobile-menu" class="mobile-menu lg:hidden">
-    <a href="../home.html#about" data-section="about">About</a>
     <a href="services.html" data-section="services">Services</a>
     <a href="training.html" data-section="training">Training</a>
     <a href="projects.html" data-section="projects">Projects</a>
+    <a href="../index.html#about" data-section="about">About</a>
     <a href="mailto:hello@clinchworks.in" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
       →</a>
   </div>
 
+  <div class="pt-24 min-h-screen">
 
-  
-<div class="pt-24 min-h-screen">
-<section class="relative pb-16 sm:pb-24 lg:pb-32">
-  <div class="max-w-5xl mx-auto px-5 sm:px-6">
-    <div class="section-reveal">
-      <div class="accent-line mb-4"></div>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
-        Our Projects
-      </h1>
-      <p class="mt-4 sm:mt-6 text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--text-faint);">
-        Internal tools, client solutions, and open-source contributions. This is proof of execution.
-      </p>
-    </div>
-
-    <div class="mt-12 sm:mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="project-card service-card section-reveal rounded-2xl p-8 h-full flex flex-col">
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full" style="background: var(--accent); opacity: 0.8;"></span>
-              <span class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Client Success</span>
-            </div>
+    <section class="relative py-16 sm:py-24 lg:py-32">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal visible">
+          <div class="accent-line mb-4"></div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
+            Our Projects
+          </h1>
+          <p class="mt-4 sm:mt-6 text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--text-faint);">
+            Internal tools, client solutions, and open-source contributions. This is proof of execution.
+          </p>
         </div>
-        <h3 class="font-bold text-xl mb-3" style="color: var(--text-primary);">Vyrinth Identity Dashboard</h3>
-        <p class="text-sm leading-relaxed flex-grow" style="color: var(--text-secondary);">
-          Built a centralized security portal offering real-time intelligent threat mapping, network anomalies, and multi-cloud authentication compliance for an enterprise security division.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-2">
-            <span class="text-xs px-3 py-1.5 rounded-md font-mono" style="background: var(--tag-bg); color: var(--accent);">React</span>
-            <span class="text-xs px-3 py-1.5 rounded-md font-mono" style="background: var(--tag-bg); color: var(--accent);">GraphQL</span>
+
+        <div class="mt-12 sm:mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="project-card service-card section-reveal visible rounded-2xl p-8 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background: var(--accent); opacity: 0.8;"></span>
+                <span class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Client
+                  Success</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-xl mb-3" style="color: var(--text-primary);">Vyrinth Identity Dashboard</h3>
+            <p class="text-sm leading-relaxed flex-grow" style="color: var(--text-secondary);">
+              Built a centralized security portal offering real-time intelligent threat mapping, network anomalies, and
+              multi-cloud authentication compliance for an enterprise security division.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-2">
+              <span class="text-xs px-3 py-1.5 rounded-md font-mono"
+                style="background: var(--tag-bg); color: var(--accent);">React</span>
+              <span class="text-xs px-3 py-1.5 rounded-md font-mono"
+                style="background: var(--tag-bg); color: var(--accent);">GraphQL</span>
+            </div>
+          </div>
+
+          <div class="project-card service-card section-reveal visible rounded-2xl p-8 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background: var(--accent); opacity: 0.8;"></span>
+                <span class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Open
+                  Source</span>
+              </div>
+            </div>
+            <h3 class="font-bold text-xl mb-3" style="color: var(--text-primary);">Clinch Cloud Engine</h3>
+            <p class="text-sm leading-relaxed flex-grow" style="color: var(--text-secondary);">
+              A suite of automated server provisioning scripts combining robust IAM rules with auto-scaling deployment.
+              Built to minimize developer boilerplate during new project lifecycles.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-2">
+              <span class="text-xs px-3 py-1.5 rounded-md font-mono"
+                style="background: var(--tag-bg); color: var(--accent);">Terraform</span>
+              <span class="text-xs px-3 py-1.5 rounded-md font-mono"
+                style="background: var(--tag-bg); color: var(--accent);">Bash</span>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="project-card service-card section-reveal rounded-2xl p-8 h-full flex flex-col">
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full" style="background: var(--accent); opacity: 0.8;"></span>
-              <span class="text-xs font-mono uppercase tracking-wider" style="color: var(--text-faint);">Open Source</span>
-            </div>
-        </div>
-        <h3 class="font-bold text-xl mb-3" style="color: var(--text-primary);">Clinch Cloud Engine</h3>
-        <p class="text-sm leading-relaxed flex-grow" style="color: var(--text-secondary);">
-          A suite of automated server provisioning scripts combining robust IAM rules with auto-scaling deployment. Built to minimize developer boilerplate during new project lifecycles.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-2">
-            <span class="text-xs px-3 py-1.5 rounded-md font-mono" style="background: var(--tag-bg); color: var(--accent);">Terraform</span>
-            <span class="text-xs px-3 py-1.5 rounded-md font-mono" style="background: var(--tag-bg); color: var(--accent);">Bash</span>
-        </div>
-      </div>
-    </div>
   </div>
-</section>
 
-</div>
+  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
+      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+    </div>
+  </footer>
 
->
+
+  <!-- ========================================
+       JAVASCRIPT
+  ======================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // === Theme Toggle ===
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+
+      function setTheme(theme) {
+        if (theme === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+        } else {
+          html.removeAttribute('data-theme');
+        }
+        localStorage.setItem('clinch-theme', theme);
+      }
+
+      function getCurrentTheme() {
+        return html.hasAttribute('data-theme') ? 'dark' : 'light';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        setTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
+      });
+
+      // === Mobile Menu ===
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = mobileMenu.querySelectorAll('a');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+
+      function closeMobileMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (!href || (!href.startsWith('mailto') && !href.startsWith('http'))) {
+            closeMobileMenu();
+          }
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const targetId = href.substring(1);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              setTimeout(() => {
+                const headerHeight = header.offsetHeight;
+                window.scrollTo({ top: targetEl.offsetTop - headerHeight - 20, behavior: 'smooth' });
+              }, 100);
+            }
+          }
+        });
+      });
+
+      // === Header scroll effect ===
+      const header = document.getElementById('header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }, { passive: true });
+
+      // === Section reveal ===
+      const revealObserver = new IntersectionObserver(
+        (entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+
+      // === Nav active state ===
+      const navItems = document.querySelectorAll('.top-nav-item');
+      const mobileNavItems = mobileMenu.querySelectorAll('a[data-section]');
+      const sections = document.querySelectorAll('section[id]');
+
+      function updateActiveNav() {
+        let current = '';
+        const scrollPos = window.scrollY + window.innerHeight / 2;
+        sections.forEach(s => {
+          if (scrollPos >= s.offsetTop && scrollPos < s.offsetTop + s.offsetHeight) {
+            current = s.getAttribute('id');
+          }
+        });
+        navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+        mobileNavItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+      }
+
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      updateActiveNav();
+
+      // === Smooth scroll for desktop nav ===
+      navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          const href = item.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.getElementById(href.substring(1));
+            if (target) {
+              window.scrollTo({ top: target.offsetTop - header.offsetHeight - 20, behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
+      // === Smooth scroll for other anchor links ===
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        if (link.closest('#top-nav') || link.closest('#mobile-menu')) return;
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.getElementById(href.substring(1));
+            if (target) window.scrollTo({ top: target.offsetTop - header.offsetHeight - 20, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Close mobile menu on resize to desktop
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024) closeMobileMenu();
+      });
+
+    })();
+  </script>
+
+</body>
+
+</html>
