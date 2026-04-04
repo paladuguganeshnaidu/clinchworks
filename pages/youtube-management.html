@@ -66,16 +66,30 @@
       </a>
 
       <!-- Desktop Glass Navigation (hidden on mobile) -->
-      <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
+            <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
         <ul class="flex items-center gap-1 sm:gap-2">
-          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
-              data-section="services">Services</a></li>
+          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+              data-section="about">About</a></li>
+              
+          <li class="relative group">
+            <a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
+              data-section="services">Services <span class="text-xs opacity-50 ml-1">▼</span></a>
+            <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+              <div class="glass-strong rounded-xl p-2 w-56 shadow-xl flex flex-col gap-1">
+                <a href="google-ads.html" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Google Ads</a>
+                <a href="social-media-marketing.html" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Social Media Marketing</a>
+                <a href="website-design.html" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Website Design</a>
+                <a href="content-marketing.html" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Content Marketing</a>
+                <a href="youtube-management.html" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">YouTube Management</a>
+                <a href="video-graphic-design.html" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Video & Graphic Design</a>
+              </div>
+            </div>
+          </li>
+          
           <li><a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="training">Training</a></li>
           <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
               data-section="projects">Projects</a></li>
-          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl"
-              data-section="about">About</a></li>
         </ul>
       </nav>
 
@@ -109,11 +123,19 @@
     </div>
   </header>
 
-  <div id="mobile-menu" class="mobile-menu lg:hidden">
+    <div id="mobile-menu" class="mobile-menu lg:hidden" style="overflow-y: auto; padding-bottom: 2rem;">
+    <a href="../index.html#about" data-section="about">About</a>
     <a href="services.html" data-section="services">Services</a>
+    <div class="flex flex-col w-full items-center gap-1 my-1">
+      <a href="google-ads.html" class="text-sm py-2" style="color: var(--text-secondary);">— Google Ads</a>
+      <a href="social-media-marketing.html" class="text-sm py-2" style="color: var(--text-secondary);">— Social Media Marketing</a>
+      <a href="website-design.html" class="text-sm py-2" style="color: var(--text-secondary);">— Website Design</a>
+      <a href="content-marketing.html" class="text-sm py-2" style="color: var(--text-secondary);">— Content Marketing</a>
+      <a href="youtube-management.html" class="text-sm py-2" style="color: var(--text-secondary);">— YouTube Management</a>
+      <a href="video-graphic-design.html" class="text-sm py-2" style="color: var(--text-secondary);">— Video & Graphic Design</a>
+    </div>
     <a href="training.html" data-section="training">Training</a>
     <a href="projects.html" data-section="projects">Projects</a>
-    <a href="../index.html#about" data-section="about">About</a>
     <a href="mailto:hello@clinchworks.in" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
       →</a>
   </div>
