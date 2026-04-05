@@ -715,3 +715,23 @@ button:hover, .btn:hover {
     transform: none !important;
   }
 }
+
+/* =========================================================
+       EMERGENCY CONTENT VISIBILITY OVERRIDE
+   ========================================================= */
+
+/* Forcing all reveal-gated content to 100% opacity to resolve blank page issues. */
+.section-reveal, 
+#about, 
+.service-card, 
+.project-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  display: flex !important; /* Matches standard member card layout */
+}
+
+/* Ensure the Member Cards flex layout is maintained */
+.flex-col.md\:flex-row {
+  display: flex !important;
+}
