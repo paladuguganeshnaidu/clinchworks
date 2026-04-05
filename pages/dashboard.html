@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Course Details — Clinch Works</title>
+  <title>Dashboard — Clinch Works</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -49,10 +49,10 @@
 
       <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
         <ul class="flex items-center gap-1 sm:gap-2">
-          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="about">About</a></li>
-          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="services">Services</a></li>
+          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl">About</a></li>
+          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl">Services</a></li>
           <li class="relative group">
-            <a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="training">Training <span class="text-xs opacity-50 ml-1">▼</span></a>
+            <a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl">Training <span class="text-xs opacity-50 ml-1">▼</span></a>
             <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[99]">
               <div class="glass-strong rounded-xl p-2 w-48 shadow-xl flex flex-col gap-1" style="background: var(--bg-primary); border: 1px solid var(--border-color);">
                 <a href="domain.html?category=Programming" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Programming</a>
@@ -60,7 +60,8 @@
               </div>
             </div>
           </li>
-          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="projects">Projects</a></li>
+          <li><a href="dashboard.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl">Dashboard</a></li>
+          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl">Projects</a></li>
         </ul>
       </nav>
 
@@ -75,39 +76,32 @@
   </header>
 
   <div id="mobile-menu" class="mobile-menu lg:hidden">
-    <a href="../index.html#about" data-section="about">About</a>
-    <a href="services.html" data-section="services">Services</a>
-    <a href="training.html" data-section="training">Training</a>
+    <a href="../index.html#about">About</a>
+    <a href="services.html">Services</a>
+    <a href="training.html">Training</a>
     <div class="flex flex-col w-full items-center gap-1 my-1">
       <a href="domain.html?category=Programming" class="text-sm py-2" style="color: var(--text-secondary);">— Programming</a>
       <a href="domain.html?category=Cyber%20Security" class="text-sm py-2" style="color: var(--text-secondary);">— Cyber Security</a>
     </div>
-    <a href="projects.html" data-section="projects">Projects</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="projects.html">Projects</a>
   </div>
 
   <div class="pt-24 min-h-screen">
     <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
       <div class="max-w-4xl mx-auto px-5 sm:px-6">
         <div class="section-reveal visible">
-          <div class="flex items-center gap-4 mb-4">
-            <span id="course-level" class="text-xs font-mono px-3 py-1 rounded" style="background: var(--tag-bg); color: var(--tag-text);">Level</span>
-            <span id="course-duration" class="text-xs font-mono" style="color: var(--text-faint); opacity: 0.8;">Duration</span>
-          </div>
-          <h1 id="course-title" class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-8" style="color: var(--text-primary);">
-            Course Loading...
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4" style="color: var(--text-primary);">
+            Student Dashboard
           </h1>
-          <p id="course-desc" class="text-base sm:text-lg leading-relaxed mb-10" style="color: var(--text-faint);">
-            Accessing course details from the registry.
+          <p class="text-base sm:text-lg leading-relaxed mb-10" style="color: var(--text-faint);">
+            Track your progress and resume your active courses.
           </p>
-          <a id="btn-start" href="#" class="btn-contact inline-block text-sm px-10 py-4 rounded-lg transition-all duration-300 font-bold" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
-            Start Course
-          </a>
         </div>
 
-        <div class="mt-20 section-reveal visible">
-          <h2 class="text-2xl font-bold mb-8" style="color: var(--text-primary);">Modules & Curriculum</h2>
-          <div id="module-list" class="flex flex-col gap-4">
-            <!-- Modules injected here -->
+        <div class="mt-8 section-reveal visible">
+          <div id="dashboard-list" class="flex flex-col gap-6">
+            <!-- Course cards injected here -->
           </div>
         </div>
       </div>
@@ -123,73 +117,76 @@
   <script src="../assets/js/script.js"></script>
   <script>
     (async function() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
-      
       try {
         const response = await fetch('../courses.json');
         const data = await response.json();
-        const course = data.courses.find(c => c.id === id);
         
-        if (!course) {
-          document.getElementById('course-title').textContent = "Course Not Found";
-          return;
+        const dashboardList = document.getElementById('dashboard-list');
+        dashboardList.innerHTML = '';
+
+        if (!data.courses || data.courses.length === 0) {
+           dashboardList.innerHTML = '<p style="color: var(--text-faint);">No courses available.</p>';
+           return;
         }
 
-        document.title = `${course.title} — Clinch Works`;
-        document.getElementById('course-title').textContent = course.title;
-        document.getElementById('course-desc').textContent = course.description;
-        document.getElementById('course-level').textContent = course.level;
-        document.getElementById('course-duration').textContent = course.duration;
-        
-        const btnStart = document.getElementById('btn-start');
-        btnStart.href = `player.html?id=${course.id}`;
+        data.courses.forEach(course => {
+          let percent = 0;
+          let statusText = "Not Started";
+          let btnText = "Start";
+          let btnColor = "var(--accent)";
+          
+          const savedProgress = localStorage.getItem('course-' + course.id);
+          
+          if (savedProgress) {
+            try {
+              const pData = JSON.parse(savedProgress);
+              percent = Math.round((pData.currentModule / pData.totalModules) * 100);
+              if (pData.completed) percent = 100;
+              
+              if (pData.completed) {
+                statusText = "Completed";
+                btnText = "View";
+                btnColor = "var(--success, #16a34a)";
+              } else if (pData.currentModule > 0 || percent > 0) {
+                statusText = "In Progress";
+                btnText = "Resume";
+              }
+            } catch(e) {}
+          }
 
-        // --- Progress Tracking UI Update ---
-        const savedProgress = localStorage.getItem('course-' + course.id);
-        if (savedProgress) {
-          try {
-            const pData = JSON.parse(savedProgress);
-            let percent = Math.round((pData.currentModule / pData.totalModules) * 100);
-            if (pData.completed) percent = 100;
+          const card = document.createElement('div');
+          card.className = 'service-card p-6 sm:p-8 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6';
 
-            if (pData.completed) {
-              btnStart.textContent = "Completed ✅";
-              btnStart.style.background = "var(--success, #16a34a)";
-              btnStart.style.borderColor = "var(--success, #16a34a)";
-            } else if (pData.currentModule > 0 || percent > 0) {
-              btnStart.textContent = "Resume Course";
-            }
-
-            if (percent > 0 || pData.currentModule > 0) {
-              const infoBox = document.getElementById('course-level').parentElement;
-              const progSpan = document.createElement('span');
-              progSpan.className = "text-xs font-mono px-3 py-1 rounded";
-              progSpan.style.background = "var(--bg-primary)";
-              progSpan.style.border = "1px solid var(--accent, #c9a84c)";
-              progSpan.style.color = "var(--accent, #c9a84c)";
-              progSpan.textContent = `${percent}% Completed`;
-              infoBox.appendChild(progSpan);
-            }
-          } catch(e) {}
-        }
-
-        const moduleContainer = document.getElementById('module-list');
-        course.modules.forEach((mod, idx) => {
-          const modEl = document.createElement('div');
-          modEl.className = 'service-card p-5 rounded-xl border border-white/5 flex items-center justify-between';
-          modEl.innerHTML = `
-            <div class="flex items-center gap-4">
-              <span class="text-sm font-mono opacity-50">${(idx + 1).toString().padStart(2, '0')}</span>
-              <span class="font-medium" style="color: var(--text-primary);">${mod.title}</span>
+          const leftSide = `
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-xs font-mono px-2 py-1 rounded" style="background: var(--tag-bg); color: var(--tag-text);">${course.category || 'TRAINING'}</span>
+                <span class="text-xs font-mono" style="color: ${statusText === 'Completed' ? 'var(--success, #16a34a)' : (statusText === 'In Progress' ? 'var(--accent)' : 'var(--text-faint)')};">${statusText}</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold mb-2" style="color: var(--text-primary);">${course.title}</h2>
+              <div class="w-full h-1.5 rounded-full overflow-hidden mt-4" style="background: var(--border-color, rgba(255,255,255,0.05)); max-w-xs;">
+                <div class="h-full transition-all duration-500 ease-out" style="width: ${percent}%; background: ${btnColor};"></div>
+              </div>
+              <span class="text-xs font-mono mt-2 inline-block" style="color: var(--text-faint);">${percent}% Completed</span>
             </div>
-            <span class="text-xs font-mono opacity-40">Module</span>
           `;
-          moduleContainer.appendChild(modEl);
+
+          const btnLink = statusText === 'Not Started' ? `course.html?id=${course.id}` : `player.html?id=${course.id}`;
+
+          const rightSide = `
+            <div class="flex-shrink-0">
+              <a href="${btnLink}" class="inline-block text-sm px-8 py-3 rounded-xl font-bold transition-all border text-center min-w-[120px]" style="background: ${btnColor}; border-color: ${btnColor}; color: var(--bg-primary);">
+                ${btnText}
+              </a>
+            </div>
+          `;
+
+          card.innerHTML = leftSide + rightSide;
+          dashboardList.appendChild(card);
         });
 
       } catch (err) {
-        console.error('Data Load Error:', err);
+        console.error('Failed to load dashboard:', err);
       }
     })();
   </script>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Exam — Clinch Works</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script>
+      (function () {
+        const saved = localStorage.getItem('clinch-theme');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+
+<body>
+
+  <header id="header" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative border-b border-white/5 bg-[var(--bg-primary)]">
+      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/images/logo.png" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide transition-colors ml-1" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+      <!-- Stripped down nav for exam mode to prevent accidental navigation -->
+      <div class="hidden lg:block text-sm font-mono opacity-50">Secure Exam Environment</div>
+    </div>
+  </header>
+
+  <div class="pt-24 min-h-screen">
+    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
+      <div class="max-w-3xl mx-auto px-5 sm:px-6">
+        <div class="service-card rounded-2xl p-8 sm:p-12 mb-10 shadow-xl border border-white/10">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="text-xs font-mono px-3 py-1 rounded" style="background: rgba(220, 38, 38, 0.1); color: #ef4444;">EXAM MODE</span>
+          </div>
+          <h1 id="exam-title" class="text-3xl mx-auto font-bold mb-4" style="color: var(--text-primary);">Course Final Exam</h1>
+          <p class="mb-10 text-sm md:text-base leading-relaxed border-b pb-8" style="color: var(--text-faint); border-color: var(--border-color, rgba(255,255,255,0.1));">
+            You must pass this final assessment with a score of <strong>at least 60%</strong> to unlock and download your completion certificate. The exam consists of 15 multiple-choice questions and 2 written coding responses.
+          </p>
+
+          <form id="exam-form" class="space-y-10">
+            <div id="questions-container" class="space-y-10"></div>
+            
+            <div id="result-box" class="hidden p-6 rounded-xl border font-mono text-sm"></div>
+            
+            <div class="flex flex-col sm:flex-row items-center gap-4 pt-6" style="border-top: 1px solid var(--border-color, rgba(255,255,255,0.1));">
+              <button type="submit" id="btn-submit" class="inline-block text-sm px-10 py-4.5 rounded-lg font-bold transition-all border w-full sm:w-auto" style="background: var(--accent); border-color: var(--accent); color: var(--bg-primary);">
+                Submit Final Exam
+              </button>
+              <button type="button" id="btn-return" class="hidden inline-block text-sm px-10 py-4.5 rounded-lg font-bold transition-all border w-full sm:w-auto" style="background: transparent; border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--text-primary);">
+                Return to Player
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get('id');
+      
+      if (!courseId) {
+        document.getElementById('exam-title').textContent = "Invalid Course ID";
+        return;
+      }
+
+      let mcqs = [];
+      let codingQs = [];
+      
+      try {
+        const response = await fetch('../examquestions.json');
+        const examData = await response.json();
+        
+        if (!examData[courseId]) {
+          document.getElementById('exam-title').textContent = "No exam available for this course";
+          document.getElementById('exam-form').style.display = 'none';
+          document.querySelector('p').textContent = "Please return to the course catalog or contact support.";
+          return;
+        }
+        
+        mcqs = examData[courseId].mcq;
+        codingQs = examData[courseId].coding;
+      } catch (err) {
+        document.getElementById('exam-title').textContent = "Failed to load exam data";
+        document.getElementById('exam-form').style.display = 'none';
+        return;
+      }
+
+      const container = document.getElementById('questions-container');
+
+      // Render MCQs
+      mcqs.forEach((mcq, idx) => {
+        const qDiv = document.createElement('div');
+        let optionsHTML = '';
+        mcq.options.forEach((opt, oIdx) => {
+          optionsHTML += `
+            <label class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors hover:bg-white/5" style="border-color: var(--border-color, rgba(255,255,255,0.05));">
+              <input type="radio" name="mcq-${idx}" value="${oIdx}" class="w-4 h-4 text-accent bg-transparent border-[var(--border-color)] focus:ring-accent" required>
+              <span class="text-sm font-medium" style="color: var(--text-secondary);">${opt}</span>
+            </label>
+          `;
+        });
+
+        qDiv.innerHTML = `
+          <div>
+            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${idx + 1}.</span> ${mcq.q}</h3>
+            <div class="space-y-2 pl-6 sm:pl-7">
+              ${optionsHTML}
+            </div>
+          </div>
+        `;
+        container.appendChild(qDiv);
+      });
+
+      // Render Coding/Written Questions
+      codingQs.forEach((cq, idx) => {
+        const qDiv = document.createElement('div');
+        const qNum = mcqs.length + idx + 1;
+        qDiv.innerHTML = `
+          <div>
+            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${qNum}.</span> ${cq.q}</h3>
+            <div class="pl-6 sm:pl-7">
+              <textarea name="${cq.id}" rows="3" class="w-full p-4 rounded-xl border text-sm focus:outline-none focus:ring-1 transition-all resize-y" style="background: var(--bg-primary); border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--text-primary); outline-color: var(--accent);" placeholder="Type answer here..." required></textarea>
+            </div>
+          </div>
+        `;
+        container.appendChild(qDiv);
+      });
+
+      // Form submission
+      const form = document.getElementById('exam-form');
+      const resultBox = document.getElementById('result-box');
+      const btnSubmit = document.getElementById('btn-submit');
+      const btnReturn = document.getElementById('btn-return');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        let score = 0;
+
+        // Check MCQs
+        mcqs.forEach((mcq, idx) => {
+          if (parseInt(formData.get(`mcq-${idx}`)) === mcq.ans) {
+            score++;
+          }
+        });
+
+        // Check Coding
+        codingQs.forEach(cq => {
+          const ans = (formData.get(cq.id) || "").toLowerCase();
+          const hasKeyword = cq.keywords.some(kw => ans.includes(kw));
+          // Either has a keyword, or is just a non-empty string as fallback scoring
+          if (hasKeyword || ans.trim().length > 10) {
+            score++;
+          }
+        });
+
+        const totalQ = mcqs.length + codingQs.length;
+        const percentage = Math.round((score / totalQ) * 100);
+        const passed = percentage >= 60;
+
+        // Save result
+        localStorage.setItem(`exam-${courseId}`, JSON.stringify({
+          score: score,
+          percentage: percentage,
+          passed: passed
+        }));
+
+        resultBox.classList.remove('hidden');
+        if (passed) {
+          resultBox.style.backgroundColor = "rgba(22, 163, 74, 0.1)"; // Success bg
+          resultBox.style.borderColor = "#16a34a";
+          resultBox.innerHTML = `
+            <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Passed ✅</div>
+            You scored ${score}/${totalQ} (${percentage}%). Your certificate has been successfully unlocked.
+          `;
+          btnReturn.textContent = "Download Certificate Now";
+        } else {
+          resultBox.style.backgroundColor = "rgba(220, 38, 38, 0.1)"; // Error bg
+          resultBox.style.borderColor = "#ef4444";
+          resultBox.innerHTML = `
+            <div style="color: #ef4444; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Failed ❌</div>
+            You scored ${score}/${totalQ} (${percentage}%). A minimum of 60% is required to pass.
+          `;
+          btnReturn.textContent = "Return to Course";
+          btnSubmit.textContent = "Retake Exam";
+        }
+
+        btnReturn.classList.remove('hidden');
+        window.scrollTo({ top: resultBox.offsetTop - 100, behavior: 'smooth' });
+      });
+
+      btnReturn.addEventListener('click', () => {
+        window.location.href = `player.html?id=${courseId}`;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+{
+  "c-programming": {
+    "mcq": [
+      {
+        "q": "What is the entry point of a C program?",
+        "options": [
+          "start()",
+          "main()",
+          "init()",
+          "entry()"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which operator is used to get the address of a variable?",
+        "options": [
+          "*",
+          "&",
+          "%",
+          "#"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does malloc() return on failure?",
+        "options": [
+          "0",
+          "-1",
+          "NULL",
+          "garbage"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the size of a standard 'char' in C?",
+        "options": [
+          "1 byte",
+          "2 bytes",
+          "4 bytes",
+          "Depends on OS"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of these is not a valid C data type?",
+        "options": [
+          "float",
+          "real",
+          "double",
+          "int"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How do you correctly declare a pointer to an integer?",
+        "options": [
+          "int ptr;",
+          "int *ptr;",
+          "ptr int;",
+          "*int ptr;"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What function is used to free dynamically allocated memory?",
+        "options": [
+          "delete",
+          "remove",
+          "free",
+          "clear"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which library contains printf?",
+        "options": [
+          "<stdlib.h>",
+          "<math.h>",
+          "<string.h>",
+          "<stdio.h>"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the result of '10 % 3' in C?",
+        "options": [
+          "3",
+          "1",
+          "0",
+          "3.33"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which loop guarantees execution at least once?",
+        "options": [
+          "for",
+          "while",
+          "do-while",
+          "foreach"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the correct way to end a statement in C?",
+        "options": [
+          ".",
+          ":",
+          ";",
+          "!"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What index does a C array start at?",
+        "options": [
+          "1",
+          "0",
+          "-1",
+          "Depends"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How do you represent a multi-line comment?",
+        "options": [
+          "//...",
+          "/*...*/",
+          "<!--...-->",
+          "#...#"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which keyword is used to return a value from a function?",
+        "options": [
+          "yield",
+          "break",
+          "give",
+          "return"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is 'sizeof' in C?",
+        "options": [
+          "A function",
+          "A macro",
+          "An operator",
+          "A variable"
+        ],
+        "ans": 2
+      }
+    ],
+    "coding": [
+      {
+        "id": "c1",
+        "q": "Write a command or line to print 'Hello' in C.",
+        "keywords": [
+          "printf",
+          ";",
+          "puts"
+        ]
+      },
+      {
+        "id": "c2",
+        "q": "Write the keyword used to define a custom structure.",
+        "keywords": [
+          "struct",
+          "typedef"
+        ]
+      }
+    ]
+  },
+  "python-programming": {
+    "mcq": [
+      {
+        "q": "How do you define a function in Python?",
+        "options": [
+          "def func()",
+          "function func()",
+          "func()",
+          "declare func()"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of these is a mutable data type?",
+        "options": [
+          "Tuple",
+          "String",
+          "List",
+          "Integer"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is used to comment a single line in Python?",
+        "options": [
+          "//",
+          "/*",
+          "--",
+          "#"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "How do you output text to console?",
+        "options": [
+          "echo()",
+          "print()",
+          "console.log()",
+          "write()"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which method adds an element to the end of a list?",
+        "options": [
+          "add()",
+          "insert()",
+          "push()",
+          "append()"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the output of '2 ** 3'?",
+        "options": [
+          "5",
+          "6",
+          "8",
+          "9"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which keyword is used to handle exceptions?",
+        "options": [
+          "catch",
+          "except",
+          "error",
+          "handle"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is a dictionary in Python?",
+        "options": [
+          "List of strings",
+          "Key-value pair structure",
+          "Ordered immutable collection",
+          "Database"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How do you find the length of a list 'my_list'?",
+        "options": [
+          "my_list.length()",
+          "length(my_list)",
+          "len(my_list)",
+          "size(my_list)"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the correct extension for Python files?",
+        "options": [
+          ".python",
+          ".pyt",
+          ".pt",
+          ".py"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Which of the following is NOT a core Python keyword?",
+        "options": [
+          "class",
+          "eval",
+          "pass",
+          "None"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How do you start a class definition?",
+        "options": [
+          "class MyClass:",
+          "define class MyClass:",
+          "MyClass() class:",
+          "class:MyClass"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What statement is used to stop a loop?",
+        "options": [
+          "stop",
+          "exit",
+          "break",
+          "return"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which symbol is used for floor division?",
+        "options": [
+          "/",
+          "//",
+          "%",
+          "\\"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is 'self' used for in class methods?",
+        "options": [
+          "To refer to the class itself",
+          "To refer to the instance",
+          "To import modules",
+          "To exit the method"
+        ],
+        "ans": 1
+      }
+    ],
+    "coding": [
+      {
+        "id": "p1",
+        "q": "Write a line of code to print 'Hi' in Python.",
+        "keywords": [
+          "print",
+          "sys.stdout"
+        ]
+      },
+      {
+        "id": "p2",
+        "q": "Write the keyword used to import external modules in Python.",
+        "keywords": [
+          "import",
+          "from"
+        ]
+      }
+    ]
+  }
+}

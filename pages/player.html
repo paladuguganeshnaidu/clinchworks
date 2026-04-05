@@ -40,6 +40,8 @@
   </script>
 
   <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 
 <body>
@@ -95,9 +97,15 @@
     <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
       <div class="max-w-4xl mx-auto px-5 sm:px-6">
         <div id="player-container" class="section-reveal visible">
-          <div class="flex justify-between items-center mb-8">
+          <div class="flex justify-between items-center mb-3">
             <h2 id="course-name" class="text-sm font-mono" style="color: var(--accent);">Course System</h2>
-            <div id="progress" class="text-xs font-mono" style="color: var(--text-faint);">Module 1 of 1</div>
+            <div class="text-right flex flex-col items-end gap-1">
+              <div id="progress" class="text-xs font-mono" style="color: var(--text-faint);">Module 1 of 1</div>
+              <div id="progress-percent" class="text-xs font-mono font-medium" style="color: var(--accent);">Progress: 0%</div>
+            </div>
+          </div>
+          <div class="w-full h-1.5 rounded-full mb-8 overflow-hidden bg-white/5">
+            <div id="progress-bar" class="h-full transition-all duration-500 ease-out" style="width: 0%; background: var(--accent);"></div>
           </div>
           
           <div class="service-card rounded-2xl p-8 sm:p-12 mb-10 min-h-[400px]">
@@ -161,6 +169,18 @@
         }
 
         courseName.textContent = courseData.title;
+
+        // --- Load Progress ---
+        const savedProgress = localStorage.getItem('course-' + courseId);
+        if (savedProgress) {
+          try {
+            const pData = JSON.parse(savedProgress);
+            if (pData.currentModule < courseData.modules.length) {
+              currentModuleIndex = pData.currentModule;
+            }
+          } catch(e) {}
+        }
+
         renderModule();
 
       } catch (e) {
@@ -168,21 +188,56 @@
       }
 
       function renderModule() {
+        const isLastModule = currentModuleIndex === courseData.modules.length - 1;
+        
+        // --- Save Progress ---
+        localStorage.setItem('course-' + courseId, JSON.stringify({
+          currentModule: currentModuleIndex,
+          totalModules: courseData.modules.length,
+          completed: isLastModule
+        }));
+
         const module = courseData.modules[currentModuleIndex];
         modTitle.textContent = module.title;
         modTitle.classList.remove('reveal');
         void modTitle.offsetWidth;
         modTitle.classList.add('reveal');
         
-        modContent.innerHTML = module.content.split('\n').map(p => `<p class="mb-4">${p}</p>`).join('');
+        const contentArray = Array.isArray(module.content) ? module.content : module.content.split('\n');
+        modContent.innerHTML = contentArray.map(p => {
+          if (p.trim().startsWith('<pre') || p.trim().startsWith('<h2') || p.trim().startsWith('<ul') || p.trim().startsWith('<li') || p.trim().startsWith('<div')) {
+            return p;
+          }
+          return `<p class="mb-4">${p}</p>`;
+        }).join('');
+        
+        initCodeBlocks();
         progress.textContent = `Module ${currentModuleIndex + 1} of ${courseData.modules.length}`;
         
+        // --- Progress Display Update ---
+        let percent = Math.round((currentModuleIndex / courseData.modules.length) * 100);
+        if (isLastModule) percent = 100;
+        
+        const progPercent = document.getElementById('progress-percent');
+        const progBar = document.getElementById('progress-bar');
+        if (progPercent) progPercent.textContent = `Progress: ${percent}%`;
+        if (progBar) progBar.style.width = `${percent}%`;
+
         btnPrev.disabled = currentModuleIndex === 0;
         btnPrev.style.opacity = btnPrev.disabled ? 0.3 : 1;
 
         if (currentModuleIndex === courseData.modules.length - 1) {
-          btnNext.textContent = "Complete Course";
-          btnNext.onclick = generateCertificate;
+          const examData = localStorage.getItem('exam-' + courseId);
+          let passed = false;
+          try { if (examData) passed = JSON.parse(examData).passed; } catch(e){}
+          
+          if (passed) {
+            btnNext.textContent = "Download Certificate";
+            btnNext.onclick = generateCertificate;
+          } else {
+            btnNext.textContent = "Take Final Exam";
+            btnNext.onclick = () => window.location.href = `exam.html?id=${courseId}`;
+          }
         } else {
           btnNext.textContent = "Next Module";
           btnNext.onclick = nextModule;
@@ -195,6 +250,85 @@
           renderModule();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+      }
+
+      function initCodeBlocks() {
+        const blocks = modContent.querySelectorAll('pre code');
+        blocks.forEach(block => {
+          const pre = block.parentElement;
+          const container = document.createElement('div');
+          container.className = 'clinch-code-block';
+          pre.parentNode.insertBefore(container, pre);
+
+          const header = document.createElement('div');
+          header.className = 'clinch-code-header';
+
+          const langSpan = document.createElement('span');
+          langSpan.className = 'clinch-code-lang';
+          
+          let langName = 'Code';
+          let ext = 'txt';
+          const langClass = Array.from(block.classList).find(c => c.startsWith('language-'));
+          
+          if (langClass) {
+            const l = langClass.replace('language-', '');
+            const dict = { 'c': ['C', 'c'], 'python': ['Python', 'py'], 'java': ['Java', 'java'], 'js': ['JavaScript', 'js'], 'javascript': ['JavaScript', 'js'], 'html': ['HTML', 'html'], 'css': ['CSS', 'css']};
+            if (dict[l]) {
+              langName = dict[l][0];
+              ext = dict[l][1];
+            } else {
+              langName = l.toUpperCase();
+              ext = l;
+            }
+          }
+
+          langSpan.textContent = langName;
+
+          const actions = document.createElement('div');
+          actions.className = 'clinch-code-actions';
+
+          const btnCopy = document.createElement('button');
+          btnCopy.className = 'clinch-code-btn';
+          btnCopy.title = "Copy code";
+          btnCopy.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
+
+          const btnDown = document.createElement('button');
+          btnDown.className = 'clinch-code-btn';
+          btnDown.title = "Download code";
+          btnDown.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>`;
+
+          actions.appendChild(btnCopy);
+          actions.appendChild(btnDown);
+          header.appendChild(langSpan);
+          header.appendChild(actions);
+
+          container.appendChild(header);
+          container.appendChild(pre);
+
+          hljs.highlightElement(block);
+
+          if (!langClass && block.result && block.result.language) {
+             langSpan.textContent = block.result.language.toUpperCase();
+             ext = block.result.language;
+          }
+
+          btnCopy.onclick = () => {
+             navigator.clipboard.writeText(block.textContent);
+             const originalHtml = btnCopy.innerHTML;
+             btnCopy.innerHTML = `<svg fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
+             setTimeout(() => btnCopy.innerHTML = originalHtml, 2000);
+          };
+
+          btnDown.onclick = () => {
+             const blob = new Blob([block.textContent], { type: 'text/plain' });
+             const url = URL.createObjectURL(blob);
+             const a = document.createElement('a');
+             a.href = url;
+             a.download = `code.${ext}`;
+             a.click();
+             URL.revokeObjectURL(url);
+          };
+        });
       }
 
       btnPrev.onclick = () => {
