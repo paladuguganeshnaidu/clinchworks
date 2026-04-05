@@ -735,3 +735,79 @@ button:hover, .btn:hover {
 .flex-col.md\:flex-row {
   display: flex !important;
 }
+
+/* =========================================================
+       RESPONSIVENESS & SCALING ENHANCEMENTS
+   ========================================================= */
+
+/* 1. Global Responsiveness Fix */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
+}
+
+/* Ensure no fixed widths break layout */
+[style*="width: 1000px"], [style*="width: 1200px"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 2. Player Page Fix */
+.course-content {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.course-content pre, .course-content code {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* 3. Text Scaling Fix */
+h1 {
+  font-size: clamp(24px, 4vw, 40px) !important;
+}
+
+p {
+  font-size: clamp(14px, 2vw, 18px) !important;
+}
+
+/* 4. Course Card Redesign */
+.service-card {
+  padding: 20px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.service-card h3 {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+
+.small-badge {
+  font-size: 12px !important;
+  opacity: 0.7 !important;
+}
+
+.caption {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  max-width: 100%;
+}
+
+/* 5. Grid Fix */
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  width: 100%;
+}
+
