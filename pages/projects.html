@@ -46,7 +46,32 @@
   <!-- ========================================
        HEADER â€” Fixed top navigation
   ======================================== -->
-  <header id="header" class="fixed top-0 left-0 right-0 z-50"></header>
+    <header id="header" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative">
+      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-1" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+      <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
+        <ul class="flex items-center gap-1 sm:gap-2">
+          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="about">About</a></li>
+          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="services">Services</a></li>
+          <li><a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="training">Training</a></li>
+          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-3 z-10 lg:absolute lg:right-8">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        </button>
+        <a href="mailto:paladuguganeshnaidu@gmail.com" class="flex items-center justify-center text-xs sm:text-sm font-semibold" style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 6px 16px;">Support</a>
+        <button id="hamburger" class="hamburger lg:hidden" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+  
 
     
     <a href="training.html" data-section="training">Training</a>
@@ -116,7 +141,12 @@
 
   </div>
 
-  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);"></footer>
+    <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
+      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+    </div>
+  </footer>
 
 
   <!-- ========================================
@@ -127,6 +157,7 @@
 </body>
 
 </html>
+
 
 
 

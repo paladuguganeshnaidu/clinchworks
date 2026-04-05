@@ -16,7 +16,7 @@
     const basePath = isRoot ? '' : '../';
 
     // 2. Load Global Components
-    await loadComponents(basePath);
+    
 
     // 3. Initialize Shared Handlers
     
@@ -33,13 +33,7 @@
   /**
    * Dynamically fetches and injects components (Navbar, Footer)
    */
-  async function loadComponents(basePath) {
-    const header = document.getElementById('header');
-    const footer = document.querySelector('footer');
-
-    if (header) {
-      try {
-        const response = await fetch(`${basePath}components/navbar.html`);
+  components/navbar.html`);
         let html = await response.text();
         // Dynamic path replacement for subdirectories
         header.innerHTML = html.replace(/{basePath}/g, basePath);
@@ -183,4 +177,5 @@
   }
 
 })();
+
 
