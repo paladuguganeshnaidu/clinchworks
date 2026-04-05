@@ -4,13 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services — Clinch Works</title>
-  <meta name="description"
-    content="Clinch Works is a software engineering company specializing in developmentv, cloud, and AI. We solve and deliver real systems." />
-  <meta name="keywords" content="software engineering, web development , cloud, AI, system design, automation" />
-  <meta name="author" content="Clinch Works" />
-
-  <!-- Tailwind CSS CDN -->
+  <title>Course Details — Clinch Works</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   
 
@@ -54,7 +49,7 @@
       </a>
 
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
-      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, );">
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(241,175,44,0.3);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
           <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
@@ -69,13 +64,13 @@
         <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
           <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
         </button>
-        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
         <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
 
             <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
       <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
-        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F1AF2C; border: 1px solid rgba(255,255,255,0.2);">
           
           <!-- Services Options -->
           <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
@@ -100,79 +95,37 @@
   </header>
   
 
-    
-    <a href="training.html" data-section="training">Training</a>
+  
     <a href="projects.html" data-section="projects">Projects</a>
-    <a href="contact.html" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
-      →</a>
   </div>
 
   <div class="pt-24 min-h-screen">
-
     <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
-      <div class="max-w-5xl mx-auto px-5 sm:px-6">
-        
+      <div class="max-w-4xl mx-auto px-5 sm:px-6">
         <div class="section-reveal visible">
-          <div class="accent-line mb-4"></div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
-            Google Ads & Scalable PPC Campaigns
+          <div class="flex items-center gap-4 mb-4">
+            <span id="course-level" class="text-xs font-mono px-3 py-1 rounded" style="background: var(--tag-bg); color: var(--tag-text);">Level</span>
+            <span id="course-duration" class="text-xs font-mono" style="color: var(--text-faint); opacity: 0.8;">Duration</span>
+          </div>
+          <h1 id="course-title" class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-8" style="color: var(--text-primary);">
+            Course Loading...
           </h1>
-          <p class="mt-6 text-base sm:text-lg max-w-3xl leading-relaxed" style="color: var(--text-faint);">
-            At ClinchWorks, we architect hyper-targeted ad campaigns built precisely to capture intent, convert active searchers, and ultimately scale your business revenue.
+          <p id="course-desc" class="text-base sm:text-lg leading-relaxed mb-10" style="color: var(--text-faint);">
+            Accessing course details from the registry.
           </p>
-          <p class="mt-4 text-base sm:text-lg max-w-3xl leading-relaxed" style="color: var(--text-faint);">
-            Through data-driven parameter adjustments and continuous structural optimization, we don’t just spend budgets; we invest securely to secure maximum Return on Investment (ROI) across the entire customer acquisition pipeline.
-          </p>
-        </div>
-
-        <div class="mt-12 sm:mt-16 section-reveal visible w-full max-w-4xl overflow-hidden rounded-2xl" style="border: 1px solid var(--border-color); box-shadow: 0 10px 40px var(--glass-shadow);">
-            <img src="../assets/images/google-ads.png" alt="Google Ads & Scalable PPC Campaigns" class="w-full h-auto object-cover max-h-[400px]" style="background: var(--bg-secondary);">
-        </div>
-
-        <div class="mt-16 flex flex-col gap-6">
-          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
-            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">High-Converting Campaign Strategies</h2>
-            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">We execute strategies specifically mapped to the psychological behaviors and search intents of your highest potential buyers.</p>
-            <ul class="mt-5 space-y-2 text-sm" style="color: var(--text-muted);">
-            <li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Competitor mapping and keyword isolation</span></li>
-<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Budget forecasting and dynamic allocation</span></li>
-<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Ad copy engineered for psychological triggers</span></li>
-            </ul>
-          </div>
-          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
-            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">Technical Bid Optimization</h2>
-            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">Preventing wasted spend is critical. We use precise manual and automated bidding protocols tailored explicitly to lower your Cost Per Acquisition (CPA).</p>
-            <ul class="mt-5 space-y-2 text-sm" style="color: var(--text-muted);">
-            <li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Negative keyword structuring</span></li>
-<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Bid modification across devices and demographics</span></li>
-<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Auction-time parameter tuning</span></li>
-            </ul>
-          </div>
-          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
-            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">Landing Page Synchronization</h2>
-            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">A great ad fails if the landing page doesn’t convert. We ensure a seamless transition from the Google Search query directly to a highly optimized page.</p>
-            <ul class="mt-5 space-y-2 text-sm" style="color: var(--text-muted);">
-            <li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Vast improvements to Quality Scores</span></li>
-<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Clear, actionable architectural workflows</span></li>
-<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>A/B testing for maximized conversions</span></li>
-            </ul>
-          </div>
-          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
-            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">Why Choose ClinchWorks?</h2>
-            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">We combine analytical precision with marketing strategy to build engines that constantly acquire revenue reliably at a scalable volume.</p>
-            
-          </div>
-        </div>
-
-        <div class="mt-16 sm:mt-24 text-center section-reveal visible">
-          <a href="contact.html" class="btn-contact inline-block border text-sm px-8 py-3 rounded-lg font-medium transition-colors">
-            Start Your Project
+          <a id="btn-start" href="#" class="btn-contact inline-block text-sm px-10 py-4 rounded-lg transition-all duration-300 font-bold" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
+            Start Course
           </a>
         </div>
 
+        <div class="mt-20 section-reveal visible">
+          <h2 class="text-2xl font-bold mb-8" style="color: var(--text-primary);">Modules & Curriculum</h2>
+          <div id="module-list" class="flex flex-col gap-4">
+            <!-- Modules injected here -->
+          </div>
+        </div>
       </div>
     </section>
-
   </div>
 
     <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
@@ -182,15 +135,82 @@
     </div>
   </footer>
 
+  <script src="../assets/js/script.js"></script>
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      
+      try {
+        const response = await fetch('../courses.json');
+        const data = await response.json();
+        const course = data.courses.find(c => c.id === id);
+        
+        if (!course) {
+          document.getElementById('course-title').textContent = "Course Not Found";
+          return;
+        }
 
-  <!-- ========================================
-       JAVASCRIPT
-  ======================================== -->
-  
+        document.title = `${course.title} — Clinch Works`;
+        document.getElementById('course-title').textContent = course.title;
+        document.getElementById('course-desc').textContent = course.description;
+        document.getElementById('course-level').textContent = course.level;
+        document.getElementById('course-duration').textContent = course.duration;
+        
+        const btnStart = document.getElementById('btn-start');
+        btnStart.href = `player.html?id=${course.id}`;
 
+        // --- Progress Tracking UI Update ---
+        const savedProgress = localStorage.getItem('course-' + course.id);
+        if (savedProgress) {
+          try {
+            const pData = JSON.parse(savedProgress);
+            let percent = Math.round((pData.currentModule / pData.totalModules) * 100);
+            if (pData.completed) percent = 100;
+
+            if (pData.completed) {
+              btnStart.textContent = "Completed ✅";
+              btnStart.style.background = "var(--success, #16a34a)";
+              btnStart.style.borderColor = "var(--success, #16a34a)";
+            } else if (pData.currentModule > 0 || percent > 0) {
+              btnStart.textContent = "Resume Course";
+            }
+
+            if (percent > 0 || pData.currentModule > 0) {
+              const infoBox = document.getElementById('course-level').parentElement;
+              const progSpan = document.createElement('span');
+              progSpan.className = "text-xs font-mono px-3 py-1 rounded";
+              progSpan.style.background = "var(--bg-primary)";
+              progSpan.style.border = "1px solid var(--accent, #c9a84c)";
+              progSpan.style.color = "var(--accent, #c9a84c)";
+              progSpan.textContent = `${percent}% Completed`;
+              infoBox.appendChild(progSpan);
+            }
+          } catch(e) {}
+        }
+
+        const moduleContainer = document.getElementById('module-list');
+        course.modules.forEach((mod, idx) => {
+          const modEl = document.createElement('div');
+          modEl.className = 'service-card p-5 rounded-xl border border-white/5 flex items-center justify-between';
+          modEl.innerHTML = `
+            <div class="flex items-center gap-4">
+              <span class="text-sm font-mono opacity-50">${(idx + 1).toString().padStart(2, '0')}</span>
+              <span class="font-medium" style="color: var(--text-primary);">${mod.title}</span>
+            </div>
+            <span class="text-xs font-mono opacity-40">Module</span>
+          `;
+          moduleContainer.appendChild(modEl);
+        });
+
+      } catch (err) {
+        console.error('Data Load Error:', err);
+      }
+    })();
+  </script>
 </body>
-
 </html>
+
 
 
 

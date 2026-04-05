@@ -1,5 +1,5 @@
 /* =========================================================
-       CSS CUSTOM PROPERTIES — LIGHT (default) & DARK themes
+       CSS CUSTOM PROPERTIES â€” LIGHT (default) & DARK themes
     ========================================================= */
 :root {
   --bg-primary: #ffffff;
@@ -56,11 +56,14 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-secondary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  transition: background-color 0.3s, color 0.3s;
   overflow-x: hidden;
-  transition: background 0.4s ease, color 0.4s ease;
+  width: 100%;
+  position: relative;
 }
 
 /* ===== Scrollbar ===== */
@@ -482,7 +485,8 @@ footer,
 .clinch-code-block pre {
   margin: 0 !important;
   padding: 1rem !important;
-  background-color: transparent !important; /* let container show through or Atom One Dark takes over */
+  background-color: transparent !important;
+  /* let container show through or Atom One Dark takes over */
   overflow-x: auto;
 }
 
@@ -491,18 +495,22 @@ footer,
   font-size: 0.875rem;
   line-height: 1.6;
 }
+
 /* =========================================================
        TEXT VISIBILITY & CONTEXT-AWARE COLOR SYSTEM
    ========================================================= */
 
 /* 1. Global Reset (Removing blunt overrides) */
 body {
-  background-color: #0b1220; /* Fixed standard background */
+  background-color: #0b1220;
+  /* Fixed standard background */
   color: inherit;
 }
 
 /* 2. Standard Context (Dark environment) */
-:root, [data-theme="dark"], .dark-section {
+:root,
+[data-theme="dark"],
+.dark-section {
   color: #FFFFFF;
 }
 
@@ -512,29 +520,40 @@ body {
 }
 
 /* 4. Semantic Hierarchy Inheritance */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: inherit !important;
   font-weight: 700;
 }
 
 p {
   color: inherit !important;
-  opacity: 0.85; /* Maintain professional readability */
+  opacity: 0.85;
+  /* Maintain professional readability */
   line-height: 1.6;
 }
 
 /* 5. Components Visibility Rules */
-.section-reveal, .service-card, .project-card {
+.section-reveal,
+.service-card,
+.project-card {
   color: inherit !important;
 }
 
 /* 6. Navigation Link Safety */
-.top-nav-item, .mobile-menu a {
+.top-nav-item,
+.mobile-menu a {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.top-nav-item:hover, .top-nav-item.active {
-  color: #F1AF2C !important; /* Keep the gold accent */
+.top-nav-item:hover,
+.top-nav-item.active {
+  color: #F1AF2C !important;
+  /* Keep the gold accent */
 }
 
 /* 7. Debug Fallback */
@@ -546,6 +565,7 @@ p {
 [style*="rgba(255, 255, 255, 0.6)"] {
   color: rgba(255, 255, 255, 0.8) !important;
 }
+
 /* =========================================================
        WHITE & GOLD PREMIUM DESIGN SYSTEM
    ========================================================= */
@@ -564,12 +584,25 @@ body {
 }
 
 /* 2. Primary Visibility (Black Text on White) */
-h1, h2, h3, h4, h5, h6, p, span, div, section, .main-content {
-  color: inherit !important; /* Inherits from body (dark-text) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div,
+section,
+.main-content {
+  color: inherit !important;
+  /* Inherits from body (dark-text) */
 }
 
 /* 3. Gold Navigation & Components */
-#header.scrolled, .glass-strong, .top-nav {
+#header.scrolled,
+.glass-strong,
+.top-nav {
   background: rgba(241, 175, 44, 0.15) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
@@ -577,16 +610,19 @@ h1, h2, h3, h4, h5, h6, p, span, div, section, .main-content {
 }
 
 /* Nav Links Context */
-.top-nav-item, .mobile-menu a {
+.top-nav-item,
+.mobile-menu a {
   color: var(--dark-text) !important;
 }
 
-.top-nav-item:hover, .top-nav-item.active {
+.top-nav-item:hover,
+.top-nav-item.active {
   color: var(--primary-gold) !important;
 }
 
 /* 4. Gold Cards (Service-Card) */
-.service-card, .project-card {
+.service-card,
+.project-card {
   background: var(--primary-gold) !important;
   color: var(--white-text) !important;
   border-radius: 12px !important;
@@ -595,7 +631,9 @@ h1, h2, h3, h4, h5, h6, p, span, div, section, .main-content {
   transition: 0.3s ease-in-out;
 }
 
-.service-card p, .service-card span, .service-card h3 {
+.service-card p,
+.service-card span,
+.service-card h3 {
   color: var(--white-text) !important;
 }
 
@@ -605,7 +643,10 @@ h1, h2, h3, h4, h5, h6, p, span, div, section, .main-content {
 }
 
 /* 5. Gold Buttons */
-button, .btn, .btn-contact, a[class*="btn-"] {
+button,
+.btn,
+.btn-contact,
+a[class*="btn-"] {
   background: var(--primary-gold) !important;
   color: var(--white-text) !important;
   border: none !important;
@@ -615,7 +656,8 @@ button, .btn, .btn-contact, a[class*="btn-"] {
   transition: 0.25s ease;
 }
 
-button:hover, .btn:hover {
+button:hover,
+.btn:hover {
   background: #d9991f !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(241, 175, 44, 0.4);
@@ -721,14 +763,15 @@ button:hover, .btn:hover {
    ========================================================= */
 
 /* Forcing all reveal-gated content to 100% opacity to resolve blank page issues. */
-.section-reveal, 
-#about, 
-.service-card, 
+.section-reveal,
+#about,
+.service-card,
 .project-card {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateY(0) !important;
-  display: flex !important; /* Matches standard member card layout */
+  display: flex !important;
+  /* Matches standard member card layout */
 }
 
 /* Ensure the Member Cards flex layout is maintained */
@@ -749,7 +792,8 @@ button:hover, .btn:hover {
 }
 
 /* Ensure no fixed widths break layout */
-[style*="width: 1000px"], [style*="width: 1200px"] {
+[style*="width: 1000px"],
+[style*="width: 1200px"] {
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -762,7 +806,8 @@ button:hover, .btn:hover {
   padding: 0 16px;
 }
 
-.course-content pre, .course-content code {
+.course-content pre,
+.course-content code {
   overflow-x: auto;
   max-width: 100%;
 }
@@ -815,17 +860,9 @@ p {
        COURSE PLAYER STRICT LAYOUT ENFORCEMENT
    ========================================================= */
 
-.player-wrapper {
-  width: 100%;
-  padding: 40px 20px;
-  display: flex;
-  justify-content: center;
-}
 
-.player-inner {
-  width: 100%;
-  max-width: 900px;   /* THIS CONTROLS YOUR YELLOW BOX SIZE */
-}
+
+
 
 .module-card {
   width: 100%;
@@ -880,7 +917,7 @@ pre {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 20px;
-  color: #0b1220;
+  color: #ffffff;
   opacity: 0.6;
 }
 
@@ -937,13 +974,141 @@ pre {
   opacity: 0.8;
 }
 
+/* ===== NETACAD-INSPIRED PLAYER LAYOUT ===== */
+.player-layout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  /* Adjust for header height if needed */
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+/* Sidebar */
+.player-sidebar {
+  width: 320px;
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  height: calc(100vh - 80px);
+  position: sticky;
+  top: 80px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  z-index: 40;
+}
+
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  background: white;
+}
+
+.sidebar-header h2 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.sidebar-content {
+  padding: 12px 0;
+}
+
+.sidebar-module-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+  color: #475569;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.sidebar-module-item:hover {
+  background: #f1f5f9;
+  color: #0b1220;
+}
+
+.sidebar-module-item.active {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-left-color: #F1AF2C;
+  font-weight: 600;
+}
+
+.sidebar-module-number {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  background: #e2e8f0;
+  color: #64748b;
+}
+
+.active .sidebar-module-number {
+  background: #F1AF2C;
+  color: #0b1220;
+}
+
+/* Main Content Area */
+.player-main {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background: white;
+}
+
+.player-header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Scrollbar for sidebar */
+.player-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.player-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.player-sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+  .player-sidebar {
+    position: fixed;
+    left: -320px;
+    top: 80px;
+    bottom: 0;
+  }
+
+  .player-sidebar.open {
+    left: 0;
+  }
+}
+
 /* Progress Enhancements */
 .progress-meter {
   height: 8px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {

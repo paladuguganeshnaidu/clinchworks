@@ -1,223 +1,222 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Course Details — Clinch Works</title>
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum | Clinch Works</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  
+  <style>
+    body {
+      background: #fdfdfd;
+      color: #0b1220;
+    }
 
-  <link rel="stylesheet" href="../assets/css/styles.css" />
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-<style>
-  /* Force professional, smooth rendering for logos similar to premium SaaS products */
-  img[src*='logo.png'], img[src*='favicon'] {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges; /* fallback */
-    image-rendering: auto;
-    object-fit: contain;
-    shape-rendering: geometricPrecision;
-  }
-</style>
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon1.png?v=2">
-  <link rel="shortcut icon" href="../assets/favicon/favicon1.png?v=2">
-  <link rel="apple-touch-icon" href="../assets/favicon/favicon1.png?v=2">
+    .hero-gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    }
+
+    .module-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid #e0a633ac;
+      border-radius: 24px;
+      padding: 32px;
+      background: #F7C763;
+      cursor: pointer;
+    }
+
+    .module-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px -12px rgba(247, 199, 99, 0.3);
+    }
+
+    .title-stroke {
+      -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 
 <body>
-  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
-      
-      <!-- LOGO (Left Aligned) -->
-      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-          <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
-        </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
-      </a>
-
-      <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
-      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(241,175,44,0.3);">
-        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="training.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
-          <li class="nav-item-wrapper"><a href="projects.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
-        </ul>
-      </nav>
-
-      <!-- RIGHT ACTIONS (Right Aligned) -->
-      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
-        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
-          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
-        </button>
-        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
-        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <!-- Standard Header -->
+  <header id="header" class="header fixed top-0 left-0 w-full z-[1000] transition-all duration-300 scrolled"
+    style="background: white; border-bottom: 1px solid #e2e8f0;">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="../assets/img/logo.png" alt="Logo" class="w-8 h-8 object-contain">
+        <span class="font-black text-xl tracking-tighter text-slate-900">CLINCH <span
+            class="text-[#F7C763]">WORKS.</span></span>
       </div>
-
-            <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
-      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
-        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F1AF2C; border: 1px solid rgba(255,255,255,0.2);">
-          
-          <!-- Services Options -->
-          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="google-ads.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
-            <li><a href="social-media-marketing.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
-            <li><a href="website-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
-            <li><a href="video-graphic-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
-            <li><a href="youtube-management.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
-            <li><a href="projects.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
-          </ul>
-
-          <!-- Training Options -->
-          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-12 w-full m-0 p-0">
-            <li><a href="domain.html?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
-            <li><a href="domain.html?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="domain.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
-          </ul>
-
-        </div>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html"
+          class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors">About</a>
+        <a href="training.html"
+          class="text-xs font-bold uppercase tracking-widest text-slate-900 border-b-2 border-[#F7C763]">Training</a>
+        <a href="services.html"
+          class="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors">Services</a>
+        <a href="book-call.html"
+          class="px-6 py-2 bg-[#F7C763] text-slate-900 rounded-full font-black text-[10px] uppercase tracking-[0.2em] shadow-lg">Book
+          a Call</a>
       </div>
     </div>
   </header>
-  
 
-  
-    <a href="projects.html" data-section="projects">Projects</a>
-  </div>
+  <div class="min-h-screen hero-gradient">
+    <!-- Hero Section -->
+    <section class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
-  <div class="pt-24 min-h-screen">
-    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
-      <div class="max-w-4xl mx-auto px-5 sm:px-6">
-        <div class="section-reveal visible">
-          <div class="flex items-center gap-4 mb-4">
-            <span id="course-level" class="text-xs font-mono px-3 py-1 rounded" style="background: var(--tag-bg); color: var(--tag-text);">Level</span>
-            <span id="course-duration" class="text-xs font-mono" style="color: var(--text-faint); opacity: 0.8;">Duration</span>
+        <!-- Left Side: Content -->
+        <div class="lg:col-span-8 flex flex-col items-start w-full">
+          <div class="flex items-center gap-4 mb-10">
+            <span id="course-level"
+              class="bg-[#F7C763] text-slate-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-lg">Intermediate
+              Path</span>
+            <span id="course-duration"
+              class="bg-white text-slate-900 border border-slate-200 shadow-sm text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-lg">4
+              Weeks</span>
           </div>
-          <h1 id="course-title" class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-8" style="color: var(--text-primary);">
-            Course Loading...
+
+          <h1 id="course-title"
+            class="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 leading-[1] mb-10 tracking-tighter title-stroke">
+            Precision Engineering<br><span class="text-[#F7C763]">& Performance Logic</span>
           </h1>
-          <p id="course-desc" class="text-base sm:text-lg leading-relaxed mb-10" style="color: var(--text-faint);">
-            Accessing course details from the registry.
+
+          <p id="course-desc" class="text-lg sm:text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mb-12">
+            Deep dive into high-performance architectures, secure module protocols, and advanced execution patterns.
           </p>
-          <a id="btn-start" href="#" class="btn-contact inline-block text-sm px-10 py-4 rounded-lg transition-all duration-300 font-bold" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
-            Start Course
-          </a>
+
+          <div class="flex flex-col sm:flex-row items-center gap-8 pt-6 border-t border-slate-200">
+            <a id="btn-start" href="#"
+              class="px-12 py-5 bg-white text-black border border-slate-200 font-black text-sm uppercase tracking-widest rounded-2xl shadow-2xl hover:scale-[1.03] transition-all transform flex items-center gap-3">
+              Start Official Training <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <div class="flex items-center gap-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              <div class="w-10 h-1 bg-[#F7C763] rounded-full"></div>
+              Verified Certification
+            </div>
+          </div>
         </div>
 
-        <div class="mt-20 section-reveal visible">
-          <h2 class="text-2xl font-bold mb-8" style="color: var(--text-primary);">Modules & Curriculum</h2>
-          <div id="module-list" class="flex flex-col gap-4">
-            <!-- Modules injected here -->
+        <!-- Right Side: Sidebar Info -->
+        <div class="lg:col-span-4 lg:sticky lg:top-32">
+          <div class="bg-white border border-slate-200 rounded-[40px] p-10 shadow-2xl shadow-slate-200">
+            <div class="w-16 h-16 bg-[#F7C763] rounded-[20px] flex items-center justify-center mb-10 shadow-lg">
+              <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-black text-slate-900 mb-2 uppercase tracking-tight">Key Learnings</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-8">Architecturally sound methodologies and hands-on
+              execution for modern engineering.</p>
+
+            <div class="space-y-6">
+              <div class="flex items-center gap-4 group">
+                <div class="w-2 h-2 rounded-full bg-[#F7C763] transition-all group-hover:scale-150"></div>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Logic-First Training</span>
+              </div>
+              <div class="flex items-center gap-4 group">
+                <div class="w-2 h-2 rounded-full bg-[#F7C763] transition-all group-hover:scale-150"></div>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Zero Placeholders</span>
+              </div>
+              <div class="flex items-center gap-4 group">
+                <div class="w-2 h-2 rounded-full bg-[#F7C763] transition-all group-hover:scale-150"></div>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Industry Standrds</span>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section class="pb-32 px-6 max-w-7xl mx-auto">
+      <div class="flex items-center justify-between mb-12 border-b border-slate-100 pb-8">
+        <h2 class="text-3xl font-black text-slate-900 uppercase tracking-tighter">Curriculum <span
+            class="text-slate-400">Roadmap</span></h2>
+        <span id="module-count"
+          class="text-[10px] font-black text-[#F7C763] uppercase tracking-widest -[#F7C763] px-4 py-2 rounded-full">0
+          Modules</span>
+      </div>
+
+      <div id="module-list" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Dynamic generation -->
+        <div class="col-span-full py-24 text-center">
+          <div class="inline-block w-8 h-8 border-4 border-slate-200 border-t-[#F7C763] rounded-full animate-spin mb-4">
+          </div>
+          <p class="text-slate-400 font-mono text-[10px] uppercase tracking-widest">Querying curriculum node...</p>
         </div>
       </div>
     </section>
   </div>
 
-    <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
-    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
-      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+  <footer class="py-12 border-t border-slate-100 bg-white">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 CLINCHWORKS. ENGINEERED
+        EXCELLENCE.</p>
+      <div class="flex gap-8">
+        <a href="#"
+          class="text-[10px] font-bold text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-widest">Documentation</a>
+        <a href="#"
+          class="text-[10px] font-bold text-slate-400 hover:text-slate-900 transition-colors uppercase tracking-widest">Core
+          Values</a>
+      </div>
     </div>
   </footer>
 
   <script src="../assets/js/script.js"></script>
   <script>
-    (async function() {
+    (async function () {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
-      
+
       try {
-        const response = await fetch('../courses.json');
+        const response = await fetch('../courses-content.json');
         const data = await response.json();
-        const course = data.courses.find(c => c.id === id);
-        
-        if (!course) {
-          document.getElementById('course-title').textContent = "Course Not Found";
+        const courseData = data.courses.find(c => c.id === id);
+
+        if (!courseData) {
+          document.getElementById('course-title').textContent = "Registry Fault.";
           return;
         }
 
-        document.title = `${course.title} — Clinch Works`;
-        document.getElementById('course-title').textContent = course.title;
-        document.getElementById('course-desc').textContent = course.description;
-        document.getElementById('course-level').textContent = course.level;
-        document.getElementById('course-duration').textContent = course.duration;
-        
-        const btnStart = document.getElementById('btn-start');
-        btnStart.href = `player.html?id=${course.id}`;
+        // Populate Page
+        document.getElementById('course-title').textContent = courseData.title;
+        document.getElementById('course-desc').textContent = courseData.description;
+        document.getElementById('course-level').textContent = courseData.level;
+        document.getElementById('course-duration').textContent = courseData.duration;
+        document.getElementById('module-count').textContent = `${courseData.modules.length} Modules`;
+        document.getElementById('btn-start').href = `player.html?id=${courseData.id}`;
 
-        // --- Progress Tracking UI Update ---
-        const savedProgress = localStorage.getItem('course-' + course.id);
-        if (savedProgress) {
-          try {
-            const pData = JSON.parse(savedProgress);
-            let percent = Math.round((pData.currentModule / pData.totalModules) * 100);
-            if (pData.completed) percent = 100;
+        const list = document.getElementById('module-list');
+        list.innerHTML = '';
 
-            if (pData.completed) {
-              btnStart.textContent = "Completed ✅";
-              btnStart.style.background = "var(--success, #16a34a)";
-              btnStart.style.borderColor = "var(--success, #16a34a)";
-            } else if (pData.currentModule > 0 || percent > 0) {
-              btnStart.textContent = "Resume Course";
-            }
-
-            if (percent > 0 || pData.currentModule > 0) {
-              const infoBox = document.getElementById('course-level').parentElement;
-              const progSpan = document.createElement('span');
-              progSpan.className = "text-xs font-mono px-3 py-1 rounded";
-              progSpan.style.background = "var(--bg-primary)";
-              progSpan.style.border = "1px solid var(--accent, #c9a84c)";
-              progSpan.style.color = "var(--accent, #c9a84c)";
-              progSpan.textContent = `${percent}% Completed`;
-              infoBox.appendChild(progSpan);
-            }
-          } catch(e) {}
-        }
-
-        const moduleContainer = document.getElementById('module-list');
-        course.modules.forEach((mod, idx) => {
-          const modEl = document.createElement('div');
-          modEl.className = 'service-card p-5 rounded-xl border border-white/5 flex items-center justify-between';
-          modEl.innerHTML = `
-            <div class="flex items-center gap-4">
-              <span class="text-sm font-mono opacity-50">${(idx + 1).toString().padStart(2, '0')}</span>
-              <span class="font-medium" style="color: var(--text-primary);">${mod.title}</span>
-            </div>
-            <span class="text-xs font-mono opacity-40">Module</span>
-          `;
-          moduleContainer.appendChild(modEl);
+        courseData.modules.forEach((mod, idx) => {
+          const card = document.createElement('div');
+          card.className = 'module-card';
+          card.innerHTML = `
+              <div class="flex items-center gap-6">
+                 <div class="w-14 h-14 bg-white text-black border border-slate-200 flex items-center justify-center rounded-2xl font-black text-xl">
+                    ${idx + 1}
+                 </div>
+                 <div class="flex-1">
+                    <h4 class="font-black text-slate-900 uppercase tracking-tight text-lg mb-1">${mod.title}</h4>
+                    <p class="text-slate-800 text-[10px] font-bold uppercase tracking-widest">Interactive Component Ready</p>
+                 </div>
+              </div>
+           `;
+          card.onclick = () => window.location.href = `player.html?id=${courseData.id}`;
+          list.appendChild(card);
         });
 
-      } catch (err) {
-        console.error('Data Load Error:', err);
+      } catch (e) {
+        console.error(e);
       }
     })();
   </script>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
