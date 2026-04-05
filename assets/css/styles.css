@@ -590,38 +590,82 @@ p {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 /* =========================================================
-       ULTIMATE VISIBILITY & BRANDING (W & Y)
+       WHITE & GOLD PREMIUM DESIGN SYSTEM
    ========================================================= */
 
-/* Force White for all primary text (W) */
-h1, h2, h3, h4, h5, h6, .text-primary {
-  color: #FFFFFF !important;
+/* 1. Global Layout (White Base) */
+:root {
+  --primary-gold: #F1AF2C;
+  --dark-text: #0b1220;
+  --white-text: #FFFFFF;
+  --bg-main: #FFFFFF;
 }
 
-/* Force specific Yellow accent (F1AF2C) for highlights (Y) */
-.accent, 
-.text-accent, 
-[style*="--accent"],
-svg:not([fill="none"]),
-.top-nav-item:hover,
-.top-nav-item.active {
-  color: #F1AF2C !important;
-  stroke: #F1AF2C !important;
-}
-
-/* Fix for buttons matching the Y theme */
-.btn-contact, .btn-primary, button[id*="btn"] {
-  background-color: #F1AF2C !important;
-  color: #0b1220 !important;
-  font-weight: 700 !important;
-}
-
-/* Background consistency */
 body {
-  background-color: #0b1220 !important;
+  background-color: var(--bg-main) !important;
+  color: var(--dark-text) !important;
 }
 
-/* Fix for standard subtext to bridge W and background */
-p, .text-secondary {
-  color: rgba(255, 255, 255, 0.9) !important;
+/* 2. Primary Visibility (Black Text on White) */
+h1, h2, h3, h4, h5, h6, p, span, div, section, .main-content {
+  color: inherit !important; /* Inherits from body (dark-text) */
+}
+
+/* 3. Gold Navigation & Components */
+#header.scrolled, .glass-strong, .top-nav {
+  background: rgba(241, 175, 44, 0.15) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(241, 175, 44, 0.3) !important;
+}
+
+/* Nav Links Context */
+.top-nav-item, .mobile-menu a {
+  color: var(--dark-text) !important;
+}
+
+.top-nav-item:hover, .top-nav-item.active {
+  color: var(--primary-gold) !important;
+}
+
+/* 4. Gold Cards (Service-Card) */
+.service-card, .project-card {
+  background: var(--primary-gold) !important;
+  color: var(--white-text) !important;
+  border-radius: 12px !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(241, 175, 44, 0.15);
+  transition: 0.3s ease-in-out;
+}
+
+.service-card p, .service-card span, .service-card h3 {
+  color: var(--white-text) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(241, 175, 44, 0.3);
+}
+
+/* 5. Gold Buttons */
+button, .btn, .btn-contact, a[class*="btn-"] {
+  background: var(--primary-gold) !important;
+  color: var(--white-text) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 10px 24px;
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+button:hover, .btn:hover {
+  background: #d9991f !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(241, 175, 44, 0.4);
+}
+
+/* 6. Fix for Theme Toggles (Visual contrast) */
+.theme-toggle {
+  border-color: var(--primary-gold) !important;
+  color: var(--primary-gold) !important;
 }
