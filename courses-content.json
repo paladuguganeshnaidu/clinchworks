@@ -1826,141 +1826,370 @@
       ]
     },
     {
-      "id": "nmap-fundamentals",
-      "title": "Nmap: Practical Network Enumeration",
-      "category": "Cyber Security",
-      "level": "Beginner",
-      "duration": "2 Weeks",
-      "description": "Nmap is the undisputed industry standard for network discovery and security auditing. You will learn to execute precise network sweeps, unmask hidden service profiles rapidly, and securely verify vulnerabilities across live nodes.",
-      "modules": [
-        {
-          "title": "Module 1: TCP/IP Mapping & Installation Protocols",
-          "content": [
-            "Before deploying Nmap, you must comprehend targeted packets. Understand the TCP 3-Way Handshake conceptually. Activity: Install strictly the latest Nmap build across your local testing execution environment."
-          ]
-        },
-        {
-          "title": "Module 2: Ping Sweeps & Live Target Acquisition",
-          "content": [
-            "Execute fast ICMP sweep architectures (`-sn`) securely to identify active operational nodes without heavily port-scanning them. Understand exactly how Nmap handles local ARP requests dynamically vs external ICMP blocks."
-          ]
-        },
-        {
-          "title": "Module 3: Basic TCP/UDP Port Scanning",
-          "content": [
-            "Map precise target nodes cleanly using the TCP Connect scan (`-sT`) and the UDP scan (`-sU`). Learn to read standard port state outputs properly (open, closed, filtered natively, open|filtered)."
-          ]
-        },
-        {
-          "title": "Module 4: Stealth Syn execution Operations",
-          "content": [
-            "Deploy the SYN Half-Open scan (`-sS`). This technique requests a connection natively but drops the packet before logging triggers seamlessly. Learn why this requires local root/admin access dynamically."
-          ]
-        },
-        {
-          "title": "Module 5: Explicit Version & Service Enumeration",
-          "content": [
-            "A port is useless without context. Deploy (`-sV`) natively to deeply interrogate execution banners dynamically mapped to ports. Understand specific service version endpoints reliably."
-          ]
-        },
-        {
-          "title": "Module 6: Aggressive OS Fingerprinting",
-          "content": [
-            "Execute precise Operation System discovery requests using (`-O`). Understand how Nmap analyzes TCP/IP specific stack behavioral anomalies dynamically to guess the target kernel seamlessly."
-          ]
-        },
-        {
-          "title": "Module 7: Optimization & Timing Templates",
-          "content": [
-            "Scale execution speed securely. Understand structural Timing blocks (`-T0` through `-T5`). Practical: Design execution sweeps prioritizing stealth over immediate velocity dynamically."
-          ]
-        },
-        {
-          "title": "Module 8: Output Formats & Greppable Execution",
-          "content": [
-            "Never rely strictly natively on terminal output. Extract scan pipelines across XML (`-oX`) and Greppable (`-oG`) outputs seamlessly. Practice passing standard Nmap greppable outputs natively into Bash pipelines."
-          ]
-        },
-        {
-          "title": "Module 9: Nmap Scripting Engine (NSE) Execution",
-          "content": [
-            "Leverage Lua-based automated execution scripts properly. Run structural `--script vuln` parameters securely mapping out deep vulnerability frameworks natively across verified services."
-          ]
-        },
-        {
-          "title": "Module 10: Advanced Firewall Evasion Operations",
-          "content": [
-            "Pass packets cleanly through explicitly restrictive networking architectures. Learn explicit MAC spoofing (`--spoof-mac`), packet fragmentation operations (`-f`), and native Decoy execution parameters (`-D`)."
-          ]
-        }
-      ]
-    },
-    {
       "id": "burp-suite-basics",
       "title": "Burp Suite: Web Vulnerability Interception",
       "category": "Cyber Security",
       "level": "Beginner",
       "duration": "3 Weeks",
-      "description": "Burp Suite operates as the core execution proxy for manual web application testing. Learn to map, intercept, modify, and replay standard HTTP requests uncovering massive API and endpoint flaws.",
+      "description": "Burp Suite operates as the core execution proxy for manual web application testing. Learn to map, intercept, modify, and replay standard HTTP requests uncovering massive API and endpoint flaws. This course transforms you from a passive browser user into an active web security analyst.",
       "modules": [
         {
           "title": "Module 1: Architecture & Proxy Routing Configuration",
           "content": [
-            "Grasp the concept of a Man-In-The-Middle Local Proxy securely. Install Burp Suite Community natively and cleanly bridge Firefox (via FoxyProxy) to route all specific HTTP/S packets directly cleanly into your interceptor."
+            "Burp Suite acts as a **local proxy** – a man‑in‑the‑middle (MITM) between your browser and the internet. Instead of your browser talking directly to web servers, it talks to Burp, and Burp forwards the traffic. This allows you to see, pause, and modify every request and response.",
+            "<h2 style='font-weight: bold;'>Why a Proxy?</h2>",
+            "Without a proxy, your browser sends HTTP/HTTPS requests directly to the target server. You cannot see the raw data or change it mid‑flight. Burp sits between, giving you full control. This is essential for security testing because you can test edge cases that normal browsers don't allow.",
+            "<h2 style='font-weight: bold;'>Step 1: Installing Burp Suite Community Edition</h2>",
+            "<ul>",
+            "<li class='bullet'>Download from PortSwigger's official website (free version).</li>",
+            "<li class='bullet'>Run the installer – choose the default settings.</li>",
+            "<li class='bullet'>Launch Burp. You will see a window with multiple tabs (Target, Proxy, Intruder, Repeater, etc.).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Step 2: Configuring the Browser – FoxyProxy</h2>",
+            "To route traffic through Burp, you need to tell your browser to use Burp as its proxy. The easiest way is the **FoxyProxy** extension (Firefox/Chrome).",
+            "<ul>",
+            "<li class='bullet'>Install FoxyProxy from your browser’s extension store.</li>",
+            "<li class='bullet'>Add a new proxy configuration:",
+            "  <ul><li>Host: <code>127.0.0.1</code> (localhost)</li>",
+            "  <li>Port: <code>8080</code> (Burp’s default listening port)</li></ul>",
+            "</li>",
+            "<li class='bullet'>Enable the proxy via FoxyProxy’s toolbar icon. You should see a colored icon indicating active proxy.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Step 3: Verifying the Setup</h2>",
+            "In Burp, go to the <strong>Proxy > Intercept</strong> tab. Turn intercept <strong>on</strong> (the button should say 'Intercept is on'). Now visit any HTTP website (e.g., <code>http://testphp.vulnweb.com</code>). You will see the request appear in Burp – it's paused. This confirms your proxy is working.",
+            "<h2 style='font-weight: bold;'>Common Pitfalls & Fixes</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>HTTPS errors:</strong> Burp uses its own certificate; you'll get 'connection not secure' warnings until you install Burp’s CA certificate (Module 2).</li>",
+            "<li class='bullet'><strong>Other applications using port 8080:</strong> Change Burp’s proxy listener port (Proxy > Options > Add/Edit) to 8081 or 8888.</li>",
+            "<li class='bullet'><strong>Proxy not working:</strong> Check that your browser’s proxy settings match Burp’s listener (127.0.0.1:8080). FoxyProxy makes this easy.</li>",
+            "</ul>",
+            "By the end of this module, you can route live browser traffic through Burp and intercept requests. This is the foundation of all manual web testing."
           ]
         },
         {
           "title": "Module 2: Trust Ingestion & Interceptor Basics",
           "content": [
-            "Resolve the 'Site Not Secure' HTTPS collisions smoothly by injecting PortSwigger's local CA Certificate. Practice securely toggling your `Intercept` switch explicitly pausing a live request."
+            "When you proxy HTTPS traffic, the browser expects the server’s SSL certificate to be valid. Burp generates its own certificate for each domain, but the browser doesn’t trust it by default – leading to 'Your connection is not private' errors. This module teaches you to install Burp’s Certificate Authority (CA) certificate so your browser trusts Burp’s signatures.",
+            "<h2 style='font-weight: bold;'>Why a Custom CA Certificate?</h2>",
+            "Burp acts as a MITM for HTTPS: it decrypts requests from your browser, inspects/modifies them, then re‑encrypts and sends to the real server. For your browser to accept Burp’s encryption, Burp signs its fake certificates using its own CA. You must add that CA to your browser’s trusted store.",
+            "<h2 style='font-weight: bold;'>Step 1: Export Burp’s CA Certificate</h2>",
+            "<ul>",
+            "<li class='bullet'>In Burp, go to <strong>Proxy > Options</strong>.</li>",
+            "<li class='bullet'>Under 'Proxy Listeners', select the listener (e.g., 127.0.0.1:8080) and click <strong>Import / Export CA Certificate</strong>.</li>",
+            "<li class='bullet'>Choose <strong>Export > Certificate in DER format</strong> and save the file (e.g., <code>burp.der</code>).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Step 2: Import the Certificate into Your Browser</h2>",
+            "<strong>Firefox:</strong>",
+            "<ul>",
+            "<li class='bullet'>Go to Settings > Privacy & Security > Certificates > View Certificates > Authorities.</li>",
+            "<li class='bullet'>Click 'Import', select the <code>burp.der</code> file.</li>",
+            "<li class='bullet'>Check 'Trust this CA to identify websites' and click OK.</li>",
+            "</ul>",
+            "<strong>Chrome (Windows/macOS uses system certificate store):</strong>",
+            "<ul>",
+            "<li class='bullet'>Windows: Run <code>certlm.msc</code> (Local Machine) or <code>certmgr.msc</code> (Current User), import into 'Trusted Root Certification Authorities'.</li>",
+            "<li class='bullet'>macOS: Open Keychain Access, drag the certificate into 'System' or 'Login', double‑click and set 'Always Trust' for SSL.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Step 3: Testing the Interceptor</h2>",
+            "With the CA installed, visit any HTTPS site (e.g., <code>https://google.com</code>). You should see the request in Burp’s interceptor without SSL errors. Toggle the <strong>Intercept</strong> button on/off to practice pausing and forwarding requests.",
+            "<ul>",
+            "<li class='bullet'><strong>Intercept On:</strong> Requests are paused. Click 'Forward' to send them.</li>",
+            "<li class='bullet'><strong>Intercept Off:</strong> Requests flow through without pausing (but still recorded in HTTP history).</li>",
+            "<li class='bullet'>Use 'Drop' to discard a request entirely (e.g., blocking a malicious request).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Best Practices</h2>",
+            "<ul>",
+            "<li class='bullet'>Turn intercept OFF when browsing normally; turn it ON when you want to modify a specific request.</li>",
+            "<li class='bullet'>Use the 'Action' button in the interceptor to send interesting requests to Repeater or Intruder.</li>",
+            "</ul>",
+            "Now you can securely intercept and inspect all HTTPS traffic. You have become the man‑in‑the‑middle – ethically and locally."
           ]
         },
         {
           "title": "Module 3: Mapping the Target Architecture",
           "content": [
-            "Use the local 'Site Map' and HTTP history logs comprehensively. Learn specifically how explicitly adding an application to the 'Target Scope' removes absolute extraneous noise from your workflow completely."
+            "Modern web applications consist of dozens (or hundreds) of endpoints: HTML pages, CSS, JS, images, API calls (REST, GraphQL), and background AJAX requests. Manually listing them is impossible. Burp’s **Site Map** and **HTTP History** automatically build a map of everything your browser touches – but it also records ads, trackers, and third‑party resources. **Target Scope** filters out the noise, focusing only on the application you are testing.",
+            "<h2 style='font-weight: bold;'>Understanding HTTP History</h2>",
+            "Go to <strong>Proxy > HTTP History</strong>. This tab shows every request and response that has passed through Burp. Each row includes method (GET/POST), URL, status code, length, and MIME type. You can double‑click any entry to view the full request/response in raw or pretty formats.",
+            "<h2 style='font-weight: bold;'>The Site Map – Tree View of Content</h2>",
+            "Switch to the <strong>Target > Site Map</strong> tab. Here Burp organizes requests by domain and path in a tree structure. You can see folders, files, and parameters. This helps you understand the application’s layout at a glance.",
+            "<h2 style='font-weight: bold;'>Defining the Target Scope</h2>",
+            "Scope tells Burp which domains and paths are part of your testing target. Anything outside scope is still recorded but can be hidden from the Site Map and from tools like Spider (if you use the deprecated Spider) or passive scanning.",
+            "<h3 style='font-weight: bold;'>How to Set Scope:</h3>",
+            "<ul>",
+            "<li class='bullet'>In the Site Map, right‑click on the root domain (e.g., <code>example.com</code>) and choose <strong>Add to Scope</strong>.</li>",
+            "<li class='bullet'>Alternatively, go to <strong>Target > Scope</strong> and manually add URL patterns (e.g., <code>.*\\\\.example\\\\.com.*</code>).</li>",
+            "<li class='bullet'>You can also use 'Include' rules for specific paths and 'Exclude' rules to ignore certain extensions like <code>.css</code>, <code>.png</code>, <code>.js</code> (though sometimes JS contains sensitive endpoints).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Filtering the Noise</h2>",
+            "Once scope is set, you can filter the HTTP History and Site Map to show only in‑scope items. Click the filter bar (funnel icon) and check 'Show only in‑scope items'. This instantly removes third‑party analytics, CDNs, and other clutter.",
+            "<h2 style='font-weight: bold;'>Manual Discovery with the Browser</h2>",
+            "Scope does not automatically discover hidden endpoints. You still need to manually navigate the application – click every button, submit forms, log in as different users. Burp records every interaction. Then review the history for API calls, hidden parameters, and unexpected response codes (403, 500, 302).",
+            "<h2 style='font-weight: bold;'>Exporting the Site Map</h2>",
+            "Right‑click the Site Map root and choose 'Copy URLs' or 'Save selected items'. This gives you a list of all endpoints, which you can feed into other tools like <code>ffuf</code> or Burp Intruder for fuzzing.",
+            "By the end of this module, you can cleanly isolate your target application and navigate its structure like a blueprint."
           ]
         },
         {
           "title": "Module 4: Packet Manipulation Execution",
           "content": [
-            "Pause an outbound authentication request directly natively. Modify execution parameters cleanly (such as altering user-agent models or flipping execution boolean logic cleanly) before cleanly pushing the packet forward securely."
+            "Intercepting a request is powerful, but the real magic is **modifying** it before it reaches the server. This allows you to test for vulnerabilities like SQL injection, command injection, authentication bypass, and parameter tampering. In this module, you will pause an authentication request, alter parameters, and observe the server’s reaction.",
+            "<h2 style='font-weight: bold;'>The Intercept Workflow</h2>",
+            "<ul>",
+            "<li class='bullet'>Enable Intercept (Proxy > Intercept > Intercept is on).</li>",
+            "<li class='bullet'>Perform an action in your browser (e.g., login, search, submit a form).</li>",
+            "<li class='bullet'>The request appears in Burp’s Intercept tab. You can edit any part of the raw HTTP request.</li>",
+            "<li class='bullet'>Click 'Forward' to send the modified request to the server.</li>",
+            "<li class='bullet'>The response will also be intercepted if you have 'Response interception' enabled (by default, only requests are intercepted).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>What Can You Modify?</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Request line:</strong> Method (GET→POST), path (e.g., <code>/user?id=1</code> → <code>/admin</code>).</li>",
+            "<li class='bullet'><strong>Headers:</strong> User‑Agent, Referer, Cookie, Authorization, X‑Forwarded‑For, etc.</li>",
+            "<li class='bullet'><strong>Body (POST data):</strong> Form parameters, JSON payloads, XML, file uploads.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical Example – Tampering with a Login Request</h2>",
+            "Assume a login form submits <code>username=john&password=secret123</code>. Intercept the POST request and try:",
+            "<pre><code>username=admin&password=anything</code></pre>",
+            "or",
+            "<pre><code>username=admin' OR '1'='1&password=x</code></pre>",
+            "Forward the request. If the application is vulnerable to SQL injection or weak authentication, you might bypass login.",
+            "<h2 style='font-weight: bold;'>Modifying Headers – User‑Agent Spoofing</h2>",
+            "Some servers behave differently for mobile vs. desktop. Intercept a request and change the <code>User-Agent</code> header to:",
+            "<pre><code>Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)</code></pre>",
+            "Then forward. If the server redirects to a mobile version, you’ve discovered endpoint variations.",
+            "<h2 style='font-weight: bold;'>Using the 'Action' Menu</h2>",
+            "Right‑click inside the intercepted request (or in HTTP history) to send it to other Burp tools:",
+            "<ul>",
+            "<li class='bullet'><strong>Send to Repeater</strong> – for manual replay and tweaking (Module 5).</li>",
+            "<li class='bullet'><strong>Send to Intruder</strong> – for automated fuzzing (Module 6).</li>",
+            "<li class='bullet'><strong>Send to Comparer</strong> – to compare two responses.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Warning: Be Ethical</h2>",
+            "Never modify requests against applications you do not own or have explicit written permission to test. Unauthorized tampering is illegal in most jurisdictions.",
+            "After this module, you can actively manipulate live HTTP traffic and observe how the server reacts – a core skill for finding logic flaws."
           ]
         },
         {
           "title": "Module 5: The Repeater Module Concept",
           "content": [
-            "Send explicit intercepted packets squarely into the 'Repeater'. Here cleanly execute deep-dive parameter fuzzing natively. Replay exact modified payloads identically examining response anomaly outputs perfectly."
+            "Intercepting a request is useful for one‑off changes, but security testing often requires sending the **same request many times** with slight variations. **Repeater** is Burp’s manual replay tool. It lets you craft a request once, then resend it repeatedly, each time changing a parameter, header, or body, and immediately see the response. This is perfect for testing edge cases, fuzzing parameters, or exploiting vulnerabilities.",
+            "<h2 style='font-weight: bold;'>Sending a Request to Repeater</h2>",
+            "Anywhere you see a request (Intercept tab, HTTP History, Site Map), right‑click and choose <strong>Send to Repeater</strong>. The request appears in the Repeater tab (usually next to Proxy).",
+            "<h2 style='font-weight: bold;'>Anatomy of Repeater</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Request panel (left/top):</strong> Editable raw HTTP request. You can modify method, path, headers, body.</li>",
+            "<li class='bullet'><strong>Response panel (right/bottom):</strong> Shows the server’s response each time you click 'Send'.</li>",
+            "<li class='bullet'><strong>Go button:</strong> Sends the current request and displays the response.</li>",
+            "<li class='bullet'><strong>Params, Headers, Hex tabs:</strong> Helper views to edit structured parts (useful for long JSON or binary data).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical – Parameter Fuzzing with Repeater</h2>",
+            "Suppose you have a request: <code>GET /product?id=123</code>. In Repeater, try:",
+            "<ul>",
+            "<li class='bullet'>Change <code>id=123</code> to <code>id=999</code> (non‑existent product). See if error message leaks info.</li>",
+            "<li class='bullet'>Try <code>id=123'</code> (SQL injection probe). If you get a database error, you’ve found a vulnerability.</li>",
+            "<li class='bullet'>Change to <code>id=0</code> or <code>id=-1</code> – some systems mishandle negative IDs.</li>",
+            "<li class='bullet'>Try path traversal: <code>/product?id=../../../etc/passwd</code> (if file inclusion).</li>",
+            "</ul>",
+            "Each time, click 'Send' and watch the response. You can also use the <strong>Compare</strong> feature to diff responses side‑by‑side.",
+            "<h2 style='font-weight: bold;'>Using Repeater with POST Requests</h2>",
+            "For a login POST: <code>username=alice&password=secret</code>. Modify the password, send, and see if the response changes. Try SQL injection payloads in the username field. Repeater’s history (the list on the left) saves every request you’ve sent, allowing you to go back to earlier attempts.",
+            "<h2 style='font-weight: bold;'>Highlighting and Notes</h2>",
+            "You can highlight interesting responses (e.g., 500 errors) or add comments. Right‑click in the response panel to 'Highlight' or 'Add comment'.",
+            "<h2 style='font-weight: bold;'>Pro Tip – Using Repeater for CSRF Testing</h2>",
+            "If an application uses anti‑CSRF tokens, you can send a valid request, copy the token, then attempt to reuse it in another request. Repeater makes this easy because you keep the same session cookie.",
+            "By the end of this module, you will be comfortable manually probing endpoints for vulnerabilities using Repeater – a skill used daily by penetration testers."
           ]
         },
         {
           "title": "Module 6: Automated Intruder Operations",
           "content": [
-            "Load automated Sniper payload execution logic natively into the Intruder securely. Practical: Perform a localized, completely authorized brute-force operation natively against a specialized testing login parameter."
+            "While Repeater is great for manual testing, many attacks require sending **hundreds or thousands** of requests with different payloads – for example, brute‑forcing a login, fuzzing for directory paths, or testing a list of XSS payloads. Burp Intruder automates this. It takes a base request, identifies positions (payload insertion points), and cycles through a list of values, sending each variation and recording the responses.",
+            "<h2 style='font-weight: bold;'>Sending a Request to Intruder</h2>",
+            "Right‑click any request (HTTP History, Repeater, Intercept) and choose <strong>Send to Intruder</strong>. The Intruder tab opens with your request.",
+            "<h2 style='font-weight: bold;'>Positioning Payloads</h2>",
+            "In Intruder > Positions tab, you define where payloads will be inserted. By default, Burp auto‑highlights parameters (e.g., username, password). You can clear all positions and manually add <code>§</code> markers around any part of the request – even inside headers or JSON bodies.",
+            "<pre><code>username=§alice§&password=§pass§</code></pre>",
+            "You can have multiple positions. For a simple brute force, you might only set one position (e.g., password).",
+            "<h2 style='font-weight: bold;'>Attack Types</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Sniper:</strong> One payload set, cycles through each position one at a time. Best for fuzzing a single parameter.</li>",
+            "<li class='bullet'><strong>Battering ram:</strong> One payload set, same value inserted into all positions simultaneously.</li>",
+            "<li class='bullet'><strong>Pitchfork:</strong> Multiple payload sets (one per position). The first payload from each set is used together, then the second, etc. Useful for credential stuffing (username list + password list).</li>",
+            "<li class='bullet'><strong>Cluster bomb:</strong> All combinations of multiple payload sets (cartesian product). Can generate huge numbers (e.g., 100 usernames × 100 passwords = 10,000 requests).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Payload Sets</h2>",
+            "Go to Intruder > Payloads. Choose a payload type:",
+            "<ul>",
+            "<li class='bullet'><strong>Simple list:</strong> Type or paste a list (e.g., common passwords, usernames, SQLi payloads).</li>",
+            "<li class='bullet'><strong>Runtime file:</strong> Load a large wordlist from disk.</li>",
+            "<li class='bullet'><strong>Numbers:</strong> Generate sequences (e.g., 1–1000).</li>",
+            "<li class='bullet'><strong>Brute forcer:</strong> Generate all combinations of a character set (use carefully – can be huge).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical – Authorized Login Brute Force</h2>",
+            "Intercept a login POST request. Send to Intruder. Set position on the password parameter (e.g., <code>password=§§</code>). Load a small password list (like <code>password,123456,admin</code>). Set attack type to Sniper. Start the attack. Burp will send one request per password. You can sort the results by status code, length, or response time to identify a successful login (often different length).",
+            "<h2 style='font-weight: bold;'>Analyzing Intruder Results</h2>",
+            "When you start an attack, a new window opens with a table of results. Each row shows the payload used and the response status/length. Look for anomalies:",
+            "<ul>",
+            "<li class='bullet'>Different status code (e.g., 302 redirect vs 200 OK).</li>",
+            "<li class='bullet'>Different response length (e.g., longer page after login).</li>",
+            "<li class='bullet'>Different response text (search for 'welcome' or 'dashboard').</li>",
+            "</ul>",
+            "You can double‑click any row to see the full request/response.",
+            "<h2 style='font-weight: bold;'>Important Ethical Warning</h2>",
+            "Do NOT run Intruder against any website without explicit permission. Even a small wordlist can generate thousands of requests, which may overload the server or trigger rate‑limiting. Always use rate‑limiting options (in Intruder > Resource Pool) to add delays between requests.",
+            "After this module, you can automate parameter fuzzing, directory brute‑forcing, and credential testing – making your testing efficient and thorough."
           ]
         },
         {
           "title": "Module 7: Deep Decoding & Payload Generation",
           "content": [
-            "Leverage the local 'Decoder' mapping deeply nested base64 strings securely, explicit URL encodings natively, and complex hex structures cleanly. Convert malicious payloads specifically past standard firewall rules."
+            "Web applications often encode data to transport it safely: URL encoding, Base64, HTML entities, or even custom schemes. Attackers also encode payloads to bypass input filters. Burp’s **Decoder** module helps you encode, decode, and manipulate data effortlessly. It also includes a **Smart Decoding** feature that automatically detects nested encodings.",
+            "<h2 style='font-weight: bold;'>Accessing the Decoder</h2>",
+            "Click the **Decoder** tab (next to Intruder). You can also send text from anywhere in Burp (e.g., from a request parameter) to Decoder via right‑click > Send to Decoder.",
+            "<h2 style='font-weight: bold;'>Common Encoding/Decoding Operations</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>URL encode:</strong> Turns <code>?&=/</code> into <code>%3F%26%3D%2F</code>. Used in query strings.</li>",
+            "<li class='bullet'><strong>URL decode:</strong> Reverse.</li>",
+            "<li class='bullet'><strong>Base64 encode:</strong> Converts binary or text to ASCII (common in JWT, API tokens, basic auth).</li>",
+            "<li class='bullet'><strong>Base64 decode:</strong> Reveals original data.</li>",
+            "<li class='bullet'><strong>HTML encode:</strong> Turns <code><></code> into <code>&lt;&gt;</code> – used to prevent XSS.</li>",
+            "<li class='bullet'><strong>Hex:</strong> Convert to/from hexadecimal representation.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical Example – Decoding a JWT</h2>",
+            "A JWT (JSON Web Token) looks like <code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxpY2UifQ.signature</code>. The first two parts are Base64‑encoded JSON. Copy the first part into Decoder, click 'Decode as Base64'. You’ll see <code>{\"alg\":\"HS256\",\"typ\":\"JWT\"}</code>. The second part decodes to <code>{\"user\":\"alice\"}</code>. This reveals the token’s claims. You can then modify the JSON, re‑encode, and use Burp Repeater to test for JWT tampering.",
+            "<h2 style='font-weight: bold;'>Smart Decoding – Nested Encodings</h2>",
+            "Sometimes data is double‑encoded (e.g., URL‑encoded, then Base64). Click the 'Smart decode' button. Burp automatically applies decoders until the data is plain text. This saves time when analyzing obfuscated payloads.",
+            "<h2 style='font-weight: bold;'>Encoding for Evasion</h2>",
+            "When testing for XSS, you can encode your payload to bypass filters. For example, a filter might block <code><script></code> but not <code>&lt;script&gt;</code> (HTML encoded). Use Decoder to encode your payload, then send it in a request. If the server decodes it before rendering, your XSS may fire.",
+            "<h2 style='font-weight: bold;'>Manual Payload Generation</h2>",
+            "Decoder also lets you manually craft payloads. For example, you can convert a binary shellcode to hex, or generate a Base64‑encoded command injection payload. Combine Decoder with Repeater or Intruder for advanced attacks.",
+            "<h2 style='font-weight: bold;'>Hash Generation</h2>",
+            "Decoder includes a 'Hash' dropdown: you can compute MD5, SHA1, SHA256, etc., of any text. Useful for testing weak password hashing or generating signatures.",
+            "By the end of this module, you can effortlessly decode any obscured data found in HTTP traffic and encode your own payloads to test filter robustness."
           ]
         },
         {
           "title": "Module 8: Web Socket Interception Logic",
           "content": [
-            "Analyze bi-directional WSS connection flows cleanly. Capture, halt, and cleanly inject manipulated logic commands deeply straight into standard WebSocket architectural frames seamlessly."
+            "Modern web applications increasingly use **WebSockets** for real‑time, bidirectional communication (chat, live feeds, gaming, collaborative editing). Unlike HTTP, WebSocket connections stay open, and messages flow in both directions without a new request each time. Burp Suite can intercept, view, and modify WebSocket messages just like HTTP, allowing you to test for vulnerabilities in this often‑overlooked attack surface.",
+            "<h2 style='font-weight: bold;'>How WebSockets Differ from HTTP</h2>",
+            "<ul>",
+            "<li class='bullet'>HTTP: client requests, server responds – one message per round trip.</li>",
+            "<li class='bullet'>WebSocket: persistent connection, any side can send messages at any time (frames).</li>",
+            "<li class='bullet'>Messages can be text or binary.</li>",
+            "</ul>",
+            "Burp supports WebSocket interception natively. No extra configuration is needed – once your proxy is active, Burp captures WebSocket handshake and subsequent frames.",
+            "<h2 style='font-weight: bold;'>Identifying WebSocket Traffic</h2>",
+            "In Burp’s HTTP History, look for requests with status code <strong>101 Switching Protocols</strong> and the <code>Upgrade: websocket</code> header. That is the handshake. After that, WebSocket messages appear in a separate tab: <strong>Proxy > WebSockets History</strong>.",
+            "<h2 style='font-weight: bold;'>Intercepting WebSocket Frames</h2>",
+            "Enable Intercept as usual. When a WebSocket frame is sent or received, Burp will pause it. The Intercept tab changes to show the WebSocket message (instead of HTTP). You can:",
+            "<ul>",
+            "<li class='bullet'>Edit the message content (text or hex).</li>",
+            "<li class='bullet'>Forward or Drop the frame.</li>",
+            "<li class='bullet'>Send the frame to Repeater for replay.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical Example – Chat Application Testing</h2>",
+            "Assume a chat app uses WebSockets. Intercept a message you send (e.g., 'Hello'). Modify it to '<code>&lt;img src=x onerror=alert(1)&gt;</code>'. Forward. If the other participants see an alert, you’ve found an XSS vulnerability in the WebSocket handler.",
+            "<h2 style='font-weight: bold;'>Replaying WebSocket Frames with Repeater</h2>",
+            "Burp Repeater also supports WebSockets. Send a WebSocket frame to Repeater (right‑click > Send to Repeater). In Repeater, you can edit the frame, click 'Send', and see the response frame. You can also create entirely new WebSocket connections from Repeater.",
+            "<h2 style='font-weight: bold;'>Common WebSocket Vulnerabilities</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Missing origin validation:</strong> Attacker’s page can connect to the WebSocket if CORS is misconfigured.</li>",
+            "<li class='bullet'><strong>Injection attacks:</strong> SQL injection, XSS, command injection in message content.</li>",
+            "<li class='bullet'><strong>Authorization flaws:</strong> After connecting, the server might not re‑authenticate each message – you can spoof user ID by modifying frames.</li>",
+            "<li class='bullet'><strong>Message tampering:</strong> Changing game scores, bidding amounts, etc.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Limitations of Burp’s WebSocket Support</h2>",
+            "Burp does not automatically decode custom binary protocols; you may need to use the Hex view. Also, some WebSocket extensions (like compression) may interfere; you can disable them in Repeater options.",
+            "After this module, you can test WebSocket endpoints with the same rigor as HTTP, uncovering vulnerabilities that many automated scanners miss."
           ]
         },
         {
           "title": "Module 9: Authentication & Session Exploitation",
           "content": [
-            "Identify insecure Cookie implementations securely natively. Map JWT executions (JSON Web Tokens) deeply inside intercepted headers, examining specifically whether structural signatures hold securely."
+            "Authentication and session management are the gateways to any web application. Flaws here often lead to full account takeover. Burp provides tools to analyze cookies, JWT tokens, OAuth flows, and session behaviors. This module teaches you to identify insecure session implementations and exploit them.",
+            "<h2 style='font-weight: bold;'>Understanding Session Tokens</h2>",
+            "After login, the server gives the client a session identifier (usually a cookie or a token in the Authorization header). The client sends it with every request to prove identity. Burp records all cookies in the <strong>Proxy > HTTP History</strong>. You can see the <code>Set-Cookie</code> response header and the <code>Cookie</code> request header.",
+            "<h2 style='font-weight: bold;'>Testing for Session Fixation</h2>",
+            "Session fixation occurs when the server accepts a session ID chosen by the attacker. Test:",
+            "<ul>",
+            "<li class='bullet'>Intercept a request to the login page. Add a custom cookie (e.g., <code>Cookie: sessionid=attacker123</code>). Forward.</li>",
+            "<li class='bullet'>Log in normally. If the response uses the same <code>attacker123</code> as the session ID, the server is vulnerable.</li>",
+            "<li class='bullet'>An attacker can force that session ID onto a victim, then log in and hijack the account.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Testing for Predictable Session Tokens</h2>",
+            "Some applications generate sequential or time‑based session IDs. Use Burp Intruder to collect multiple session IDs after login, then analyze them in Decoder or with a script. Look for patterns (incrementing numbers, timestamps, weak hashes).",
+            "<h2 style='font-weight: bold;'>JWT (JSON Web Token) Exploitation</h2>",
+            "JWTs are common in APIs. They consist of three Base64 parts: header, payload, signature. Burp can help test JWT weaknesses:",
+            "<ul>",
+            "<li class='bullet'><strong>None algorithm attack:</strong> Change the header's <code>alg</code> to <code>none</code>, remove the signature, and see if the server accepts it.</li>",
+            "<li class='bullet'><strong>Weak secret brute force:</strong> Use Burp Intruder with a wordlist to guess the signing secret (if HMAC).</li>",
+            "<li class='bullet'><strong>Kid injection:</strong> Modify the <code>kid</code> (key ID) to cause path traversal or SQL injection.</li>",
+            "</ul>",
+            "To modify JWTs, copy the token into Burp Decoder, decode each part, edit the JSON, re‑encode, and reassemble. Or use the JWT Editor extension (install via BApp Store).",
+            "<h2 style='font-weight: bold;'>Session Timeout Testing</h2>",
+            "Log in and intercept a request. Forward the same request after 1 minute, 5 minutes, 1 hour. If the session never expires, that’s a risk. Burp Repeater’s 'Send' button makes this easy. You can also use Intruder with a delay between requests.",
+            "<h2 style='font-weight: bold;'>Cookie Attributes – Security Flags</h2>",
+            "Inspect the <code>Set-Cookie</code> header. Check for:",
+            "<ul>",
+            "<li class='bullet'><code>Secure</code> – cookie sent only over HTTPS. Missing means possible interception over HTTP.</li>",
+            "<li class='bullet'><code>HttpOnly</code> – prevents JavaScript access. Missing allows XSS to steal the cookie.</li>",
+            "<li class='bullet'><code>SameSite</code> – protects against CSRF. Lax or Strict is good; None without Secure is dangerous.</li>",
+            "</ul>",
+            "If these flags are missing, you can report them as low‑severity issues.",
+            "<h2 style='font-weight: bold;'>Practical – Stealing Session via XSS (Simulated)</h2>",
+            "If you find an XSS vulnerability, you can craft a payload that sends the document.cookie to your server. Burp’s Collaborator (or a simple HTTP listener) can capture it. This demonstrates the impact of combining XSS with weak cookie protection.",
+            "After this module, you can systematically audit authentication and session mechanisms, identify misconfigurations, and demonstrate real exploitation paths."
           ]
         },
         {
           "title": "Module 10: Comparative Execution & Final Testing",
           "content": [
-            "Utilize the 'Comparer' execution module mapping byte-by-byte visual differences securely across multiple raw structural responses natively, diagnosing specifically complex blind vulnerabilities rapidly."
+            "When testing complex vulnerabilities, you often need to compare two (or more) HTTP responses to spot subtle differences – for example, comparing a valid login response vs. an invalid one, or comparing responses from two different user roles. Burp’s **Comparer** module performs byte‑by‑byte and visual diffs, helping you identify differences that indicate vulnerabilities.",
+            "<h2 style='font-weight: bold;'>Sending Data to Comparer</h2>",
+            "You can send any text or raw HTTP messages to Comparer:",
+            "<ul>",
+            "<li class='bullet'>From HTTP History or Repeater: right‑click a request/response and choose 'Send to Comparer'.</li>",
+            "<li class='bullet'>From any text field (e.g., Decoder output): highlight text, right‑click > Send to Comparer.</li>",
+            "</ul>",
+            "In the Comparer tab, you will see a list of items. Select any two and click 'Compare'.",
+            "<h2 style='font-weight: bold;'>Comparison Views</h2>",
+            "Burp offers two comparison modes:",
+            "<ul>",
+            "<li class='bullet'><strong>Words:</strong> Shows added/deleted/changed words (good for text).</li>",
+            "<li class='bullet'><strong>Bytes:</strong> Hex diff, useful for binary data or exact character changes.</li>",
+            "</ul>",
+            "The result highlights differences in color: removed text in red, added in blue, changed in yellow.",
+            "<h2 style='font-weight: bold;'>Practical Use Cases</h2>",
+            "<h3 style='font-weight: bold;'>1. Blind SQL Injection Detection</h3>",
+            "A blind SQL injection doesn’t show data directly, but it changes the response in subtle ways (e.g., a 'Welcome back' message appears or disappears). Send a normal request to Comparer, then send the same request with a sleep payload (<code>' AND SLEEP(5)--</code>). Compare the response times (not just content). Comparer can also compare length and timing if you capture the response time manually (though Burp Pro has a better engine).",
+            "<h3 style='font-weight: bold;'>2. Authentication Bypass via Response Differences</h3>",
+            "Send a request as a low‑privileged user, and another as an admin. Compare the responses to see which endpoints leak extra data or allow admin functions.",
+            "<h3 style='font-weight: bold;'>3. Fuzzing with Comparer</h3>",
+            "After running an Intruder attack, you can send two interesting results (e.g., one 200 OK and one 403) to Comparer to understand why the server blocked one payload.",
+            "<h2 style='font-weight: bold;'>Final Capstone Project: Full Web Application Assessment</h2>",
+            "Now you will apply all modules to a deliberately vulnerable web application (e.g., OWASP Juice Shop, DVWA, or PortSwigger’s Web Security Academy labs).",
+            "**Tasks:**",
+            "<ol>",
+            "<li class='bullet'>Set up Burp proxy with FoxyProxy and install CA certificate.</li>",
+            "<li class='bullet'>Define the target scope and explore the application, mapping all endpoints.</li>",
+            "<li class='bullet'>Intercept a login request and attempt SQL injection (e.g., <code>admin' --</code>) to bypass authentication.</li>",
+            "<li class='bullet'>Use Repeater to test for parameter tampering (e.g., changing a product ID or user role).</li>",
+            "<li class='bullet'>Use Intruder with a wordlist to fuzz a hidden parameter (e.g., <code>id</code>).</li>",
+            "<li class='bullet'>Decode a JWT or Base64‑encoded cookie to reveal sensitive information.</li>",
+            "<li class='bullet'>If the app uses WebSockets, intercept and modify a chat message to test for XSS.</li>",
+            "<li class='bullet'>Analyze session cookies for missing security flags and test for fixation.</li>",
+            "<li class='bullet'>Compare responses from two different user accounts to find privilege escalation paths.</li>",
+            "</ol>",
+            "Document each finding with screenshots from Burp (request/response evidence). This final project simulates a real penetration test engagement.",
+            "<h2 style='font-weight: bold;'>Beyond the Course – Next Steps</h2>",
+            "<ul>",
+            "<li class='bullet'>Learn Burp Extensions (BApp Store): Add tools like JWT Editor, Active Scan++, Turbo Intruder.</li>",
+            "<li class='bullet'>Practice on PortSwigger’s Web Security Academy (free labs).</li>",
+            "<li class='bullet'>Explore Burp Professional features (if you upgrade): passive/active scanning, automated crawling, and CI/CD integration.</li>",
+            "</ul>",
+            "Congratulations! You have transformed from a casual web user into a security tester capable of identifying and exploiting web vulnerabilities using Burp Suite. Always act ethically and with permission."
           ]
         }
       ]
@@ -1971,66 +2200,242 @@
       "category": "Cyber Security",
       "level": "Beginner",
       "duration": "2 Weeks",
-      "description": "Information gathering is structural. Gobuster is a highly scalable, execution-heavy command-line tool written strictly in Go, designed specifically for rapid DNS, Virtual Host, and deep Directory bruteforcing.",
+      "description": "Information gathering is structural. Gobuster is a highly scalable, execution‑heavy command‑line tool written strictly in Go, designed specifically for rapid DNS, Virtual Host, and deep Directory bruteforcing. This course teaches you to uncover hidden endpoints, admin panels, and backup files that are invisible to standard browsing.",
       "modules": [
         {
           "title": "Module 1: Go-Architecture Execution & Installation",
           "content": [
-            "Understand Gobuster's precise concurrency models. Install correctly via native `apt` execution endpoints securely or directly mapping the underlying Go release source architectures securely natively."
+            "Gobuster is written in Go (Golang), a compiled language that produces a single static binary. This makes it fast, cross‑platform, and easy to distribute. Unlike Python tools, Gobuster uses lightweight threads (goroutines) for massive concurrency.",
+            "<h2 style='font-weight: bold;'>Installation Methods</h2>",
+            "<strong>Linux (apt):</strong> <code>sudo apt install gobuster -y</code> (often older version).<br>",
+            "<strong>Manual (latest):</strong>",
+            "<pre><code>wget https://github.com/OJ/gobuster/releases/download/v3.6.0/gobuster_Linux_x86_64.tar.gz\ntar xvf gobuster_Linux_x86_64.tar.gz\nsudo mv gobuster /usr/local/bin/</code></pre>",
+            "<strong>macOS (Homebrew):</strong> <code>brew install gobuster</code><br>",
+            "<strong>Windows:</strong> Download the .exe from GitHub releases and place in a folder in your PATH.",
+            "Verify: <code>gobuster --version</code>",
+            "<h2 style='font-weight: bold;'>Understanding Concurrency</h2>",
+            "Gobuster uses threads (default 10) to send multiple HTTP requests simultaneously. This dramatically speeds up directory brute‑forcing. However, too many threads can overwhelm the target or trigger rate limiting. You will learn to tune this in Module 8.",
+            "<h2 style='font-weight: bold;'>First Test – Help</h2>",
+            "<pre><code>gobuster --help</code></pre>",
+            "Explore the subcommands: <code>dir</code>, <code>dns</code>, <code>vhost</code>, <code>s3</code> (AWS). This course focuses on <code>dir</code>, <code>vhost</code>, and <code>dns</code>."
           ]
         },
         {
           "title": "Module 2: Dictionary Ingestion Constraints",
           "content": [
-            "Gobuster is utterly useless without highly functional payloads. Understand the native Seclists repository. Practical: Map exactly how localized line-based read executions drive extreme multi-thread operations cleanly."
+            "Gobuster is only as good as the wordlist you feed it. A <strong>wordlist</strong> is a text file containing potential directory or file names (e.g., <code>admin</code>, <code>backup.zip</code>, <code>hidden</code>). The larger and more comprehensive the list, the more hidden endpoints you will find.",
+            "<h2 style='font-weight: bold;'>The SecLists Repository</h2>",
+            "SecLists (https://github.com/danielmiessler/SecLists) is the de facto standard collection of wordlists for security testing. Install it:",
+            "<pre><code>git clone https://github.com/danielmiessler/SecLists.git</code></pre>",
+            "Important lists for Gobuster:",
+            "<ul>",
+            "<li class='bullet'><code>Discovery/Web-Content/common.txt</code> – Common directories and files.</li>",
+            "<li class='bullet'><code>Discovery/Web-Content/directory-list-2.3-small.txt</code> – Smaller, faster list.</li>",
+            "<li class='bullet'><code>Discovery/Web-Content/big.txt</code> – Larger, more thorough.</li>",
+            "<li class='bullet'><code>Discovery/Web-Content/raft-large-words.txt</code> – Extensive wordlist.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Custom Wordlists</h2>",
+            "You can create your own wordlist by analyzing the target’s naming conventions (e.g., using <code>cewl</code> to scrape words from the website).",
+            "<h2 style='font-weight: bold;'>How Gobuster Reads Wordlists</h2>",
+            "Gobuster reads the wordlist line by line, ignoring empty lines. Each line becomes a path appended to the base URL. For example, if your wordlist contains <code>admin</code>, Gobuster will request <code>http://example.com/admin</code>.",
+            "<h2 style='font-weight: bold;'>Ethical Considerations</h2>",
+            "Brute‑forcing directories can generate thousands of requests. Only do this on systems you own or have explicit permission to test. It may be considered an aggressive attack by some hosting providers."
           ]
         },
         {
           "title": "Module 3: Native `dir` Mode Execution",
           "content": [
-            "Execute your absolute first comprehensive directory brute-force securely. Learn specifically the syntax `gobuster dir -u <URL> -w <wordlist>`. Evaluate structural HTTP status outputs securely (200, 301, 403)."
+            "The <code>dir</code> mode is the most common use of Gobuster. It brute‑forces directories and files on a web server.",
+            "<h2 style='font-weight: bold;'>Basic Command</h2>",
+            "<pre><code>gobuster dir -u http://example.com -w /path/to/wordlist.txt</code></pre>",
+            "This sends HTTP GET requests for each word in the wordlist. It outputs the status code, length, and URL of discovered paths.",
+            "<h2 style='font-weight: bold;'>Understanding HTTP Status Codes</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>200 OK</strong> – The resource exists and is accessible.</li>",
+            "<li class='bullet'><strong>301 Moved Permanently</strong> – Usually indicates a directory (redirects to trailing slash).</li>",
+            "<li class='bullet'><strong>302 Found</strong> – Temporary redirect; often used for login pages.</li>",
+            "<li class='bullet'><strong>403 Forbidden</strong> – The resource exists but access is denied. Still interesting.</li>",
+            "<li class='bullet'><strong>404 Not Found</strong> – The resource does not exist (you usually ignore these).</li>",
+            "<li class='bullet'><strong>500 Internal Server Error</strong> – May indicate a script error; could be exploitable.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical Example</h2>",
+            "<pre><code>gobuster dir -u http://testphp.vulnweb.com -w /usr/share/seclists/Discovery/Web-Content/common.txt</code></pre>",
+            "You will see results like:",
+            "<pre><code>/admin (Status: 301)\n/images (Status: 200)\n/robots.txt (Status: 200)\n/index.php (Status: 200)</code></pre>",
+            "Each discovered path is a potential entry point for further testing (e.g., SQL injection, file inclusion).",
+            "<h2 style='font-weight: bold;'>Using HTTPS and Custom Headers</h2>",
+            "For HTTPS: <code>gobuster dir -u https://example.com -w wordlist.txt -k</code> (skip TLS verification if needed). Add custom headers with <code>-H</code> (e.g., <code>-H 'Authorization: Bearer token'</code>)."
           ]
         },
         {
           "title": "Module 4: Filtering Output Anomaly Structures",
           "content": [
-            "Large lists generate massive noise. Use `-b` to explicitly ignore garbage executions (e.g., `-b 404,401`). Isolate cleanly operational successes natively using deep status filters `-s` securely."
+            "Default Gobuster output includes all responses, including 404 errors and other irrelevant statuses. To focus on interesting results, use filtering options.",
+            "<h2 style='font-weight: bold;'>Excluding Status Codes (-b)</h2>",
+            "Ignore specific status codes (e.g., 404, 401).",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt -b 404,401</code></pre>",
+            "Now only 200, 301, 302, 403, etc., are shown.",
+            "<h2 style='font-weight: bold;'>Including Only Specific Status Codes (-s)</h2>",
+            "Show only, for example, 200 and 301:",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt -s 200,301</code></pre>",
+            "<h2 style='font-weight: bold;'>Length Filtering – Removing Noise</h2>",
+            "Many false positives may have the same response length (e.g., a custom 404 page). Use <code>--exclude-length</code> to hide them.",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt --exclude-length 1234</code></pre>",
+            "You can also combine multiple lengths with commas.",
+            "<h2 style='font-weight: bold;'>Practical – Cleaning Up Output</h2>",
+            "First, run a small wordlist and note the length of the 404 page. Then exclude that length in the full scan.",
+            "<pre><code>gobuster dir -u http://example.com -w small.txt -o first_run.txt\n# Find the 404 length (e.g., 5432)\ngobuster dir -u http://example.com -w big.txt --exclude-length 5432</code></pre>",
+            "This significantly reduces false positives and makes the results actionable."
           ]
         },
         {
           "title": "Module 5: Explicit File Extension Sweeps",
           "content": [
-            "Most sensitive backups are severely hidden seamlessly. Inject the extension parameter natively (`-x php,bak,txt,tar.gz`) to force specific file endpoints securely appending explicitly to every single wordlist check logically."
+            "Directories are only half the story. Backup files, configuration files, and sensitive scripts often have specific extensions: <code>.bak</code>, <code>.old</code>, <code>.php</code>, <code>.txt</code>, <code>.tar.gz</code>. Gobuster can append extensions to each wordlist entry, turning a directory brute‑forcer into a file discovery tool.",
+            "<h2 style='font-weight: bold;'>The -x Flag</h2>",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt -x php,bak,txt,zip</code></pre>",
+            "For each word in the list (e.g., <code>config</code>), Gobuster will request:",
+            "<ul>",
+            "<li class='bullet'><code>/config</code></li>",
+            "<li class='bullet'><code>/config.php</code></li>",
+            "<li class='bullet'><code>/config.bak</code></li>",
+            "<li class='bullet'><code>/config.txt</code></li>",
+            "<li class='bullet'><code>/config.zip</code></li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Common Extensions for Web Testing</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Backups:</strong> <code>bak, old, backup, ~, .swp, .save</code></li>",
+            "<li class='bullet'><strong>Source code:</strong> <code>php, asp, aspx, jsp, do, cfm, go, py</code></li>",
+            "<li class='bullet'><strong>Configuration:</strong> <code>conf, config, ini, env, yaml, json, xml</code></li>",
+            "<li class='bullet'><strong>Archives:</strong> <code>zip, tar.gz, tgz, rar, 7z</code></li>",
+            "<li class='bullet'><strong>Database dumps:</strong> <code>sql, db, sqlite, dump</code></li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical – Finding Backup of Configuration</h2>",
+            "<pre><code>gobuster dir -u http://example.com/admin -w /usr/share/seclists/Discovery/Web-Content/raft-large-files.txt -x bak,old,php,txt</code></pre>",
+            "If <code>config.php.bak</code> exists, you may be able to download it and read database credentials.",
+            "<h2 style='font-weight: bold;'>Combining with Status Filtering</h2>",
+            "Filter out 404s and specific lengths to focus on real hits."
           ]
         },
         {
           "title": "Module 6: Deep Virtual Host (VHost) Exploitation",
           "content": [
-            "Switch to `vhost` operational execution mode securely. Break standard Host header logic natively attempting specifically to expose internal administrative execution domains severely hidden squarely behind reverse proxies."
+            "A <strong>virtual host</strong> is a technique where a single IP address hosts multiple domain names (e.g., <code>admin.example.com</code>, <code>dev.internal.example.com</code>). These subdomains may not be linked from the main site and are often overlooked. Gobuster’s <code>vhost</code> mode brute‑forces the <code>Host</code> header to discover these hidden vhosts.",
+            "<h2 style='font-weight: bold;'>Switching to VHost Mode</h2>",
+            "<pre><code>gobuster vhost -u http://example.com -w subdomains.txt</code></pre>",
+            "Gobuster sends requests with the <code>Host: subdomain.example.com</code> header. If the server responds with a different status code or content (compared to the base domain), the vhost likely exists.",
+            "<h2 style='font-weight: bold;'>Wordlists for VHost Brute‑forcing</h2>",
+            "Use <code>SecLists/Discovery/DNS/subdomains-top1million-5000.txt</code> or <code>common-vhosts.txt</code>.",
+            "<h2 style='font-weight: bold;'>Interpreting Results</h2>",
+            "<pre><code>Found: admin.example.com (Status: 200) [Size: 3456]\nFound: mail.example.com (Status: 302) [Size: 189]</code></pre>",
+            "A 200 response suggests a live vhost. A 302 might be a login portal. Compare the response length to the base domain; a different length indicates a different site.",
+            "<h2 style='font-weight: bold;'>Why VHost Discovery Matters</h2>",
+            "Internal administrative panels, staging environments, and development versions are often hidden behind vhosts. Discovering them expands the attack surface dramatically.",
+            "<h2 style='font-weight: bold;'>Practical – Hunting for Admin VHost</h2>",
+            "<pre><code>gobuster vhost -u http://target.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -t 30 --append-domain</code></pre>",
+            "The <code>--append-domain</code> flag adds the base domain to each word (e.g., <code>admin.target.com</code>)."
           ]
         },
         {
           "title": "Module 7: Native `dns` Subdomain Discovery Mode",
           "content": [
-            "Execute precise DNS brute-forcing rapidly targeting massive namespaces cleanly. Differentiate explicitly between traditional DNS structural transfers natively and hard execution dictionary discovery loops."
+            "Subdomain enumeration is a critical part of reconnaissance. Gobuster’s <code>dns</code> mode performs DNS brute‑forcing, querying A, AAAA, and CNAME records for each subdomain guess.",
+            "<h2 style='font-weight: bold;'>Basic DNS Brute‑force</h2>",
+            "<pre><code>gobuster dns -d example.com -w subdomains.txt</code></pre>",
+            "For each subdomain (e.g., <code>mail</code>), it queries <code>mail.example.com</code>. If a DNS record exists, it prints the resolved IP.",
+            "<h2 style='font-weight: bold;'>DNS vs. VHost – Key Difference</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>DNS mode</strong> – Finds subdomains that have DNS records (A/AAAA). These can be hosted on different IPs.</li>",
+            "<li class='bullet'><strong>VHost mode</strong> – Finds virtual hosts on the same IP (using the Host header).</li>",
+            "</ul>",
+            "Use both techniques for comprehensive coverage.",
+            "<h2 style='font-weight: bold;'>Practical – Discovering Hidden Subdomains</h2>",
+            "<pre><code>gobuster dns -d target.com -w /usr/share/seclists/Discovery/DNS/namelist.txt -t 50 -o found_subdomains.txt</code></pre>",
+            "Example output:",
+            "<pre><code>Found: api.target.com [192.0.2.10]\nFound: dev.target.com [192.0.2.20]</code></pre>",
+            "<h2 style='font-weight: bold;'>Wildcard DNS Handling</h2>",
+            "Some domains use wildcard DNS (<code>*.example.com</code>). Gobuster will show every subdomain as resolved. Use <code>-wildcard</code> flag to attempt detection and filter them, but manual verification is often needed.",
+            "<h2 style='font-weight: bold;'>Advanced – Zone Transfers</h2>",
+            "If a misconfigured DNS server allows zone transfer (<code>dig axfr</code>), you can get all subdomains instantly. Gobuster does not perform zone transfers; use <code>dig</code> or <code>dnsrecon</code> for that. However, DNS brute‑force is more reliable when transfers are blocked."
           ]
         },
         {
           "title": "Module 8: Thread Scaling & Rate Limitation Mapping",
           "content": [
-            "Increase concurrent operational sweeps securely leveraging parameter `-t`. Understand strictly why maxing operational threads cleanly causes highly unstable connection drops securely, necessitating precise tuning natively."
+            "Gobuster’s speed comes from concurrency. By default, it uses 10 threads (<code>-t</code>). Increasing threads makes scans faster but may overwhelm the target, trigger WAF bans, or cause connection errors. This module teaches you to find the optimal balance.",
+            "<h2 style='font-weight: bold;'>Adjusting Threads</h2>",
+            "<pre><code>gobuster dir -u http://example.com -w big.txt -t 50</code></pre>",
+            "Start low (10–20), then increase gradually. If you see connection resets or timeouts, reduce threads.",
+            "<h2 style='font-weight: bold;'>Rate Limiting – Delaying Requests</h2>",
+            "Gobuster does not have a built‑in delay (unlike tools like <code>wfuzz</code>). To avoid rate limiting, you can use lower threads or combine with a proxy that adds delays. Alternatively, use <code>--delay</code> flag (introduced in recent versions).",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt -t 5 --delay 500ms</code></pre>",
+            "This waits 500 milliseconds between requests from each thread.",
+            "<h2 style='font-weight: bold;'>Timeout Settings</h2>",
+            "<ul>",
+            "<li class='bullet'><code>--timeout</code> – HTTP timeout in seconds (default 10). Lower for faster failure detection.</li>",
+            "<li class='bullet'><code>--retry</code> – Number of retries on failure (default 0).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical – Tuning for a Production Target</h2>",
+            "If you are authorized to test a live website, start with:",
+            "<pre><code>gobuster dir -u https://example.com -w medium.txt -t 20 --delay 100ms --timeout 5</code></pre>",
+            "Monitor response times. If they spike, reduce threads. Never use maximum threads against a production server without permission – you could cause a denial of service."
           ]
         },
         {
           "title": "Module 9: Stealth & Evasion Execution Protocols",
           "content": [
-            "Randomize explicit custom User-Agents organically using `-a`. Override explicit request methodologies securely explicitly and cleanly append highly specific headers dynamically bypassing basic WAF (Web Application Firewall) sweeps."
+            "Web application firewalls (WAF) and intrusion detection systems may block or log Gobuster requests. This module covers techniques to make your scans less detectable.",
+            "<h2 style='font-weight: bold;'>Randomizing User-Agent (-a)</h2>",
+            "Default Gobuster User‑Agent is hardcoded (<code>gobuster/version</code>). Change it to a common browser:",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt -a \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"</code></pre>",
+            "For better randomness, use a list of user agents from a file with <code>-a</code> (not built‑in; you would need a wrapper script).",
+            "<h2 style='font-weight: bold;'>Custom Headers (-H)</h2>",
+            "Add headers like <code>X-Forwarded-For</code> to appear as a proxy, or <code>Accept-Language</code> to look like a real browser.",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt -H 'X-Forwarded-For: 127.0.0.1' -H 'Accept-Language: en-US,en;q=0.9'</code></pre>",
+            "<h2 style='font-weight: bold;'>Using Proxies (--proxy)</h2>",
+            "Route requests through a proxy (e.g., Burp Suite, Tor) to hide your real IP.",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt --proxy socks5://127.0.0.1:9050</code></pre>",
+            "With Tor, your requests exit from different IPs, evading IP‑based rate limiting.",
+            "<h2 style='font-weight: bold;'>Randomizing Request Order</h2>",
+            "Gobuster sends requests in the order of the wordlist. Some WAFs detect alphabetical scanning. Use <code>--random</code> flag to shuffle the wordlist.",
+            "<pre><code>gobuster dir -u http://example.com -w wordlist.txt --random</code></pre>",
+            "<h2 style='font-weight: bold;'>Practical – Evading Simple WAF</h2>",
+            "Combine techniques: random user agent, random order, low threads, and a proxy. Example:",
+            "<pre><code>gobuster dir -u https://target.com -w /seclists/Discovery/Web-Content/common.txt -t 10 --random -a \"Mozilla/5.0\" --proxy http://127.0.0.1:8080</code></pre>",
+            "This makes the scan resemble normal browsing behavior."
           ]
         },
         {
           "title": "Module 10: Deep Automation Command Scripting",
           "content": [
-            "Pipe structural outputs cleanly. Design highly automated native Bash execution wrappers cleanly pulling live targets squarely from external `.txt` arrays, processing massive automated Gobuster sweeps efficiently seamlessly."
+            "In real engagements, you may need to scan dozens of targets with different wordlists and output formats. Automating Gobuster with bash scripts saves time and ensures consistency.",
+            "<h2 style='font-weight: bold;'>Batch Scanning Multiple URLs</h2>",
+            "Create a file <code>targets.txt</code> with one URL per line:",
+            "<pre><code>http://site1.com\nhttps://site2.com\nhttp://site3.com:8080</code></pre>",
+            "Then a script:",
+            "<pre><code>#!/bin/bash\nwhile read url; do\n    echo \"Scanning $url\"\n    gobuster dir -u \"$url\" -w /path/to/wordlist.txt -o \"scan_$(echo $url | tr '/' '_').txt\"\ndone < targets.txt</code></pre>",
+            "<h2 style='font-weight: bold;'>Using Different Wordlists per Target</h2>",
+            "If you have a CSV file with <code>url,wordlist</code> pairs:",
+            "<pre><code>while IFS=',' read url wordlist; do\n    gobuster dir -u \"$url\" -w \"$wordlist\" -o \"result_${url//[:\/]/_}.txt\"\ndone < config.csv</code></pre>",
+            "<h2 style='font-weight: bold;'>Parallel Execution with GNU Parallel</h2>",
+            "For faster batch processing, use <code>parallel</code>:",
+            "<pre><code>cat targets.txt | parallel -j 3 'gobuster dir -u {} -w common.txt -o {}.out'</code></pre>",
+            "This runs up to 3 scans simultaneously.",
+            "<h2 style='font-weight: bold;'>Post‑Processing Results</h2>",
+            "Extract all 200 OK paths from all output files:",
+            "<pre><code>grep -h 'Status: 200' scan_*.txt | cut -d' ' -f2 > all_200_urls.txt</code></pre>",
+            "<h2 style='font-weight: bold;'>Final Capstone Project – Automated Recon Pipeline</h2>",
+            "Build a script that:",
+            "<ol>",
+            "<li class='bullet'>Takes a domain name as input.</li>",
+            "<li class='bullet'>Uses Gobuster DNS to find subdomains.</li>",
+            "<li class='bullet'>For each subdomain, runs a Gobuster directory scan with a medium wordlist, filtering 404s and excluding common lengths.</li>",
+            "<li class='bullet'>Saves results in organized folders.</li>",
+            "<li class='bullet'>Generates a summary report of all discovered endpoints.</li>",
+            "</ol>",
+            "Example skeleton:",
+            "<pre><code>#!/bin/bash\ndomain=$1\n\necho \"[+] Finding subdomains...\"\ngobuster dns -d $domain -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -o subdomains.txt\n\nwhile read line; do\n    sub=$(echo $line | awk '{print $2}')\n    echo \"[+] Scanning $sub\"\n    gobuster dir -u https://$sub -w /usr/share/seclists/Discovery/Web-Content/common.txt -b 404,401 --exclude-length 1234 -o \"results/$sub.txt\"\ndone < subdomains.txt\n\necho \"[+] Done. Results in results/\"</code></pre>",
+            "Congratulations – you now have professional skills in web enumeration using Gobuster. Combine this with Nmap and Burp Suite for a complete recon workflow."
           ]
         }
       ]
