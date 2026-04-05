@@ -811,3 +811,46 @@ p {
   width: 100%;
 }
 
+/* =========================================================
+       COURSE PLAYER STRICT LAYOUT ENFORCEMENT
+   ========================================================= */
+
+.course-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.course-card {
+  width: 100%;
+  max-width: 900px;
+  background: #F1AF2C;
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.course-card p {
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+pre {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.course-card * {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.course-card h1 {
+  margin-bottom: 16px;
+}
+
+.course-card h3 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+}

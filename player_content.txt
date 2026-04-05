@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Course Player â€” Clinch Works</title>
+  <title>Course Player — Clinch Works</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -146,12 +146,10 @@
             <div id="progress-bar" class="h-full transition-all duration-500 ease-out" style="width: 0%; background: var(--accent);"></div>
           </div>
           
-                    <div class="course-container section-reveal visible">
-            <div class="course-card">
-              <h1 id="module-title" class="text-3xl font-bold">Loading...</h1>
-              <div id="module-content" class="text-base leading-relaxed">
-                Initializing modules...
-              </div>
+          <div class="service-card rounded-2xl p-8 sm:p-12 mb-10 min-h-[400px]">
+            <h1 id="module-title" class="text-3xl font-bold mb-6" style="color: var(--text-primary);">Loading...</h1>
+            <div id="module-content" class="prose prose-invert max-w-none text-base leading-relaxed" style="color: var(--text-faint);">
+              Initializing modules...
             </div>
           </div>
           
@@ -170,7 +168,7 @@
 
     <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
     <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
+      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
       <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
     </div>
   </footer>
@@ -244,38 +242,13 @@
         void modTitle.offsetWidth;
         modTitle.classList.add('reveal');
         
-                const contentArray = Array.isArray(module.content) ? module.content : module.content.split('\n');
-        modContent.innerHTML = '';
-        contentArray.forEach(line => {
-            const raw = line.trim();
-            if (!raw) return;
-            
-            if (raw.startsWith('<pre')) {
-                const temp = document.createElement('div');
-                temp.innerHTML = raw;
-                Array.from(temp.children).forEach(child => modContent.appendChild(child));
-                return;
-            }
-            
-            let text = raw.replace(/<[^>]+>/g, '').trim();
-            if (!text) return;
-            
-            const isHeading = raw.includes('<h3') || raw.includes('<h2') || 
-                              (text.endsWith('?') && text.split(' ').length < 10) || 
-                              (text.split(' ').length < 10 && !text.endsWith('.'));
-                              
-            if (isHeading) {
-                const h3 = document.createElement('h3');
-                h3.textContent = text;
-                h3.className = "text-xl font-bold mt-5 mb-2";
-                modContent.appendChild(h3);
-            } else {
-                const p = document.createElement('p');
-                p.textContent = text;
-                p.className = "mb-4";
-                modContent.appendChild(p);
-            }
-        });
+        const contentArray = Array.isArray(module.content) ? module.content : module.content.split('\n');
+        modContent.innerHTML = contentArray.map(p => {
+          if (p.trim().startsWith('<pre') || p.trim().startsWith('<h2') || p.trim().startsWith('<ul') || p.trim().startsWith('<li') || p.trim().startsWith('<div')) {
+            return p;
+          }
+          return `<p class="mb-4">${p}</p>`;
+        }).join('');
         
         initCodeBlocks();
         progress.textContent = `Module ${currentModuleIndex + 1} of ${courseData.modules.length}`;
@@ -468,15 +441,15 @@
           const certContainer = document.getElementById('cert-render-container');
           const certElement = certContainer.querySelector('.certificate');
 
-          // Replace student name: "Ganesh" â†’ user input
+          // Replace student name: "Ganesh" → user input
           const nameEl = certElement.querySelector('.name');
           if (nameEl) nameEl.textContent = studentName;
 
-          // Replace course title: "Cyber Security & Ethical Hacking" â†’ course title
+          // Replace course title: "Cyber Security & Ethical Hacking" → course title
           const courseEl = certElement.querySelector('.course');
           if (courseEl) courseEl.textContent = courseData.title;
 
-          // Replace certificate ID: "CW-2026-0001" â†’ dynamic ID
+          // Replace certificate ID: "CW-2026-0001" → dynamic ID
           const certIdEl = certElement.querySelector('.cert-id');
           if (certIdEl) certIdEl.textContent = 'ID: ' + certID;
 
@@ -552,14 +525,14 @@
             + '<p style="font-size:1.25rem; margin-bottom:1.5rem;">Congratulations, ' + studentName + '.</p>'
             + '<p style="color:var(--text-faint);">Your verified certificate for <strong>' + courseData.title + '</strong> has been generated and downloaded.</p>'
             + '<p style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-faint); opacity:0.7;">Certificate ID: ' + certID + '</p>'
-            + '<div style="margin-top:2rem;"><a href="training.html" style="color:var(--accent); font-weight:600;">â† Browse More Programs</a></div>'
+            + '<div style="margin-top:2rem;"><a href="training.html" style="color:var(--accent); font-weight:600;">← Browse More Programs</a></div>'
             + '</div>';
           btnPrev.style.display = 'none';
           btnNext.style.display = 'none';
 
         } catch (err) {
           console.error('Certificate generation failed:', err);
-          btnNext.textContent = 'Error â€” Click to Retry';
+          btnNext.textContent = 'Error — Click to Retry';
           btnNext.disabled = false;
           btnNext.style.opacity = '1';
         }
@@ -568,7 +541,6 @@
   </script>
 </body>
 </html>
-
 
 
 
