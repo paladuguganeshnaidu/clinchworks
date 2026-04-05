@@ -69,21 +69,19 @@
   <!-- Right side controls -->
   <div class="flex items-center gap-2 sm:gap-3 z-10 lg:absolute lg:right-8">
     <!-- Theme Toggle -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-      <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+    <button id="theme-toggle" class="theme-toggle flex items-center justify-center" aria-label="Toggle theme">
+      <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+        <path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
       </svg>
-      <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+      <svg class="icon-sun" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; display: none;">
+        <path d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
       </svg>
     </button>
 
-    <!-- Contact (hidden on small mobile, shown on sm+) -->
-    <a href="{basePath}pages/contact.html" id="btn-contact"
-      class="btn-contact border text-sm px-4 sm:px-5 py-2 rounded-lg font-medium transition-colors hidden sm:inline-block">
-      Contact
+    <!-- Support Button -->
+    <a href="mailto:paladuguganeshnaidu@gmail.com" class="btn-support flex items-center justify-center text-sm font-semibold transition-all duration-300" 
+       style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 8px 20px; box-shadow: 0 4px 15px rgba(241, 175, 44, 0.2);">
+      Support
     </a>
 
     <!-- Hamburger (visible on mobile only) -->
