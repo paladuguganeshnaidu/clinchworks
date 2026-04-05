@@ -19,7 +19,7 @@
     await loadComponents(basePath);
 
     // 3. Initialize Shared Handlers
-    initThemeToggle();
+    
     initMobileMenu();
     initScrollEffects();
     initRevealAnimations();
@@ -62,19 +62,10 @@
   /**
    * Theme Management
    */
-  function initThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
-    
-    const html = document.documentElement;
-
-    const setTheme = (theme) => {
-      if (theme === 'dark') {
-        html.setAttribute('data-theme', 'dark');
-      } else {
+   else {
         html.removeAttribute('data-theme');
       }
-      localStorage.setItem('clinch-theme', theme);
+      
     };
 
     const getCurrentTheme = () => html.hasAttribute('data-theme') ? 'dark' : 'light';
@@ -192,3 +183,4 @@
   }
 
 })();
+
