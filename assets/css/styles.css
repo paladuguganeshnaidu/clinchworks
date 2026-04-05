@@ -669,3 +669,68 @@ button:hover, .btn:hover {
   border-color: var(--primary-gold) !important;
   color: var(--primary-gold) !important;
 }
+
+/* =========================================================
+       THEME ICON VISIBILITY (Moon/Sun)
+   ========================================================= */
+
+[data-theme="dark"] #theme-toggle .icon-moon {
+  display: none !important;
+}
+
+[data-theme="dark"] #theme-toggle .icon-sun {
+  display: block !important;
+  color: #FFFFFF !important;
+}
+
+#theme-toggle .icon-moon {
+  display: block !important;
+  color: #0b1220 !important;
+}
+
+#theme-toggle .icon-sun {
+  display: none !important;
+}
+
+/* =========================================================
+       WHITE BOX TEXT VISIBILITY (Black)
+   ========================================================= */
+
+/* Targeting cards/badges with pure white backgrounds to force black text */
+[style*="background-color: rgb(255, 255, 255)"],
+[style*="background-color: #ffffff"],
+[style*="background: white"],
+[style*="background: #fff"],
+.bg-white,
+.service-card[style*="background: white"] {
+  color: #000000 !important;
+}
+
+/* Ensure all nested text inside these white boxes is also black */
+[style*="background-color: #ffffff"] *,
+[style*="background: white"] *,
+.bg-white * {
+  color: #000000 !important;
+}
+
+/* =========================================================
+       GLOBAL WHITE BOX -> BLACK TEXT (Accessibility Fix)
+   ========================================================= */
+
+/* Any container using the light secondary background should force black text */
+[style*="background: var(--bg-secondary)"],
+[style*="background-color: var(--bg-secondary)"],
+[style*="background: white"],
+[style*="background: #ffffff"],
+.bg-white {
+  color: #000000 !important;
+}
+
+/* Ensure all nested text elements inside these containers are also forced to black */
+[style*="background: var(--bg-secondary)"] div,
+[style*="background: var(--bg-secondary)"] p,
+[style*="background: var(--bg-secondary)"] span,
+[style*="background: white"] *,
+.bg-white * {
+  color: #000000 !important;
+}
