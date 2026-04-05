@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Course Player â€” Clinch Works</title>
+  <title>Course Player Ã¢â‚¬â€ Clinch Works</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -134,29 +134,36 @@
   <div class="pt-24 min-h-screen">
     <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
       <div class="max-w-4xl mx-auto px-5 sm:px-6">
+    <div class="player-wrapper">
+      <div class="player-inner">
         <div id="player-container" class="section-reveal visible">
-          <div class="flex justify-between items-center mb-3">
-            <h2 id="course-name" class="text-sm font-mono" style="color: var(--accent);">Course System</h2>
-            <div class="text-right flex flex-col items-end gap-1">
-              <div id="progress" class="text-xs font-mono" style="color: var(--text-faint);">Module 1 of 1</div>
-              <div id="progress-percent" class="text-xs font-mono font-medium" style="color: var(--accent);">Progress: 0%</div>
-            </div>
-          </div>
-          <div class="w-full h-1.5 rounded-full mb-8 overflow-hidden bg-white/5">
-            <div id="progress-bar" class="h-full transition-all duration-500 ease-out" style="width: 0%; background: var(--accent);"></div>
-          </div>
-          
-                    <div class="course-container section-reveal visible">
-            <div class="course-card">
-              <h1 id="module-title" class="text-3xl font-bold">Loading...</h1>
-              <div id="module-content" class="text-base leading-relaxed">
-                Initializing modules...
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div id="breadcrumb" class="breadcrumb m-0">Training <span>/</span> Programming <span>/</span> Course</div>
+            <div class="w-full sm:w-48">
+              <div class="flex justify-between text-[10px] font-bold uppercase tracking-wider mb-1 opacity-60">
+                <span id="progress-percent">Progress: 0%</span>
+                <span id="progress">Module 1/1</span>
+              </div>
+              <div class="progress-meter">
+                <div id="progress-bar" class="progress-fill" style="width: 0%"></div>
               </div>
             </div>
           </div>
           
-          <div class="flex justify-between items-center">
-            <button id="btn-prev" class="px-6 py-3 rounded-lg border font-medium text-sm transition-all hover:bg-white/5" style="border-color: var(--cta-border); color: var(--text-primary);">
+                    <div class="module-card shadow-2xl">
+            <div class="module-header">
+              <h1 id="module-title" class="text-3xl sm:text-4xl font-bold mb-4" style="color: #0b1220; line-height: 1.2;">Loading...</h1>
+              <div id="module-meta" class="flex flex-wrap gap-2">
+                <!-- Meta items injected here -->
+              </div>
+            </div>
+            <div id="module-content" class="text-lg leading-loose" style="color: #0b1220;">
+              Initializing modules...
+            </div>
+          </div>
+          
+          <div class="flex justify-between items-center mt-8">
+            <button id="btn-prev" class="px-6 py-3 rounded-lg border font-medium text-sm transition-all hover:bg-white/5" style="border-color: var(--cta-border); color: var(--text-secondary);">
               Previous
             </button>
             <button id="btn-next" class="btn-contact px-10 py-3 rounded-lg font-bold text-sm transition-all" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
@@ -165,12 +172,14 @@
           </div>
         </div>
       </div>
+    </div>
+      </div>
     </section>
   </div>
 
     <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
     <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
+      <span class="text-xs font-mono" style="color: var(--footer-text);">Â© 2026 Clinch Works</span>
       <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
     </div>
   </footer>
@@ -228,10 +237,9 @@
         console.error('Failed to load course player', e);
       }
 
-      function renderModule() {
+            function renderModule() {
         const isLastModule = currentModuleIndex === courseData.modules.length - 1;
         
-        // --- Save Progress ---
         localStorage.setItem('course-' + courseId, JSON.stringify({
           currentModule: currentModuleIndex,
           totalModules: courseData.modules.length,
@@ -239,17 +247,31 @@
         }));
 
         const module = courseData.modules[currentModuleIndex];
-        modTitle.textContent = module.title;
-        modTitle.classList.remove('reveal');
-        void modTitle.offsetWidth;
-        modTitle.classList.add('reveal');
         
-                const contentArray = Array.isArray(module.content) ? module.content : module.content.split('\n');
+        // --- Breadcrumb Update ---
+        const bc = document.getElementById('breadcrumb');
+        if (bc) bc.innerHTML = \Training <span>/</span> \ <span>/</span> \\;
+        
+        // --- Meta Items Update ---
+        const meta = document.getElementById('module-meta');
+        if (meta) {
+          meta.innerHTML = \
+            <div class="metadata-item">⏱️ \</div>
+            <div class="metadata-item">🎓 \</div>
+            <div class="metadata-item">📚 Module \</div>
+          \;
+        }
+
+        modTitle.textContent = module.title;
+        
+        const contentArray = Array.isArray(module.content) ? module.content : module.content.split('\n');
         modContent.innerHTML = '';
+        
         contentArray.forEach(line => {
             const raw = line.trim();
             if (!raw) return;
             
+            // --- Code blocks ---
             if (raw.startsWith('<pre')) {
                 const temp = document.createElement('div');
                 temp.innerHTML = raw;
@@ -257,22 +279,49 @@
                 return;
             }
             
+            // --- Callouts Detection ---
+            const calloutTypes = {
+              'Note:': 'info',
+              'Tip:': 'tip',
+              'Warning:': 'warning',
+              'Important:': 'warning'
+            };
+            
+            let matchedType = null;
+            for (const key in calloutTypes) {
+              if (raw.startsWith(key)) {
+                matchedType = calloutTypes[key];
+                break;
+              }
+            }
+            
+            if (matchedType) {
+              const div = document.createElement('div');
+              const keyName = Object.keys(calloutTypes).find(k => raw.startsWith(k));
+              div.className = \callout callout-\\;
+              div.innerHTML = \<span class="callout-label">\</span>\\;
+              modContent.appendChild(div);
+              return;
+            }
+            
+            // --- Standard Content ---
             let text = raw.replace(/<[^>]+>/g, '').trim();
             if (!text) return;
             
             const isHeading = raw.includes('<h3') || raw.includes('<h2') || 
-                              (text.endsWith('?') && text.split(' ').length < 10) || 
+                              (text.endsWith(':') && text.split(' ').length < 10) ||
                               (text.split(' ').length < 10 && !text.endsWith('.'));
                               
             if (isHeading) {
                 const h3 = document.createElement('h3');
-                h3.textContent = text;
-                h3.className = "text-xl font-bold mt-5 mb-2";
+                h3.textContent = text.replace(':', '');
+                h3.className = "text-2xl font-bold mt-10 mb-4";
+                h3.style.color = "#0b1220";
                 modContent.appendChild(h3);
             } else {
                 const p = document.createElement('p');
                 p.textContent = text;
-                p.className = "mb-4";
+                p.className = "mb-6 opacity-90";
                 modContent.appendChild(p);
             }
         });
@@ -468,15 +517,15 @@
           const certContainer = document.getElementById('cert-render-container');
           const certElement = certContainer.querySelector('.certificate');
 
-          // Replace student name: "Ganesh" â†’ user input
+          // Replace student name: "Ganesh" Ã¢â€ â€™ user input
           const nameEl = certElement.querySelector('.name');
           if (nameEl) nameEl.textContent = studentName;
 
-          // Replace course title: "Cyber Security & Ethical Hacking" â†’ course title
+          // Replace course title: "Cyber Security & Ethical Hacking" Ã¢â€ â€™ course title
           const courseEl = certElement.querySelector('.course');
           if (courseEl) courseEl.textContent = courseData.title;
 
-          // Replace certificate ID: "CW-2026-0001" â†’ dynamic ID
+          // Replace certificate ID: "CW-2026-0001" Ã¢â€ â€™ dynamic ID
           const certIdEl = certElement.querySelector('.cert-id');
           if (certIdEl) certIdEl.textContent = 'ID: ' + certID;
 
@@ -552,14 +601,14 @@
             + '<p style="font-size:1.25rem; margin-bottom:1.5rem;">Congratulations, ' + studentName + '.</p>'
             + '<p style="color:var(--text-faint);">Your verified certificate for <strong>' + courseData.title + '</strong> has been generated and downloaded.</p>'
             + '<p style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-faint); opacity:0.7;">Certificate ID: ' + certID + '</p>'
-            + '<div style="margin-top:2rem;"><a href="training.html" style="color:var(--accent); font-weight:600;">â† Browse More Programs</a></div>'
+            + '<div style="margin-top:2rem;"><a href="training.html" style="color:var(--accent); font-weight:600;">Ã¢â€ Â Browse More Programs</a></div>'
             + '</div>';
           btnPrev.style.display = 'none';
           btnNext.style.display = 'none';
 
         } catch (err) {
           console.error('Certificate generation failed:', err);
-          btnNext.textContent = 'Error â€” Click to Retry';
+          btnNext.textContent = 'Error Ã¢â‚¬â€ Click to Retry';
           btnNext.disabled = false;
           btnNext.style.opacity = '1';
         }
@@ -568,6 +617,7 @@
   </script>
 </body>
 </html>
+
 
 
 

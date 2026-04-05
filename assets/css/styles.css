@@ -815,42 +815,140 @@ p {
        COURSE PLAYER STRICT LAYOUT ENFORCEMENT
    ========================================================= */
 
-.course-container {
+.player-wrapper {
+  width: 100%;
+  padding: 40px 20px;
   display: flex;
   justify-content: center;
-  padding: 40px 16px;
 }
 
-.course-card {
+.player-inner {
   width: 100%;
-  max-width: 900px;
-  background: #F1AF2C;
-  border-radius: 16px;
-  padding: 30px;
+  max-width: 900px;   /* THIS CONTROLS YOUR YELLOW BOX SIZE */
 }
 
-.course-card p {
+.module-card {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 16px;
+  background: #F1AF2C;
+  padding: 30px;
+  margin: 0 auto;
+}
+
+.module-card * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+pre {
+  overflow-x: auto;
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.module-card p {
   line-height: 1.6;
   max-width: 800px;
 }
 
-pre {
-  background: #1e293b;
-  border-radius: 10px;
-  padding: 16px;
-  overflow-x: auto;
-}
-
-.course-card * {
-  max-width: 100%;
-  word-wrap: break-word;
-}
-
-.course-card h1 {
+.module-card h1 {
   margin-bottom: 16px;
+  color: #0b1220 !important;
 }
 
-.course-card h3 {
+.module-card h3 {
   margin-top: 20px;
   margin-bottom: 8px;
+  color: #0b1220 !important;
+}
+
+.module-card p {
+  color: #0b1220 !important;
+}
+
+/* =========================================================
+       NETACAD-INSPIRED CONTENT ENHANCEMENTS
+   ========================================================= */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  color: #0b1220;
+  opacity: 0.6;
+}
+
+.breadcrumb span {
+  opacity: 0.4;
+}
+
+.module-header {
+  border-bottom: 2px solid rgba(11, 18, 32, 0.1);
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.metadata-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0b1220;
+  background: rgba(11, 18, 32, 0.05);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* Callout Boxes */
+.callout {
+  margin: 25px 0;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 5px solid;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.callout-info {
+  border-left-color: #0891b2;
+}
+
+.callout-tip {
+  border-left-color: #22c55e;
+}
+
+.callout-warning {
+  border-left-color: #ef4444;
+}
+
+.callout-label {
+  display: block;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+/* Progress Enhancements */
+.progress-meter {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F1AF2C, #FFD700);
+  box-shadow: 0 0 10px rgba(241, 175, 44, 0.5);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
