@@ -22,14 +22,14 @@
   }
 
   /**
-   * Hover-Based Secondary Navigation
+   * Hover-Based Secondary Navigation (Full-Width)
    */
   function initHoverNav() {
     const navItems = document.querySelectorAll('.nav-has-dropdown');
-    const subNavContainer = document.getElementById('sub-nav-container');
+    const secondaryNav = document.getElementById('secondary-nav');
     const dropdownContents = document.querySelectorAll('.dropdown-content');
 
-    if (!subNavContainer) return;
+    if (!secondaryNav) return;
 
     let hideTimeout;
 
@@ -39,6 +39,7 @@
         clearTimeout(hideTimeout);
         
         // Hide all dropdowns
+        dropdownContents.forEach(el => el.classList.remove('flex'));
         dropdownContents.forEach(el => el.classList.add('hidden'));
         
         // Show target dropdown
@@ -47,32 +48,33 @@
         
         if (targetContent) {
           targetContent.classList.remove('hidden');
+          targetContent.classList.add('flex'); // Ensure horizontal layout
           
           // Show container
-          subNavContainer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-          subNavContainer.classList.add('opacity-100', 'translate-y-0');
+          secondaryNav.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+          secondaryNav.classList.add('opacity-100', 'translate-y-0');
         }
       });
 
       // Start hide timer when leaving the nav item
       item.addEventListener('mouseleave', () => {
         hideTimeout = setTimeout(() => {
-          subNavContainer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-          subNavContainer.classList.remove('opacity-100', 'translate-y-0');
-        }, 150); // slight delay for smooth transition
+          secondaryNav.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+          secondaryNav.classList.remove('opacity-100', 'translate-y-0');
+        }, 200); // 200ms delay for smooth transition and flicker prevention
       });
     });
 
-    // Keep sub-nav visible while hovering over the sub-nav itself
-    subNavContainer.addEventListener('mouseenter', () => {
+    // Keep secondary-nav visible while hovering over the nav itself
+    secondaryNav.addEventListener('mouseenter', () => {
       clearTimeout(hideTimeout);
     });
 
-    subNavContainer.addEventListener('mouseleave', () => {
+    secondaryNav.addEventListener('mouseleave', () => {
       hideTimeout = setTimeout(() => {
-        subNavContainer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-        subNavContainer.classList.remove('opacity-100', 'translate-y-0');
-      }, 150);
+        secondaryNav.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+        secondaryNav.classList.remove('opacity-100', 'translate-y-0');
+      }, 200);
     });
   }
 
