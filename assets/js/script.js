@@ -1,6 +1,6 @@
 /**
  * ClinchWorks Modular Script Core
- * Handles Theme, Navigation, Component Loading, and UI Interactions
+ * Handles Navigation, Hover Dropdowns, and UI Interactions
  */
 
 (function () {
@@ -10,62 +10,69 @@
     initApp();
   });
 
-  async function initApp() {
-    // 1. Identify context (base path)
-    const isRoot = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
-    const basePath = isRoot ? '' : '../';
-
-    // 2. Load Global Components
-    
-
-    // 3. Initialize Shared Handlers
-    
+  function initApp() {
+    initHoverNav();
     initMobileMenu();
     initScrollEffects();
     initRevealAnimations();
     initSmoothScroll();
     
-    // 4. Update Active Nav State
     updateActiveNav();
     window.addEventListener('scroll', updateActiveNav, { passive: true });
   }
 
   /**
-   * Dynamically fetches and injects components (Navbar, Footer)
+   * Hover-Based Secondary Navigation
    */
-  components/navbar.html`);
-        let html = await response.text();
-        // Dynamic path replacement for subdirectories
-        header.innerHTML = html.replace(/{basePath}/g, basePath);
-      } catch (err) {
-        console.error('Failed to load navbar:', err);
-      }
-    }
+  function initHoverNav() {
+    const navItems = document.querySelectorAll('.nav-has-dropdown');
+    const subNavContainer = document.getElementById('sub-nav-container');
+    const dropdownContents = document.querySelectorAll('.dropdown-content');
 
-    if (footer) {
-      try {
-        const response = await fetch(`${basePath}components/footer.html`);
-        let html = await response.text();
-        footer.innerHTML = html;
-      } catch (err) {
-        console.error('Failed to load footer:', err);
-      }
-    }
-  }
+    if (!subNavContainer) return;
 
-  /**
-   * Theme Management
-   */
-   else {
-        html.removeAttribute('data-theme');
-      }
-      
-    };
+    let hideTimeout;
 
-    const getCurrentTheme = () => html.hasAttribute('data-theme') ? 'dark' : 'light';
+    // Show appropriate dropdown on hover
+    navItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        clearTimeout(hideTimeout);
+        
+        // Hide all dropdowns
+        dropdownContents.forEach(el => el.classList.add('hidden'));
+        
+        // Show target dropdown
+        const targetId = item.getAttribute('data-target');
+        const targetContent = document.getElementById(targetId);
+        
+        if (targetContent) {
+          targetContent.classList.remove('hidden');
+          
+          // Show container
+          subNavContainer.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+          subNavContainer.classList.add('opacity-100', 'translate-y-0');
+        }
+      });
 
-    themeToggle.addEventListener('click', () => {
-      setTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
+      // Start hide timer when leaving the nav item
+      item.addEventListener('mouseleave', () => {
+        hideTimeout = setTimeout(() => {
+          subNavContainer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+          subNavContainer.classList.remove('opacity-100', 'translate-y-0');
+        }, 150); // slight delay for smooth transition
+      });
+    });
+
+    // Keep sub-nav visible while hovering over the sub-nav itself
+    subNavContainer.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimeout);
+    });
+
+    subNavContainer.addEventListener('mouseleave', () => {
+      hideTimeout = setTimeout(() => {
+        subNavContainer.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+        subNavContainer.classList.remove('opacity-100', 'translate-y-0');
+      }, 150);
     });
   }
 
@@ -136,8 +143,6 @@
    */
   function updateActiveNav() {
     const navItems = document.querySelectorAll('.top-nav-item');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileNavItems = mobileMenu ? mobileMenu.querySelectorAll('a[data-section]') : [];
     const sections = document.querySelectorAll('section[id]');
 
     let current = '';
@@ -149,7 +154,6 @@
     });
 
     navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
-    mobileNavItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
   }
 
   /**
@@ -177,5 +181,3 @@
   }
 
 })();
-
-

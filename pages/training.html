@@ -12,72 +12,99 @@
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
 
   <link rel="stylesheet" href="../assets/css/styles.css" />
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-<style>
-  /* Force professional, smooth rendering for logos similar to premium SaaS products */
-  img[src*='logo.png'], img[src*='favicon'] {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges; /* fallback */
-    image-rendering: auto;
-    object-fit: contain;
-    shape-rendering: geometricPrecision;
-  }
-</style>
+
+
+
+
+
+
+
+
+
+
+
+  <style>
+    /* Force professional, smooth rendering for logos similar to premium SaaS products */
+    img[src*='logo.png'],
+    img[src*='favicon'] {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      /* fallback */
+      image-rendering: auto;
+      object-fit: contain;
+      shape-rendering: geometricPrecision;
+    }
+  </style>
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon1.png?v=2">
   <link rel="shortcut icon" href="../assets/favicon/favicon1.png?v=2">
   <link rel="apple-touch-icon" href="../assets/favicon/favicon1.png?v=2">
 </head>
 
 <body>
-<header id="header" class="fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative">
-      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      
+      <!-- LOGO (Left Aligned) -->
+      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
         </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-1" style="color: #c9a84c;">Clinch Works</span>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
       </a>
-      <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
-        <ul class="flex items-center gap-1 sm:gap-2">
-          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="about">About</a></li>
-          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="services">Services</a></li>
-          <li><a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="training">Training</a></li>
-          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="projects">Projects</a></li>
+
+      <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(241,175,44,0.3);">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="training.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
+          <li class="nav-item-wrapper"><a href="projects.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
         </ul>
       </nav>
-      <div class="flex items-center gap-2 sm:gap-3 z-10 lg:absolute lg:right-8">
-        <button id="theme-toggle" class="theme-toggle flex items-center justify-center" aria-label="Toggle theme">
+
+      <!-- RIGHT ACTIONS (Right Aligned) -->
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
           <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
         </button>
-        <a href="mailto:paladuguganeshnaidu@gmail.com" class="flex items-center justify-center text-xs sm:text-sm font-semibold" style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 6px 16px;">Support</a>
-        <button id="hamburger" class="hamburger lg:hidden" aria-label="Open menu"><span></span><span></span><span></span></button>
+        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+      <!-- SECONDARY NAVIGATION MENU (Hover Dropdown) -->
+      <div id="sub-nav-container" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] min-w-[450px] flex justify-center">
+        <div class="glass-strong rounded-full px-6 py-3 shadow-md w-max" style="border: 1px solid rgba(241,175,44,0.4); background: rgba(255,255,255,0.98);">
+          
+          <!-- Services Options -->
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center gap-6 m-0 p-0">
+            <li><a href="services.html" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="services.html" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Social Media</a></li>
+            <li><a href="services.html" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Web Design</a></li>
+            <li><a href="services.html" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Video & Graphics</a></li>
+          </ul>
+
+          <!-- Training Options -->
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center gap-6 m-0 p-0">
+            <li><a href="domain.html?category=Programming" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain.html?category=Cyber%20Security" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Cyber Security</a></li>
+            <li><a href="training.html" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+
+          <!-- Real Estate Options -->
+          <ul id="dropdown-realestate" class="dropdown-content hidden flex-row items-center gap-6 m-0 p-0">
+            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Residential Properties</a></li>
+            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Commercial Spaces</a></li>
+            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F1AF2C] transition-colors" style="color: #0b1220;">Consulting</a></li>
+          </ul>
+
+        </div>
       </div>
     </div>
   </header>
-  
-
-    
-    <a href="training.html" data-section="training">Training</a>
-    <div class="flex flex-col w-full items-center gap-1 mb-1">
-      <a href="domain.html?category=Programming" class="text-sm py-2" style="color: var(--text-secondary);">— Programming</a>
-      <a href="domain.html?category=Cyber%20Security" class="text-sm py-2" style="color: var(--text-secondary);">— Cyber Security</a>
-    </div>
-    <a href="projects.html" data-section="projects">Projects</a>
-    <a href="contact.html" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
-      →</a>
   </div>
 
   <div class="pt-24 min-h-screen">
@@ -145,9 +172,9 @@
 
   </div>
 
-    <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
     <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
+      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
       <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
     </div>
   </footer>
@@ -156,15 +183,8 @@
   <!-- ========================================
        JAVASCRIPT
   ======================================== -->
-  
+
 
 </body>
 
 </html>
-
-
-
-
-
-
-
