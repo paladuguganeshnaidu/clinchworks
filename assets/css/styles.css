@@ -534,3 +534,100 @@ footer,
   font-size: 0.875rem;
   line-height: 1.6;
 }
+/* =========================================================
+       PREMIUM BRANDING OVERRIDES
+   ========================================================= */
+
+:root {
+  --primary: #F1AF2C;
+  --text-main: #FFFFFF;
+  --bg-main: #0b1220;
+  --glass-bg-accent: rgba(11, 18, 32, 0.7);
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --card-glass: rgba(255, 255, 255, 0.05);
+}
+
+/* Global Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main) !important;
+}
+
+p, span, div {
+  /* Targeted subtext smoothing */
+  &[style*="var(--text-secondary)"], 
+  &[style*="var(--text-faint)"],
+  &[style*="var(--text-muted)"] {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+}
+
+/* Navbar Enhancement */
+#header.scrolled {
+  background: var(--glass-bg-accent) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-soft) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Nav Links */
+.top-nav-item {
+  color: rgba(255, 255, 255, 0.7) !important;
+  position: relative;
+  transition: 0.3s ease !important;
+}
+
+.top-nav-item:hover, 
+.top-nav-item.active {
+  color: var(--primary) !important;
+}
+
+.top-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--primary);
+  transition: 0.3s ease;
+}
+
+.top-nav-item:hover::after,
+.top-nav-item.active::after {
+  width: 100%;
+}
+
+/* Button Improvements */
+.btn-contact, 
+button[id*="btn"], 
+a[class*="btn-"] {
+  background: var(--primary) !important;
+  color: #0b1220 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  transition: 0.25s ease !important;
+  font-weight: 600 !important;
+}
+
+.btn-contact:hover, 
+button[id*="btn"]:hover, 
+a[class*="btn-"]:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(241, 175, 44, 0.3) !important;
+  background: #e5a52a !important; /* Slightly deeper gold on hover */
+}
+
+/* Card (service-card) Improvement */
+.service-card {
+  background: var(--card-glass) !important;
+  border: 1px solid var(--border-soft) !important;
+  backdrop-filter: blur(4px);
+  transition: 0.3s ease !important;
+}
+
+.service-card:hover {
+  transform: translateY(-5px) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}

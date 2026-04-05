@@ -7,31 +7,7 @@
   <title>Training Path — Clinch Works</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-          },
-        }
-      }
-    }
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <script>
-      (function () {
-        const saved = localStorage.getItem('clinch-theme');
-        if (saved === 'dark') {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      })();
-  </script>
+  
 
   <link rel="stylesheet" href="../assets/css/styles.css" />
   
@@ -62,50 +38,9 @@
 
 <body>
 
-  <header id="header" class="fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative">
-      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-          <img src="../assets/images/logo.png" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
-        </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide transition-colors ml-1" style="color: #c9a84c;">Clinch Works</span>
-      </a>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50"></header>
 
-      <nav id="top-nav" class="top-nav glass-strong rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 hidden lg:block">
-        <ul class="flex items-center gap-1 sm:gap-2">
-          <li><a href="../index.html#about" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="about">About</a></li>
-          <li><a href="services.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="services">Services</a></li>
-          <li class="relative group">
-            <a href="training.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="training">Training <span class="text-xs opacity-50 ml-1">▼</span></a>
-            <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[99]">
-              <div class="glass-strong rounded-xl p-2 w-48 shadow-xl flex flex-col gap-1" style="background: var(--bg-primary); border: 1px solid var(--border-color);">
-                <a href="domain.html?category=Programming" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Programming</a>
-                <a href="domain.html?category=Cyber%20Security" class="block px-4 py-2 text-sm rounded-lg transition-colors hover:text-[var(--accent)]" style="color: var(--text-secondary);">Cyber Security</a>
-              </div>
-            </div>
-          </li>
-          <li><a href="projects.html" class="top-nav-item block px-4 py-1.5 text-sm font-medium rounded-xl" data-section="projects">Projects</a></li>
-        </ul>
-      </nav>
-
-      <div class="flex items-center gap-2 sm:gap-3 z-10 lg:absolute lg:right-8">
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-          <svg class="icon-moon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
-          <svg class="icon-sun" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg>
-        </button>
-        <button id="hamburger" class="hamburger lg:hidden" aria-label="Open menu"><span></span><span></span><span></span></button>
-      </div>
-    </div>
-  </header>
-
-  <div id="mobile-menu" class="mobile-menu lg:hidden">
-    <a href="../index.html#about" data-section="about">About</a>
-    <a href="services.html" data-section="services">Services</a>
-    <a href="training.html" data-section="training">Training</a>
-    <div class="flex flex-col w-full items-center gap-1 my-1">
-      <a href="domain.html?category=Programming" class="text-sm py-2" style="color: var(--text-secondary);">— Programming</a>
-      <a href="domain.html?category=Cyber%20Security" class="text-sm py-2" style="color: var(--text-secondary);">— Cyber Security</a>
-    </div>
+  
     <a href="projects.html" data-section="projects">Projects</a>
   </div>
 
@@ -128,11 +63,7 @@
     </section>
   </div>
 
-  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
-    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
-    </div>
-  </footer>
+  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);"></footer>
 
   <script src="../assets/js/script.js"></script>
   <script>
@@ -174,6 +105,7 @@
   </script>
 </body>
 </html>
+
 
 
 

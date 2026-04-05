@@ -7,31 +7,7 @@
   <title>Final Exam — Clinch Works</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-          },
-        }
-      }
-    }
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <script>
-      (function () {
-        const saved = localStorage.getItem('clinch-theme');
-        if (saved === 'dark') {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      })();
-  </script>
+  
 
   <link rel="stylesheet" href="../assets/css/styles.css" />
   
@@ -62,18 +38,7 @@
 
 <body>
 
-  <header id="header" class="fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:justify-center relative border-b border-white/5 bg-[var(--bg-primary)]">
-      <a href="../index.html" class="flex items-center gap-0 group z-10 lg:absolute lg:left-8">
-        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-          <img src="../assets/images/logo.png" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
-        </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide transition-colors ml-1" style="color: #c9a84c;">Clinch Works</span>
-      </a>
-      <!-- Stripped down nav for exam mode to prevent accidental navigation -->
-      <div class="hidden lg:block text-sm font-mono opacity-50">Secure Exam Environment</div>
-    </div>
-  </header>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50"></header>
 
   <div class="pt-24 min-h-screen">
     <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
@@ -250,6 +215,7 @@
   </script>
 </body>
 </html>
+
 
 
 
