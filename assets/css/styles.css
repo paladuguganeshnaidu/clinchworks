@@ -589,3 +589,39 @@ p {
 [style*="rgba(255, 255, 255, 0.6)"] {
   color: rgba(255, 255, 255, 0.8) !important;
 }
+/* =========================================================
+       ULTIMATE VISIBILITY & BRANDING (W & Y)
+   ========================================================= */
+
+/* Force White for all primary text (W) */
+h1, h2, h3, h4, h5, h6, .text-primary {
+  color: #FFFFFF !important;
+}
+
+/* Force specific Yellow accent (F1AF2C) for highlights (Y) */
+.accent, 
+.text-accent, 
+[style*="--accent"],
+svg:not([fill="none"]),
+.top-nav-item:hover,
+.top-nav-item.active {
+  color: #F1AF2C !important;
+  stroke: #F1AF2C !important;
+}
+
+/* Fix for buttons matching the Y theme */
+.btn-contact, .btn-primary, button[id*="btn"] {
+  background-color: #F1AF2C !important;
+  color: #0b1220 !important;
+  font-weight: 700 !important;
+}
+
+/* Background consistency */
+body {
+  background-color: #0b1220 !important;
+}
+
+/* Fix for standard subtext to bridge W and background */
+p, .text-secondary {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
