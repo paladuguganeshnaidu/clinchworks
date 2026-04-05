@@ -692,3 +692,26 @@ button:hover, .btn:hover {
   color: #000000 !important;
 }
 
+
+/* =========================================================
+       CORE REVEAL ANIMATIONS (Fix for Hidden Cards)
+   ========================================================= */
+
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.section-reveal.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Fallback for cases where JS fails */
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
