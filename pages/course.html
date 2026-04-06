@@ -284,7 +284,7 @@
       }
       
       error.classList.add("hidden");
-      localStorage.setItem("clinch-username", nameInput);
+      localStorage.setItem("cert_student_name", nameInput);
       window.location.href = `player?id=${currentCourseId}`;
     });
 
@@ -308,7 +308,8 @@
         document.getElementById('course-level').textContent = courseData.level;
         document.getElementById('course-duration').textContent = courseData.duration;
         document.getElementById('module-count').textContent = `${courseData.modules.length} Modules`;
-        document.getElementById('btn-start').href = `player.html?id=${courseData.id}`;
+        document.getElementById('btn-start').href = "javascript:void(0)";
+        document.getElementById('btn-start').onclick = () => openNameModal(courseData.id);
 
         const list = document.getElementById('module-list');
         list.innerHTML = '';
@@ -323,7 +324,7 @@
                  </div>
                  <div class="flex-1">
                     <h4 class="font-black text-slate-900 uppercase tracking-tight text-lg mb-1">${mod.title}</h4>
-                    <p class="text-slate-800 text-[10px] font-bold uppercase tracking-widest">Interactive Component Ready</p>
+                    <p class="text-slate-800 text-[10px] font-bold uppercase tracking-widest">${mod.videos ? mod.videos.length : '0'} Interactive Lessons</p>
                  </div>
               </div>
            `;

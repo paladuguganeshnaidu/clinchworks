@@ -241,7 +241,7 @@
         // Nav
         btnPrev.disabled = currentModuleIndex === 0;
         btnNext.innerHTML = isLast ? 'Take Final Assessment' : 'Continue <span>&rarr;</span>';
-        btnNext.onclick = isLast ? () => window.location.href = `exam.html?id=${courseId}` : () => { currentModuleIndex++; renderModule(); };
+        btnNext.onclick = isLast ? () => window.location.href = `exam?id=${courseId}` : () => { currentModuleIndex++; renderModule(); };
         btnPrev.onclick = () => { currentModuleIndex--; renderModule(); };
 
         // Sidebar update
