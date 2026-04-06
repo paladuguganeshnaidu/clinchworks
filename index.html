@@ -52,7 +52,7 @@
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
       <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, );">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-home"><a href="index.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">Home</a></li>
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="pages/services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="pages/domain.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
@@ -73,6 +73,13 @@
       <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
         <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
           
+          <!-- Home Options -->
+          <ul id="dropdown-home" class="dropdown-content hidden flex-row items-center justify-center gap-12 w-full m-0 p-0">
+            <li><a href="index.html#Company" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Company</a></li>
+            <li><a href="index.html#Mission" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Mission</a></li>
+            <li><a href="index.html#Vision" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Vision</a></li>
+            <li><a href="index.html#Leadership" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Leadership</a></li>
+          </ul>
           <!-- Services Options -->
           <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
             <li><a href="pages/google-ads.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
@@ -120,21 +127,83 @@
         Development, Security, Cloud, AI — we solve and deliver real systems.
       </p>
       <div class="mt-8 sm:mt-10 flex justify-center">
-        <a href="#about" class="text-sm px-5 sm:px-6 py-2.5 rounded-lg transition-all duration-300"
+        <a href="#Company" class="text-sm px-5 sm:px-6 py-2.5 rounded-lg transition-all duration-300"
           style="color: var(--cta-text); border: 1px solid var(--cta-border);">
-          Get to Know Our Team ↓
+          Explore ↓
         </a>
       </div>
     </div>
 
     <div class="absolute bottom-0 left-0 right-0 h-24 sm:h-32 hero-fade"></div>
   </section>
+  <!-- ========================================
+       HOME / COMPANY, MISSION, VISION SECTION
+  ======================================== -->
+  <section id="company-mission-vision" class="relative pt-4 pb-16 sm:pt-8 sm:pb-24 lg:pt-12 lg:pb-32">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6">
+      <div class="flex flex-col gap-8 sm:gap-10">
+        <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight" style="color: var(--text-primary);">
+        Company 
+        </h2>
+        <!-- Company Card -->
+        <div id="Company" class="service-card section-reveal rounded-2xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold" style="color: var(--text-primary);">
+            Company
+          </h1>
+          <p class="text-sm sm:text-base leading-relaxed mb-8" style="color: var(--text-secondary);text-size-adjust: bold;">
+            <strong>To deliver reliable, high‑quality software solutions across every technical domain—using AI as an accelerator, not a crutch—while building long‑term trust through practical services like web development, training, and maintenance</strong>
+            <br>
+            <!-- image should be here -->
+            <br>The mission of ClinchWorks is very straightforward: get the job done, and get it done right. No matter what kind of software problem a customer has—building a website, securing company data, automating daily reports, or connecting cloud systems—ClinchWorks will provide a working solution.Why is AI mentioned? Because many companies use AI to replace thinking or to deliver incomplete work quickly. ClinchWorks does the opposite. AI is used only to handle boring, repeatable work so that the real engineering work gets more attention. This means the customer gets faster delivery without losing quality.The mission also says that ClinchWorks starts with everyday services like web development, training, and maintenance. Why? Because those are the services that build trust. A customer can start with a small website or a short training session, see the quality, and then trust ClinchWorks with larger, more complex projects. That is how long‑term trust is built—one small success at a time.
+          </div>
 
+        <!-- Mission Card -->
+        <div id="Mission" class="service-card section-reveal rounded-2xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold" style="color: var(--text-primary);">
+            Mission<span style="color: var(--accent);">.</span>
+          </h1>
+          <p class="text-sm sm:text-base leading-relaxed mb-8" style="color: var(--text-secondary);">
+          <strong>To deliver reliable, high‑quality software solutions across every technical domain—using AI as an accelerator, not a crutch—while building long‑term trust through practical services like web development, training, and maintenance.</strong>  
+          <!-- image should be here -->
+           <br>
+           <br>
+           The mission of ClinchWorks is very straightforward: get the job done, and get it done right. No matter what kind of software problem a customer has—building a website, securing company data, automating daily reports, or connecting cloud systems—ClinchWorks will provide a working solution.
+Why is AI mentioned? Because many companies use AI to replace thinking or to deliver incomplete work quickly. ClinchWorks does the opposite. AI is used only to handle boring, repeatable work so that the real engineering work gets more attention. This means the customer gets faster delivery without losing quality.
+The mission also says that ClinchWorks starts with everyday services like web development, training, and maintenance. Why? Because those are the services that build trust. A customer can start with a small website or a short training session, see the quality, and then trust ClinchWorks with larger, more complex projects. That is how long‑term trust is built—one small success at a time.
+        </p>
+        </div>
+
+        <!-- Vision Card -->
+        <div id="Vision" class="service-card section-reveal rounded-2xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+          <div class="flex-grow w-full md:w-2/3 order-2 md:order-1">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold" style="color: var(--text-primary);">
+              Vision<span style="color: var(--accent);">.</span>
+            </h1>
+            <p class="text-sm sm:text-base leading-relaxed mb-8" style="color: var(--text-secondary);">
+            <strong>To become the go‑to execution engine for any software need—recognized for building, securing, optimizing, and scaling systems without limits, and eventually creating proprietary products that solve complex real‑world problems.</strong>  
+            <!-- image should be here -->
+             <br>
+             <br>
+            The vision is what ClinchWorks wants to become in the future. Today, ClinchWorks provides services like web development and maintenance. Tomorrow, ClinchWorks wants to be the first company that customers call when they have a software problem that others say is “too hard,” “too unusual,” or “not our domain."
+“Execution engine” is a simple way of saying: ClinchWorks gets things done. No endless meetings. No passing the work between different teams. ClinchWorks takes the problem, breaks it down, and delivers a working solution end‑to‑end.
+The vision also says ClinchWorks will build, secure, optimize, and scale systems. Let us break that down:
+Build – Create new software from nothing.
+Secure – Make sure data and systems are safe from attacks.
+Optimize – Make existing software run faster and cheaper.
+Scale – Make software handle more users, more data, or more tasks without breaking.
+And finally, the vision says ClinchWorks will create its own products. That means not just building for other businesses, but also inventing new solutions that solve real‑world problems—and selling those solutions directly.
+          </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
 
 
   <!-- ========================================
-       ABOUT / TEAM SECTION
+       HOME / Leadership SECTION
   ======================================== -->
   <section id="about" class="relative pt-4 pb-16 sm:pt-8 sm:pb-24 lg:pt-12 lg:pb-32">
     <div class="max-w-5xl mx-auto px-5 sm:px-6">
