@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # 1. Externally redirect direct requests for .html files to the extensionless URL
+    # %{ENV:REDIRECT_STATUS} ^$ ensures it only applies to direct browser requests, preventing infinite loops.
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+
+    # 2. Redirect direct requests for index to the root path /
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteRule ^(.*)index$ /$1 [R=301,L]
+
+    # 3. Internally rewrite extensionless URLs back to .html so the server can serve the file
+    # This only applies if the requested path is not an existing directory or file, but the .html version DOES exist
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
