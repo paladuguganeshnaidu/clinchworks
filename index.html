@@ -35,6 +35,10 @@
 
 
   <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo-transparent.png">
+  <link rel="shortcut icon" href="assets/images/logo-transparent.png">
+  <link rel="apple-touch-icon" href="assets/images/logo-transparent.png">
 </head>
 
 <body>
@@ -43,10 +47,8 @@
 
       <!-- LOGO (Left Aligned) -->
       <a href="index.html" class="flex items-center gap-0 group z-10 w-1/4">
-        <div
-          class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-          <img src="assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo"
-            class="w-[180%] h-[180%] max-w-none object-cover" />
+        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="assets/images/logo.png" alt="Clinch Works Logo" class="h-10 sm:h-12 w-auto object-contain" />
         </div>
         <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch
           Works</span>
@@ -55,11 +57,11 @@
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
       <nav id="top-nav"
         class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
-        style="border: 1px solid rgba(247, 199, 99, );">
+        style="border: 1px solid rgba(247, 200, 99, 0.9);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-home"><a href="index.html"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
-              data-section="about">Home</a></li>
+              data-section="about">About</a></li>
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="pages/services.html"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="services">Services</a></li>
@@ -138,9 +140,13 @@
             <li><a href="pages/domain.html?category=Cyber%20Security"
                 class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="pages/domain.html?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
-            <li><a href="pages/domain.html?category=Artificial%20Intelligence" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="pages/domain.html?category=Database%20Engineering" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a></li>
+            <li><a href="pages/domain.html?category=Cloud"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
+            <li><a href="pages/domain.html?category=Artificial%20Intelligence"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
+            <li><a href="pages/domain.html?category=Database%20Engineering"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
+            </li>
             <li><a href="pages/domain.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">All Courses</a></li>
           </ul>
@@ -337,7 +343,7 @@
               The visionary founder behind ClinchWorks. With a passion for building impactful solutions, I lead the
               company's strategic direction and growth, delivering constant value and driving relentless innovation.
             </p>
-            
+
             <!-- Stats Row -->
             <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
               <div class="px-4 py-3 rounded-xl flex-none inline-block w-max"
@@ -393,7 +399,7 @@
                 class="px-6 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105"
                 style="background: var(--accent); color: var(--bg-primary);">View Projects</a>
               <a href="#Vision" class="px-6 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105"
-                  style="background: var(--accent); color: var(--bg-primary);">Our Vision</a>
+                style="background: var(--accent); color: var(--bg-primary);">Our Vision</a>
             </div>
           </div>
         </div>
