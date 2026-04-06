@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Exam — Clinch Works</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<style>
+  /* Force professional, smooth rendering for logos similar to premium SaaS products */
+  img[src*='logo.png'], img[src*='favicon'] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges; /* fallback */
+    image-rendering: auto;
+    object-fit: contain;
+    shape-rendering: geometricPrecision;
+  }
+</style>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="shortcut icon" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/favicon/favicon1.png?v=2">
+</head>
+
+<body>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      
+      <!-- LOGO (Left Aligned) -->
+      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, );">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
+          <li class="nav-item-wrapper"><a href="projects.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <!-- RIGHT ACTIONS (Right Aligned) -->
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        </button>
+        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+            <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
+      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+          
+          <!-- Services Options -->
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="google-ads.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="social-media-marketing.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
+            <li><a href="website-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
+            <li><a href="video-graphic-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
+            <li><a href="youtube-management.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
+            <li><a href="projects.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
+          </ul>
+
+          <!-- Training Options -->
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-12 w-full m-0 p-0">
+            <li><a href="domain.html?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain.html?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="domain.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+  <div class="pt-24 min-h-screen">
+    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
+      <div class="max-w-3xl mx-auto px-5 sm:px-6">
+        <div class="service-card rounded-2xl p-8 sm:p-12 mb-10 shadow-xl border border-white/10">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="text-xs font-mono px-3 py-1 rounded" style="background: rgba(220, 38, 38, 0.1); color: #ef4444;">EXAM MODE</span>
+          </div>
+          <h1 id="exam-title" class="text-3xl mx-auto font-bold mb-4" style="color: var(--text-primary);">Course Final Exam</h1>
+          <p class="mb-10 text-sm md:text-base leading-relaxed border-b pb-8" style="color: var(--text-faint); border-color: var(--border-color, rgba(255,255,255,0.1));">
+            You must pass this final assessment with a score of <strong>at least 60%</strong> to unlock and download your completion certificate. The exam consists of 15 multiple-choice questions and 2 written coding responses.
+          </p>
+
+          <form id="exam-form" class="space-y-10">
+            <div id="questions-container" class="space-y-10"></div>
+            
+            <div id="result-box" class="hidden p-6 rounded-xl border font-mono text-sm"></div>
+            
+            <div class="flex flex-col sm:flex-row items-center gap-4 pt-6" style="border-top: 1px solid var(--border-color, rgba(255,255,255,0.1));">
+              <button type="submit" id="btn-submit" class="inline-block text-sm px-10 py-4.5 rounded-lg font-bold transition-all border w-full sm:w-auto" style="background: var(--accent); border-color: var(--accent); color: var(--bg-primary);">
+                Submit Final Exam
+              </button>
+              <button type="button" id="btn-return" class="hidden inline-block text-sm px-10 py-4.5 rounded-lg font-bold transition-all border w-full sm:w-auto" style="background: transparent; border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--text-primary);">
+                Return to Player
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get('id');
+      
+      if (!courseId) {
+        document.getElementById('exam-title').textContent = "Invalid Course ID";
+        return;
+      }
+
+      let mcqs = [];
+      let codingQs = [];
+      
+      try {
+        const response = await fetch('../examquestions.json');
+        const examData = await response.json();
+        
+        if (!examData[courseId]) {
+          document.getElementById('exam-title').textContent = "No exam available for this course";
+          document.getElementById('exam-form').style.display = 'none';
+          document.querySelector('p').textContent = "Please return to the course catalog or contact support.";
+          return;
+        }
+        
+        mcqs = examData[courseId].mcq;
+        codingQs = examData[courseId].coding;
+      } catch (err) {
+        document.getElementById('exam-title').textContent = "Failed to load exam data";
+        document.getElementById('exam-form').style.display = 'none';
+        return;
+      }
+
+      const container = document.getElementById('questions-container');
+
+      // Render MCQs
+      mcqs.forEach((mcq, idx) => {
+        const qDiv = document.createElement('div');
+        let optionsHTML = '';
+        mcq.options.forEach((opt, oIdx) => {
+          optionsHTML += `
+            <label class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors hover:bg-white/5" style="border-color: var(--border-color, rgba(255,255,255,0.05));">
+              <input type="radio" name="mcq-${idx}" value="${oIdx}" class="w-4 h-4 text-accent bg-transparent border-[var(--border-color)] focus:ring-accent" required>
+              <span class="text-sm font-medium" style="color: var(--text-secondary);">${opt}</span>
+            </label>
+          `;
+        });
+
+        qDiv.innerHTML = `
+          <div>
+            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${idx + 1}.</span> ${mcq.q}</h3>
+            <div class="space-y-2 pl-6 sm:pl-7">
+              ${optionsHTML}
+            </div>
+          </div>
+        `;
+        container.appendChild(qDiv);
+      });
+
+      // Render Coding/Written Questions
+      codingQs.forEach((cq, idx) => {
+        const qDiv = document.createElement('div');
+        const qNum = mcqs.length + idx + 1;
+        qDiv.innerHTML = `
+          <div>
+            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${qNum}.</span> ${cq.q}</h3>
+            <div class="pl-6 sm:pl-7">
+              <textarea name="${cq.id}" rows="3" class="w-full p-4 rounded-xl border text-sm focus:outline-none focus:ring-1 transition-all resize-y" style="background: var(--bg-primary); border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--text-primary); outline-color: var(--accent);" placeholder="Type answer here..." required></textarea>
+            </div>
+          </div>
+        `;
+        container.appendChild(qDiv);
+      });
+
+      // Form submission
+      const form = document.getElementById('exam-form');
+      const resultBox = document.getElementById('result-box');
+      const btnSubmit = document.getElementById('btn-submit');
+      const btnReturn = document.getElementById('btn-return');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        let score = 0;
+
+        // Check MCQs
+        mcqs.forEach((mcq, idx) => {
+          if (parseInt(formData.get(`mcq-${idx}`)) === mcq.ans) {
+            score++;
+          }
+        });
+
+        // Check Coding
+        codingQs.forEach(cq => {
+          const ans = (formData.get(cq.id) || "").toLowerCase();
+          const hasKeyword = cq.keywords.some(kw => ans.includes(kw));
+          // Either has a keyword, or is just a non-empty string as fallback scoring
+          if (hasKeyword || ans.trim().length > 10) {
+            score++;
+          }
+        });
+
+        const totalQ = mcqs.length + codingQs.length;
+        const percentage = Math.round((score / totalQ) * 100);
+        const passed = percentage >= 60;
+
+        // Save result
+        localStorage.setItem(`exam-${courseId}`, JSON.stringify({
+          score: score,
+          percentage: percentage,
+          passed: passed
+        }));
+
+        resultBox.classList.remove('hidden');
+        if (passed) {
+          resultBox.style.backgroundColor = "rgba(22, 163, 74, 0.1)"; // Success bg
+          resultBox.style.borderColor = "#16a34a";
+          resultBox.innerHTML = `
+            <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Passed ✅</div>
+            You scored ${score}/${totalQ} (${percentage}%). Your certificate has been successfully unlocked.
+          `;
+          btnReturn.textContent = "Download Certificate Now";
+        } else {
+          resultBox.style.backgroundColor = "rgba(220, 38, 38, 0.1)"; // Error bg
+          resultBox.style.borderColor = "#ef4444";
+          resultBox.innerHTML = `
+            <div style="color: #ef4444; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Failed ❌</div>
+            You scored ${score}/${totalQ} (${percentage}%). A minimum of 60% is required to pass.
+          `;
+          btnReturn.textContent = "Return to Course";
+          btnSubmit.textContent = "Retake Exam";
+        }
+
+        btnReturn.classList.remove('hidden');
+        window.scrollTo({ top: resultBox.offsetTop - 100, behavior: 'smooth' });
+      });
+
+      btnReturn.addEventListener('click', () => {
+        window.location.href = `../certificate.html?id=${courseId}`;
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

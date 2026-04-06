@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Player — Clinch Works</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+      (function () {
+        const saved = localStorage.getItem('clinch-theme');
+        if (saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          if (!saved) localStorage.setItem('clinch-theme', 'light');
+        }
+      })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<style>
+  /* Force professional, smooth rendering for logos similar to premium SaaS products */
+  img[src*='logo.png'], img[src*='favicon'] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges; /* fallback */
+    image-rendering: auto;
+    object-fit: contain;
+    shape-rendering: geometricPrecision;
+  }
+</style>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="shortcut icon" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/favicon/favicon1.png?v=2">
+</head>
+
+<body>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      
+      <!-- LOGO (Left Aligned) -->
+      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(241,175,44,0.3);">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="training.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
+          <li class="nav-item-wrapper"><a href="projects.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <!-- RIGHT ACTIONS (Right Aligned) -->
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        </button>
+        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F1AF2C; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+            <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
+      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F1AF2C; border: 1px solid rgba(255,255,255,0.2);">
+          
+          <!-- Services Options -->
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="google-ads.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="social-media-marketing.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
+            <li><a href="website-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
+            <li><a href="video-graphic-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
+            <li><a href="youtube-management.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
+            <li><a href="projects.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
+          </ul>
+
+          <!-- Training Options -->
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-12 w-full m-0 p-0">
+            <li><a href="domain.html?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain.html?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="domain.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+  
+    <a href="projects.html" data-section="projects">Projects</a>
+  </div>
+
+  <div class="pt-24 min-h-screen">
+    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
+      <div class="max-w-4xl mx-auto px-5 sm:px-6">
+        <div id="player-container" class="section-reveal visible">
+          <div class="flex justify-between items-center mb-3">
+            <h2 id="course-name" class="text-sm font-mono" style="color: var(--accent);">Course System</h2>
+            <div class="text-right flex flex-col items-end gap-1">
+              <div id="progress" class="text-xs font-mono" style="color: var(--text-faint);">Module 1 of 1</div>
+              <div id="progress-percent" class="text-xs font-mono font-medium" style="color: var(--accent);">Progress: 0%</div>
+            </div>
+          </div>
+          <div class="w-full h-1.5 rounded-full mb-8 overflow-hidden bg-white/5">
+            <div id="progress-bar" class="h-full transition-all duration-500 ease-out" style="width: 0%; background: var(--accent);"></div>
+          </div>
+          
+          <div class="service-card rounded-2xl p-8 sm:p-12 mb-10 min-h-[400px]">
+            <h1 id="module-title" class="text-3xl font-bold mb-6" style="color: var(--text-primary);">Loading...</h1>
+            <div id="module-content" class="prose prose-invert max-w-none text-base leading-relaxed" style="color: var(--text-faint);">
+              Initializing modules...
+            </div>
+          </div>
+          
+          <div class="flex justify-between items-center">
+            <button id="btn-prev" class="px-6 py-3 rounded-lg border font-medium text-sm transition-all hover:bg-white/5" style="border-color: var(--cta-border); color: var(--text-primary);">
+              Previous
+            </button>
+            <button id="btn-next" class="btn-contact px-10 py-3 rounded-lg font-bold text-sm transition-all" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
+              Next Module
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
+      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/script.js"></script>
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get('id');
+      let currentModuleIndex = 0;
+      let courseData = null;
+      let studentName = '';
+
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const modTitle = document.getElementById('module-title');
+      const modContent = document.getElementById('module-content');
+      const progress = document.getElementById('progress');
+      const courseName = document.getElementById('course-name');
+
+      // --- Prompt for student name on first entry ---
+      studentName = localStorage.getItem('clinch-student-name');
+      if (!studentName) {
+        const input = prompt('Enter name that should be showed on certificate:');
+        studentName = (input && input.trim()) ? input.trim() : 'ClinchWorks Student';
+        localStorage.setItem('clinch-student-name', studentName);
+      }
+
+      try {
+        const response = await fetch('../courses.json');
+        const data = await response.json();
+        courseData = data.courses.find(c => c.id === courseId);
+        
+        if (!courseData) {
+          modTitle.textContent = "Course Not Found";
+          return;
+        }
+
+        courseName.textContent = courseData.title;
+
+        // --- Load Progress ---
+        const savedProgress = localStorage.getItem('course-' + courseId);
+        if (savedProgress) {
+          try {
+            const pData = JSON.parse(savedProgress);
+            if (pData.currentModule < courseData.modules.length) {
+              currentModuleIndex = pData.currentModule;
+            }
+          } catch(e) {}
+        }
+
+        renderModule();
+
+      } catch (e) {
+        console.error('Failed to load course player', e);
+      }
+
+      function renderModule() {
+        const isLastModule = currentModuleIndex === courseData.modules.length - 1;
+        
+        // --- Save Progress ---
+        localStorage.setItem('course-' + courseId, JSON.stringify({
+          currentModule: currentModuleIndex,
+          totalModules: courseData.modules.length,
+          completed: isLastModule
+        }));
+
+        const module = courseData.modules[currentModuleIndex];
+        modTitle.textContent = module.title;
+        modTitle.classList.remove('reveal');
+        void modTitle.offsetWidth;
+        modTitle.classList.add('reveal');
+        
+        const contentArray = Array.isArray(module.content) ? module.content : module.content.split('\n');
+        modContent.innerHTML = contentArray.map(p => {
+          if (p.trim().startsWith('<pre') || p.trim().startsWith('<h2') || p.trim().startsWith('<ul') || p.trim().startsWith('<li') || p.trim().startsWith('<div')) {
+            return p;
+          }
+          return `<p class="mb-4">${p}</p>`;
+        }).join('');
+        
+        initCodeBlocks();
+        progress.textContent = `Module ${currentModuleIndex + 1} of ${courseData.modules.length}`;
+        
+        // --- Progress Display Update ---
+        let percent = Math.round((currentModuleIndex / courseData.modules.length) * 100);
+        if (isLastModule) percent = 100;
+        
+        const progPercent = document.getElementById('progress-percent');
+        const progBar = document.getElementById('progress-bar');
+        if (progPercent) progPercent.textContent = `Progress: ${percent}%`;
+        if (progBar) progBar.style.width = `${percent}%`;
+
+        btnPrev.disabled = currentModuleIndex === 0;
+        btnPrev.style.opacity = btnPrev.disabled ? 0.3 : 1;
+
+        if (currentModuleIndex === courseData.modules.length - 1) {
+          const examData = localStorage.getItem('exam-' + courseId);
+          let passed = false;
+          try { if (examData) passed = JSON.parse(examData).passed; } catch(e){}
+          
+          if (passed) {
+            btnNext.textContent = "Download Certificate";
+            btnNext.onclick = generateCertificate;
+          } else {
+            btnNext.textContent = "Take Final Exam";
+            btnNext.onclick = () => window.location.href = `exam.html?id=${courseId}`;
+          }
+        } else {
+          btnNext.textContent = "Next Module";
+          btnNext.onclick = nextModule;
+        }
+      }
+
+      function nextModule() {
+        if (currentModuleIndex < courseData.modules.length - 1) {
+          currentModuleIndex++;
+          renderModule();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+
+      function initCodeBlocks() {
+        const blocks = modContent.querySelectorAll('pre code');
+        blocks.forEach(block => {
+          const pre = block.parentElement;
+          const container = document.createElement('div');
+          container.className = 'clinch-code-block';
+          pre.parentNode.insertBefore(container, pre);
+
+          const header = document.createElement('div');
+          header.className = 'clinch-code-header';
+
+          const langSpan = document.createElement('span');
+          langSpan.className = 'clinch-code-lang';
+          
+          let langName = 'Code';
+          let ext = 'txt';
+          const langClass = Array.from(block.classList).find(c => c.startsWith('language-'));
+          
+          if (langClass) {
+            const l = langClass.replace('language-', '');
+            const dict = { 'c': ['C', 'c'], 'python': ['Python', 'py'], 'java': ['Java', 'java'], 'js': ['JavaScript', 'js'], 'javascript': ['JavaScript', 'js'], 'html': ['HTML', 'html'], 'css': ['CSS', 'css']};
+            if (dict[l]) {
+              langName = dict[l][0];
+              ext = dict[l][1];
+            } else {
+              langName = l.toUpperCase();
+              ext = l;
+            }
+          }
+
+          langSpan.textContent = langName;
+
+          const actions = document.createElement('div');
+          actions.className = 'clinch-code-actions';
+
+          const btnCopy = document.createElement('button');
+          btnCopy.className = 'clinch-code-btn';
+          btnCopy.title = "Copy code";
+          btnCopy.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
+
+          const btnDown = document.createElement('button');
+          btnDown.className = 'clinch-code-btn';
+          btnDown.title = "Download code";
+          btnDown.innerHTML = `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>`;
+
+          actions.appendChild(btnCopy);
+          actions.appendChild(btnDown);
+          header.appendChild(langSpan);
+          header.appendChild(actions);
+
+          container.appendChild(header);
+          container.appendChild(pre);
+
+          hljs.highlightElement(block);
+
+          if (!langClass && block.result && block.result.language) {
+             langSpan.textContent = block.result.language.toUpperCase();
+             ext = block.result.language;
+          }
+
+          btnCopy.onclick = () => {
+             navigator.clipboard.writeText(block.textContent);
+             const originalHtml = btnCopy.innerHTML;
+             btnCopy.innerHTML = `<svg fill="none" stroke="#22c55e" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
+             setTimeout(() => btnCopy.innerHTML = originalHtml, 2000);
+          };
+
+          btnDown.onclick = () => {
+             const blob = new Blob([block.textContent], { type: 'text/plain' });
+             const url = URL.createObjectURL(blob);
+             const a = document.createElement('a');
+             a.href = url;
+             a.download = `code.${ext}`;
+             a.click();
+             URL.revokeObjectURL(url);
+          };
+        });
+      }
+
+      btnPrev.onclick = () => {
+        if (currentModuleIndex > 0) {
+          currentModuleIndex--;
+          renderModule();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      };
+
+      async function generateCertificate() {
+        // Show loading state
+        btnNext.textContent = 'Generating Certificate...';
+        btnNext.disabled = true;
+        btnNext.style.opacity = '0.6';
+
+        try {
+          // Build dynamic values
+          const today = new Date();
+          const formattedDate = today.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+          const certID = 'CW-' + today.getFullYear() + '-' + String(Math.floor(1000 + Math.random() * 9000));
+
+          // --- STEP 1: Fetch the external certificate.html ---
+          if (!document.getElementById('cert-render-container')) {
+            const certResponse = await fetch('../certificate.html');
+            const certHTML = await certResponse.text();
+
+            // Parse fetched HTML
+            const parser = new DOMParser();
+            const certDoc = parser.parseFromString(certHTML, 'text/html');
+
+            // Extract the <style> block from certificate.html
+            const certStyle = certDoc.querySelector('style');
+
+            // Extract the .certificate div (the entire renderable certificate)
+            const certDiv = certDoc.querySelector('.certificate');
+
+            if (!certStyle || !certDiv) {
+              throw new Error('certificate.html is missing required elements (.certificate div or <style>)');
+            }
+
+            // Create hidden off-screen container
+            const container = document.createElement('div');
+            container.id = 'cert-render-container';
+            container.style.cssText = 'position:absolute; left:-9999px; top:-9999px; z-index:-1;';
+
+            // Inject the Poppins font link (required by certificate.html)
+            const fontLink = document.createElement('link');
+            fontLink.rel = 'stylesheet';
+            fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap';
+            document.head.appendChild(fontLink);
+
+            // Inject scoped style into container
+            // CRITICAL: Strip the body{} rule to prevent it from overriding the player page theme.
+            // Scope all remaining CSS selectors under #cert-render-container so they can't leak.
+            const rawCSS = certStyle.textContent;
+            const scopedCSS = rawCSS
+              .replace(/body\s*\{[^}]*\}/gi, '')  // Remove body{} rule entirely
+              .replace(/(\.[\w-]+)/g, '#cert-render-container $1');  // Scope class selectors
+            const scopedStyle = document.createElement('style');
+            scopedStyle.textContent = scopedCSS;
+            container.appendChild(scopedStyle);
+
+            // Inject the certificate div
+            container.appendChild(certDiv);
+
+            document.body.appendChild(container);
+          }
+
+          // --- STEP 2: Dynamic data replacement ---
+          const certContainer = document.getElementById('cert-render-container');
+          const certElement = certContainer.querySelector('.certificate');
+
+          // Replace student name: "Ganesh" → user input
+          const nameEl = certElement.querySelector('.name');
+          if (nameEl) nameEl.textContent = studentName;
+
+          // Replace course title: "Cyber Security & Ethical Hacking" → course title
+          const courseEl = certElement.querySelector('.course');
+          if (courseEl) courseEl.textContent = courseData.title;
+
+          // Replace certificate ID: "CW-2026-0001" → dynamic ID
+          const certIdEl = certElement.querySelector('.cert-id');
+          if (certIdEl) certIdEl.textContent = 'ID: ' + certID;
+
+          // Replace badge with course level + category
+          const badgeEl = certElement.querySelector('.badge');
+          if (badgeEl) badgeEl.textContent = (courseData.category || 'TRAINING').toUpperCase() + ' | ' + (courseData.level || 'CERTIFIED').toUpperCase();
+
+          // Add completion date below the description
+          const descEl = certElement.querySelector('.desc');
+          if (descEl) {
+            descEl.innerHTML = 'This certifies that the above individual has successfully completed '
+              + 'the training program and demonstrated practical competency in real-world scenarios.'
+              + '<br><span style="display:inline-block; margin-top:8px; font-size:13px; opacity:0.8;">Date: ' + formattedDate + '</span>';
+          }
+
+          // --- STEP 3: Wait for fonts to load ---
+          await document.fonts.ready;
+          await new Promise(resolve => setTimeout(resolve, 400));
+
+          // --- STEP 4: Render certificate to canvas via html2canvas ---
+          // Use null to let html2canvas inherit the certificate's own CSS background
+          const canvas = await html2canvas(certElement, {
+            scale: 3,
+            useCORS: true,
+            backgroundColor: null,
+            logging: false
+          });
+
+          // --- STEP 5: Generate PDF via jsPDF ---
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4'
+          });
+
+          // Calculate aspect ratio to fit certificate perfectly
+          const pageW = 297;
+          const pageH = 210;
+          const certRatio = canvas.width / canvas.height;
+          const pageRatio = pageW / pageH;
+          let drawW, drawH, drawX, drawY;
+
+          if (certRatio > pageRatio) {
+            drawW = pageW;
+            drawH = pageW / certRatio;
+            drawX = 0;
+            drawY = (pageH - drawH) / 2;
+          } else {
+            drawH = pageH;
+            drawW = pageH * certRatio;
+            drawX = (pageW - drawW) / 2;
+            drawY = 0;
+          }
+
+          // Fill background to match certificate's own designed background
+          const certBg = getComputedStyle(certElement).backgroundColor;
+          const rgbMatch = certBg.match(/\d+/g);
+          if (rgbMatch && rgbMatch.length >= 3) {
+            pdf.setFillColor(parseInt(rgbMatch[0]), parseInt(rgbMatch[1]), parseInt(rgbMatch[2]));
+          } else {
+            pdf.setFillColor(17, 24, 39); // fallback to certificate's default #111827
+          }
+          pdf.rect(0, 0, pageW, pageH, 'F');
+
+          pdf.addImage(imgData, 'PNG', drawX, drawY, drawW, drawH);
+          pdf.save('certificate-' + courseId + '.pdf');
+
+          // --- STEP 6: Success UI ---
+          modTitle.textContent = 'Certificate Issued';
+          modContent.innerHTML = '<div style="text-align:center;">'
+            + '<p style="font-size:1.25rem; margin-bottom:1.5rem;">Congratulations, ' + studentName + '.</p>'
+            + '<p style="color:var(--text-faint);">Your verified certificate for <strong>' + courseData.title + '</strong> has been generated and downloaded.</p>'
+            + '<p style="margin-top:0.5rem; font-size:0.85rem; color:var(--text-faint); opacity:0.7;">Certificate ID: ' + certID + '</p>'
+            + '<div style="margin-top:2rem;"><a href="training.html" style="color:var(--accent); font-weight:600;">← Browse More Programs</a></div>'
+            + '</div>';
+          btnPrev.style.display = 'none';
+          btnNext.style.display = 'none';
+
+        } catch (err) {
+          console.error('Certificate generation failed:', err);
+          btnNext.textContent = 'Error — Click to Retry';
+          btnNext.disabled = false;
+          btnNext.style.opacity = '1';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

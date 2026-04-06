@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Path â€” Clinch Works</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<style>
+  /* Force professional, smooth rendering for logos similar to premium SaaS products */
+  img[src*='logo.png'], img[src*='favicon'] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges; /* fallback */
+    image-rendering: auto;
+    object-fit: contain;
+    shape-rendering: geometricPrecision;
+  }
+</style>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="shortcut icon" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/favicon/favicon1.png?v=2">
+</head>
+
+<body>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      
+      <!-- LOGO (Left Aligned) -->
+      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, );">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
+          <li class="nav-item-wrapper"><a href="projects.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <!-- RIGHT ACTIONS (Right Aligned) -->
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        </button>
+        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+            <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
+      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+          
+          <!-- Services Options -->
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="google-ads.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="social-media-marketing.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
+            <li><a href="website-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
+            <li><a href="video-graphic-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
+            <li><a href="youtube-management.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
+            <li><a href="projects.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
+          </ul>
+
+          <!-- Training Options -->
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-12 w-full m-0 p-0">
+            <li><a href="domain.html?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain.html?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="domain.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+  
+    </div>
+
+  <div class="min-h-screen bg-slate-50 pt-32 pb-24">
+    <section class="max-w-6xl mx-auto px-6">
+      <div class="section-reveal visible mb-16 px-4 flex flex-col items-start">
+        <h1 id="category-title" class="text-4xl sm:text-6xl font-black text-slate-900 tracking-tighter mb-6 w-full">
+          Training <span class="text-slate-400">Path</span>
+        </h1>
+        <p id="category-desc" class="text-lg sm:text-xl text-slate-600 max-w-2xl leading-relaxed font-medium w-full">
+          Professional engineering programs designed to master specialized domains through hands-on execution and logic-first training.
+        </p>
+      </div>
+
+      <div id="course-list" class="container-grid">
+        <!-- Dynamically populated by registry -->
+        <div class="col-span-full py-24 text-center">
+          <div class="inline-block w-8 h-8 border-4 border-slate-200 -[#F7C763] rounded-full animate-spin mb-4"></div>
+          <p class="text-slate-400 font-mono text-xs uppercase tracking-widest">Querying Program Registry...</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">© 2026 Clinch Works</span>
+      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/script.js"></script>
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const category = params.get('category');
+      
+      try {
+        const response = await fetch('../courses-content.json');
+        const data = await response.json();
+        
+        // Filter by category if specified, else show all
+        const courses = category 
+          ? data.courses.filter(c => c.category.toLowerCase() === category.toLowerCase())
+          : data.courses;
+
+        if (category) {
+          document.getElementById('category-title').innerHTML = `${category} <span class="text-slate-400">Path</span>`;
+        }
+        
+        const container = document.getElementById('course-list');
+        container.innerHTML = '';
+
+        if (courses.length === 0) {
+          container.innerHTML = `<div class="col-span-full py-24 text-center text-slate-400 italic">No programs found in this category.</div>`;
+          return;
+        }
+
+        courses.forEach(course => {
+          const card = document.createElement('div');
+          card.className = 'group bg-[#F7C763] rounded-[32px] p-10 border border-transparent shadow-xl shadow-slate-200 transition-all duration-300 hover:translate-y-[-8px] hover:shadow-2xl cursor-pointer relative overflow-hidden';
+          card.onclick = () => window.location.href = `course.html?id=${course.id}`;
+          
+          card.innerHTML = `
+            <div class="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-bl-full transform translate-x-12 translate-y-[-12px] group-hover:scale-150 transition-transform duration-500"></div>
+            
+            <div class="flex items-center gap-4 mb-10">
+              <span class="text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 bg-white text-black border border-slate-100 rounded-lg">${course.level}</span>
+              <span class="text-[9px] font-bold text-slate-800 uppercase tracking-widest">${course.duration}</span>
+            </div>
+            
+            <h3 class="text-2xl font-black text-slate-900 mb-6 leading-tight">${course.title}</h3>
+            
+            <p class="text-slate-800 text-sm leading-relaxed mb-10 line-clamp-3">
+              ${course.description}
+            </p>
+            
+            <div class="flex items-center gap-3 text-black font-bold text-xs uppercase tracking-widest pt-6 border-t border-slate-800/10">
+              Explore Roadmap 
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (e) {
+        console.error('Failed to load courses', e);
+      }
+    })();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Clinch Works</title>
+  <meta name="description"
+    content="Clinch Works is a software engineering company specializing in developmentv, cloud, and AI. We solve and deliver real systems." />
+  <meta name="keywords" content="software engineering, web development , cloud, AI, system design, automation" />
+  <meta name="author" content="Clinch Works" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<style>
+  /* Force professional, smooth rendering for logos similar to premium SaaS products */
+  img[src*='logo.png'], img[src*='favicon'] {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges; /* fallback */
+    image-rendering: auto;
+    object-fit: contain;
+    shape-rendering: geometricPrecision;
+  }
+</style>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="shortcut icon" href="../assets/favicon/favicon1.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/favicon/favicon1.png?v=2">
+</head>
+
+<body>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      
+      <!-- LOGO (Left Aligned) -->
+      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+          <img src="../assets/favicon/favicon1.png?v=2" alt="Clinch Works Logo" class="w-[180%] h-[180%] max-w-none object-cover" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, );">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="../index.html#about" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
+          <li class="nav-item-wrapper"><a href="projects.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <!-- RIGHT ACTIONS (Right Aligned) -->
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        </button>
+        <a href="book-call.html" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+            <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
+      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+          
+          <!-- Services Options -->
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="google-ads.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="social-media-marketing.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
+            <li><a href="website-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
+            <li><a href="video-graphic-design.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
+            <li><a href="youtube-management.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
+            <li><a href="projects.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
+          </ul>
+
+          <!-- Training Options -->
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-12 w-full m-0 p-0">
+            <li><a href="domain.html?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain.html?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="domain.html" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </header>
+  
+
+    
+    <a href="domain.html" data-section="training">Training</a>
+    <a href="projects.html" data-section="projects">Projects</a>
+    <a href="contact.html" class="sm:hidden" style="color: var(--accent); margin-top: 1rem;">Contact
+      →</a>
+  </div>
+
+  <div class="pt-24 min-h-screen">
+
+    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        
+        <div class="section-reveal visible">
+          <div class="accent-line mb-4"></div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
+            Premium Website Design & Architecture
+          </h1>
+          <p class="mt-6 text-base sm:text-lg max-w-3xl leading-relaxed" style="color: var(--text-faint);">
+            At ClinchWorks, we develop stunning, responsive user interfaces that transform complex digital architectures into simple, intuitive, and highly authoritative brand experiences.
+          </p>
+          <p class="mt-4 text-base sm:text-lg max-w-3xl leading-relaxed" style="color: var(--text-faint);">
+            Your website is the ultimate anchor of your business credibility. We refuse to use bloated templates, opting instead to build ultra-fast, premium glassmorphic and minimalistic structures that command raw trust immediately.
+          </p>
+        </div>
+
+        <div class="mt-12 sm:mt-16 section-reveal visible w-full max-w-4xl overflow-hidden rounded-2xl" style="border: 1px solid var(--border-color); box-shadow: 0 10px 40px var(--glass-shadow);">
+            <img src="../assets/images/website-design.png" alt="Premium Website Design & Architecture" class="w-full h-auto object-cover max-h-[400px]" style="background: var(--bg-secondary);">
+        </div>
+
+        <div class="mt-16 flex flex-col gap-6">
+          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
+            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">Strategic UI & UX Implementation</h2>
+            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">We design experiences crafted around the user. Removing friction points and guiding potential customers effortlessly toward your core service offerings.</p>
+            <ul class="mt-5 space-y-2 text-sm" style="color: var(--text-muted);">
+            <li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Strict psychological visual hierarchies</span></li>
+<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Aesthetics built explicitly for your brand DNA</span></li>
+<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Fluid interactive micro-animations</span></li>
+            </ul>
+          </div>
+          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
+            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">Universal Responsiveness</h2>
+            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">A flawless experience is mandatory regardless of the hardware. From massive desktop resolutions to the smallest mobile screen, your site operates identically.</p>
+            <ul class="mt-5 space-y-2 text-sm" style="color: var(--text-muted);">
+            <li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Mobile-first architectural workflows</span></li>
+<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Dynamic grid and flex compliance</span></li>
+<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Zero visual breakage across devices</span></li>
+            </ul>
+          </div>
+          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
+            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">High-Performance Web Vitals</h2>
+            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">Slow websites destroy conversions. We enforce ruthless performance budgets ensuring your pages load in fractions of a second to retain absolute attention.</p>
+            <ul class="mt-5 space-y-2 text-sm" style="color: var(--text-muted);">
+            <li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Aggressive asset optimization</span></li>
+<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Asynchronous loading parameters</span></li>
+<li class="flex items-start gap-2"><span style="color: var(--accent); margin-top: 2px;">→</span> <span>Green-zone Core Web Vital scores</span></li>
+            </ul>
+          </div>
+          <div class="service-card section-reveal visible rounded-2xl p-8 lg:p-10">
+            <h2 class="font-bold text-2xl mb-4" style="color: var(--text-primary);">Why Choose ClinchWorks?</h2>
+            <p class="text-[15px] leading-relaxed" style="color: var(--text-faint);">We bridge ultra-premium aesthetics with hardcore engineering, ensuring your website is both visually stunning and technically flawless.</p>
+            
+          </div>
+        </div>
+
+        <div class="mt-16 sm:mt-24 text-center section-reveal visible">
+          <a href="contact.html" class="btn-contact inline-block border text-sm px-8 py-3 rounded-lg font-medium transition-colors">
+            Start Your Project
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+    <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
+      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+    </div>
+  </footer>
+
+
+  <!-- ========================================
+       JAVASCRIPT
+  ======================================== -->
+  
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
