@@ -166,7 +166,7 @@
         courses.forEach(course => {
           const card = document.createElement('div');
           card.className = 'group bg-[#F7C763] rounded-[32px] p-10 border border-transparent shadow-xl shadow-slate-200 transition-all duration-300 hover:translate-y-[-8px] hover:shadow-2xl cursor-pointer relative overflow-hidden';
-          card.onclick = () => window.location.href = `course.html?id=${course.id}`;
+          card.onclick = () => window.location.href = `course?id=${course.id}`;
           
           card.innerHTML = `
             <div class="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-bl-full transform translate-x-12 translate-y-[-12px] group-hover:scale-150 transition-transform duration-500"></div>

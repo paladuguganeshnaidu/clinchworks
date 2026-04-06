@@ -213,8 +213,81 @@
     </div>
   </footer>
 
+    <!-- Certificate Name Modal -->
+  <div id="name-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="name-modal-bg"></div>
+    <div class="relative bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl transform scale-95 opacity-0 transition-all duration-300 border border-[#F7C763]/30" id="name-modal-panel">
+      <div class="w-12 h-12 bg-[#F7C763]/20 rounded-2xl flex items-center justify-center mb-6">
+        <svg class="w-6 h-6 text-[#c9a84c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+      </div>
+      <h3 class="text-2xl font-black text-slate-900 mb-2 tracking-tight">Student Registration</h3>
+      <p class="text-slate-500 text-sm mb-6 leading-relaxed">Please enter your full legal name precisely as it should appear on your verified completion certificate.</p>
+      
+      <div class="relative mb-6">
+        <label for="student-name-input" class="text-[10px] uppercase tracking-widest font-bold text-slate-400 block mb-2">Full Name</label>
+        <input type="text" id="student-name-input" placeholder="e.g. Sree Vidya" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:border-[#F7C763] focus:ring-1 focus:ring-[#F7C763] transition-all" autocomplete="off">
+        <span id="name-error" class="text-red-500 text-[10px] hidden absolute -bottom-5 left-0">Please enter a valid name to proceed.</span>
+      </div>
+
+      <div class="flex gap-3 mt-8">
+        <button onclick="closeNameModal()" class="flex-1 px-4 py-3 bg-slate-100 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-200 transition-colors">Cancel</button>
+        <button id="btn-confirm-name" class="flex-1 px-4 py-3 bg-[#F7C763] text-slate-900 rounded-xl text-sm font-bold shadow-lg shadow-[#F7C763]/30 hover:scale-105 transition-all">Start Course</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../assets/js/script.js"></script>
   <script>
+        let currentCourseId = null;
+
+    function openNameModal(courseId) {
+      currentCourseId = courseId;
+      const modal = document.getElementById("name-modal");
+      const bg = document.getElementById("name-modal-bg");
+      const panel = document.getElementById("name-modal-panel");
+      
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      
+      setTimeout(() => {
+        bg.classList.remove("opacity-0");
+        panel.classList.remove("scale-95", "opacity-0");
+        panel.classList.add("scale-100", "opacity-100");
+      }, 10);
+      
+      setTimeout(() => document.getElementById("student-name-input").focus(), 100);
+    }
+
+    function closeNameModal() {
+      const modal = document.getElementById("name-modal");
+      const bg = document.getElementById("name-modal-bg");
+      const panel = document.getElementById("name-modal-panel");
+      
+      bg.classList.add("opacity-0");
+      panel.classList.remove("scale-100", "opacity-100");
+      panel.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }, 300);
+    }
+
+    document.getElementById("btn-confirm-name").addEventListener("click", () => {
+      const nameInput = document.getElementById("student-name-input").value.trim();
+      const error = document.getElementById("name-error");
+      
+      if(nameInput.length < 2) {
+        error.classList.remove("hidden");
+        document.getElementById("student-name-input").classList.add("border-red-500");
+        return;
+      }
+      
+      error.classList.add("hidden");
+      localStorage.setItem("clinch-username", nameInput);
+      window.location.href = `player?id=${currentCourseId}`;
+    });
+
     (async function () {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
@@ -254,7 +327,7 @@
                  </div>
               </div>
            `;
-          card.onclick = () => window.location.href = `player.html?id=${courseData.id}`;
+          card.onclick = () => openNameModal(courseData.id);
           list.appendChild(card);
         });
 
