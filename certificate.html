@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>ClinchWorks | Official Certificate of Completion</title>
-    
+
     <!-- Elegant serif + sans-serif pairing for classic certificate feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap"
+        rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: #e9edf2;
             display: flex;
@@ -21,7 +29,12 @@
             position: relative;
         }
 
-        .certificate-container { max-width: 1100px; width: 100%; margin: 0 auto; }
+        .certificate-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
         .certificate {
             background: #ffffff;
             border: 2px solid #d4af37;
@@ -31,174 +44,298 @@
             position: relative;
             transition: all 0.2s;
         }
-        .certificate::before {
-            content: ""; position: absolute;
-            top: 15px; left: 15px; right: 15px; bottom: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            pointer-events: none; border-radius: 2px;
-        }
-        .brand {
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem;
-            letter-spacing: 3px; text-transform: uppercase; color: #2c3e4e;
-            border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.8rem;
-        }
-        .brand span { font-weight: 300; color: #b68b40; letter-spacing: 1px; }
 
-        .certificate-content { text-align: center; }
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            pointer-events: none;
+            border-radius: 2px;
+        }
+
+        .brand {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2c3e4e;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .brand span {
+            font-weight: 300;
+            color: #b68b40;
+            letter-spacing: 1px;
+        }
+
+        .certificate-content {
+            text-align: center;
+        }
 
         .cert-title {
-            font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.7rem;
-            letter-spacing: 2px; color: #1e2a36; margin-top: 0.5rem; margin-bottom: 1.8rem;
-            text-transform: uppercase; position: relative; display: inline-block; padding-bottom: 0.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 2.7rem;
+            letter-spacing: 2px;
+            color: #1e2a36;
+            margin-top: 0.5rem;
+            margin-bottom: 1.8rem;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
         }
+
         .cert-title:after {
-            content: ""; position: absolute; bottom: 0; left: 25%; width: 50%; height: 2px; background: #d4af37;
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: #d4af37;
         }
 
         .recipient-name {
-            font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 3.2rem;
-            color: #0a1c2a; margin: 0.75rem 0 0.5rem 0; letter-spacing: 1px; word-break: break-word;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 3.2rem;
+            color: #0a1c2a;
+            margin: 0.75rem 0 0.5rem 0;
+            letter-spacing: 1px;
+            word-break: break-word;
         }
 
         .course-name {
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.5rem;
-            color: #2c5282; margin: 0.75rem 0 1.2rem 0; background: #f8fafc;
-            display: inline-block; padding: 0.2rem 1.2rem; border-radius: 40px; letter-spacing: -0.2px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #2c5282;
+            margin: 0.75rem 0 1.2rem 0;
+            background: #f8fafc;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: -0.2px;
         }
 
         .description {
-            font-family: 'Inter', sans-serif; font-weight: 400; font-size: 1rem;
-            line-height: 1.55; color: #2d3e50; max-width: 80%; margin: 1.2rem auto 1.2rem auto;
-            border-left: 3px solid #e2bc7c; border-right: 3px solid #e2bc7c; padding: 0.6rem 1rem; background: #fefcf7;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #2d3e50;
+            max-width: 80%;
+            margin: 1.2rem auto 1.2rem auto;
+            border-left: 3px solid #e2bc7c;
+            border-right: 3px solid #e2bc7c;
+            padding: 0.6rem 1rem;
+            background: #fefcf7;
         }
 
         .date-row {
-            font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1rem;
-            margin: 1.5rem 0 0.8rem 0; color: #2c3e50; letter-spacing: 0.3px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            margin: 1.5rem 0 0.8rem 0;
+            color: #2c3e50;
+            letter-spacing: 0.3px;
         }
-        .date-row strong { font-weight: 600; color: #b68b40; }
+
+        .date-row strong {
+            font-weight: 600;
+            color: #b68b40;
+        }
 
         .level-badge {
-            display: inline-block; margin-top: 1.2rem; margin-bottom: 1rem;
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
-            letter-spacing: 1.2px; background: #1e2a36; color: #f5e7d9;
-            padding: 0.5rem 1.6rem; border-radius: 40px; text-transform: uppercase; border: 1px solid #c9a96b;
+            display: inline-block;
+            margin-top: 1.2rem;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1.2px;
+            background: #1e2a36;
+            color: #f5e7d9;
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            border: 1px solid #c9a96b;
         }
 
         .footer-note {
-            margin-top: 2rem; display: flex; justify-content: center; align-items: center;
-            gap: 1.8rem; font-size: 0.75rem; color: #7f8c8d; border-top: 1px solid #ece9e0;
-            padding-top: 1.5rem; font-weight: 400;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.8rem;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            border-top: 1px solid #ece9e0;
+            padding-top: 1.5rem;
+            font-weight: 400;
         }
-        .emblem { font-size: 1rem; letter-spacing: 2px; }
+
+        .emblem {
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
 
         .no-print {
-            position: fixed; 
-            bottom: 20px; 
-            left: 50%; 
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
         }
 
         @media print {
-            body { background: white; padding: 0; margin: 0; align-items: flex-start; justify-content: flex-start; }
-            .certificate-container { max-width: 100%; margin: 0; padding: 0; }
-            .certificate { box-shadow: none; border: 2px solid #aaa; padding: 1.8rem; break-inside: avoid; }
-            .certificate::before { border: 1px solid #ccc; }
-            .brand { color: #111; }
-            .level-badge { background: #e0e0e0; color: #1e2a36; border: 1px solid #aaa; }
-            .description { background: none; border-left: 2px solid #bbb; border-right: 2px solid #bbb; }
-            .no-print { display: none !important; }
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                align-items: flex-start;
+                justify-content: flex-start;
+            }
+
+            .certificate-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .certificate {
+                box-shadow: none;
+                border: 2px solid #aaa;
+                padding: 1.8rem;
+                break-inside: avoid;
+            }
+
+            .certificate::before {
+                border: 1px solid #ccc;
+            }
+
+            .brand {
+                color: #111;
+            }
+
+            .level-badge {
+                background: #e0e0e0;
+                color: #1e2a36;
+                border: 1px solid #aaa;
+            }
+
+            .description {
+                background: none;
+                border-left: 2px solid #bbb;
+                border-right: 2px solid #bbb;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
+
 <body>
-<div class="certificate-container">
-    <div class="certificate">
-        <div class="brand">
-            CLINCHWORKS.IN <span>⚡ training division</span>
-        </div>
+    <div class="certificate-container">
+        <div class="certificate">
+            <span style="display:inline-flex; align-items:center; gap: 2px;">
+                <img src="assets/images/logo-transparent.png" alt="Clinch Works Logo"
+                    style="height:30px; width:auto; object-fit:contain;">
+                <p style="font-size: 20px; font-weight: bold; color: #0b1220; margin: 0;">CLINCHWORKS.IN</p>
+            </span>
 
-        <div class="certificate-content">
-            <div class="cert-title">CERTIFICATE OF COMPLETION</div>
-            <div class="recipient-name">Ganesh Naidu</div>
-            <div class="course-name">Engineering Protocol</div>
-            <div class="description">
-                This certifies that the above individual has successfully completed
-                the training program and demonstrated practical competency in real-world scenarios.
+            <div class="certificate-content">
+                <div class="cert-title">CERTIFICATE OF COMPLETION</div>
+                <div class="recipient-name">Ganesh Naidu</div>
+                <div class="course-name">Engineering Protocol</div>
+                <div class="description">
+                    This certifies that the above individual has successfully completed
+                    the training program and demonstrated practical competency in real-world scenarios.
+                </div>
+                <div class="date-row">
+                    <strong>Date:</strong> <span id="cert-date">April 5, 2026</span>
+                </div>
+                <div class="level-badge">
+                    PROGRAMMING | BEGINNER
+                </div>
             </div>
-            <div class="date-row">
-                <strong>Date:</strong> <span id="cert-date">April 5, 2026</span>
-            </div>
-            <div class="level-badge">
-                PROGRAMMING | BEGINNER
-            </div>
-        </div>
 
-        <div class="footer-note">
-            <div class="emblem">✦ ClinchWorks Verified ✦</div>
+            <div class="footer-note">
+                <div class="emblem">✦ ClinchWorks Verified ✦</div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="no-print">
-    <button id="download-btn" style="background: #2c5282; color: white; padding: 14px 28px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: 0.2s ease;">
-        Download PDF Certificate ⬇
-    </button>
-</div>
+    <div class="no-print">
+        <button id="download-btn"
+            style="background: #2c5282; color: white; padding: 14px 28px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: 0.2s ease;">
+            Download PDF Certificate ⬇
+        </button>
+    </div>
 
-<!-- Using html2pdf for high quality PDF generation -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", async () => {
-        const params = new URLSearchParams(window.location.search);
-        const courseId = params.get('id');
-        
-        // 1. Resolve Name
-        const userName = localStorage.getItem('clinch-username') || "Ganesh Naidu";
-        document.querySelector('.recipient-name').textContent = userName;
+    <!-- Using html2pdf for high quality PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id');
 
-        // 2. Resolve Course Context
-        if (courseId) {
-            try {
-                const response = await fetch('courses-content.json');
-                const data = await response.json();
-                const cd = data.courses.find(c => c.id === courseId);
-                if (cd) {
-                    document.querySelector('.course-name').textContent = cd.title;
-                    document.querySelector('.level-badge').textContent = `${cd.category.toUpperCase()} | ${cd.level.toUpperCase()}`;
+            // 1. Resolve Name
+            const userName = localStorage.getItem('clinch-username') || "Ganesh Naidu";
+            document.querySelector('.recipient-name').textContent = userName;
+
+            // 2. Resolve Course Context
+            if (courseId) {
+                try {
+                    const response = await fetch('courses-content.json');
+                    const data = await response.json();
+                    const cd = data.courses.find(c => c.id === courseId);
+                    if (cd) {
+                        document.querySelector('.course-name').textContent = cd.title;
+                        document.querySelector('.level-badge').textContent = `${cd.category.toUpperCase()} | ${cd.level.toUpperCase()}`;
+                    }
+                } catch (err) {
+                    console.error("Failed fetching meta");
                 }
-            } catch (err) {
-                console.error("Failed fetching meta");
             }
-        }
-        
-        const dOpts = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US', dOpts);
 
-        // 3. Bind generator
-        const btn = document.getElementById('download-btn');
-        btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
-        btn.addEventListener('mouseleave', () => btn.style.transform = 'translateY(0)');
-        
-        btn.addEventListener('click', () => {
-             const btnArea = document.querySelector('.no-print');
-             btnArea.style.display = 'none';
-             
-             const element = document.querySelector('.certificate-container');
-             const opt = {
-                 margin:       0.5,
-                 filename:     `ClinchWorks_Certificate_${courseId || 'Certified'}.pdf`,
-                 image:        { type: 'jpeg', quality: 0.98 },
-                 html2canvas:  { scale: 2, useCORS: true },
-                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-             };
-             
-             html2pdf().set(opt).from(element).save().then(() => {
-                 btnArea.style.display = 'block';
-             });
+            const dOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US', dOpts);
+
+            // 3. Bind generator
+            const btn = document.getElementById('download-btn');
+            btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
+            btn.addEventListener('mouseleave', () => btn.style.transform = 'translateY(0)');
+
+            btn.addEventListener('click', () => {
+                const btnArea = document.querySelector('.no-print');
+                btnArea.style.display = 'none';
+
+                const element = document.querySelector('.certificate-container');
+                const opt = {
+                    margin: 0.5,
+                    filename: `ClinchWorks_Certificate_${courseId || 'Certified'}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
+
+                html2pdf().set(opt).from(element).save().then(() => {
+                    btnArea.style.display = 'block';
+                });
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
