@@ -2416,7 +2416,7 @@
             "<pre><code>#!/bin/bash\nwhile read url; do\n    echo \"Scanning $url\"\n    gobuster dir -u \"$url\" -w /path/to/wordlist.txt -o \"scan_$(echo $url | tr '/' '_').txt\"\ndone < targets.txt</code></pre>",
             "<h2 style='font-weight: bold;'>Using Different Wordlists per Target</h2>",
             "If you have a CSV file with <code>url,wordlist</code> pairs:",
-            "<pre><code>while IFS=',' read url wordlist; do\n    gobuster dir -u \"$url\" -w \"$wordlist\" -o \"result_${url//[:\/]/_}.txt\"\ndone < config.csv</code></pre>",
+            "<pre><code>while IFS=',' read url wordlist; do\n    gobuster dir -u \"$url\" -w \"$wordlist\" -o \"result_${url//[:/]/_}.txt\"\ndone < config.csv</code></pre>",
             "<h2 style='font-weight: bold;'>Parallel Execution with GNU Parallel</h2>",
             "For faster batch processing, use <code>parallel</code>:",
             "<pre><code>cat targets.txt | parallel -j 3 'gobuster dir -u {} -w common.txt -o {}.out'</code></pre>",
@@ -2436,6 +2436,57 @@
             "Example skeleton:",
             "<pre><code>#!/bin/bash\ndomain=$1\n\necho \"[+] Finding subdomains...\"\ngobuster dns -d $domain -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -o subdomains.txt\n\nwhile read line; do\n    sub=$(echo $line | awk '{print $2}')\n    echo \"[+] Scanning $sub\"\n    gobuster dir -u https://$sub -w /usr/share/seclists/Discovery/Web-Content/common.txt -b 404,401 --exclude-length 1234 -o \"results/$sub.txt\"\ndone < subdomains.txt\n\necho \"[+] Done. Results in results/\"</code></pre>",
             "Congratulations – you now have professional skills in web enumeration using Gobuster. Combine this with Nmap and Burp Suite for a complete recon workflow."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dummy-cloud",
+      "title": "Cloud Infrastructure 101",
+      "category": "Cloud",
+      "level": "Beginner",
+      "duration": "1 Week",
+      "description": "Learn the basics of cloud computing.",
+      "modules": [
+        {
+          "title": "Module 1: Introduction",
+          "content": [
+            "This is a test module for certificate generation.",
+            "You can interact with it safely."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dummy-ai",
+      "title": "Artificial Intelligence Concepts",
+      "category": "Artificial Intelligence",
+      "level": "Intermediate",
+      "duration": "2 Weeks",
+      "description": "Core AI and ML concepts.",
+      "modules": [
+        {
+          "title": "Module 1: Introduction",
+          "content": [
+            "This is a test module for certificate generation.",
+            "You can interact with it safely."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dummy-db",
+      "title": "Database Engineering Fundamentals",
+      "category": "Database Engineering",
+      "level": "Beginner",
+      "duration": "1 Week",
+      "description": "Relational and NoSQL databases.",
+      "modules": [
+        {
+          "title": "Module 1: Introduction",
+          "content": [
+            "This is a test module for certificate generation.",
+            "You can interact with it safely."
           ]
         }
       ]
