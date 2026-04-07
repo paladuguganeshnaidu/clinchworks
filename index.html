@@ -42,6 +42,88 @@
 </head>
 
 <body>
+  <!-- ========================================
+       INTRO VIDEO OVERLAY
+  ======================================== -->
+  <style>
+    #intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+      will-change: opacity, transform;
+    }
+    #intro-overlay.hide-intro {
+      opacity: 0;
+      visibility: hidden;
+    }
+    #intro-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(1.05);
+    }
+    body.intro-active {
+      overflow: hidden !important;
+    }
+  </style>
+
+  <div id="intro-overlay" style="display: none;">
+    <video id="intro-video" preload="auto" autoplay muted playsinline>
+      <source src="assets/vedios/intro.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <script>
+    (function() {
+      const hasPlayed = sessionStorage.getItem('introPlayed');
+      if (!hasPlayed) {
+        document.getElementById('intro-overlay').style.display = 'flex';
+        document.body.classList.add('intro-active');
+        
+        window.addEventListener('DOMContentLoaded', () => {
+          const introVideo = document.getElementById('intro-video');
+          const introOverlay = document.getElementById('intro-overlay');
+
+          function hideIntro() {
+            if (!introOverlay) return;
+            introOverlay.classList.add('hide-intro');
+            document.body.classList.remove('intro-active');
+            sessionStorage.setItem('introPlayed', 'true');
+            
+            setTimeout(() => {
+              if (introOverlay.parentNode) {
+                introOverlay.parentNode.removeChild(introOverlay);
+              }
+            }, 800);
+          }
+
+          if (introVideo) {
+            introVideo.play().catch(() => hideIntro()); // Fallback if autoplay is blocked
+            introVideo.addEventListener('ended', hideIntro);
+          } else {
+            hideIntro();
+          }
+        });
+      } else {
+        // Cleanup if already played
+        window.addEventListener('DOMContentLoaded', () => {
+          const introOverlay = document.getElementById('intro-overlay');
+          if (introOverlay && introOverlay.parentNode) {
+            introOverlay.parentNode.removeChild(introOverlay);
+          }
+        });
+      }
+    })();
+  </script>
+
   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
 
@@ -119,16 +201,16 @@
             class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
             <li><a href="pages/google-ads" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Google Ads</a></li>
-            <li><a href="pages/social-media-marketing"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social
+            <li><a href="pages/social-media-marketing" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Social
                 Media</a></li>
             <li><a href="pages/website-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Website Design</a></li>
-            <li><a href="pages/video-graphic-design"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video &
+            <li><a href="pages/video-graphic-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Video &
                 Graphics</a></li>
-            <li><a href="pages/youtube-management"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a>
+            <li><a href="pages/youtube-management" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">YouTube</a>
             </li>
             <li><a href="pages/projects" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Projects</a></li>
@@ -143,8 +225,8 @@
             <li><a href="pages/domain?category=Cyber%20Security"
                 class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="pages/domain?category=Cloud"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
+            <li><a href="pages/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Cloud</a></li>
             <li><a href="pages/domain?category=Artificial%20Intelligence"
                 class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
             <li><a href="pages/domain?category=Database%20Engineering"
