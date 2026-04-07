@@ -256,7 +256,7 @@
 
             <div class="certificate-content">
                 <div class="cert-title">CERTIFICATE OF COMPLETION</div>
-                <div class="recipient-name">Ganesh Naidu</div>
+                <div class="recipient-name">ClinchWorks Student</div>
                 <div class="course-name">Engineering Protocol</div>
                 <div class="description">
                     This certifies that the above individual has successfully completed
@@ -286,13 +286,50 @@
     <!-- Using html2pdf for high quality PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
+        function getCourseState(cId) {
+          try {
+            const raw = localStorage.getItem('course-' + cId);
+            if (raw && raw.startsWith("{")) return JSON.parse(raw);
+          } catch(e) {}
+          return { completed: false, examPassed: false, certificateIssued: false };
+        }
+
+        function saveCourseState(cId, state) {
+          localStorage.setItem('course-' + cId, JSON.stringify(state));
+          console.log("Course State:", state);
+        }
+
         document.addEventListener("DOMContentLoaded", async () => {
             const params = new URLSearchParams(window.location.search);
             const courseId = params.get('id');
 
+            if (courseId) {
+                const cState = getCourseState(courseId);
+                if (!cState.examPassed) {
+                    alert("You have not passed the final exam yet.");
+                    window.location.href = `pages/exam?id=${courseId}`;
+                    return;
+                }
+                
+                if (cState.certificateIssued) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.style.color = "red";
+                    alertDiv.style.fontWeight = "bold";
+                    alertDiv.style.textAlign = "center";
+                    let btbtn = document.getElementById('download-btn');
+                    btbtn.textContent = "Certificate already issued";
+                    btbtn.style.pointerEvents = "none";
+                    btbtn.style.opacity = "0.5";
+                }
+            }
+
             // 1. Resolve Name
-            const userName = localStorage.getItem('clinch-username') || "Ganesh Naidu";
+            const storedName = localStorage.getItem("clinch-username");
+            const userName = (storedName && storedName.trim() !== "")
+              ? storedName
+              : "ClinchWorks Student";
             document.querySelector('.recipient-name').textContent = userName;
+            console.log("Stored Username:", localStorage.getItem("clinch-username"));
 
             // 2. Resolve Course Context
             if (courseId) {
@@ -332,6 +369,14 @@
 
                 html2pdf().set(opt).from(element).save().then(() => {
                     btnArea.style.display = 'block';
+                    if (courseId) {
+                        let st = getCourseState(courseId);
+                        st.certificateIssued = true;
+                        saveCourseState(courseId, st);
+                        btn.textContent = "Certificate already issued";
+                        btn.style.pointerEvents = "none";
+                        btn.style.opacity = "0.5";
+                    }
                 });
             });
         });

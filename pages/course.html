@@ -284,7 +284,8 @@
       }
       
       error.classList.add("hidden");
-      localStorage.setItem("cert_student_name", nameInput);
+      localStorage.setItem("clinch-username", nameInput);
+      console.log("Stored Username:", localStorage.getItem("clinch-username"));
       window.location.href = `player?id=${currentCourseId}`;
     });
 

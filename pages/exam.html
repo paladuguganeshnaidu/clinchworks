@@ -142,6 +142,21 @@
   </div>
 
   <script>
+    function getCourseState(courseId) {
+      try {
+        const raw = localStorage.getItem('course-' + courseId);
+        if (raw && raw.startsWith("{")) {
+          return JSON.parse(raw);
+        }
+      } catch(e) {}
+      return { completed: false, examPassed: false, certificateIssued: false };
+    }
+
+    function saveCourseState(courseId, state) {
+      localStorage.setItem('course-' + courseId, JSON.stringify(state));
+      console.log("Course State:", state);
+    }
+
     document.addEventListener("DOMContentLoaded", async () => {
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('id');
@@ -149,6 +164,22 @@
       if (!courseId) {
         document.getElementById('exam-title').textContent = "Invalid Course ID";
         return;
+      }
+      
+      let state = getCourseState(courseId);
+      
+      if (!state.completed) {
+         document.getElementById('exam-title').textContent = "Unauthorized Access";
+         document.getElementById('exam-form').style.display = 'none';
+         document.querySelector('p').innerHTML = "You must complete the course modules before accessing the exam.<br><br><a href='player?id="+courseId+"' class='inline-block px-8 py-3 bg-[#F7C763] text-black font-bold rounded-lg'>Return to Course</a>";
+         return;
+      }
+
+      if (state.examPassed) {
+         document.getElementById('exam-title').textContent = "Exam Already Passed";
+         document.getElementById('exam-form').style.display = 'none';
+         document.querySelector('p').innerHTML = `You have already proven your competency.<br><br> <a href="../certificate?id=${courseId}" class="inline-block px-8 py-3 bg-[#F7C763] text-black font-bold rounded-lg shadow-xl mt-4">Go to Certificate</a>`;
+         return;
       }
 
       let mcqs = [];
@@ -252,6 +283,12 @@
           percentage: percentage,
           passed: passed
         }));
+        
+        if (passed) {
+           let st = getCourseState(courseId);
+           st.examPassed = true;
+           saveCourseState(courseId, st);
+        }
 
         resultBox.classList.remove('hidden');
         if (passed) {

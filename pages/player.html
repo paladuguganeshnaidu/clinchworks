@@ -154,6 +154,63 @@
                <a href="#" class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Documentation</a>
                <a href="#" class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Support</a>
             </div>
+
+
+  <div id="player-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="player-sidebar">
+      <div class="p-6 border-bottom border-slate-200">
+        <h2 id="sidebar-course-title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Course Index</h2>
+      </div>
+      <div id="sidebar-modules" class="flex-1">
+        <!-- Dynamic module items -->
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="player-main">
+      <div class="sticky top-0 bg-white/80 backdrop-blur-md z-30 border-b border-slate-100">
+        <div class="max-w-4xl mx-auto px-10 py-5 flex items-center justify-between">
+          <div class="flex-1">
+            <div class="flex items-center gap-4 mb-1">
+               <span id="progress-percent" class="text-[10px] font-black uppercase tracking-widest -[#F7C763]">Progress: 0%</span>
+               <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden max-w-[200px]">
+                 <div id="progress-bar" class="h-full -[#F7C763] transition-all duration-500" style="width: 0%"></div>
+               </div>
+            </div>
+            <p id="progress" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Module 0 of 0</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button id="btn-prev" class="p-2.5 rounded-xl border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all disabled:opacity-30">
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="btn-next" class="px-6 py-2.5 bg-slate-900 -[#F7C763] font-bold text-xs uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+               Continue <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <h1 id="module-title" class="text-4xl sm:text-5xl font-black text-slate-900 leading-tight mb-8 tracking-tighter">Synchronizing course data...</h1>
+        <div id="module-meta" class="flex items-center gap-4 mb-12">
+           <!-- Dynamic Meta Tags -->
+        </div>
+        <div id="module-content" class="text-lg text-slate-700 leading-relaxed space-y-6">
+           <div class="py-24 flex flex-col items-center justify-center opacity-20">
+              <div class="w-12 h-12 border-4 border-slate-200 -[#F7C763] rounded-full animate-spin mb-6"></div>
+              <p class="font-mono text-xs uppercase tracking-[0.3em]">Accessing Cryptography Node</p>
+           </div>
+        </div>
+      </div>
+      
+      <footer class="max-w-4xl mx-auto px-10 py-20 border-t border-slate-100 mt-20">
+         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Professional Training System &copy; 2026 Clinchworks</p>
+            <div class="flex gap-8">
+               <a href="#" class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Documentation</a>
+               <a href="#" class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Support</a>
+            </div>
          </div>
       </footer>
     </main>
@@ -166,7 +223,6 @@
       const courseId = params.get('id');
       let currentModuleIndex = 0;
       let courseData = null;
-      let studentName = '';
 
       const btnPrev = document.getElementById('btn-prev');
       const btnNext = document.getElementById('btn-next');
@@ -177,7 +233,32 @@
       const progBar = document.getElementById('progress-bar');
       const sidebarContent = document.getElementById('sidebar-modules');
 
-      studentName = localStorage.getItem('clinch-student-name') || 'ClinchWorks Scholar';
+      function getCourseState() {
+        try {
+          const raw = localStorage.getItem('course-' + courseId);
+          if (raw) {
+            // Handle corrupted numeric data fallback safely
+            if (raw === "NaN" || !raw.startsWith("{")) {
+                let parsedInt = parseInt(raw) || 0;
+                return { currentModule: parsedInt, totalModules: 0, completed: false, examPassed: false, certificateIssued: false };
+            }
+            const state = JSON.parse(raw);
+            return {
+              currentModule: state.currentModule || 0,
+              totalModules: state.totalModules || 0,
+              completed: !!state.completed,
+              examPassed: !!state.examPassed,
+              certificateIssued: !!state.certificateIssued
+            };
+          }
+        } catch(e) {}
+        return { currentModule: 0, totalModules: 0, completed: false, examPassed: false, certificateIssued: false };
+      }
+
+      function saveCourseState(state) {
+        localStorage.setItem('course-' + courseId, JSON.stringify(state));
+        console.log("Course State:", state);
+      }
 
       async function init() {
         try {
@@ -192,8 +273,30 @@
           }
 
           document.title = `${courseData.title} | Clinch Works`;
-          const savedIndex = localStorage.getItem('course-' + courseId);
-          if (savedIndex) currentModuleIndex = parseInt(savedIndex) || 0;
+          
+          let state = getCourseState();
+          state.totalModules = courseData.modules.length;
+          
+          // Anti-back navigation / specific module
+          const reqModStr = params.get('module');
+          if (reqModStr !== null && !isNaN(parseInt(reqModStr))) {
+            const reqIdx = parseInt(reqModStr);
+            if (reqIdx >= 0 && (reqIdx <= state.currentModule || state.completed) && reqIdx < state.totalModules) {
+              currentModuleIndex = reqIdx;
+            } else {
+              currentModuleIndex = state.currentModule;
+              window.history.replaceState({}, '', `player?id=${courseId}&module=${currentModuleIndex}`);
+            }
+          } else {
+            currentModuleIndex = state.currentModule;
+            window.history.replaceState({}, '', `player?id=${courseId}&module=${currentModuleIndex}`);
+          }
+
+          // Safety progress logic
+          if (!state.completed && currentModuleIndex > state.currentModule && currentModuleIndex < state.totalModules) {
+             state.currentModule = currentModuleIndex;
+          }
+          saveCourseState(state);
 
           renderSidebar();
           renderModule();
@@ -209,9 +312,10 @@
         sidebarContent.innerHTML = '';
         courseData.modules.forEach((mod, idx) => {
           const item = document.createElement('div');
+          
           item.className = `p-5 pl-8 cursor-pointer transition-all border-l-4 border-transparent hover:bg-slate-100 flex items-center gap-4 ${idx === currentModuleIndex ? 'sidebar-active' : 'text-slate-500'}`;
           item.innerHTML = `<span class="text-[10px] font-black opacity-30">${idx + 1}</span><span class="text-[11px] font-bold uppercase tracking-tight truncate">${mod.title}</span>`;
-          item.onclick = () => { currentModuleIndex = idx; renderModule(); sidebarContent.scrollIntoView(); };
+          
           sidebarContent.appendChild(item);
         });
         document.getElementById('sidebar-course-title').textContent = courseData.title;
@@ -219,10 +323,18 @@
 
       function renderModule() {
         if (!courseData || !courseData.modules[currentModuleIndex]) return;
+        
+        // Progress validation
+        let state = getCourseState();
+        if (!state.completed) {
+            if (currentModuleIndex > state.currentModule) {
+               state.currentModule = currentModuleIndex;
+               saveCourseState(state);
+            }
+        }
+
         const module = courseData.modules[currentModuleIndex];
         const isLast = currentModuleIndex === courseData.modules.length - 1;
-        
-        localStorage.setItem('course-' + courseId, currentModuleIndex);
         
         modTitle.textContent = module.title;
         renderContent(module.content);
@@ -235,18 +347,52 @@
         
         // Metadata
         const meta = document.getElementById('module-meta');
-        meta.innerHTML = `<span class="px-3 py-1 -[#F7C763] -[#F7C763] text-[9px] font-black uppercase rounded-full">${courseData.category}</span>
-                          <span class="px-3 py-1 bg-slate-100 text-slate-500 text-[9px] font-black uppercase rounded-full">${courseData.duration}</span>`;
+        let reviewBadge = state.completed ? `<span class="px-3 py-1 bg-green-100 text-green-800 text-[9px] font-black uppercase rounded-full">Course Completed (Review)</span>` : ``;
+        meta.innerHTML = `<span class="px-3 py-1 bg-white text-slate-900 border border-[#F7C763] text-[9px] font-black uppercase rounded-full">${courseData.category}</span>
+                          <span class="px-3 py-1 bg-slate-100 text-slate-500 text-[9px] font-black uppercase rounded-full">${courseData.duration}</span>
+                          ${reviewBadge}`;
 
-        // Nav
+        // Nav logic
         btnPrev.disabled = currentModuleIndex === 0;
-        btnNext.innerHTML = isLast ? 'Take Final Assessment' : 'Continue <span>&rarr;</span>';
-        btnNext.onclick = isLast ? () => window.location.href = `exam?id=${courseId}` : () => { currentModuleIndex++; renderModule(); };
-        btnPrev.onclick = () => { currentModuleIndex--; renderModule(); };
+        btnNext.innerHTML = isLast || state.completed ? (state.completed ? 'Review Mode - See Exam &rarr;' : 'Take Final Assessment') : 'Continue <span>&rarr;</span>';
+        
+        btnNext.onclick = (isLast || state.completed) ? () => {
+             let st = getCourseState();
+             if (!st.completed) {
+                 st.completed = true;
+                 saveCourseState(st);
+             }
+             window.location.href = `exam?id=${courseId}`;
+        } : () => { 
+             currentModuleIndex++; 
+             window.history.pushState({}, '', `player?id=${courseId}&module=${currentModuleIndex}`);
+             renderModule(); 
+        };
+        
+        btnPrev.onclick = () => { 
+             currentModuleIndex--; 
+             window.history.pushState({}, '', `player?id=${courseId}&module=${currentModuleIndex}`);
+             renderModule(); 
+        };
 
-        // Sidebar update
-        Array.from(sidebarContent.children).forEach((el, i) => {
-          el.className = `p-5 pl-8 cursor-pointer transition-all border-l-4 border-transparent hover:bg-slate-100 flex items-center gap-4 ${i === currentModuleIndex ? 'sidebar-active' : 'text-slate-500'}`;
+        // Sidebar logic update
+        Array.from(sidebarContent.children).forEach((el, idx) => {
+          el.className = `p-5 pl-8 cursor-pointer transition-all border-l-4 border-transparent hover:bg-slate-100 flex items-center gap-4 ${idx === currentModuleIndex ? 'sidebar-active' : 'text-slate-500'}`;
+          let isLocked = (!state.completed && idx > state.currentModule);
+          if (isLocked) {
+             el.style.opacity = '0.5';
+             el.style.cursor = 'not-allowed';
+             el.onclick = null;
+          } else {
+             el.style.opacity = '1';
+             el.style.cursor = 'pointer';
+             el.onclick = () => { 
+                currentModuleIndex = idx;
+                window.history.pushState({}, '', `player?id=${courseId}&module=${currentModuleIndex}`);
+                renderModule(); 
+                sidebarContent.scrollIntoView(); 
+             };
+          }
         });
 
         if (window.initCodeBlocks) initCodeBlocks();
@@ -270,13 +416,26 @@
           }
         });
         
-        // Handle code blocks
         modContent.querySelectorAll('pre code').forEach(block => {
-           hljs.highlightElement(block);
+           if (window.hljs) hljs.highlightElement(block);
            const p = block.parentElement;
-           p.className = "p-6 bg-slate-900 rounded-xl my-8 overflow-x-auto selection:-[#F7C763] selection:text-slate-900";
+           p.className = "p-6 bg-slate-900 rounded-xl my-8 overflow-x-auto";
         });
       }
+
+      window.addEventListener('popstate', () => {
+         const params = new URLSearchParams(window.location.search);
+         const mod = parseInt(params.get('module'));
+         let state = getCourseState();
+         if (!isNaN(mod) && mod >= 0 && (mod <= state.currentModule || state.completed)) {
+            currentModuleIndex = mod;
+            renderModule();
+         } else {
+            currentModuleIndex = state.currentModule;
+            window.history.replaceState({}, '', `player?id=${courseId}&module=${currentModuleIndex}`);
+            renderModule();
+         }
+      });
 
       init();
     })();
