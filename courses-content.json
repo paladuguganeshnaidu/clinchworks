@@ -2441,52 +2441,645 @@
       ]
     },
     {
-      "id": "dummy-cloud",
-      "title": "Cloud Infrastructure 101",
-      "category": "Cloud",
-      "level": "Beginner",
-      "duration": "1 Week",
-      "description": "Learn the basics of cloud computing.",
-      "modules": [
-        {
-          "title": "Module 1: Introduction",
-          "content": [
-            "This is a test module for certificate generation.",
-            "You can interact with it safely."
-          ]
-        }
-      ]
-    },
-    {
-      "id": "dummy-ai",
-      "title": "Artificial Intelligence Concepts",
+      "id": "ai-cyber-beginner",
+      "title": "AI-Enhanced Cybersecurity: Core Concepts & Threat Detection",
       "category": "Artificial Intelligence",
-      "level": "Intermediate",
-      "duration": "2 Weeks",
-      "description": "Core AI and ML concepts.",
+      "level": "Beginner",
+      "duration": "6 Weeks",
+      "description": "Step into the future of digital defense. This beginner-friendly course demystifies how Artificial Intelligence and Machine Learning are revolutionizing cybersecurity. You'll learn to identify modern threats, understand the fundamentals of AI-driven detection, and build your first security analytics models using Python-no prior AI experience required.",
       "modules": [
         {
-          "title": "Module 1: Introduction",
+          "title": "Module 1: The New Cybersecurity Landscape & AI's Role",
           "content": [
-            "This is a test module for certificate generation.",
-            "You can interact with it safely."
+            "Cybersecurity is no longer just about firewalls and antivirus signatures. Attackers are using automation and AI to scale their efforts, while defenders leverage AI to keep pace. This module sets the stage by exploring the modern threat landscape and explaining why AI has become an essential tool in the security arsenal.",
+            "<h2 style='font-weight: bold;'>The Shift from Reactive to Predictive Security</h2>",
+            "Traditional security relies on known patterns (signatures). But zero-day exploits and advanced persistent threats (APTs) bypass these defenses. AI introduces the ability to detect anomalies-deviations from normal behavior-even when an attack has never been seen before.",
+            "<ul>",
+            "<li class='bullet'><strong>Reactive Security:</strong> Waiting for a virus definition update.</li>",
+            "<li class='bullet'><strong>Proactive Security (AI):</strong> Identifying that a user's typing pattern suddenly changed, indicating a compromised account.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Key AI Applications in Cybersecurity</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Spam Filtering:</strong> Bayesian networks classify emails based on word probability.</li>",
+            "<li class='bullet'><strong>Malware Detection:</strong> Machine learning models analyze file structure (headers, entropy) rather than just hash signatures.</li>",
+            "<li class='bullet'><strong>User and Entity Behavior Analytics (UEBA):</strong> AI establishes a baseline of 'normal' activity and flags deviations (e.g., logging in at 3 AM from a new country).</li>",
+            "<li class='bullet'><strong>Phishing URL Detection:</strong> NLP models analyze the text and structure of a URL to determine if it's impersonating a legitimate brand.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>The Attacker's Perspective: Offensive AI</h2>",
+            "It's crucial to know your enemy. Attackers use AI for:",
+            "<ul>",
+            "<li class='bullet'>Generating hyper-realistic phishing emails (eliminating grammar mistakes).</li>",
+            "<li class='bullet'>Creating polymorphic malware that rewrites its code to evade detection.</li>",
+            "<li class='bullet'>Automating vulnerability scanning and exploit selection.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Setting Up Your Lab Environment</h2>",
+            "Throughout this course, we will use Python and Jupyter Notebooks. Ensure you have the following installed:",
+            "<pre><code>pip install pandas numpy matplotlib scikit-learn seaborn jupyter</code></pre>",
+            "<h2 style='font-weight: bold;'>Practical: Loading Your First Security Dataset</h2>",
+            "Let's load a sample network traffic dataset (simulated) to get a feel for the data we'll be analyzing.",
+            "<pre><code>import pandas as pd\nimport numpy as np\n\n# Simulating a small network connection dataset\n# Features: duration, protocol_type, src_bytes, dst_bytes, flag\ndata = {\n    'duration': [0, 10, 0, 125, 0],\n    'protocol': ['tcp', 'udp', 'tcp', 'icmp', 'tcp'],\n    'src_bytes': [245, 80, 1024, 64, 5120],\n    'dst_bytes': [1024, 40, 0, 64, 0],\n    'attack': [0, 0, 1, 1, 1]  # 0 = normal, 1 = malicious\n}\ndf = pd.DataFrame(data)\nprint(df.head())\nprint(\"\\nDistribution of attacks:\")\nprint(df['attack'].value_counts())</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>AI transforms security from signature-based detection to behavior-based detection.</li>",
+            "<li class='bullet'>Defenders use AI for anomaly detection, attackers use it for automation and evasion.</li>",
+            "<li class='bullet'>Data is the fuel for AI security models; understanding the data format is the first step.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 2: Machine Learning 101 for Security Analysts",
+          "content": [
+            "Machine Learning (ML) is the engine behind AI. In this module, we strip away the complex math and focus on the intuition of how ML algorithms learn from data to make security predictions.",
+            "<h2 style='font-weight: bold;'>The Three Pillars of ML in Security</h2>",
+            "<h3 style='font-weight: bold;'>1. Supervised Learning (The Guided Detective)</h3>",
+            "<p>You have labeled historical data: 'This connection was an attack (1)', 'This was normal (0)'. The algorithm learns the difference and predicts labels for new, unseen data.</p>",
+            "<ul>",
+            "<li class='bullet'><strong>Use Case:</strong> Classifying known malware families based on labeled samples.</li>",
+            "<li class='bullet'><strong>Common Algorithms:</strong> Decision Trees, Random Forest, Logistic Regression.</li>",
+            "</ul>",
+            "<h3 style='font-weight: bold;'>2. Unsupervised Learning (The Pattern Seeker)</h3>",
+            "<p>You have unlabeled data. The algorithm finds hidden structures or clusters. It might group all similar-looking network traffic together, and you as the analyst notice that one small cluster looks suspicious.</p>",
+            "<ul>",
+            "<li class='bullet'><strong>Use Case:</strong> Detecting an unknown botnet C2 channel that doesn't match any known signature.</li>",
+            "<li class='bullet'><strong>Common Algorithms:</strong> K-Means Clustering, Isolation Forest, Autoencoders.</li>",
+            "</ul>",
+            "<h3 style='font-weight: bold;'>3. Reinforcement Learning (The Trial-and-Error Agent)</h3>",
+            "<p>An agent interacts with an environment (e.g., a network) and learns to make decisions to maximize a reward (e.g., blocking an attack).</p>",
+            "<ul>",
+            "<li class='bullet'><strong>Use Case:</strong> Automated incident response playbooks (e.g., AI deciding whether to quarantine a suspicious endpoint).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Feature Engineering: Teaching the AI What to Look For</h2>",
+            "AI doesn't understand 'IP addresses' natively; it understands numbers. Feature engineering is the art of converting raw security data (logs, packets) into meaningful numerical vectors.",
+            "<pre><code># Example: Converting a URL into features\nurl = \"http://evil-site.com/login.php?user=admin\"\n\nfeatures = {\n    'length': len(url),\n    'num_dots': url.count('.'),\n    'num_slashes': url.count('/'),\n    'has_php': 1 if '.php' in url else 0,\n    'num_digits': sum(c.isdigit() for c in url)\n}\nprint(features)</code></pre>",
+            "<h2 style='font-weight: bold;'>Practical: Training Your First Security Classifier</h2>",
+            "Let's build a simple model to distinguish between short 'ping' packets and long 'data transfer' packets (simulating a data exfiltration baseline).",
+            "<pre><code>from sklearn.tree import DecisionTreeClassifier\nfrom sklearn.model_selection import train_test_split\n\n# Simulate features: [packet_size, ttl]\nX = [[64, 128], [1500, 64], [80, 255], [1200, 64], [100, 128]]\ny = [0, 1, 0, 1, 0]  # 0: Normal, 1: Suspicious transfer\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# Train model\nclf = DecisionTreeClassifier()\nclf.fit(X_train, y_train)\n\n# Predict\nnew_packet = [[1400, 60]]\nprediction = clf.predict(new_packet)\nprint(f\"Prediction for large packet: {'Suspicious' if prediction[0] == 1 else 'Normal'}\")</code></pre>",
+            "<h2 style='font-weight: bold;'>The Danger of Overfitting</h2>",
+            "A model that is too complex might memorize the training data instead of learning general patterns. In security, an overfitted model will fail to detect a slightly modified version of a known attack.",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Supervised learning requires labeled data (good for known threats).</li>",
+            "<li class='bullet'>Unsupervised learning finds unknowns (good for anomaly detection).</li>",
+            "<li class='bullet'>Feature engineering is critical-garbage features lead to garbage predictions.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 3: Data Preprocessing for Security Logs",
+          "content": [
+            "Security data is messy. Logs contain timestamps, IPs, strings, and missing values. Before feeding data to an AI model, it must be cleaned and transformed. This module covers the essential steps of the data preprocessing pipeline.",
+            "<h2 style='font-weight: bold;'>Handling Missing Values</h2>",
+            "Logs might be incomplete due to packet loss or system errors. We can either drop the incomplete rows or impute (fill in) missing values.",
+            "<pre><code>import pandas as pd\n\n# Simulated firewall log with missing values\ndf = pd.DataFrame({\n    'src_ip': ['192.168.1.1', '10.0.0.2', '172.16.0.1'],\n    'bytes_sent': [1200, None, 450],\n    'bytes_received': [800, 200, None]\n})\n\n# Fill missing bytes with the median value\nmedian_sent = df['bytes_sent'].median()\ndf['bytes_sent'].fillna(median_sent, inplace=True)\nprint(df)</code></pre>",
+            "<h2 style='font-weight: bold;'>Encoding Categorical Data</h2>",
+            "Protocols (TCP, UDP, ICMP) and flags (SYN, ACK) are text. We convert them to numbers using One-Hot Encoding.",
+            "<pre><code># One-Hot Encoding for protocols\ndf = pd.DataFrame({'protocol': ['TCP', 'UDP', 'ICMP', 'TCP', 'UDP']})\nencoded_df = pd.get_dummies(df, columns=['protocol'])\nprint(encoded_df.head())</code></pre>",
+            "<h2 style='font-weight: bold;'>Feature Scaling</h2>",
+            "Features like 'bytes sent' (range 0-1,500,000) and 'duration' (range 0-3600) have vastly different scales. Algorithms like K-Means and Neural Networks require scaling (Normalization or Standardization) to avoid bias toward large numbers.",
+            "<pre><code>from sklearn.preprocessing import StandardScaler\n\ndata = [[0, 1500000], [10, 200], [5, 50000]]\nscaler = StandardScaler()\nscaled_data = scaler.fit_transform(data)\nprint(scaled_data)</code></pre>",
+            "<h2 style='font-weight: bold;'>Practical: Processing a Web Server Access Log</h2>",
+            "Let's parse a raw Apache/Nginx style log line into structured features.",
+            "<pre><code>import re\n\nlog_line = '192.168.1.100 - - [10/Oct/2023:13:55:36 +0000] \"GET /admin.php HTTP/1.1\" 404 512 \"-\" \"Mozilla/5.0\"'\n\n# Extract features using regex\npattern = r'(?P<ip>\\d+\\.\\d+\\.\\d+\\.\\d+).*?\"(?P<method>\\w+) (?P<path>.*?) HTTP.*?\" (?P<status>\\d+) (?P<size>\\d+)'\nmatch = re.search(pattern, log_line)\nif match:\n    features = match.groupdict()\n    features['status'] = int(features['status'])\n    features['size'] = int(features['size'])\n    features['path_len'] = len(features['path'])\n    print(features)</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Security logs are rarely ready for AI out-of-the-box.</li>",
+            "<li class='bullet'>Scaling prevents features with large numeric ranges from dominating the model.</li>",
+            "<li class='bullet'>One-Hot Encoding is essential for categorical protocol and flag data.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 4: Anomaly Detection with Unsupervised Learning",
+          "content": [
+            "Most attacks are 'unknown unknowns.' Unsupervised learning shines here by establishing a baseline of normal network behavior and flagging anything that looks different-an anomaly.",
+            "<h2 style='font-weight: bold;'>Understanding Isolation Forest</h2>",
+            "Isolation Forest is a tree-based algorithm specifically designed for anomaly detection. It works on the principle that anomalies are 'few and different.' They are easier to isolate (separate from the rest of the data) than normal points.",
+            "<p>Think of a forest. Normal data points are like dense clusters of trees; you need to cut many branches to isolate one tree. An anomaly is like a single tree standing alone in a clearing-you can isolate it with just one cut.</p>",
+            "<h2 style='font-weight: bold;'>Practical: Detecting Port Scan Activity</h2>",
+            "Port scans often involve many connections from a single source IP to multiple ports on a target. We'll simulate this behavior.",
+            "<pre><code>import numpy as np\nfrom sklearn.ensemble import IsolationForest\n\n# Simulate normal traffic: 100 connections with small number of ports\nnormal = np.random.normal(loc=5, scale=2, size=(100, 1))  # Avg 5 unique ports\n# Simulate scan traffic: 20 connections with many ports\nscan = np.random.normal(loc=500, scale=50, size=(20, 1))  # Avg 500 unique ports\n\nX = np.vstack([normal, scan])\n\n# Train Isolation Forest\nmodel = IsolationForest(contamination=0.1, random_state=42)\npreds = model.fit_predict(X)  # 1 = normal, -1 = anomaly\n\n# Print results\nfor i, p in enumerate(preds):\n    if p == -1:\n        print(f\"Connection {i}: ANOMALY DETECTED (Ports: {X[i][0]:.0f})\")</code></pre>",
+            "<h2 style='font-weight: bold;'>Visualizing the Decision Boundary</h2>",
+            "Let's plot the results to see how Isolation Forest separates normal from anomalous traffic.",
+            "<pre><code>import matplotlib.pyplot as plt\n\nplt.figure(figsize=(10, 4))\nplt.scatter(range(len(X)), X, c=preds, cmap='coolwarm', edgecolor='k')\nplt.axhline(y=50, color='g', linestyle='--', label='Threshold approx')\nplt.xlabel('Connection Index')\nplt.ylabel('Unique Ports Contacted')\nplt.title('Isolation Forest: Port Scan Detection')\nplt.legend()\nplt.show()</code></pre>",
+            "<h2 style='font-weight: bold;'>Limitations of Unsupervised Learning</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>False Positives:</strong> Not every anomaly is an attack. A legitimate backup job at midnight might look anomalous but is safe.</li>",
+            "<li class='bullet'><strong>Drift:</strong> 'Normal' changes over time (e.g., new services added). Models need periodic retraining.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Isolation Forest is fast and effective for high-dimensional security data.</li>",
+            "<li class='bullet'>Unsupervised learning requires human validation-anomalies are not always threats.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 5: Introduction to Natural Language Processing (NLP) for Phishing Detection",
+          "content": [
+            "Phishing attacks manipulate human psychology through text. NLP allows us to analyze email content, URLs, and domain names to detect deceptive patterns that humans might miss.",
+            "<h2 style='font-weight: bold;'>The Bag-of-Words Model</h2>",
+            "A simple yet powerful way to represent text as numbers. We create a vocabulary of all words in the dataset and count how many times each word appears in a given email.",
+            "<pre><code>from sklearn.feature_extraction.text import CountVectorizer\n\nemails = [\n    \"Urgent! Your account has been locked. Click here to verify.\",\n    \"Meeting at 3 PM in conference room B.\",\n    \"Verify your PayPal account immediately or it will be suspended.\"\n]\n\nvectorizer = CountVectorizer()\nX = vectorizer.fit_transform(emails)\nprint(\"Vocabulary:\", vectorizer.get_feature_names_out())\nprint(\"\\nFeature Vectors:\\n\", X.toarray())</code></pre>",
+            "<h2 style='font-weight: bold;'>Detecting Phishing URLs with Lexical Features</h2>",
+            "Phishing URLs often contain tricks to look legitimate: long random subdomains, brand names in the path, excessive hyphens, or IP addresses instead of domain names.",
+            "<pre><code>import re\nfrom urllib.parse import urlparse\n\ndef extract_url_features(url):\n    parsed = urlparse(url)\n    features = {\n        'url_len': len(url),\n        'num_dots': url.count('.'),\n        'num_hyphens': url.count('-'),\n        'num_digits': sum(c.isdigit() for c in url),\n        'has_https': 1 if parsed.scheme == 'https' else 0,\n        'path_len': len(parsed.path),\n        'is_ip': 1 if re.match(r'\\d+\\.\\d+\\.\\d+\\.\\d+', parsed.netloc) else 0\n    }\n    return features\n\nurl = \"http://192.168.1.1/secure-login-paypal.com/verify.php\"\nprint(extract_url_features(url))</code></pre>",
+            "<h2 style='font-weight: bold;'>Practical: Building a Phishing Classifier</h2>",
+            "Using a simple Logistic Regression model to classify URLs based on lexical features.",
+            "<pre><code>import numpy as np\nfrom sklearn.linear_model import LogisticRegression\n\n# Simulated feature data: [url_len, num_dots, num_hyphens, is_ip]\nX_train = np.array([\n    [45, 2, 0, 0],  # Legit\n    [120, 5, 3, 1], # Phish\n    [50, 3, 0, 0],  # Legit\n    [95, 4, 2, 0],  # Phish\n])\ny_train = np.array([0, 1, 0, 1])\n\nmodel = LogisticRegression()\nmodel.fit(X_train, y_train)\n\nnew_url_feat = np.array([[110, 6, 4, 1]])\npred = model.predict(new_url_feat)\nprint(f\"Phishing Probability: {model.predict_proba(new_url_feat)[0][1]:.2f}\")</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>NLP transforms text into numerical features that ML models can understand.</li>",
+            "<li class='bullet'>Lexical analysis of URLs is a lightweight, effective first line of defense against phishing.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 6: Evaluating AI Security Models",
+          "content": [
+            "A model that is 99% accurate might be useless if it misses all the actual attacks. In cybersecurity, we care deeply about False Positives (alert fatigue) and False Negatives (missed breaches).",
+            "<h2 style='font-weight: bold;'>The Confusion Matrix</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>True Positive (TP):</strong> Attack correctly identified.</li>",
+            "<li class='bullet'><strong>False Positive (FP):</strong> Normal activity flagged as attack (Crying Wolf).</li>",
+            "<li class='bullet'><strong>True Negative (TN):</strong> Normal activity correctly ignored.</li>",
+            "<li class='bullet'><strong>False Negative (FN):</strong> Attack missed entirely (Catastrophic).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Key Security Metrics</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Recall (Detection Rate):</strong> TP / (TP + FN). How many attacks did we catch? (Goal: >95%)</li>",
+            "<li class='bullet'><strong>Precision:</strong> TP / (TP + FP). How many of our alerts were real attacks? (Goal: reduce analyst time).</li>",
+            "<li class='bullet'><strong>F1-Score:</strong> Harmonic mean of Precision and Recall. Balances both.</li>",
+            "</ul>",
+            "<pre><code>from sklearn.metrics import classification_report, confusion_matrix\n\ny_true = [0, 1, 0, 0, 1, 1, 0, 1, 0, 0]  # 0: Normal, 1: Attack\ny_pred = [0, 1, 1, 0, 0, 1, 0, 1, 0, 0]  # Model predictions\n\nprint(\"Confusion Matrix:\")\nprint(confusion_matrix(y_true, y_pred))\nprint(\"\\nClassification Report:\")\nprint(classification_report(y_true, y_pred, target_names=['Normal', 'Attack']))</code></pre>",
+            "<h2 style='font-weight: bold;'>The ROC Curve and AUC</h2>",
+            "The ROC curve shows the trade-off between True Positive Rate and False Positive Rate at various threshold settings. AUC (Area Under Curve) summarizes the model's ability to distinguish between classes. AUC = 1.0 is perfect; AUC = 0.5 is random guessing.",
+            "<pre><code>import matplotlib.pyplot as plt\nfrom sklearn.metrics import RocCurveDisplay\n\n# Assume we have a model and test data\n# RocCurveDisplay.from_estimator(model, X_test, y_test)\n# plt.show()</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Accuracy is misleading in imbalanced security datasets (most traffic is normal).</li>",
+            "<li class='bullet'>Recall is often the most critical metric-we cannot afford to miss an attack.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 7: Introduction to Deep Learning for Image-Based Threats",
+          "content": [
+            "Deep Learning, particularly Convolutional Neural Networks (CNNs), excels at pattern recognition in images. This is useful for detecting phishing kits that mimic login pages of banks or social media sites.",
+            "<h2 style='font-weight: bold;'>How CNNs 'See' Phishing Pages</h2>",
+            "Instead of analyzing HTML code, we take a screenshot of a suspicious login page. A CNN scans the image looking for visual trademarks, layout similarities, and logos to determine if it's a legitimate brand or a spoof.",
+            "<h2 style='font-weight: bold;'>Practical: Using a Pre-trained CNN for Logo Detection</h2>",
+            "We can use a model like ResNet50 pre-trained on ImageNet to extract features from a webpage screenshot and compare it to a known legitimate logo.",
+            "<pre><code>from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input, decode_predictions\nfrom tensorflow.keras.preprocessing import image\nimport numpy as np\n\n# Load pre-trained model\nmodel = ResNet50(weights='imagenet')\n\n# Load an image of a login page (simulate)\n# img_path = 'suspicious_paypal_login.png'\n# img = image.load_img(img_path, target_size=(224, 224))\n# x = image.img_to_array(img)\n# x = np.expand_dims(x, axis=0)\n# x = preprocess_input(x)\n\n# preds = model.predict(x)\n# print('Predicted:', decode_predictions(preds, top=3)[0])\nprint(\"Note: In practice, this requires downloading an image file.\")</code></pre>",
+            "<h2 style='font-weight: bold;'>Limitations and Adversarial Attacks</h2>",
+            "CNNs can be fooled by 'adversarial examples'-slightly modified images that look normal to humans but cause the AI to misclassify them completely. This is a major area of research in AI security.",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Deep Learning automates feature extraction from complex data like images.</li>",
+            "<li class='bullet'>Visual similarity analysis can catch phishing pages that bypass text-based detectors.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 8: AI-Powered Log Analysis with ELK Stack",
+          "content": [
+            "The ELK Stack (Elasticsearch, Logstash, Kibana) is a powerful platform for centralizing logs. When integrated with Machine Learning, it provides real-time anomaly detection out-of-the-box.",
+            "<h2 style='font-weight: bold;'>Elasticsearch Machine Learning Jobs</h2>",
+            "Elastic's ML features automatically model the normal behavior of your time-series data (e.g., request rates, error counts) and alert on anomalies.",
+            "<h3 style='font-weight: bold;'>Types of ML Jobs</h3>",
+            "<ul>",
+            "<li class='bullet'><strong>Single Metric Job:</strong> Monitor the count of 500 errors per minute.</li>",
+            "<li class='bullet'><strong>Multi-Metric Job:</strong> Correlate CPU usage with network traffic.</li>",
+            "<li class='bullet'><strong>Population Job:</strong> Compare behavior across many similar entities (e.g., all web servers in a fleet).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical: Simulating an ELK ML Alert</h2>",
+            "While we can't run a full ELK stack here, let's simulate how a time-series anomaly detection model would work.",
+            "<pre><code>import numpy as np\nimport pandas as pd\n\n# Simulate normal traffic over a day (1440 minutes)\ntime = np.arange(0, 1440)\ntraffic = 100 + 20*np.sin(time/60) + np.random.normal(0, 5, 1440)\n\n# Inject a spike anomaly\ntraffic[800:810] += 300\n\n# Simple Z-Score anomaly detection (if value > 3 standard deviations from mean)\nmean = np.mean(traffic)\nstd = np.std(traffic)\nanomalies = np.abs(traffic - mean) > 3 * std\n\nprint(f\"Anomalies detected at minutes: {time[anomalies]}\")</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Centralized logging is a prerequisite for effective AI-driven security monitoring.</li>",
+            "<li class='bullet'>Elastic ML provides user-friendly anomaly detection without writing code.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 9: Ethics, Bias, and Responsible AI in Security",
+          "content": [
+            "AI models are only as good as the data they are trained on. If the training data contains bias, the AI will perpetuate and amplify that bias, leading to unfair or ineffective security outcomes.",
+            "<h2 style='font-weight: bold;'>Types of Bias in Security AI</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Sampling Bias:</strong> Training a malware detector only on samples from Western countries, making it blind to malware prevalent in Asia.</li>",
+            "<li class='bullet'><strong>Label Bias:</strong> Analysts may have labeled certain benign tools as 'hacktools' incorrectly, teaching the AI to block legitimate admin software.</li>",
+            "<li class='bullet'><strong>Automation Bias:</strong> Analysts trusting AI alerts without verification, leading to overlooked false negatives.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Explainable AI (XAI)</h2>",
+            "Black-box models (like Deep Neural Networks) are powerful but opaque. XAI tools like SHAP and LIME help explain *why* a model made a specific prediction.",
+            "<pre><code># Conceptual example using SHAP\n# import shap\n# explainer = shap.Explainer(model)\n# shap_values = explainer(X_test)\n# shap.plots.waterfall(shap_values[0])  # Shows feature contributions for a single prediction\nprint(\"SHAP values help answer: 'Why did the model flag this connection as malicious?'\")\n</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Always audit your training data for representation and fairness.</li>",
+            "<li class='bullet'>Explainability is crucial for incident response and regulatory compliance.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 10: Capstone Project - Building a Simple Network Intrusion Detection System (NIDS)",
+          "content": [
+            "You will now integrate all the skills learned in this course to build a basic AI-powered NIDS. You'll load a public dataset (NSL-KDD), preprocess the data, train a Random Forest classifier, and evaluate its performance.",
+            "<h2 style='font-weight: bold;'>Project Steps</h2>",
+            "<ol>",
+            "<li><strong>Data Loading:</strong> Download the NSL-KDD dataset (or use a provided sample).</li>",
+            "<li><strong>Preprocessing:</strong> Encode categorical features (protocol, service, flag) and scale numerical features.</li>",
+            "<li><strong>Model Training:</strong> Train a Random Forest Classifier.</li>",
+            "<li><strong>Evaluation:</strong> Generate a confusion matrix and classification report focusing on Recall.</li>",
+            "<li><strong>Inference:</strong> Write a function that takes a single connection record and predicts if it's an attack.</li>",
+            "</ol>",
+            "<h2 style='font-weight: bold;'>Project Skeleton Code</h2>",
+            "<pre><code>import pandas as pd\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler, LabelEncoder\nfrom sklearn.metrics import classification_report\n\n# Load data (simulate with sample structure)\n# df = pd.read_csv('KDDTrain+.txt', header=None)\n# Define column names (omitted for brevity)\n\n# For demo, create small synthetic data\ndata = {\n    'duration': [0,0,0,0,0],\n    'protocol_type': ['tcp','udp','tcp','icmp','tcp'],\n    'service': ['http','private','smtp','eco_i','ftp'],\n    'flag': ['SF','SF','SF','SF','SF'],\n    'src_bytes': [200, 150, 300, 100, 500],\n    'dst_bytes': [5000, 40, 200, 80, 100],\n    'label': ['normal','normal','neptune','ipsweep','satan']\n}\ndf = pd.DataFrame(data)\n\n# Encode categorical features\nle = LabelEncoder()\nfor col in ['protocol_type', 'service', 'flag']:\n    df[col] = le.fit_transform(df[col])\n\n# Separate features and target\nX = df.drop('label', axis=1)\ny = (df['label'] != 'normal').astype(int)  # Binary classification\n\n# Train/Test Split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Train Random Forest\nrf = RandomForestClassifier(n_estimators=100, random_state=42)\nrf.fit(X_train_scaled, y_train)\n\n# Predict and Evaluate\ny_pred = rf.predict(X_test_scaled)\nprint(classification_report(y_test, y_pred, target_names=['Normal', 'Attack']))\n\n# Inference function\ndef predict_connection(connection_features):\n    scaled = scaler.transform([connection_features])\n    pred = rf.predict(scaled)\n    return \"Attack\" if pred[0] == 1 else \"Normal\"\n\n# Example: Predict a new connection\nnew_conn = [0, 0, 2, 0, 450, 80]  # Encoded values\nprint(f\"Prediction: {predict_connection(new_conn)}\")</code></pre>",
+            "<h2 style='font-weight: bold;'>Congratulations!</h2>",
+            "You have completed the foundational course in AI-Enhanced Cybersecurity. You are now equipped to explore more advanced topics and apply these techniques in real-world security operations."
           ]
         }
       ]
     },
     {
-      "id": "dummy-db",
-      "title": "Database Engineering Fundamentals",
-      "category": "Database Engineering",
-      "level": "Beginner",
-      "duration": "1 Week",
-      "description": "Relational and NoSQL databases.",
+      "id": "ai-cyber-associate",
+      "title": "Applied AI for Cybersecurity Tools & Techniques",
+      "category": "Artificial Intelligence",
+      "level": "Associate",
+      "duration": "8 Weeks",
+      "description": "Move beyond fundamentals and into the arsenal of AI-powered security tools. This hands-on course teaches you to configure, deploy, and tune AI-driven systems for threat hunting, malware analysis, and security automation. You'll work with real security datasets, build custom models with Scikit-learn and TensorFlow, and integrate AI into SIEM and SOAR platforms.",
       "modules": [
         {
-          "title": "Module 1: Introduction",
+          "title": "Module 1: Advanced Data Handling & Feature Stores",
           "content": [
-            "This is a test module for certificate generation.",
-            "You can interact with it safely."
+            "At the Associate level, you need to manage large-scale security data efficiently. This module covers feature engineering at scale and the concept of Feature Stores-centralized repositories for reusing security features across multiple models.",
+            "<h2 style='font-weight: bold;'>Building a Feature Engineering Pipeline</h2>",
+            "We'll use Python's `pandas` and `numpy` to extract meaningful features from raw PCAP (packet capture) data. Key features for network security include:",
+            "<ul>",
+            "<li class='bullet'><strong>Flow duration</strong></li>",
+            "<li class='bullet'><strong>Packet inter-arrival time statistics (mean, variance)</strong></li>",
+            "<li class='bullet'><strong>Bytes per packet ratio</strong></li>",
+            "<li class='bullet'><strong>TCP flag counts (SYN, ACK, RST)</strong></li>",
+            "</ul>",
+            "<pre><code>import pandas as pd\nimport numpy as np\n\n# Simulate a few network flows\ndata = {\n    'flow_id': [1, 2, 3],\n    'packet_sizes': [[100, 200, 150], [500], [80, 80, 80, 80]],\n    'arrival_times': [[0.0, 0.5, 1.2], [0.0], [0.0, 0.1, 0.2, 0.3]]\n}\ndf = pd.DataFrame(data)\n\n# Feature extraction functions\ndef get_flow_stats(sizes, times):\n    return {\n        'total_bytes': sum(sizes),\n        'num_packets': len(sizes),\n        'avg_packet_size': np.mean(sizes),\n        'std_packet_size': np.std(sizes),\n        'duration': times[-1] - times[0] if len(times) > 1 else 0\n    }\n\ndf['stats'] = df.apply(lambda row: get_flow_stats(row['packet_sizes'], row['arrival_times']), axis=1)\nfeatures_df = pd.DataFrame(df['stats'].tolist())\nprint(features_df)</code></pre>",
+            "<h2 style='font-weight: bold;'>Feature Store Concept</h2>",
+            "In production, you don't want every detection model recalculating the 'average packet size' for the same flow. A Feature Store (like Feast) caches these computations.",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Efficient feature pipelines are essential for real-time security AI.</li>",
+            "<li class='bullet'>Feature Stores prevent duplicate work and ensure consistency across models.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 2: Supervised Learning for Malware Classification",
+          "content": [
+            "Signature-based antivirus is obsolete against polymorphic malware. In this module, we train a Random Forest and an XGBoost model to classify Portable Executable (PE) files as benign or malicious based on static features extracted from the file headers.",
+            "<h2 style='font-weight: bold;'>Key PE Features</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Machine:</strong> Target architecture (e.g., 0x14c for x86).</li>",
+            "<li class='bullet'><strong>NumberOfSections:</strong> Unusually high section count may indicate packing.</li>",
+            "<li class='bullet'><strong>Characteristics:</strong> Flags like IMAGE_FILE_EXECUTABLE_IMAGE.</li>",
+            "<li class='bullet'><strong>Entropy of sections:</strong> High entropy suggests encryption/packing.</li>",
+            "</ul>",
+            "<pre><code>import pandas as pd\nfrom sklearn.ensemble import RandomForestClassifier\nfrom xgboost import XGBClassifier\nfrom sklearn.model_selection import train_test_split\n\n# Simulated PE header features\n# Features: [Machine, NumberOfSections, SizeOfCode, Entropy]\ndata = {\n    'Machine': [332, 332, 34404, 332, 332],\n    'NumberOfSections': [4, 5, 8, 4, 9],\n    'SizeOfCode': [2048, 4096, 512, 1024, 256],\n    'Entropy': [4.5, 5.1, 7.8, 4.2, 7.9],\n    'label': [0, 0, 1, 0, 1]  # 0=Benign, 1=Malicious\n}\ndf = pd.DataFrame(data)\n\nX = df.drop('label', axis=1)\ny = df['label']\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# Train models\nrf = RandomForestClassifier(n_estimators=100)\nrf.fit(X_train, y_train)\n\nxgb = XGBClassifier(eval_metric='logloss')\nxgb.fit(X_train, y_train)\n\nprint(f\"Random Forest Accuracy: {rf.score(X_test, y_test):.2f}\")\nprint(f\"XGBoost Accuracy: {xgb.score(X_test, y_test):.2f}\")</code></pre>",
+            "<h2 style='font-weight: bold;'>Feature Importance Analysis</h2>",
+            "Understanding which features drive the classification helps security analysts verify the model's logic.",
+            "<pre><code>import matplotlib.pyplot as plt\nimportances = rf.feature_importances_\nplt.barh(X.columns, importances)\nplt.xlabel('Importance')\nplt.title('Feature Importance for Malware Detection')\nplt.show()</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Static analysis features can effectively triage unknown files.</li>",
+            "<li class='bullet'>Ensemble methods (Random Forest, XGBoost) are robust for imbalanced malware datasets.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 3: Deep Learning for Network Traffic Analysis",
+          "content": [
+            "While Random Forest works well on tabular data, Deep Learning (specifically Autoencoders) excels at learning compressed representations of 'normal' traffic. Any traffic that cannot be reconstructed well is flagged as anomalous.",
+            "<h2 style='font-weight: bold;'>Autoencoder Architecture</h2>",
+            "An Autoencoder consists of an Encoder that compresses input data into a lower-dimensional 'latent space' and a Decoder that attempts to reconstruct the original input. The reconstruction error is the anomaly score.",
+            "<pre><code>import tensorflow as tf\nfrom tensorflow.keras import layers, Model\n\n# Define Autoencoder\ninput_dim = 10  # 10 features per flow\nencoding_dim = 4\n\ninput_layer = layers.Input(shape=(input_dim,))\nencoded = layers.Dense(encoding_dim, activation='relu')(input_layer)\ndecoded = layers.Dense(input_dim, activation='sigmoid')(encoded)\n\nautoencoder = Model(input_layer, decoded)\nautoencoder.compile(optimizer='adam', loss='mse')\n\n# Simulate normal training data\nimport numpy as np\nX_train_normal = np.random.rand(1000, input_dim)\n\nautoencoder.fit(X_train_normal, X_train_normal, epochs=10, batch_size=32, verbose=0)\n\n# Detect anomaly\nX_test = np.random.rand(5, input_dim)\nreconstructions = autoencoder.predict(X_test)\nmse = np.mean(np.square(X_test - reconstructions), axis=1)\nprint(\"Reconstruction Errors:\", mse)\n# High error -> Anomaly</code></pre>",
+            "<h2 style='font-weight: bold;'>Setting the Anomaly Threshold</h2>",
+            "We calculate the 95th percentile of reconstruction errors on a validation set of normal traffic. Any test sample with error above this threshold is flagged.",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Autoencoders are powerful for detecting zero-day attacks without labeled data.</li>",
+            "<li class='bullet'>Reconstruction error provides a continuous anomaly score, allowing fine-tuning of alert sensitivity.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 4: AI-Enhanced SIEM: Splunk and Elastic ML",
+          "content": [
+            "Modern SIEMs like Splunk and Elasticsearch have built-in Machine Learning capabilities. This module teaches you how to configure and interpret these tools effectively.",
+            "<h2 style='font-weight: bold;'>Splunk Machine Learning Toolkit (MLTK)</h2>",
+            "Splunk's MLTK allows you to apply predictive models directly on indexed data using SPL (Search Processing Language).",
+            "<h3 style='font-weight: bold;'>Example: Predicting Disk Failure</h3>",
+            "<pre><code>| inputlookup disk_failures.csv \n| fit LinearRegression \"days_to_failure\" from \"smart_1_raw\" \"smart_5_raw\" into disk_model</code></pre>",
+            "<h2 style='font-weight: bold;'>Elastic Security: Prebuilt ML Jobs</h2>",
+            "Elastic provides dozens of pre-configured ML jobs for security:",
+            "<ul>",
+            "<li class='bullet'><strong>DNS Tunneling Detection:</strong> Analyzes high byte counts over DNS port.</li>",
+            "<li class='bullet'><strong>Rare Process Execution:</strong> Flags processes that have never been seen on a host before.</li>",
+            "<li class='bullet'><strong>Unusual Login Activity:</strong> Models geolocation and time of day.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Leveraging built-in ML in SIEMs reduces development time and integrates seamlessly with alerting workflows.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 5: Automating Response with AI and SOAR",
+          "content": [
+            "Security Orchestration, Automation and Response (SOAR) platforms execute playbooks when alerts fire. AI can enhance SOAR by making nuanced decisions-for example, determining if a suspicious email is a false positive before quarantining it.",
+            "<h2 style='font-weight: bold;'>Integrating a Custom AI Model into a Playbook</h2>",
+            "We'll simulate a playbook step that calls a Python script to score a URL's maliciousness.",
+            "<pre><code># phishing_scorer.py\nimport sys\nimport joblib\nimport numpy as np\n\n# Load pre-trained model\nmodel = joblib.load('phishing_model.pkl')\n\n# Extract features from URL passed by SOAR\nurl = sys.argv[1]\n# (Feature extraction code here...)\nfeatures = np.array([[len(url), url.count('.'), url.count('-')]])\n\nscore = model.predict_proba(features)[0][1]\nprint(score)\n\n# In SOAR playbook logic: if score > 0.8: quarantine email; else: deliver to inbox with warning.</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>AI reduces analyst fatigue by automating low-level decisions in SOAR.</li>",
+            "<li class='bullet'>The output of AI models can be used as conditional branches in playbooks.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 6: Threat Intelligence Automation with NLP",
+          "content": [
+            "Threat intelligence reports, blogs, and dark web forums contain valuable IOCs (Indicators of Compromise) but are unstructured text. We use NLP to automatically extract IPs, domains, and MITRE ATT&CK techniques.",
+            "<h2 style='font-weight: bold;'>Named Entity Recognition (NER) for IOCs</h2>",
+            "Using `spaCy` and custom regex patterns to extract security entities.",
+            "<pre><code>import spacy\nimport re\n\nnlp = spacy.load(\"en_core_web_sm\")\n\nthreat_text = \"\"\"\nAPT29 has been observed using domains such as malicious-update[.]com and IP 185.142.236[.]113. \nThey utilized PowerShell Empire and T1059.001 command and scripting interpreter.\n\"\"\"\n\n# Extract IPs and Domains via regex\nips = re.findall(r'\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}', threat_text.replace('[.]', '.'))\ndomains = re.findall(r'[a-zA-Z0-9-]+\\[?\\.[a-zA-Z]{2,}\\]?', threat_text)\n\nprint(\"Extracted IPs:\", ips)\nprint(\"Extracted Domains:\", domains)\n\n# Use spaCy for MITRE technique extraction (TXXXX)\ndoc = nlp(threat_text)\nfor token in doc:\n    if re.match(r'T\\d{4}(\\.\\d{3})?', token.text):\n        print(\"MITRE Technique Found:\", token.text)</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Automated IOC extraction saves hours of analyst time.</li>",
+            "<li class='bullet'>NLP can map threat reports directly to the MITRE ATT&CK framework.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 7: Defending AI: Adversarial Machine Learning",
+          "content": [
+            "Attackers will try to bypass your AI defenses. Adversarial ML involves crafting inputs that cause the model to misclassify. We explore evasion attacks and defense strategies.",
+            "<h2 style='font-weight: bold;'>Evasion Attack: FGSM (Fast Gradient Sign Method)</h2>",
+            "By adding a small, carefully calculated 'noise' to a malware sample, an attacker can cause the classifier to label it as benign without breaking functionality.",
+            "<pre><code># Conceptual code (requires TensorFlow model and gradient access)\n# import tensorflow as tf\n# loss_object = tf.keras.losses.BinaryCrossentropy()\n# with tf.GradientTape() as tape:\n#     tape.watch(input_image)\n#     prediction = model(input_image)\n#     loss = loss_object(tf.ones_like(prediction), prediction)\n# gradient = tape.gradient(loss, input_image)\n# perturbation = epsilon * tf.sign(gradient)\n# adversarial_example = input_image + perturbation</code></pre>",
+            "<h2 style='font-weight: bold;'>Defense: Adversarial Training</h2>",
+            "Include adversarial examples in the training set so the model learns to resist them.",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>AI models are vulnerable; defense-in-depth is essential.</li>",
+            "<li class='bullet'>Monitor for concept drift-if model accuracy drops suddenly, it might be under attack.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 8: Cloud Security Analytics with AWS GuardDuty & SageMaker",
+          "content": [
+            "Cloud providers offer native AI security services. AWS GuardDuty uses ML to analyze VPC Flow Logs, DNS logs, and CloudTrail events. We can augment it with custom models in SageMaker.",
+            "<h2 style='font-weight: bold;'>GuardDuty Findings</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Recon:EC2/PortProbeUnprotectedPort:</strong> ML detected a port scan.</li>",
+            "<li class='bullet'><strong>CryptoCurrency:EC2/BitcoinTool.B!DNS:</strong> ML identified DNS queries to known mining pools.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Building a Custom Model in SageMaker</h2>",
+            "We'll train a model on CloudTrail events to detect unusual API calls.",
+            "<pre><code>import sagemaker\nfrom sagemaker import get_execution_role\nfrom sagemaker.sklearn.estimator import SKLearn\n\n# Define training script and dependencies\n# ...\n\n# Deploy model to endpoint\n# predictor = estimator.deploy(initial_instance_count=1, instance_type='ml.m5.large')</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Leverage managed AI services for baseline security; customize with your own models for specific threats.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 9: MLOps for Security Models",
+          "content": [
+            "Building a model is 20% of the work; maintaining it in production is the other 80%. MLOps applies DevOps principles to machine learning, ensuring models remain accurate as threats evolve.",
+            "<h2 style='font-weight: bold;'>Key MLOps Components</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Version Control:</strong> DVC for data and model versioning.</li>",
+            "<li class='bullet'><strong>CI/CD Pipelines:</strong> Automate retraining when new malware samples arrive.</li>",
+            "<li class='bullet'><strong>Model Monitoring:</strong> Track data drift (e.g., new file types, new protocols).</li>",
+            "</ul>",
+            "<pre><code># Example: Using Evidently AI to detect data drift\n# from evidently.report import Report\n# from evidently.metric_preset import DataDriftPreset\n\n# report = Report(metrics=[DataDriftPreset()])\n# report.run(reference_data=ref_df, current_data=curr_df)\n# report.save_html('drift_report.html')</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>A stale model is a dangerous model. Continuous monitoring and retraining are non-negotiable.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 10: Capstone - AI-Driven SOC Analyst Assistant",
+          "content": [
+            "In this final project, you will build a comprehensive tool that ingests a security alert, enriches it with threat intelligence using NLP, scores the risk using an ML model, and suggests a response action.",
+            "<h2 style='font-weight: bold;'>Project Components</h2>",
+            "<ol>",
+            "<li><strong>Alert Parser:</strong> Accept a JSON alert (e.g., from Splunk).</li>",
+            "<li><strong>IOC Extractor:</strong> Extract IPs/domains from alert description using regex.</li>",
+            "<li><strong>Risk Scorer:</strong> Load a pre-trained model to score the alert based on features.</li>",
+            "<li><strong>Report Generator:</strong> Produce a markdown report summarizing findings.</li>",
+            "</ol>",
+            "<pre><code>import json\nimport joblib\n\ndef analyze_alert(alert_json):\n    alert = json.loads(alert_json)\n    # Extract features\n    features = [\n        alert['severity'],\n        len(alert['description']),\n        1 if 'phish' in alert['description'].lower() else 0\n    ]\n    model = joblib.load('alert_risk_model.pkl')\n    risk_score = model.predict_proba([features])[0][1]\n    \n    response = {\n        'alert_id': alert['id'],\n        'risk_score': risk_score,\n        'recommendation': 'Quarantine' if risk_score > 0.7 else 'Monitor'\n    }\n    return response\n\n# Simulate alert\nalert = '{\"id\": 1001, \"severity\": 4, \"description\": \"User clicked phishing link\"}'\nprint(analyze_alert(alert))</code></pre>",
+            "<h2 style='font-weight: bold;'>Congratulations!</h2>",
+            "You have completed the Associate-level course and can now build, deploy, and maintain AI security tools in a production environment."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai-dev-professional",
+      "title": "Professional AI-Agent Development for Web Applications",
+      "category": "Artificial Intelligence",
+      "level": "Professional",
+      "duration": "10 Weeks",
+      "description": "Master the art of building autonomous AI agents that accelerate web development. This professional-level course teaches you to design multi-agent systems, craft advanced prompts for code generation, integrate LLMs into full-stack applications, and deploy AI-augmented development pipelines. You'll complete a capstone project using AI agents to build a production-ready web application from scratch.",
+      "modules": [
+        {
+          "title": "Module 1: Foundations of AI Agents & Tool Use",
+          "content": [
+            "An AI agent is more than a chatbot-it's a system that perceives its environment, makes decisions, and takes actions using tools. In development, agents can read code, write files, run tests, and even debug.",
+            "<h2 style='font-weight: bold;'>Agent Architecture</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>LLM Core:</strong> The 'brain' (GPT-4, Claude, Llama).</li>",
+            "<li class='bullet'><strong>Memory:</strong> Short-term (conversation history) and Long-term (vector database of project knowledge).</li>",
+            "<li class='bullet'><strong>Tools:</strong> Functions the agent can call (e.g., `read_file`, `write_code`, `search_web`).</li>",
+            "<li class='bullet'><strong>Planning:</strong> Breaking complex tasks into subtasks (Chain-of-Thought, Tree-of-Thoughts).</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical: Building a Simple File Reader Agent</h2>",
+            "Using the OpenAI Function Calling API to let the agent interact with the filesystem.",
+            "<pre><code>import openai\nimport os\n\n# Define a tool (function schema)\ntools = [{\n    \"type\": \"function\",\n    \"function\": {\n        \"name\": \"read_file\",\n        \"description\": \"Read the contents of a file\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"filepath\": {\"type\": \"string\", \"description\": \"Path to the file\"}\n            },\n            \"required\": [\"filepath\"]\n        }\n    }\n}]\n\ndef read_file(filepath):\n    try:\n        with open(filepath, 'r') as f:\n            return f.read()\n    except Exception as e:\n        return str(e)\n\n# Agent loop\nuser_prompt = \"What's in the config.json file?\"\nresponse = openai.ChatCompletion.create(\n    model=\"gpt-4\",\n    messages=[{\"role\": \"user\", \"content\": user_prompt}],\n    tools=tools,\n    tool_choice=\"auto\"\n)\n\n# If the model wants to call a tool\nif response.choices[0].message.tool_calls:\n    tool_call = response.choices[0].message.tool_calls[0]\n    if tool_call.function.name == \"read_file\":\n        args = json.loads(tool_call.function.arguments)\n        content = read_file(args['filepath'])\n        # Send tool output back to model for final response\n        # ...</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Agents extend LLMs beyond text generation by giving them access to external functions.</li>",
+            "<li class='bullet'>Tool definitions must be precise for the LLM to use them correctly.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 2: Prompt Engineering for Code Generation & Review",
+          "content": [
+            "Crafting effective prompts is the key to getting high-quality code from AI. This module covers advanced prompting techniques specifically for software development.",
+            "<h2 style='font-weight: bold;'>Chain-of-Thought (CoT) Prompting</h2>",
+            "Instead of asking 'Write a function to sort a list', we guide the model through reasoning steps.",
+            "<pre><code>prompt = \"\"\"\nTask: Write a Python function to find the longest palindrome substring.\n\nLet's think step by step:\n1. We can use the 'expand around center' approach.\n2. There are 2N-1 possible centers (each character and each space between characters).\n3. For each center, expand outwards as long as characters match.\n4. Keep track of the longest palindrome found.\n\nNow, write the code implementing this logic.\n\"\"\"\n# The model's output will follow the reasoning structure, producing more robust code.</code></pre>",
+            "<h2 style='font-weight: bold;'>Role Prompting & System Messages</h2>",
+            "Set the AI's persona to get specialized output.",
+            "<pre><code>system_message = \"\"\"\nYou are a Senior Security Engineer conducting a code review. \nAnalyze the provided code for OWASP Top 10 vulnerabilities, focusing on SQL injection, XSS, and insecure deserialization. \nProvide a detailed report with line numbers and remediation steps.\n\"\"\"</code></pre>",
+            "<h2 style='font-weight: bold;'>Few-Shot Prompting for Consistent Style</h2>",
+            "Provide examples of the desired output format.",
+            "<pre><code>prompt = \"\"\"\nConvert the following requirements into JSON test cases.\n\nExample:\nRequirement: User login with email and password.\nOutput: {\"test_cases\": [{\"name\": \"Valid login\", \"steps\": [\"Navigate to /login\", \"Enter valid email\", \"Enter valid password\", \"Click submit\"], \"expected\": \"Redirect to dashboard\"}]}\n\nNow do this:\nRequirement: User can reset password via email link.\nOutput:\n\"\"\"</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Explicit reasoning steps (CoT) improve complex code generation.</li>",
+            "<li class='bullet'>System messages and examples shape the AI's output style and accuracy.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 3: Building a Codebase-Aware AI Assistant with RAG",
+          "content": [
+            "General LLMs don't know your private codebase. Retrieval-Augmented Generation (RAG) solves this by retrieving relevant code snippets from your repository and injecting them into the prompt context.",
+            "<h2 style='font-weight: bold;'>RAG Pipeline for Code</h2>",
+            "<ol>",
+            "<li><strong>Indexing:</strong> Chunk your codebase (functions, classes) and embed them using a model like `text-embedding-3-small`.</li>",
+            "<li><strong>Storage:</strong> Store embeddings in a vector database (Chroma, Pinecone).</li>",
+            "<li><strong>Retrieval:</strong> Given a query (e.g., 'How does the auth middleware work?'), embed the query and find similar code chunks.</li>",
+            "<li><strong>Generation:</strong> Pass retrieved code + user query to LLM for an informed answer.</li>",
+            "</ol>",
+            "<pre><code>import chromadb\nfrom chromadb.utils import embedding_functions\n\n# Initialize Chroma client\nclient = chromadb.PersistentClient(path=\"./code_db\")\ncollection = client.get_or_create_collection(\n    name=\"my_project\",\n    embedding_function=embedding_functions.OpenAIEmbeddingFunction(api_key=\"...\")\n)\n\n# Indexing (run once)\n# code_snippets = extract_functions_from_repo(\"./src\")\n# for i, snippet in enumerate(code_snippets):\n#     collection.add(documents=[snippet], ids=[f\"func_{i}\"])\n\n# Querying\nquery = \"JWT token validation logic\"\nresults = collection.query(query_texts=[query], n_results=3)\ncontext = \"\\n\\n\".join(results['documents'][0])\n\n# Generate with context\nprompt = f\"\"\"Given the following code snippets from our project:\n{context}\n\nQuestion: {query}\nAnswer based only on the provided code.\"\"\"\nprint(prompt)</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>RAG eliminates hallucinations about your specific codebase.</li>",
+            "<li class='bullet'>Vector databases enable semantic search over code.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 4: Multi-Agent Systems with CrewAI",
+          "content": [
+            "Complex development tasks benefit from specialized agents working together. CrewAI is a framework for orchestrating role-playing autonomous AI agents.",
+            "<h2 style='font-weight: bold;'>CrewAI Architecture</h2>",
+            "<ul>",
+            "<li class='bullet'><strong>Agent:</strong> Has a role, goal, backstory, and tools.</li>",
+            "<li class='bullet'><strong>Task:</strong> Specific assignment with expected output.</li>",
+            "<li class='bullet'><strong>Crew:</strong> A group of agents with sequential or hierarchical process.</li>",
+            "</ul>",
+            "<h2 style='font-weight: bold;'>Practical: Dev Team Crew</h2>",
+            "Simulate a Product Manager, Software Engineer, and QA Tester collaborating on a feature.",
+            "<pre><code>from crewai import Agent, Task, Crew, Process\n\n# Define Agents\npm = Agent(\n    role='Product Manager',\n    goal='Write clear user stories and acceptance criteria',\n    backstory='You are an experienced PM who loves details.',\n    allow_delegation=False\n)\n\ndeveloper = Agent(\n    role='Senior Software Engineer',\n    goal='Implement features based on user stories',\n    backstory='You write clean, testable Python code.',\n    allow_delegation=False\n)\n\ntester = Agent(\n    role='QA Engineer',\n    goal='Write comprehensive test cases and find edge cases',\n    backstory='You are meticulous and break things.',\n    allow_delegation=False\n)\n\n# Define Tasks\ntask1 = Task(description='Write a user story for a password reset feature.', agent=pm, expected_output='User story with acceptance criteria')\ntask2 = Task(description='Implement the password reset feature in Python Flask.', agent=developer, expected_output='Python code for the feature')\ntask3 = Task(description='Write pytest tests for the password reset feature.', agent=tester, expected_output='pytest test cases')\n\n# Assemble Crew\ncrew = Crew(agents=[pm, developer, tester], tasks=[task1, task2, task3], process=Process.sequential)\nresult = crew.kickoff()\nprint(result)</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Multi-agent systems mirror real development teams, reducing errors.</li>",
+            "<li class='bullet'>Specialized agents produce higher quality outputs than a single generalist prompt.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 5: AI-Augmented Testing & Quality Assurance",
+          "content": [
+            "AI can generate unit tests, integration tests, and even perform visual regression testing. This module focuses on automating the test generation process.",
+            "<h2 style='font-weight: bold;'>Generating Unit Tests with AI</h2>",
+            "Given a function signature and docstring, we prompt the LLM to create comprehensive pytest cases.",
+            "<pre><code>function_code = \"\"\"\ndef calculate_discount(price, user_type):\n    '''\n    Calculate final price after discount.\n    - Regular user: no discount.\n    - Member: 10% off.\n    - VIP: 20% off, but price must be at least 100 to qualify.\n    Raises ValueError if price negative.\n    '''\n    # Implementation omitted\n\"\"\"\n\nprompt = f\"\"\"\nWrite 10 pytest test cases for the following function, covering normal, edge, and error cases.\n\n{function_code}\n\nOutput only the Python test code.\n\"\"\"\n# Response will contain ready-to-run test cases.</code></pre>",
+            "<h2 style='font-weight: bold;'>Self-Healing UI Tests</h2>",
+            "When a UI selector changes (e.g., button ID changes), traditional tests break. AI can analyze the page structure and suggest a new robust selector.",
+            "<pre><code># Concept: Use an LLM to analyze DOM diff and update selector\n# old_selector = \"#login-button\"\n# new_dom = \"<button class='btn-primary' data-testid='submit-login'>...</button>\"\n# prompt = f\"The old selector '{old_selector}' broke. Given this new HTML snippet, suggest the best new selector.\"</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>AI accelerates test creation and reduces maintenance overhead.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 6: Building a Full-Stack App with Vercel AI SDK",
+          "content": [
+            "The Vercel AI SDK provides React hooks and streaming utilities to integrate LLMs directly into your Next.js applications. We'll build a chat interface that can call tools.",
+            "<h2 style='font-weight: bold;'>Setup and Streaming Chat</h2>",
+            "<pre><code>// app/api/chat/route.ts (Next.js App Router)\nimport { OpenAIStream, StreamingTextResponse } from 'ai';\nimport { Configuration, OpenAIApi } from 'openai-edge';\n\nexport async function POST(req: Request) {\n  const { messages } = await req.json();\n  const config = new Configuration({ apiKey: process.env.OPENAI_API_KEY });\n  const openai = new OpenAIApi(config);\n  \n  const response = await openai.createChatCompletion({\n    model: 'gpt-4',\n    stream: true,\n    messages,\n  });\n  \n  const stream = OpenAIStream(response);\n  return new StreamingTextResponse(stream);\n}</code></pre>",
+            "<h2 style='font-weight: bold;'>Client Component</h2>",
+            "<pre><code>// components/Chat.tsx\n'use client';\nimport { useChat } from 'ai/react';\n\nexport default function Chat() {\n  const { messages, input, handleInputChange, handleSubmit } = useChat();\n  return (\n    <div>\n      {messages.map(m => (\n        <div key={m.id}>{m.role}: {m.content}</div>\n      ))}\n      <form onSubmit={handleSubmit}>\n        <input value={input} onChange={handleInputChange} />\n      </form>\n    </div>\n  );\n}</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Streaming improves user experience for AI responses.</li>",
+            "<li class='bullet'>Vercel AI SDK simplifies tool calling and state management.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 7: Deploying and Scaling AI Agents",
+          "content": [
+            "Moving agents from local scripts to production requires robust infrastructure. We cover serverless deployment, queue management, and cost optimization.",
+            "<h2 style='font-weight: bold;'>Serverless Agent on AWS Lambda</h2>",
+            "Package your agent as a Lambda function triggered by API Gateway.",
+            "<pre><code># lambda_function.py\nimport json\nfrom my_agent import run_agent\n\ndef lambda_handler(event, context):\n    body = json.loads(event['body'])\n    user_query = body['query']\n    result = run_agent(user_query)\n    return {\n        'statusCode': 200,\n        'body': json.dumps({'response': result})\n    }</code></pre>",
+            "<h2 style='font-weight: bold;'>Managing Long-Running Tasks</h2>",
+            "Agents may take minutes to complete complex tasks. Use a queue (SQS, BullMQ) and webhooks for asynchronous processing.",
+            "<h2 style='font-weight: bold;'>Cost Tracking</h2>",
+            "Implement token counting and budgeting per user to prevent runaway costs.",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Production agents need async patterns and monitoring.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 8: Securing AI-Generated Code",
+          "content": [
+            "AI can inadvertently generate vulnerable code (SQL injection, hardcoded secrets). This module teaches static analysis and prompting techniques to mitigate risks.",
+            "<h2 style='font-weight: bold;'>Prompting for Security</h2>",
+            "Explicitly instruct the AI to follow secure coding guidelines.",
+            "<pre><code>secure_prompt = \"\"\"\nWrite a Python function to query a user by ID from a database.\nRequirements:\n- Use parameterized queries (no string concatenation).\n- Validate input ID is an integer.\n- Handle database errors gracefully without leaking schema info.\n- Include comments explaining security measures.\n\"\"\"</code></pre>",
+            "<h2 style='font-weight: bold;'>Automated Code Scanning in CI/CD</h2>",
+            "Integrate tools like Semgrep or CodeQL into your pipeline to scan AI-generated code before it merges.",
+            "<pre><code># .github/workflows/security.yml\nname: Security Scan\non: [pull_request]\njobs:\n  semgrep:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v3\n    - uses: returntocorp/semgrep-action@v1\n      with:\n        config: p/owasp-top-ten</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Never trust AI-generated code blindly-treat it as untrusted input.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 9: Project Prompts & Blueprints for AI-Driven Development",
+          "content": [
+            "This module provides curated prompts and architectural blueprints for building real-world projects using AI agents. Use these as starting points for your own work.",
+            "<h2 style='font-weight: bold;'>Project 1: AI-Powered E-Commerce Backend</h2>",
+            "<p><strong>Goal:</strong> Build a REST API with authentication, product management, and order processing.</p>",
+            "<p><strong>Agent Team:</strong> Architect Agent (designs DB schema), Backend Agent (writes Node.js/Express code), DevOps Agent (writes Dockerfile and docker-compose).</p>",
+            "<h3>Prompt for Architect Agent:</h3>",
+            "<pre><code>You are a Solutions Architect. Design a PostgreSQL schema for an e-commerce platform.\nRequirements:\n- Users (email, hashed password, role: customer/admin)\n- Products (name, description, price, stock_quantity)\n- Orders (user_id, total_amount, status, created_at)\n- OrderItems (order_id, product_id, quantity, price_at_time)\n\nProvide the SQL DDL statements. Include indexes for performance.</code></pre>",
+            "<h2 style='font-weight: bold;'>Project 2: AI Content Moderation Dashboard</h2>",
+            "<p><strong>Goal:</strong> Build a Next.js app where users submit comments, and an AI agent moderates them for toxicity in real-time.</p>",
+            "<h3>Prompt for Full-Stack Agent:</h3>",
+            "<pre><code>Create a Next.js 14 application with App Router.\nFeatures:\n1. API route `/api/moderate` that accepts text and returns a toxicity score (0-1) using Perspective API or a local model.\n2. Homepage with a textarea and submit button.\n3. Display the comment with a warning badge if score > 0.7.\nUse Tailwind CSS for styling. Provide all code files.</code></pre>",
+            "<h2 style='font-weight: bold;'>Key Takeaways</h2>",
+            "<ul>",
+            "<li class='bullet'>Well-structured prompts can generate entire project scaffolds.</li>",
+            "<li class='bullet'>Break large projects into domain-specific prompts for each agent.</li>",
+            "</ul>"
+          ]
+        },
+        {
+          "title": "Module 10: Capstone - Autonomous AI Dev Team Project",
+          "content": [
+            "You will orchestrate a team of AI agents to build a complete web application from scratch. You act as the 'Lead Developer' overseeing the agents.",
+            "<h2 style='font-weight: bold;'>Project: AI-Powered Personal Finance Tracker</h2>",
+            "<p><strong>Features:</strong> User authentication, add transactions (with category suggestion via AI), view charts, and export reports.</p>",
+            "<h2 style='font-weight: bold;'>Agent Workflow</h2>",
+            "<ol>",
+            "<li><strong>Product Agent:</strong> Creates PRD and user stories.</li>",
+            "<li><strong>UI/UX Agent:</strong> Generates React component code with Tailwind.</li>",
+            "<li><strong>Backend Agent:</strong> Writes FastAPI endpoints and database models.</li>",
+            "<li><strong>Integration Agent:</strong> Connects frontend to backend.</li>",
+            "<li><strong>Test Agent:</strong> Writes unit and integration tests.</li>",
+            "<li><strong>Documentation Agent:</strong> Creates README and API docs.</li>",
+            "</ol>",
+            "<h2 style='font-weight: bold;'>Orchestration Code Skeleton</h2>",
+            "<pre><code>from crewai import Crew, Process\nfrom agents import product_agent, ui_agent, backend_agent, test_agent\n\n# Define tasks (as shown in Module 4)\n# ...\n\ncrew = Crew(\n    agents=[product_agent, ui_agent, backend_agent, test_agent],\n    tasks=[task_prd, task_frontend, task_backend, task_tests],\n    process=Process.sequential\n)\n\nresult = crew.kickoff()\n\n# Save generated code to files\nsave_code_to_project(result)</code></pre>",
+            "<h2 style='font-weight: bold;'>Final Review</h2>",
+            "As the Lead Developer, you will review the generated code, run tests, and deploy the application to Vercel or AWS.",
+            "<h2 style='font-weight: bold;'>Congratulations!</h2>",
+            "You have mastered professional AI-agent development. You can now leverage AI to 10x your productivity and build complex applications with confidence."
           ]
         }
       ]
