@@ -238,23 +238,45 @@
 
   <script src="../assets/js/script.js"></script>
   <script>
-        let currentCourseId = null;
+    let currentCourseId = null;
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    async function startSecureSession(courseId, name) {
+      const response = await fetch("/api/session/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ courseId, name })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to initialize secure session");
+      }
+    }
 
     function openNameModal(courseId) {
       currentCourseId = courseId;
       const modal = document.getElementById("name-modal");
       const bg = document.getElementById("name-modal-bg");
       const panel = document.getElementById("name-modal-panel");
-      
+
       modal.classList.remove("hidden");
       modal.classList.add("flex");
-      
+
       setTimeout(() => {
         bg.classList.remove("opacity-0");
         panel.classList.remove("scale-95", "opacity-0");
         panel.classList.add("scale-100", "opacity-100");
       }, 10);
-      
+
       setTimeout(() => document.getElementById("student-name-input").focus(), 100);
     }
 
@@ -262,77 +284,98 @@
       const modal = document.getElementById("name-modal");
       const bg = document.getElementById("name-modal-bg");
       const panel = document.getElementById("name-modal-panel");
-      
+
       bg.classList.add("opacity-0");
       panel.classList.remove("scale-100", "opacity-100");
       panel.classList.add("scale-95", "opacity-0");
-      
+
       setTimeout(() => {
         modal.classList.add("hidden");
         modal.classList.remove("flex");
       }, 300);
     }
 
-    document.getElementById("btn-confirm-name").addEventListener("click", () => {
-      const nameInput = document.getElementById("student-name-input").value.trim();
+    document.getElementById("btn-confirm-name").addEventListener("click", async () => {
+      const inputEl = document.getElementById("student-name-input");
+      const nameInput = inputEl.value.trim();
       const error = document.getElementById("name-error");
-      
-      if(nameInput.length < 2) {
+      const btn = document.getElementById("btn-confirm-name");
+
+      if (nameInput.length < 2 || !currentCourseId) {
         error.classList.remove("hidden");
-        document.getElementById("student-name-input").classList.add("border-red-500");
+        inputEl.classList.add("border-red-500");
         return;
       }
-      
+
       error.classList.add("hidden");
-      localStorage.setItem("clinch-username", nameInput);
-      console.log("Stored Username:", localStorage.getItem("clinch-username"));
-      window.location.href = `player?id=${currentCourseId}`;
+      inputEl.classList.remove("border-red-500");
+
+      btn.disabled = true;
+      btn.style.opacity = "0.7";
+
+      try {
+        await startSecureSession(currentCourseId, nameInput);
+        window.location.href = `player?id=${encodeURIComponent(currentCourseId)}`;
+      } catch (err) {
+        error.textContent = "Failed to start secure session. Please try again.";
+        error.classList.remove("hidden");
+      } finally {
+        btn.disabled = false;
+        btn.style.opacity = "1";
+      }
     });
 
     (async function () {
       const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+      const id = params.get("id");
+
+      if (!id) {
+        document.getElementById("course-title").textContent = "Registry Fault.";
+        return;
+      }
 
       try {
-        const response = await fetch('../courses-content.json');
+        const response = await fetch("../courses-content.json");
         const data = await response.json();
-        const courseData = data.courses.find(c => c.id === id);
+        const courseData = data.courses.find((c) => c.id === id);
 
         if (!courseData) {
-          document.getElementById('course-title').textContent = "Registry Fault.";
+          document.getElementById("course-title").textContent = "Registry Fault.";
           return;
         }
 
-        // Populate Page
-        document.getElementById('course-title').textContent = courseData.title;
-        document.getElementById('course-desc').textContent = courseData.description;
-        document.getElementById('course-level').textContent = courseData.level;
-        document.getElementById('course-duration').textContent = courseData.duration;
-        document.getElementById('module-count').textContent = `${courseData.modules.length} Modules`;
-        document.getElementById('btn-start').href = "javascript:void(0)";
-        document.getElementById('btn-start').onclick = () => openNameModal(courseData.id);
+        document.getElementById("course-title").textContent = courseData.title;
+        document.getElementById("course-desc").textContent = courseData.description;
+        document.getElementById("course-level").textContent = courseData.level;
+        document.getElementById("course-duration").textContent = courseData.duration;
+        document.getElementById("module-count").textContent = `${courseData.modules.length} Modules`;
+        document.getElementById("btn-start").href = "#";
+        document.getElementById("btn-start").onclick = (event) => {
+          event.preventDefault();
+          openNameModal(courseData.id);
+        };
 
-        const list = document.getElementById('module-list');
-        list.innerHTML = '';
+        const list = document.getElementById("module-list");
+        list.innerHTML = "";
 
         courseData.modules.forEach((mod, idx) => {
-          const card = document.createElement('div');
-          card.className = 'module-card';
+          const lessonCount = Array.isArray(mod.videos) ? mod.videos.length : 0;
+          const card = document.createElement("div");
+          card.className = "module-card";
           card.innerHTML = `
               <div class="flex items-center gap-6">
                  <div class="w-14 h-14 bg-white text-black border border-slate-200 flex items-center justify-center rounded-2xl font-black text-xl">
                     ${idx + 1}
                  </div>
                  <div class="flex-1">
-                    <h4 class="font-black text-slate-900 uppercase tracking-tight text-lg mb-1">${mod.title}</h4>
-                    <p class="text-slate-800 text-[10px] font-bold uppercase tracking-widest">${mod.videos ? mod.videos.length : '0'} Interactive Lessons</p>
+                    <h4 class="font-black text-slate-900 uppercase tracking-tight text-lg mb-1">${escapeHtml(mod.title)}</h4>
+                    <p class="text-slate-800 text-[10px] font-bold uppercase tracking-widest">${lessonCount} Interactive Lessons</p>
                  </div>
               </div>
            `;
           card.onclick = () => openNameModal(courseData.id);
           list.appendChild(card);
         });
-
       } catch (e) {
         console.error(e);
       }

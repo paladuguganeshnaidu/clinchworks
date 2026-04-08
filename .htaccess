@@ -1,17 +1,38 @@
+Options -Indexes
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Resource-Policy "same-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self';"
+</IfModule>
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
-    # 1. Externally redirect direct requests for .html files to the extensionless URL
-    # %{ENV:REDIRECT_STATUS} ^$ ensures it only applies to direct browser requests, preventing infinite loops.
+
+    # Block access to private runtime data used by secure session logic
+    RewriteRule (^|/)\.data(/|$) - [F,L]
+    RewriteRule (^|/)(dev-server\.js|examquestions\.json)$ - [F,L,NC]
+
+    # 1. Externally redirect direct requests for .html files to extensionless URL
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteRule ^(.*)\.html$ /$1 [R=301,L]
 
-    # 2. Redirect direct requests for index to the root path /
+    # 2. Redirect direct requests for index to root path
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteRule ^(.*)index$ /$1 [R=301,L]
 
-    # 3. Internally rewrite extensionless URLs back to .html so the server can serve the file
-    # This only applies if the requested path is not an existing directory or file, but the .html version DOES exist
+    # 3. Internally rewrite extensionless URLs to .html if file exists
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME}.html -f

@@ -285,102 +285,131 @@
 
     <!-- Using html2pdf for high quality PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        function getCourseState(cId) {
-          try {
-            const raw = localStorage.getItem('course-' + cId);
-            if (raw && raw.startsWith("{")) return JSON.parse(raw);
-          } catch(e) {}
-          return { completed: false, examPassed: false, certificateIssued: false };
-        }
-
-        function saveCourseState(cId, state) {
-          localStorage.setItem('course-' + cId, JSON.stringify(state));
-          console.log("Course State:", state);
-        }
-
-        document.addEventListener("DOMContentLoaded", async () => {
-            const params = new URLSearchParams(window.location.search);
-            const courseId = params.get('id');
-
-            if (courseId) {
-                const cState = getCourseState(courseId);
-                if (!cState.examPassed) {
-                    alert("You have not passed the final exam yet.");
-                    window.location.href = `pages/exam?id=${courseId}`;
-                    return;
-                }
-                
-                if (cState.certificateIssued) {
-                    const alertDiv = document.createElement('div');
-                    alertDiv.style.color = "red";
-                    alertDiv.style.fontWeight = "bold";
-                    alertDiv.style.textAlign = "center";
-                    let btbtn = document.getElementById('download-btn');
-                    btbtn.textContent = "Certificate already issued";
-                    btbtn.style.pointerEvents = "none";
-                    btbtn.style.opacity = "0.5";
-                }
-            }
-
-            // 1. Resolve Name
-            const storedName = localStorage.getItem("clinch-username");
-            const userName = (storedName && storedName.trim() !== "")
-              ? storedName
-              : "ClinchWorks Student";
-            document.querySelector('.recipient-name').textContent = userName;
-            console.log("Stored Username:", localStorage.getItem("clinch-username"));
-
-            // 2. Resolve Course Context
-            if (courseId) {
-                try {
-                    const response = await fetch('courses-content.json');
-                    const data = await response.json();
-                    const cd = data.courses.find(c => c.id === courseId);
-                    if (cd) {
-                        document.querySelector('.course-name').textContent = cd.title;
-                        document.querySelector('.level-badge').textContent = `${cd.category.toUpperCase()} | ${cd.level.toUpperCase()}`;
+        <script>
+                async function fetchJson(url, options) {
+                    const response = await fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
+                    let payload = null;
+                    try {
+                        payload = await response.json();
+                    } catch (err) {
+                        payload = null;
                     }
-                } catch (err) {
-                    console.error("Failed fetching meta");
+                    return { response, payload };
                 }
-            }
 
-            const dOpts = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US', dOpts);
+                function setButtonIssuedState(btn) {
+                    btn.textContent = "Certificate already issued";
+                    btn.style.pointerEvents = "none";
+                    btn.style.opacity = "0.5";
+                }
 
-            // 3. Bind generator
-            const btn = document.getElementById('download-btn');
-            btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
-            btn.addEventListener('mouseleave', () => btn.style.transform = 'translateY(0)');
+                document.addEventListener("DOMContentLoaded", async () => {
+                        const params = new URLSearchParams(window.location.search);
+                        const courseId = params.get('id');
+                        const safeCourseId = encodeURIComponent(String(courseId || ''));
 
-            btn.addEventListener('click', () => {
-                const btnArea = document.querySelector('.no-print');
-                btnArea.style.display = 'none';
+                        const recipientNameEl = document.querySelector('.recipient-name');
+                        const courseNameEl = document.querySelector('.course-name');
+                        const levelBadgeEl = document.querySelector('.level-badge');
+                        const btn = document.getElementById('download-btn');
 
-                const element = document.querySelector('.certificate-container');
-                const opt = {
-                    margin: 0.5,
-                    filename: `ClinchWorks_Certificate_${courseId || 'Certified'}.pdf`,
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
-                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-                };
+                        let certificateAlreadyIssued = false;
+                        let resolvedName = "ClinchWorks Student";
 
-                html2pdf().set(opt).from(element).save().then(() => {
-                    btnArea.style.display = 'block';
-                    if (courseId) {
-                        let st = getCourseState(courseId);
-                        st.certificateIssued = true;
-                        saveCourseState(courseId, st);
-                        btn.textContent = "Certificate already issued";
-                        btn.style.pointerEvents = "none";
-                        btn.style.opacity = "0.5";
-                    }
+                        if (courseId) {
+                                const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
+                                if (!statusResult.response.ok || !statusResult.payload) {
+                                        alert("Unable to verify exam status.");
+                                        window.location.href = `pages/exam?id=${safeCourseId}`;
+                                        return;
+                                }
+
+                                if (!statusResult.payload.examPassed) {
+                                        alert("You have not passed the final exam yet.");
+                                        window.location.href = `pages/exam?id=${safeCourseId}`;
+                                        return;
+                                }
+
+                                if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
+                                        resolvedName = String(statusResult.payload.username).trim();
+                                }
+
+                                certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
+                                if (certificateAlreadyIssued) {
+                                        setButtonIssuedState(btn);
+                                }
+                        }
+
+                        if (resolvedName === "ClinchWorks Student") {
+                            const sessionResult = await fetchJson('/api/session');
+                            if (sessionResult.response.ok && sessionResult.payload && sessionResult.payload.username) {
+                                const candidate = String(sessionResult.payload.username).trim();
+                                if (candidate) {
+                                    resolvedName = candidate;
+                                }
+                            }
+                        }
+
+                        recipientNameEl.textContent = resolvedName;
+
+                        if (courseId) {
+                                try {
+                                        const response = await fetch('courses-content.json');
+                                        const data = await response.json();
+                                        const cd = data.courses.find(c => c.id === courseId);
+                                        if (cd) {
+                                                courseNameEl.textContent = cd.title;
+                                                levelBadgeEl.textContent = `${cd.category.toUpperCase()} | ${cd.level.toUpperCase()}`;
+                                        }
+                                } catch (err) {
+                                        console.error("Failed fetching certificate metadata");
+                                }
+                        }
+
+                        const dOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+                        document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US', dOpts);
+
+                        btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
+                        btn.addEventListener('mouseleave', () => btn.style.transform = 'translateY(0)');
+
+                        btn.addEventListener('click', () => {
+                                if (certificateAlreadyIssued) {
+                                    return;
+                                }
+
+                                const btnArea = document.querySelector('.no-print');
+                                btnArea.style.display = 'none';
+
+                                const element = document.querySelector('.certificate-container');
+                                const opt = {
+                                        margin: 0.5,
+                                        filename: `ClinchWorks_Certificate_${courseId || 'Certified'}.pdf`,
+                                        image: { type: 'jpeg', quality: 0.98 },
+                                        html2canvas: { scale: 2, useCORS: true },
+                                        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                                };
+
+                                html2pdf().set(opt).from(element).save().then(async () => {
+                                        btnArea.style.display = 'block';
+
+                                        if (courseId) {
+                                                const issueResult = await fetchJson('/api/certificate/issue', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ courseId })
+                                                });
+
+                                                if (issueResult.response.ok) {
+                                                    certificateAlreadyIssued = true;
+                                                    setButtonIssuedState(btn);
+                                                }
+                                        }
+                                }).catch(() => {
+                                        btnArea.style.display = 'block';
+                                });
+                        });
                 });
-            });
-        });
-    </script>
+        </script>
   <!-- ========================================
        JAVASCRIPT
   ======================================== -->

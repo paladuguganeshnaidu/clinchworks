@@ -142,86 +142,114 @@
   </div>
 
   <script>
-    function getCourseState(courseId) {
-      try {
-        const raw = localStorage.getItem('course-' + courseId);
-        if (raw && raw.startsWith("{")) {
-          return JSON.parse(raw);
-        }
-      } catch(e) {}
-      return { completed: false, examPassed: false, certificateIssued: false };
-    }
-
-    function saveCourseState(courseId, state) {
-      localStorage.setItem('course-' + courseId, JSON.stringify(state));
-      console.log("Course State:", state);
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('id');
-      
+      const safeCourseId = encodeURIComponent(String(courseId || ''));
+
+      const titleEl = document.getElementById('exam-title');
+      const form = document.getElementById('exam-form');
+      const resultBox = document.getElementById('result-box');
+      const btnSubmit = document.getElementById('btn-submit');
+      const btnReturn = document.getElementById('btn-return');
+      const infoText = titleEl.parentElement.querySelector('p');
+
+      function showBlockedState(title, message, linkText, href) {
+        titleEl.textContent = title;
+        form.style.display = 'none';
+        if (!infoText) return;
+
+        infoText.innerHTML = '';
+        infoText.appendChild(document.createTextNode(message));
+        if (linkText && href) {
+          infoText.appendChild(document.createElement('br'));
+          infoText.appendChild(document.createElement('br'));
+          const link = document.createElement('a');
+          link.href = href;
+          link.className = 'inline-block px-8 py-3 bg-[#F7C763] text-black font-bold rounded-lg';
+          link.textContent = linkText;
+          infoText.appendChild(link);
+        }
+      }
+
       if (!courseId) {
-        document.getElementById('exam-title').textContent = "Invalid Course ID";
+        showBlockedState('Invalid Course ID', 'Missing course identifier.');
         return;
       }
-      
-      let state = getCourseState(courseId);
-      
+
+      let state;
+      try {
+        const stateResponse = await fetch(`/api/progress?courseId=${safeCourseId}`, { credentials: 'same-origin' });
+        if (!stateResponse.ok) {
+          showBlockedState('Unauthorized Access', 'Unable to verify your training progress.', 'Return to Course', `player?id=${safeCourseId}`);
+          return;
+        }
+        const statePayload = await stateResponse.json();
+        state = statePayload.state || {};
+      } catch (err) {
+        showBlockedState('Connection Error', 'Failed to verify secure progress state.', 'Return to Course', `player?id=${safeCourseId}`);
+        return;
+      }
+
       if (!state.completed) {
-         document.getElementById('exam-title').textContent = "Unauthorized Access";
-         document.getElementById('exam-form').style.display = 'none';
-         document.querySelector('p').innerHTML = "You must complete the course modules before accessing the exam.<br><br><a href='player?id="+courseId+"' class='inline-block px-8 py-3 bg-[#F7C763] text-black font-bold rounded-lg'>Return to Course</a>";
-         return;
+        showBlockedState('Unauthorized Access', 'You must complete the course modules before accessing the exam.', 'Return to Course', `player?id=${safeCourseId}`);
+        return;
       }
 
       if (state.examPassed) {
-         document.getElementById('exam-title').textContent = "Exam Already Passed";
-         document.getElementById('exam-form').style.display = 'none';
-         document.querySelector('p').innerHTML = `You have already proven your competency.<br><br> <a href="../certificate?id=${courseId}" class="inline-block px-8 py-3 bg-[#F7C763] text-black font-bold rounded-lg shadow-xl mt-4">Go to Certificate</a>`;
-         return;
+        showBlockedState('Exam Already Passed', 'You have already proven your competency.', 'Go to Certificate', `../certificate?id=${safeCourseId}`);
+        return;
       }
 
       let mcqs = [];
       let codingQs = [];
-      
+
       try {
-        const response = await fetch('../examquestions.json');
-        const examData = await response.json();
-        
-        if (!examData[courseId]) {
-          document.getElementById('exam-title').textContent = "No exam available for this course";
-          document.getElementById('exam-form').style.display = 'none';
-          document.querySelector('p').textContent = "Please return to the course catalog or contact support.";
+        const response = await fetch(`/api/exam/questions?courseId=${safeCourseId}`, { credentials: 'same-origin' });
+        if (!response.ok) {
+          showBlockedState('Exam Unavailable', 'No exam is currently available for this course.', 'Return to Course', `player?id=${safeCourseId}`);
           return;
         }
-        
-        mcqs = examData[courseId].mcq;
-        codingQs = examData[courseId].coding;
+
+        const examData = await response.json();
+        mcqs = Array.isArray(examData.mcq) ? examData.mcq : [];
+        codingQs = Array.isArray(examData.coding) ? examData.coding : [];
       } catch (err) {
-        document.getElementById('exam-title').textContent = "Failed to load exam data";
-        document.getElementById('exam-form').style.display = 'none';
+        showBlockedState('Failed to load exam data', 'Please try again shortly.');
         return;
       }
 
       const container = document.getElementById('questions-container');
+      container.innerHTML = '';
 
-      // Render MCQs
+      const codingFieldMap = [];
+
       mcqs.forEach((mcq, idx) => {
         const qDiv = document.createElement('div');
         let optionsHTML = '';
-        mcq.options.forEach((opt, oIdx) => {
+        const options = Array.isArray(mcq.options) ? mcq.options : [];
+
+        options.forEach((opt, oIdx) => {
           optionsHTML += `
             <label class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors hover:bg-white/5" style="border-color: var(--border-color, rgba(255,255,255,0.05));">
               <input type="radio" name="mcq-${idx}" value="${oIdx}" class="w-4 h-4 text-accent bg-transparent border-[var(--border-color)] focus:ring-accent" required>
-              <span class="text-sm font-medium" style="color: var(--text-secondary);">${opt}</span>
+              <span class="text-sm font-medium" style="color: var(--text-secondary);">${escapeHtml(opt)}</span>
             </label>
           `;
         });
 
         qDiv.innerHTML = `
           <div>
-            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${idx + 1}.</span> ${mcq.q}</h3>
+            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${idx + 1}.</span> ${escapeHtml(mcq.q || '')}</h3>
             <div class="space-y-2 pl-6 sm:pl-7">
               ${optionsHTML}
             </div>
@@ -230,92 +258,100 @@
         container.appendChild(qDiv);
       });
 
-      // Render Coding/Written Questions
       codingQs.forEach((cq, idx) => {
         const qDiv = document.createElement('div');
         const qNum = mcqs.length + idx + 1;
+        const originalId = String(cq.id || `coding-${idx}`);
+        const fieldId = originalId.replace(/[^a-zA-Z0-9_-]/g, '') || `coding_${idx}`;
+        codingFieldMap.push({ originalId, fieldId });
+
         qDiv.innerHTML = `
           <div>
-            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${qNum}.</span> ${cq.q}</h3>
+            <h3 class="text-base font-bold mb-3" style="color: var(--text-primary);"><span class="opacity-50 mr-2">${qNum}.</span> ${escapeHtml(cq.q || '')}</h3>
             <div class="pl-6 sm:pl-7">
-              <textarea name="${cq.id}" rows="3" class="w-full p-4 rounded-xl border text-sm focus:outline-none focus:ring-1 transition-all resize-y" style="background: var(--bg-primary); border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--text-primary); outline-color: var(--accent);" placeholder="Type answer here..." required></textarea>
+              <textarea name="${fieldId}" rows="3" class="w-full p-4 rounded-xl border text-sm focus:outline-none focus:ring-1 transition-all resize-y" style="background: var(--bg-primary); border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--text-primary); outline-color: var(--accent);" placeholder="Type answer here..." required></textarea>
             </div>
           </div>
         `;
         container.appendChild(qDiv);
       });
 
-      // Form submission
-      const form = document.getElementById('exam-form');
-      const resultBox = document.getElementById('result-box');
-      const btnSubmit = document.getElementById('btn-submit');
-      const btnReturn = document.getElementById('btn-return');
+      let returnUrl = `player?id=${safeCourseId}`;
 
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        btnSubmit.disabled = true;
+        btnSubmit.style.opacity = '0.7';
+
         const formData = new FormData(form);
-        let score = 0;
-
-        // Check MCQs
-        mcqs.forEach((mcq, idx) => {
-          if (parseInt(formData.get(`mcq-${idx}`)) === mcq.ans) {
-            score++;
+        const payload = {
+          courseId,
+          answers: {
+            mcq: mcqs.map((_, idx) => Number.parseInt(formData.get(`mcq-${idx}`), 10)),
+            coding: {}
           }
+        };
+
+        codingFieldMap.forEach((entry) => {
+          payload.answers.coding[entry.originalId] = String(formData.get(entry.fieldId) || '');
         });
 
-        // Check Coding
-        codingQs.forEach(cq => {
-          const ans = (formData.get(cq.id) || "").toLowerCase();
-          const hasKeyword = cq.keywords.some(kw => ans.includes(kw));
-          // Either has a keyword, or is just a non-empty string as fallback scoring
-          if (hasKeyword || ans.trim().length > 10) {
-            score++;
+        try {
+          const response = await fetch('/api/exam/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error('Submission failed');
           }
-        });
 
-        const totalQ = mcqs.length + codingQs.length;
-        const percentage = Math.round((score / totalQ) * 100);
-        const passed = percentage >= 60;
+          const result = await response.json();
+          const score = Number.parseInt(result.score, 10) || 0;
+          const totalQ = Number.parseInt(result.total, 10) || (mcqs.length + codingQs.length);
+          const percentage = Number.parseInt(result.percentage, 10) || 0;
+          const passed = !!result.passed;
 
-        // Save result
-        localStorage.setItem(`exam-${courseId}`, JSON.stringify({
-          score: score,
-          percentage: percentage,
-          passed: passed
-        }));
-        
-        if (passed) {
-           let st = getCourseState(courseId);
-           st.examPassed = true;
-           saveCourseState(courseId, st);
+          resultBox.classList.remove('hidden');
+          if (passed) {
+            resultBox.style.backgroundColor = 'rgba(22, 163, 74, 0.1)';
+            resultBox.style.borderColor = '#16a34a';
+            resultBox.innerHTML = `
+              <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Passed ✅</div>
+              You scored ${score}/${totalQ} (${percentage}%). Your certificate has been successfully unlocked.
+            `;
+            btnReturn.textContent = 'Download Certificate Now';
+            returnUrl = `../certificate?id=${safeCourseId}`;
+          } else {
+            resultBox.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
+            resultBox.style.borderColor = '#ef4444';
+            resultBox.innerHTML = `
+              <div style="color: #ef4444; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Failed ❌</div>
+              You scored ${score}/${totalQ} (${percentage}%). A minimum of 60% is required to pass.
+            `;
+            btnReturn.textContent = 'Return to Course';
+            btnSubmit.textContent = 'Retake Exam';
+            returnUrl = `player?id=${safeCourseId}`;
+          }
+
+          btnReturn.classList.remove('hidden');
+          window.scrollTo({ top: resultBox.offsetTop - 100, behavior: 'smooth' });
+        } catch (err) {
+          resultBox.classList.remove('hidden');
+          resultBox.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
+          resultBox.style.borderColor = '#ef4444';
+          resultBox.textContent = 'Submission failed. Please try again.';
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.style.opacity = '1';
         }
-
-        resultBox.classList.remove('hidden');
-        if (passed) {
-          resultBox.style.backgroundColor = "rgba(22, 163, 74, 0.1)"; // Success bg
-          resultBox.style.borderColor = "#16a34a";
-          resultBox.innerHTML = `
-            <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Passed ✅</div>
-            You scored ${score}/${totalQ} (${percentage}%). Your certificate has been successfully unlocked.
-          `;
-          btnReturn.textContent = "Download Certificate Now";
-        } else {
-          resultBox.style.backgroundColor = "rgba(220, 38, 38, 0.1)"; // Error bg
-          resultBox.style.borderColor = "#ef4444";
-          resultBox.innerHTML = `
-            <div style="color: #ef4444; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Failed ❌</div>
-            You scored ${score}/${totalQ} (${percentage}%). A minimum of 60% is required to pass.
-          `;
-          btnReturn.textContent = "Return to Course";
-          btnSubmit.textContent = "Retake Exam";
-        }
-
-        btnReturn.classList.remove('hidden');
-        window.scrollTo({ top: resultBox.offsetTop - 100, behavior: 'smooth' });
       });
 
       btnReturn.addEventListener('click', () => {
-        window.location.href = `../certificate?id=${courseId}`;
+        window.location.href = returnUrl;
       });
     });
   </script>
