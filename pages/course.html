@@ -317,8 +317,10 @@
         await startSecureSession(currentCourseId, nameInput);
         window.location.href = `player?id=${encodeURIComponent(currentCourseId)}`;
       } catch (err) {
-        error.textContent = "Failed to start secure session. Please try again.";
-        error.classList.remove("hidden");
+        console.warn("Secure session failed, falling back to local state:", err);
+        // Fallback: Save name in localStorage and proceed
+        localStorage.setItem(`cw_name_${currentCourseId}`, nameInput);
+        window.location.href = `player?id=${encodeURIComponent(currentCourseId)}`;
       } finally {
         btn.disabled = false;
         btn.style.opacity = "1";

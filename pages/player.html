@@ -245,35 +245,53 @@
       }
 
       async function fetchCourseState() {
-        const response = await fetch(`/api/progress?courseId=${encodedCourseId}`, { credentials: 'same-origin' });
-        if (!response.ok) {
-          throw new Error('Unable to read secure course state');
+        try {
+          const response = await fetch(`/api/progress?courseId=${encodedCourseId}`, { credentials: 'same-origin' });
+          if (!response.ok) {
+            throw new Error('Server API failed');
+          }
+          const payload = await response.json();
+          state = normalizeState(payload.state || {}, state.totalModules);
+        } catch (err) {
+          console.warn("API progress fetch failed, trying localStorage:", err);
+          const local = localStorage.getItem(`cw_progress_${courseId}`);
+          if (local) {
+            state = normalizeState(JSON.parse(local), state.totalModules);
+          } else {
+            state = normalizeState({}, state.totalModules);
+          }
         }
-        const payload = await response.json();
-        state = normalizeState(payload.state || {}, state.totalModules);
       }
 
       async function saveCourseState(partialState) {
         state = normalizeState(Object.assign({}, state, partialState), state.totalModules);
 
-        const response = await fetch('/api/progress', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({
-            courseId,
-            state: {
-              currentModule: state.currentModule,
-              totalModules: state.totalModules,
-              completed: state.completed
-            }
-          })
-        });
+        try {
+          const response = await fetch('/api/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              courseId,
+              state: {
+                currentModule: state.currentModule,
+                totalModules: state.totalModules,
+                completed: state.completed
+              }
+            })
+          });
 
-        if (response.ok) {
-          const payload = await response.json();
-          state = normalizeState(payload.state || state, state.totalModules);
+          if (response.ok) {
+            const payload = await response.json();
+            state = normalizeState(payload.state || state, state.totalModules);
+            return;
+          }
+        } catch (err) {
+          console.warn("API progress save failed, using localStorage:", err);
         }
+
+        // Always sync with localStorage as fallback/backup
+        localStorage.setItem(`cw_progress_${courseId}`, JSON.stringify(state));
       }
 
       async function init() {

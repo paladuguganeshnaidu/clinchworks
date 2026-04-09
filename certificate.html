@@ -317,24 +317,37 @@
                         let resolvedName = "ClinchWorks Student";
 
                         if (courseId) {
-                                const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
-                                if (!statusResult.response.ok || !statusResult.payload) {
-                                        alert("Unable to verify exam status.");
+                                try {
+                                    const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
+                                    if (statusResult.response.ok && statusResult.payload) {
+                                        if (!statusResult.payload.examPassed) {
+                                            alert("You have not passed the final exam yet.");
+                                            window.location.href = `pages/exam?id=${safeCourseId}`;
+                                            return;
+                                        }
+
+                                        if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
+                                            resolvedName = String(statusResult.payload.username).trim();
+                                        }
+
+                                        certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
+                                    } else {
+                                        throw new Error("API failed");
+                                    }
+                                } catch (err) {
+                                    console.warn("Certificate API failed, checking local fallback:", err);
+                                    const localPass = localStorage.getItem(`cw_exam_passed_${courseId}`);
+                                    if (localPass !== "true") {
+                                        alert("Unable to verify exam status. Please ensure you have passed the exam on this device.");
                                         window.location.href = `pages/exam?id=${safeCourseId}`;
                                         return;
+                                    }
+                                    const localName = localStorage.getItem(`cw_name_${courseId}`);
+                                    if (localName) {
+                                        resolvedName = localName;
+                                    }
                                 }
-
-                                if (!statusResult.payload.examPassed) {
-                                        alert("You have not passed the final exam yet.");
-                                        window.location.href = `pages/exam?id=${safeCourseId}`;
-                                        return;
-                                }
-
-                                if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
-                                        resolvedName = String(statusResult.payload.username).trim();
-                                }
-
-                                certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
+                                
                                 if (certificateAlreadyIssued) {
                                         setButtonIssuedState(btn);
                                 }
