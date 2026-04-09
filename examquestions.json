@@ -2,97 +2,137 @@
   "c-programming": {
     "mcq": [
       {
-        "q": "What is the entry point of a C program?",
+        "q": "What is the first stage of the C compilation process?",
         "options": [
-          "start()",
-          "main()",
-          "init()",
-          "entry()"
-        ],
-        "ans": 1
-      },
-      {
-        "q": "Which operator is used to get the address of a variable?",
-        "options": [
-          "*",
-          "&",
-          "%",
-          "#"
-        ],
-        "ans": 1
-      },
-      {
-        "q": "What does malloc() return on failure?",
-        "options": [
-          "0",
-          "-1",
-          "NULL",
-          "garbage"
+          "Linking",
+          "Compilation",
+          "Preprocessing",
+          "Assembly"
         ],
         "ans": 2
       },
       {
-        "q": "What is the size of a standard 'char' in C?",
+        "q": "Which operator is used to access the value at an address held by a pointer?",
         "options": [
-          "1 byte",
-          "2 bytes",
-          "4 bytes",
-          "Depends on OS"
+          "&",
+          "*",
+          "->",
+          "."
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does the 'sizeof' operator return?",
+        "options": [
+          "Size of variable in bits",
+          "Size of variable in bytes",
+          "Address of variable",
+          "Type of variable"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which of the following correctly declares an array of 5 integers?",
+        "options": [
+          "int arr[5];",
+          "int arr(5);",
+          "arr int[5];",
+          "int[5] arr;"
         ],
         "ans": 0
       },
       {
-        "q": "Which of these is not a valid C data type?",
+        "q": "What is the output of 'printf(\"%d\", 10 / 3);'?",
         "options": [
-          "float",
-          "real",
-          "double",
-          "int"
+          "3.33",
+          "3",
+          "4",
+          "0"
         ],
         "ans": 1
       },
       {
-        "q": "How do you correctly declare a pointer to an integer?",
+        "q": "Which keyword is used to prevent a variable from being modified?",
         "options": [
-          "int ptr;",
-          "int *ptr;",
-          "ptr int;",
-          "*int ptr;"
+          "static",
+          "const",
+          "volatile",
+          "final"
         ],
         "ans": 1
       },
       {
-        "q": "What function is used to free dynamically allocated memory?",
+        "q": "What is the purpose of the 'break' statement in a switch case?",
         "options": [
-          "delete",
-          "remove",
-          "free",
-          "clear"
+          "To exit the program",
+          "To skip the default case",
+          "To prevent fall-through",
+          "To restart the switch"
         ],
         "ans": 2
       },
       {
-        "q": "Which library contains printf?",
+        "q": "Which function is used to dynamically allocate memory for an array and initializes to zero?",
         "options": [
-          "<stdlib.h>",
-          "<math.h>",
-          "<string.h>",
-          "<stdio.h>"
-        ],
-        "ans": 3
-      },
-      {
-        "q": "What is the result of '10 % 3' in C?",
-        "options": [
-          "3",
-          "1",
-          "0",
-          "3.33"
+          "malloc()",
+          "calloc()",
+          "realloc()",
+          "free()"
         ],
         "ans": 1
       },
       {
-        "q": "Which loop guarantees execution at least once?",
+        "q": "What does the '->' operator do?",
+        "options": [
+          "Access structure member using pointer",
+          "Bitwise shift",
+          "Logical AND",
+          "Pointer to pointer"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which header file is required for dynamic memory allocation?",
+        "options": [
+          "<stdio.h>",
+          "<string.h>",
+          "<stdlib.h>",
+          "<math.h>"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is a dangling pointer?",
+        "options": [
+          "Pointer to a constant",
+          "Pointer that points to freed memory",
+          "Pointer to NULL",
+          "Pointer to a function"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "How do you declare a function that returns an integer and takes no parameters?",
+        "options": [
+          "void func();",
+          "int func();",
+          "func int();",
+          "int func(void);"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the default storage class for local variables in C?",
+        "options": [
+          "static",
+          "register",
+          "auto",
+          "extern"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which loop is guaranteed to execute at least once?",
         "options": [
           "for",
           "while",
@@ -102,72 +142,184 @@
         "ans": 2
       },
       {
-        "q": "What is the correct way to end a statement in C?",
+        "q": "What is the size of 'double' on most 32-bit systems?",
         "options": [
-          ".",
-          ":",
-          ";",
-          "!"
+          "4 bytes",
+          "8 bytes",
+          "16 bytes",
+          "Depends on compiler"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which operator is used for logical AND?",
+        "options": [
+          "&",
+          "&&",
+          "|",
+          "||"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does 'typedef' do?",
+        "options": [
+          "Defines a new data type alias",
+          "Defines a structure",
+          "Defines a union",
+          "Defines a constant"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which function is used to copy strings in C?",
+        "options": [
+          "strcpy()",
+          "strcat()",
+          "strcmp()",
+          "strlen()"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the result of '2 << 1'?",
+        "options": [
+          "2",
+          "4",
+          "1",
+          "8"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the correct way to open a file for reading in binary mode?",
+        "options": [
+          "\"r\"",
+          "\"rb\"",
+          "\"rw\"",
+          "\"wb\""
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which of the following is a valid way to define a union?",
+        "options": [
+          "union Data { int i; float f; };",
+          "union Data { int i; float f; } data;",
+          "Both A and B",
+          "None"
         ],
         "ans": 2
       },
       {
-        "q": "What index does a C array start at?",
+        "q": "What is the maximum number of arguments a function can have in C?",
         "options": [
-          "1",
+          "10",
+          "255",
+          "No limit",
+          "Depends on stack size"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which standard input/output function reads a line including spaces?",
+        "options": [
+          "scanf()",
+          "gets()",
+          "fgets()",
+          "getchar()"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What does 'realloc()' return if it fails to resize memory?",
+        "options": [
+          "NULL",
           "0",
-          "-1",
-          "Depends"
+          "The original pointer",
+          "An error code"
         ],
-        "ans": 1
+        "ans": 0
       },
       {
-        "q": "How do you represent a multi-line comment?",
+        "q": "Which bitwise operator is used to flip bits?",
         "options": [
-          "//...",
-          "/*...*/",
-          "<!--...-->",
-          "#...#"
-        ],
-        "ans": 1
-      },
-      {
-        "q": "Which keyword is used to return a value from a function?",
-        "options": [
-          "yield",
-          "break",
-          "give",
-          "return"
+          "&",
+          "|",
+          "^",
+          "~"
         ],
         "ans": 3
-      },
-      {
-        "q": "What is 'sizeof' in C?",
-        "options": [
-          "A function",
-          "A macro",
-          "An operator",
-          "A variable"
-        ],
-        "ans": 2
       }
     ],
     "coding": [
       {
-        "id": "c1",
-        "q": "Write a command or line to print 'Hello' in C.",
+        "id": "c_code1",
+        "q": "Write a C program to swap two integers using pointers.",
         "keywords": [
-          "printf",
-          ";",
-          "puts"
+          "swap",
+          "pointer",
+          "*",
+          "&",
+          "temp"
         ]
       },
       {
-        "id": "c2",
-        "q": "Write the keyword used to define a custom structure.",
+        "id": "c_code2",
+        "q": "Write a function that returns the factorial of a number using recursion.",
+        "keywords": [
+          "factorial",
+          "recursion",
+          "return",
+          "if"
+        ]
+      },
+      {
+        "id": "c_code3",
+        "q": "Write the command to compile a C program named 'hello.c' and produce an executable 'myprog'.",
+        "keywords": [
+          "gcc",
+          "hello.c",
+          "-o",
+          "myprog"
+        ]
+      },
+      {
+        "id": "c_code4",
+        "q": "Write a statement to allocate memory for an integer using malloc.",
+        "keywords": [
+          "malloc",
+          "sizeof(int)",
+          "int*"
+        ]
+      },
+      {
+        "id": "c_code5",
+        "q": "Write a line of code to define a structure named 'Student' with members 'name' and 'age'.",
         "keywords": [
           "struct",
-          "typedef"
+          "Student",
+          "char name",
+          "int age"
+        ]
+      },
+      {
+        "id": "c_code6",
+        "q": "Write a loop that prints numbers 1 to 10 using a for loop.",
+        "keywords": [
+          "for",
+          "printf",
+          "i++"
+        ]
+      },
+      {
+        "id": "c_code7",
+        "q": "Write an if-else statement to check if a number is even or odd.",
+        "keywords": [
+          "if",
+          "%",
+          "else",
+          "printf"
         ]
       }
     ]
@@ -175,171 +327,3025 @@
   "python-programming": {
     "mcq": [
       {
-        "q": "How do you define a function in Python?",
+        "q": "Which of the following is used to define a block of code in Python?",
         "options": [
-          "def func()",
-          "function func()",
-          "func()",
-          "declare func()"
-        ],
-        "ans": 0
-      },
-      {
-        "q": "Which of these is a mutable data type?",
-        "options": [
-          "Tuple",
-          "String",
-          "List",
-          "Integer"
+          "Braces",
+          "Parentheses",
+          "Indentation",
+          "Keywords"
         ],
         "ans": 2
       },
       {
-        "q": "What is used to comment a single line in Python?",
+        "q": "What is the output of 'print(2 ** 3)'?",
         "options": [
-          "//",
-          "/*",
-          "--",
-          "#"
-        ],
-        "ans": 3
-      },
-      {
-        "q": "How do you output text to console?",
-        "options": [
-          "echo()",
-          "print()",
-          "console.log()",
-          "write()"
+          "6",
+          "8",
+          "9",
+          "5"
         ],
         "ans": 1
       },
       {
-        "q": "Which method adds an element to the end of a list?",
+        "q": "Which data type is immutable?",
         "options": [
-          "add()",
-          "insert()",
-          "push()",
-          "append()"
+          "List",
+          "Dictionary",
+          "Tuple",
+          "Set"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "How do you create a variable with the floating number 3.14?",
+        "options": [
+          "x = 3.14",
+          "float x = 3.14",
+          "x = float(3.14)",
+          "Both A and C"
         ],
         "ans": 3
       },
       {
-        "q": "What is the output of '2 ** 3'?",
+        "q": "What is the correct way to create a function that returns nothing?",
         "options": [
-          "5",
-          "6",
-          "8",
-          "9"
+          "def func(): return None",
+          "def func(): pass",
+          "def func():",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Which method is used to add an element to the end of a list?",
+        "options": [
+          "insert()",
+          "extend()",
+          "append()",
+          "add()"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the output of 'len([1, 2, 3])'?",
+        "options": [
+          "3",
+          "4",
+          "2",
+          "1"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which operator is used for floor division?",
+        "options": [
+          "/",
+          "//",
+          "%",
+          "**"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the correct syntax for a dictionary?",
+        "options": [
+          "{key: value}",
+          "[key: value]",
+          "(key: value)",
+          "<key: value>"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How do you start a for loop to iterate over a list 'items'?",
+        "options": [
+          "for i in range(items):",
+          "for i = 0 to len(items):",
+          "for item in items:",
+          "foreach items as item:"
         ],
         "ans": 2
       },
       {
         "q": "Which keyword is used to handle exceptions?",
         "options": [
+          "try",
           "catch",
           "except",
-          "error",
-          "handle"
-        ],
-        "ans": 1
-      },
-      {
-        "q": "What is a dictionary in Python?",
-        "options": [
-          "List of strings",
-          "Key-value pair structure",
-          "Ordered immutable collection",
-          "Database"
-        ],
-        "ans": 1
-      },
-      {
-        "q": "How do you find the length of a list 'my_list'?",
-        "options": [
-          "my_list.length()",
-          "length(my_list)",
-          "len(my_list)",
-          "size(my_list)"
-        ],
-        "ans": 2
-      },
-      {
-        "q": "What is the correct extension for Python files?",
-        "options": [
-          ".python",
-          ".pyt",
-          ".pt",
-          ".py"
+          "Both A and C"
         ],
         "ans": 3
       },
       {
-        "q": "Which of the following is NOT a core Python keyword?",
+        "q": "What is the output of 'bool([])'?",
         "options": [
-          "class",
-          "eval",
-          "pass",
+          "True",
+          "False",
+          "Error",
           "None"
         ],
         "ans": 1
       },
       {
-        "q": "How do you start a class definition?",
+        "q": "Which of the following is a valid variable name?",
         "options": [
-          "class MyClass:",
-          "define class MyClass:",
-          "MyClass() class:",
-          "class:MyClass"
-        ],
-        "ans": 0
-      },
-      {
-        "q": "What statement is used to stop a loop?",
-        "options": [
-          "stop",
-          "exit",
-          "break",
-          "return"
+          "2var",
+          "var-name",
+          "_var",
+          "var name"
         ],
         "ans": 2
       },
       {
-        "q": "Which symbol is used for floor division?",
+        "q": "How do you write a comment in Python?",
         "options": [
-          "/",
-          "//",
-          "%",
-          "\\"
+          "// comment",
+          "/* comment */",
+          "# comment",
+          "-- comment"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the result of 'type(10)'?",
+        "options": [
+          "<class 'int'>",
+          "<class 'float'>",
+          "<class 'str'>",
+          "<class 'list'>"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which function is used to read a line from standard input?",
+        "options": [
+          "input()",
+          "read()",
+          "scan()",
+          "get()"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a lambda function?",
+        "options": [
+          "A named function",
+          "An anonymous function",
+          "A recursive function",
+          "A built-in function"
         ],
         "ans": 1
       },
       {
-        "q": "What is 'self' used for in class methods?",
+        "q": "Which method removes the last element from a list?",
         "options": [
-          "To refer to the class itself",
-          "To refer to the instance",
-          "To import modules",
-          "To exit the method"
+          "remove()",
+          "pop()",
+          "delete()",
+          "clear()"
         ],
         "ans": 1
+      },
+      {
+        "q": "What does the 'is' operator compare?",
+        "options": [
+          "Values",
+          "Types",
+          "Memory addresses",
+          "Lengths"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which of the following creates a set?",
+        "options": [
+          "{1, 2, 3}",
+          "set([1, 2, 3])",
+          "(1, 2, 3)",
+          "Both A and B"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the output of 'print(\"Hello\" * 2)'?",
+        "options": [
+          "Hello2",
+          "HelloHello",
+          "Hello Hello",
+          "Error"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which statement is used to exit a loop prematurely?",
+        "options": [
+          "break",
+          "continue",
+          "pass",
+          "exit"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How do you import a module named 'math'?",
+        "options": [
+          "import math",
+          "include math",
+          "using math",
+          "require math"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of the 'self' parameter in class methods?",
+        "options": [
+          "To refer to the class",
+          "To refer to the instance",
+          "To refer to the superclass",
+          "It is optional"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which method is called when an object is created?",
+        "options": [
+          "__init__",
+          "__new__",
+          "__call__",
+          "__str__"
+        ],
+        "ans": 0
       }
     ],
     "coding": [
       {
-        "id": "p1",
-        "q": "Write a line of code to print 'Hi' in Python.",
+        "id": "py_code1",
+        "q": "Write a Python function to check if a number is prime.",
         "keywords": [
-          "print",
-          "sys.stdout"
+          "def",
+          "for",
+          "range",
+          "return",
+          "%"
         ]
       },
       {
-        "id": "p2",
-        "q": "Write the keyword used to import external modules in Python.",
+        "id": "py_code2",
+        "q": "Write a list comprehension that squares numbers from 1 to 10.",
         "keywords": [
-          "import",
-          "from"
+          "[",
+          "for",
+          "**",
+          "range",
+          "]"
+        ]
+      },
+      {
+        "id": "py_code3",
+        "q": "Write a line to open a file 'data.txt' for reading.",
+        "keywords": [
+          "open",
+          "('data.txt'",
+          "'r'",
+          "with"
+        ]
+      },
+      {
+        "id": "py_code4",
+        "q": "Write a lambda function that adds two numbers.",
+        "keywords": [
+          "lambda",
+          "x,y",
+          ":"
+        ]
+      },
+      {
+        "id": "py_code5",
+        "q": "Write a class 'Car' with an __init__ method that sets 'make' and 'model'.",
+        "keywords": [
+          "class",
+          "Car",
+          "__init__",
+          "self"
+        ]
+      },
+      {
+        "id": "py_code6",
+        "q": "Write a for loop that prints the numbers 0 to 4.",
+        "keywords": [
+          "for",
+          "range(5)",
+          "print"
+        ]
+      },
+      {
+        "id": "py_code7",
+        "q": "Write a try-except block to handle ZeroDivisionError.",
+        "keywords": [
+          "try",
+          "except",
+          "ZeroDivisionError"
+        ]
+      }
+    ]
+  },
+  "java-programming": {
+    "mcq": [
+      {
+        "q": "What is the bytecode extension for Java files?",
+        "options": [
+          ".java",
+          ".class",
+          ".byte",
+          ".jvm"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which method is the entry point of a Java program?",
+        "options": [
+          "main()",
+          "public static void main(String[] args)",
+          "start()",
+          "run()"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the size of an int in Java?",
+        "options": [
+          "16 bits",
+          "32 bits",
+          "64 bits",
+          "Platform dependent"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which keyword is used to inherit a class?",
+        "options": [
+          "implements",
+          "extends",
+          "inherits",
+          "super"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does JVM stand for?",
+        "options": [
+          "Java Virtual Machine",
+          "Java Variable Machine",
+          "Just Virtual Machine",
+          "Java Verified Machine"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which access modifier makes a member accessible only within the same class?",
+        "options": [
+          "public",
+          "protected",
+          "private",
+          "default"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the default value of a boolean variable in Java?",
+        "options": [
+          "true",
+          "false",
+          "0",
+          "null"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which collection allows duplicate elements and maintains insertion order?",
+        "options": [
+          "HashSet",
+          "TreeSet",
+          "ArrayList",
+          "HashMap"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the purpose of the 'final' keyword?",
+        "options": [
+          "To make a variable constant",
+          "To prevent method overriding",
+          "To prevent inheritance",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Which exception is thrown when accessing an array index out of bounds?",
+        "options": [
+          "IndexOutOfBoundsException",
+          "ArrayIndexOutOfBoundsException",
+          "IllegalArgumentException",
+          "NullPointerException"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the output of 'System.out.println(10 + 20 + \"Hello\");'?",
+        "options": [
+          "30Hello",
+          "1020Hello",
+          "Hello30",
+          "Hello1020"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which interface is implemented by classes that can be used in a for-each loop?",
+        "options": [
+          "Iterable",
+          "Collection",
+          "List",
+          "Set"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the superclass of all classes in Java?",
+        "options": [
+          "Object",
+          "Class",
+          "Main",
+          "System"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which keyword is used to call a parent class constructor?",
+        "options": [
+          "this",
+          "super",
+          "parent",
+          "base"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the difference between 'StringBuilder' and 'StringBuffer'?",
+        "options": [
+          "StringBuilder is thread-safe",
+          "StringBuffer is thread-safe",
+          "No difference",
+          "StringBuilder is mutable"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which package contains the 'ArrayList' class?",
+        "options": [
+          "java.util",
+          "java.lang",
+          "java.io",
+          "java.collections"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of the 'throws' keyword?",
+        "options": [
+          "To throw an exception",
+          "To declare that a method may throw an exception",
+          "To catch an exception",
+          "To ignore exceptions"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which loop is guaranteed to execute at least once?",
+        "options": [
+          "for",
+          "while",
+          "do-while",
+          "foreach"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is the default value of a local variable?",
+        "options": [
+          "0",
+          "null",
+          "No default, must be initialized",
+          "false"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "Which operator is used for instanceof comparison?",
+        "options": [
+          "instanceof",
+          "is",
+          "type",
+          "typeof"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the result of 'Math.floor(3.9)'?",
+        "options": [
+          "3.0",
+          "4.0",
+          "3.9",
+          "3"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which method is called during garbage collection?",
+        "options": [
+          "finalize()",
+          "gc()",
+          "destroy()",
+          "cleanup()"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which keyword is used to define a constant in Java?",
+        "options": [
+          "const",
+          "final",
+          "static",
+          "constant"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the output of 'System.out.println(10 % 3);'?",
+        "options": [
+          "1",
+          "3",
+          "0",
+          "10"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which interface is used to define a contract for sorting?",
+        "options": [
+          "Comparable",
+          "Comparator",
+          "Sortable",
+          "Both A and B"
+        ],
+        "ans": 3
+      }
+    ],
+    "coding": [
+      {
+        "id": "java_code1",
+        "q": "Write a Java program to print 'Hello, World!'.",
+        "keywords": [
+          "public class",
+          "public static void main",
+          "System.out.println"
+        ]
+      },
+      {
+        "id": "java_code2",
+        "q": "Write a Java code snippet to create an ArrayList of Strings and add two elements.",
+        "keywords": [
+          "ArrayList",
+          "add",
+          "import java.util.ArrayList"
+        ]
+      },
+      {
+        "id": "java_code3",
+        "q": "Write a simple try-catch block to handle ArithmeticException.",
+        "keywords": [
+          "try",
+          "catch",
+          "ArithmeticException"
+        ]
+      },
+      {
+        "id": "java_code4",
+        "q": "Write a line to declare a constant integer named MAX with value 100.",
+        "keywords": [
+          "final",
+          "int",
+          "MAX",
+          "="
+        ]
+      },
+      {
+        "id": "java_code5",
+        "q": "Write a class definition for a 'Person' with private fields 'name' and 'age'.",
+        "keywords": [
+          "class",
+          "Person",
+          "private",
+          "String",
+          "int"
+        ]
+      },
+      {
+        "id": "java_code6",
+        "q": "Write a for loop that iterates from 0 to 4 and prints each number.",
+        "keywords": [
+          "for",
+          "i<5",
+          "System.out.println"
+        ]
+      }
+    ]
+  },
+  "burp-suite-basics": {
+    "mcq": [
+      {
+        "q": "What is the default port Burp Suite proxy listens on?",
+        "options": [
+          "8080",
+          "80",
+          "443",
+          "3128"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which module allows you to replay modified HTTP requests?",
+        "options": [
+          "Intruder",
+          "Repeater",
+          "Scanner",
+          "Decoder"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the purpose of Burp's Interceptor?",
+        "options": [
+          "To modify traffic in transit",
+          "To generate reports",
+          "To spider the website",
+          "To decode Base64"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which Burp tool is used for automated fuzzing?",
+        "options": [
+          "Repeater",
+          "Intruder",
+          "Sequencer",
+          "Comparer"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What does the 'Target Scope' do?",
+        "options": [
+          "Defines which domains to include in testing",
+          "Sets the proxy port",
+          "Manages certificates",
+          "Stores saved requests"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which module is used to compare two HTTP responses?",
+        "options": [
+          "Comparer",
+          "Decoder",
+          "Organizer",
+          "Logger"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the function of the Decoder module?",
+        "options": [
+          "Encode/decode data",
+          "Decrypt SSL traffic",
+          "Generate payloads",
+          "Analyze session tokens"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack type in Intruder uses one payload set for multiple positions simultaneously?",
+        "options": [
+          "Sniper",
+          "Battering ram",
+          "Pitchfork",
+          "Cluster bomb"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is required to intercept HTTPS traffic with Burp?",
+        "options": [
+          "Burp CA certificate installed",
+          "Root access",
+          "SSL key",
+          "No special configuration"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tab shows all requests and responses passing through the proxy?",
+        "options": [
+          "HTTP History",
+          "Site Map",
+          "Target",
+          "Dashboard"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does the 'Send to Repeater' action do?",
+        "options": [
+          "Sends request to Intruder",
+          "Allows manual replay",
+          "Generates a report",
+          "Decodes the request"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which Burp edition is free for basic web security testing?",
+        "options": [
+          "Professional",
+          "Enterprise",
+          "Community",
+          "Pro"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What is a 'payload position' in Intruder?",
+        "options": [
+          "Where payloads are inserted",
+          "The target URL",
+          "The attack type",
+          "The result table"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which protocol does Burp intercept by default?",
+        "options": [
+          "HTTP and HTTPS",
+          "FTP",
+          "DNS",
+          "SSH"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How do you stop Burp from intercepting further requests?",
+        "options": [
+          "Click 'Forward'",
+          "Turn Intercept off",
+          "Close the proxy",
+          "Restart Burp"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is the purpose of the 'Site Map'?",
+        "options": [
+          "Tree view of discovered content",
+          "Map of network infrastructure",
+          "List of vulnerabilities",
+          "Proxy settings"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which extension is commonly used to route browser traffic through Burp?",
+        "options": [
+          "FoxyProxy",
+          "Burp Proxy",
+          "SwitchyOmega",
+          "Proxy Switchy"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does 'smart decoding' in Decoder do?",
+        "options": [
+          "Automatically detects nested encodings",
+          "Decodes all data",
+          "Encodes to Base64",
+          "Converts to hex"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack type in Intruder combines all payload sets into all combinations?",
+        "options": [
+          "Sniper",
+          "Battering ram",
+          "Pitchfork",
+          "Cluster bomb"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the purpose of the 'Comparer' module?",
+        "options": [
+          "Compare two responses visually",
+          "Compare performance",
+          "Compare hash values",
+          "Compare certificates"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How can you add a custom header in Burp Repeater?",
+        "options": [
+          "Edit the raw request",
+          "Use the 'Headers' tab",
+          "Both A and B",
+          "None"
+        ],
+        "ans": 2
+      },
+      {
+        "q": "What does the 'Drop' button do in Interceptor?",
+        "options": [
+          "Discards the intercepted request",
+          "Forwards the request",
+          "Saves the request",
+          "Decodes the request"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which module helps analyze randomness in session tokens?",
+        "options": [
+          "Sequencer",
+          "Decoder",
+          "Intruder",
+          "Scanner"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a WebSocket message?",
+        "options": [
+          "Persistent bidirectional communication",
+          "HTTP request",
+          "SSL handshake",
+          "TCP packet"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which Burp feature allows you to test for SQL injection by sending many payloads?",
+        "options": [
+          "Intruder",
+          "Repeater",
+          "Scanner",
+          "Decoder"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "burp_code1",
+        "q": "Write the command to start Burp Suite from terminal (Linux).",
+        "keywords": [
+          "burpsuite",
+          "java -jar",
+          "burp.jar"
+        ]
+      },
+      {
+        "id": "burp_code2",
+        "q": "Name the Burp module used to manually edit and resend individual requests.",
+        "keywords": [
+          "Repeater"
+        ]
+      },
+      {
+        "id": "burp_code3",
+        "q": "What is the default listening address and port for Burp proxy?",
+        "keywords": [
+          "127.0.0.1",
+          "8080"
+        ]
+      },
+      {
+        "id": "burp_code4",
+        "q": "Which Burp tab shows WebSocket messages?",
+        "keywords": [
+          "WebSockets History"
+        ]
+      },
+      {
+        "id": "burp_code5",
+        "q": "Name the Intruder attack type that uses a single payload set for one position at a time.",
+        "keywords": [
+          "Sniper"
+        ]
+      }
+    ]
+  },
+  "gobuster-recon": {
+    "mcq": [
+      {
+        "q": "What language is Gobuster written in?",
+        "options": [
+          "Python",
+          "Go",
+          "C",
+          "Ruby"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which Gobuster mode is used for directory and file brute-forcing?",
+        "options": [
+          "dir",
+          "dns",
+          "vhost",
+          "s3"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What flag is used to specify a wordlist in Gobuster?",
+        "options": [
+          "-w",
+          "-u",
+          "-l",
+          "-f"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which status code indicates a resource exists and is accessible?",
+        "options": [
+          "200",
+          "404",
+          "301",
+          "403"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How can you exclude specific status codes from Gobuster output?",
+        "options": [
+          "-b",
+          "-x",
+          "-s",
+          "-e"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which flag appends extensions to each wordlist entry?",
+        "options": [
+          "-x",
+          "-e",
+          "-a",
+          "-E"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does the 'vhost' mode brute-force?",
+        "options": [
+          "Virtual hosts",
+          "Subdomains",
+          "Directories",
+          "DNS records"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which mode is used to discover subdomains via DNS queries?",
+        "options": [
+          "dns",
+          "dir",
+          "vhost",
+          "subdomain"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the default number of threads in Gobuster?",
+        "options": [
+          "10",
+          "20",
+          "5",
+          "50"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which flag sets a delay between requests to avoid rate limiting?",
+        "options": [
+          "--delay",
+          "--wait",
+          "--timeout",
+          "--sleep"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which wordlist is commonly used with Gobuster from SecLists?",
+        "options": [
+          "common.txt",
+          "rockyou.txt",
+          "passwords.txt",
+          "subdomains.txt"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does the '-k' flag do in Gobuster?",
+        "options": [
+          "Skip SSL verification",
+          "Keep output",
+          "Keep alive",
+          "Keyword search"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which flag is used to randomize the order of wordlist entries?",
+        "options": [
+          "--random",
+          "--shuffle",
+          "--order",
+          "--mix"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How do you specify a custom User-Agent in Gobuster?",
+        "options": [
+          "-a",
+          "-u",
+          "-H",
+          "-U"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of '--exclude-length'?",
+        "options": [
+          "Filter responses by size",
+          "Exclude certain status codes",
+          "Exclude directories",
+          "Skip long URLs"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which Gobuster mode can be used to find S3 buckets?",
+        "options": [
+          "s3",
+          "dir",
+          "dns",
+          "vhost"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does the '-o' flag do?",
+        "options": [
+          "Output results to a file",
+          "Override settings",
+          "Open browser",
+          "Offline mode"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which protocol does Gobuster use for directory brute-forcing?",
+        "options": [
+          "HTTP/HTTPS",
+          "FTP",
+          "DNS",
+          "SMB"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a typical use of Gobuster DNS mode?",
+        "options": [
+          "Find subdomains",
+          "Enumerate directories",
+          "Test virtual hosts",
+          "Crack passwords"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which flag increases verbosity?",
+        "options": [
+          "-v",
+          "--verbose",
+          "-d",
+          "-V"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does '301' status code typically indicate?",
+        "options": [
+          "Permanent redirect",
+          "Not found",
+          "Forbidden",
+          "Internal error"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How can you throttle Gobuster to avoid detection?",
+        "options": [
+          "Use --delay",
+          "Use -t 1",
+          "Use --timeout",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Which flag is used to resume a previous scan?",
+        "options": [
+          "--resume",
+          "-r",
+          "-R",
+          "--continue"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does the '-c' flag do?",
+        "options": [
+          "Set cookie",
+          "Change directory",
+          "Continue on error",
+          "Color output"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is often used to generate custom wordlists for Gobuster?",
+        "options": [
+          "cewl",
+          "hydra",
+          "nmap",
+          "sqlmap"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "gobuster_code1",
+        "q": "Write a Gobuster command to perform directory brute-forcing on 'http://example.com' using 'common.txt' wordlist.",
+        "keywords": [
+          "gobuster",
+          "dir",
+          "-u",
+          "http://example.com",
+          "-w",
+          "common.txt"
+        ]
+      },
+      {
+        "id": "gobuster_code2",
+        "q": "Write a command to brute-force subdomains of 'example.com' using 'subdomains.txt'.",
+        "keywords": [
+          "gobuster",
+          "dns",
+          "-d",
+          "example.com",
+          "-w",
+          "subdomains.txt"
+        ]
+      },
+      {
+        "id": "gobuster_code3",
+        "q": "Write a Gobuster command to scan for files with extensions .php and .txt on 'http://target.com'.",
+        "keywords": [
+          "gobuster",
+          "dir",
+          "-u",
+          "http://target.com",
+          "-x",
+          "php,txt"
+        ]
+      },
+      {
+        "id": "gobuster_code4",
+        "q": "Write a command to exclude status codes 404 and 401 from Gobuster output.",
+        "keywords": [
+          "gobuster",
+          "dir",
+          "-b",
+          "404,401"
+        ]
+      },
+      {
+        "id": "gobuster_code5",
+        "q": "Write a Gobuster command to use 50 threads and a 200ms delay.",
+        "keywords": [
+          "gobuster",
+          "dir",
+          "-t",
+          "50",
+          "--delay",
+          "200ms"
+        ]
+      }
+    ]
+  },
+  "ai-cyber-beginner": {
+    "mcq": [
+      {
+        "q": "What is the primary advantage of AI in cybersecurity over traditional signature-based detection?",
+        "options": [
+          "Lower cost",
+          "Detect unknown threats",
+          "Faster scanning",
+          "Easier to implement"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "Which type of learning uses labeled data?",
+        "options": [
+          "Supervised",
+          "Unsupervised",
+          "Reinforcement",
+          "Semi-supervised"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common challenge when using AI for security?",
+        "options": [
+          "Imbalanced datasets",
+          "Too much labeled data",
+          "Lack of algorithms",
+          "Slow processing"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which algorithm is commonly used for anomaly detection?",
+        "options": [
+          "Isolation Forest",
+          "Linear Regression",
+          "K-Means",
+          "Decision Tree"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does NLP stand for?",
+        "options": [
+          "Natural Language Processing",
+          "Neural Language Programming",
+          "Network Log Processor",
+          "Non-Linear Processing"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which metric is most important for imbalanced security datasets?",
+        "options": [
+          "Accuracy",
+          "Recall",
+          "Precision",
+          "F1-Score"
+        ],
+        "ans": 1
+      },
+      {
+        "q": "What is a false positive in security AI?",
+        "options": [
+          "Normal activity flagged as attack",
+          "Attack missed",
+          "Correctly identified attack",
+          "System crash"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which library is commonly used for machine learning in Python?",
+        "options": [
+          "scikit-learn",
+          "numpy",
+          "pandas",
+          "matplotlib"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of TF-IDF in text analysis?",
+        "options": [
+          "Weight important words",
+          "Remove stop words",
+          "Tokenize sentences",
+          "Stem words"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack uses AI to generate convincing phishing emails?",
+        "options": [
+          "AI-generated phishing",
+          "SQL injection",
+          "DDoS",
+          "Man-in-the-middle"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main goal of unsupervised learning in security?",
+        "options": [
+          "Find hidden patterns",
+          "Classify known malware",
+          "Predict labels",
+          "Optimize responses"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a confusion matrix?",
+        "options": [
+          "Table showing TP, TN, FP, FN",
+          "Matrix of correlations",
+          "Graph of errors",
+          "List of features"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which algorithm is used for clustering?",
+        "options": [
+          "K-Means",
+          "Random Forest",
+          "Logistic Regression",
+          "SVM"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is 'feature engineering'?",
+        "options": [
+          "Creating new features from raw data",
+          "Selecting the best model",
+          "Training the model",
+          "Evaluating results"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a phishing detection technique?",
+        "options": [
+          "URL lexical analysis",
+          "Port scanning",
+          "Packet sniffing",
+          "Brute force"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does ROC curve measure?",
+        "options": [
+          "Model discrimination ability",
+          "Model speed",
+          "Model size",
+          "Model complexity"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which Python library is used for data manipulation?",
+        "options": [
+          "pandas",
+          "sklearn",
+          "tensorflow",
+          "keras"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a 'zero-day' attack?",
+        "options": [
+          "Attack exploiting unknown vulnerability",
+          "Attack that lasts zero days",
+          "Attack detected immediately",
+          "Attack using AI"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique is used to handle imbalanced datasets?",
+        "options": [
+          "SMOTE",
+          "PCA",
+          "StandardScaler",
+          "OneHotEncoder"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of the 'fit' method in scikit-learn?",
+        "options": [
+          "Train the model",
+          "Make predictions",
+          "Load data",
+          "Visualize results"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack uses deepfakes for social engineering?",
+        "options": [
+          "Deepfake impersonation",
+          "Phishing",
+          "Ransomware",
+          "DDoS"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common metric for evaluating phishing detection?",
+        "options": [
+          "Precision",
+          "R2 score",
+          "Mean squared error",
+          "Log loss"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which algorithm is based on decision trees?",
+        "options": [
+          "Random Forest",
+          "Logistic Regression",
+          "KNN",
+          "Naive Bayes"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is 'overfitting'?",
+        "options": [
+          "Model memorizes training data",
+          "Model too simple",
+          "Model too slow",
+          "Model underperforms"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for AI-powered log analysis?",
+        "options": [
+          "ELK Stack",
+          "Wireshark",
+          "Nmap",
+          "Metasploit"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "aicyber_code1",
+        "q": "Write a line to import the RandomForestClassifier from sklearn.",
+        "keywords": [
+          "from sklearn.ensemble import RandomForestClassifier"
+        ]
+      },
+      {
+        "id": "aicyber_code2",
+        "q": "Write a command to install scikit-learn using pip.",
+        "keywords": [
+          "pip install scikit-learn"
+        ]
+      },
+      {
+        "id": "aicyber_code3",
+        "q": "Write a line to split data into training and test sets using train_test_split.",
+        "keywords": [
+          "from sklearn.model_selection import train_test_split",
+          "train_test_split"
+        ]
+      },
+      {
+        "id": "aicyber_code4",
+        "q": "Write a line to compute accuracy score.",
+        "keywords": [
+          "from sklearn.metrics import accuracy_score",
+          "accuracy_score"
+        ]
+      },
+      {
+        "id": "aicyber_code5",
+        "q": "Write a line to create a StandardScaler object.",
+        "keywords": [
+          "StandardScaler()"
+        ]
+      }
+    ]
+  },
+  "ai-cyber-associate": {
+    "mcq": [
+      {
+        "q": "What is a feature store?",
+        "options": [
+          "Central repository for features",
+          "Database of models",
+          "Tool for visualization",
+          "Version control system"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique is used to generate adversarial malware samples?",
+        "options": [
+          "GANs",
+          "Autoencoders",
+          "Random Forest",
+          "K-Means"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does FGSM stand for?",
+        "options": [
+          "Fast Gradient Sign Method",
+          "Fast Gradient Step Method",
+          "Feature Gradient Sign Method",
+          "Full Gradient Sign Method"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which framework is used for adversarial robustness testing?",
+        "options": [
+          "ART (Adversarial Robustness Toolbox)",
+          "TensorFlow",
+          "PyTorch",
+          "Scikit-learn"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is model extraction attack?",
+        "options": [
+          "Stealing model parameters via queries",
+          "Injecting malicious data",
+          "Evading detection",
+          "Poisoning training data"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which MITRE framework focuses on AI threats?",
+        "options": [
+          "ATLAS",
+          "ATT&CK",
+          "D3FEND",
+          "CAPEC"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of an autoencoder?",
+        "options": [
+          "Dimensionality reduction and anomaly detection",
+          "Classification",
+          "Regression",
+          "Clustering"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for ML pipeline versioning?",
+        "options": [
+          "DVC",
+          "Git",
+          "Jenkins",
+          "Docker"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is concept drift?",
+        "options": [
+          "Change in data distribution over time",
+          "Model overfitting",
+          "Underfitting",
+          "High bias"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which AWS service provides ML-powered threat detection?",
+        "options": [
+          "GuardDuty",
+          "SageMaker",
+          "Inspector",
+          "CloudTrail"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a SOAR platform?",
+        "options": [
+          "Security orchestration, automation, response",
+          "Security operations center",
+          "System for attack response",
+          "Secure analytics"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack uses reinforcement learning to evade detection?",
+        "options": [
+          "Adaptive evasion",
+          "FGSM",
+          "PGD",
+          "Poisoning"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main goal of MLOps?",
+        "options": [
+          "Manage ML lifecycle",
+          "Improve model accuracy",
+          "Reduce data size",
+          "Increase speed"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which library is used for ML monitoring?",
+        "options": [
+          "Evidently AI",
+          "Pandas",
+          "NumPy",
+          "Matplotlib"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common defense against adversarial attacks?",
+        "options": [
+          "Adversarial training",
+          "Data augmentation",
+          "Ensemble methods",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Which algorithm is used for time-series anomaly detection in Elastic?",
+        "options": [
+          "Random Cut Forest",
+          "Isolation Forest",
+          "K-Means",
+          "DBSCAN"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of SHAP?",
+        "options": [
+          "Explain model predictions",
+          "Train models",
+          "Visualize data",
+          "Preprocess features"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack poisons training data?",
+        "options": [
+          "Data poisoning",
+          "Evasion",
+          "Inversion",
+          "Extraction"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the role of a SIEM?",
+        "options": [
+          "Centralized log management",
+          "Network scanning",
+          "Vulnerability assessment",
+          "Penetration testing"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for threat intelligence extraction?",
+        "options": [
+          "MISP",
+          "Wireshark",
+          "Nmap",
+          "Burp Suite"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common evaluation metric for imbalanced data?",
+        "options": [
+          "F1-score",
+          "Accuracy",
+          "MSE",
+          "MAE"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique is used to detect DNS tunneling?",
+        "options": [
+          "Anomaly detection on DNS queries",
+          "Signature matching",
+          "Port scanning",
+          "Packet capture"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a confusion matrix?",
+        "options": [
+          "Evaluate classification performance",
+          "Visualize data",
+          "Train models",
+          "Reduce dimensions"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which algorithm is robust to outliers?",
+        "options": [
+          "Isolation Forest",
+          "Linear Regression",
+          "KNN",
+          "Naive Bayes"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a typical use of LLMs in security?",
+        "options": [
+          "Phishing detection",
+          "Password cracking",
+          "Network scanning",
+          "Firewall configuration"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "aicyber_assoc_code1",
+        "q": "Write a line to train an Isolation Forest model from sklearn.",
+        "keywords": [
+          "IsolationForest",
+          ".fit"
+        ]
+      },
+      {
+        "id": "aicyber_assoc_code2",
+        "q": "Write a command to install the adversarial robustness toolbox (ART).",
+        "keywords": [
+          "pip install adversarial-robustness-toolbox"
+        ]
+      },
+      {
+        "id": "aicyber_assoc_code3",
+        "q": "Write a line to compute precision and recall using sklearn.",
+        "keywords": [
+          "precision_score",
+          "recall_score",
+          "from sklearn.metrics import"
+        ]
+      },
+      {
+        "id": "aicyber_assoc_code4",
+        "q": "Write a line to create a DVC remote storage.",
+        "keywords": [
+          "dvc remote add",
+          "dvc push"
+        ]
+      },
+      {
+        "id": "aicyber_assoc_code5",
+        "q": "Write a line to load a saved model using joblib.",
+        "keywords": [
+          "joblib.load"
+        ]
+      }
+    ]
+  },
+  "ai-dev-professional": {
+    "mcq": [
+      {
+        "q": "What is the primary advantage of multi-agent systems over single agents?",
+        "options": [
+          "Specialized roles improve quality",
+          "Lower cost",
+          "Faster execution",
+          "Easier to deploy"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which framework is designed for multi-agent collaboration?",
+        "options": [
+          "CrewAI",
+          "LangChain",
+          "OpenAI API",
+          "TensorFlow"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of ReAct prompting?",
+        "options": [
+          "Interleave reasoning and actions",
+          "Generate chain of thought",
+          "Few-shot learning",
+          "Zero-shot classification"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique is used for code-aware AI assistants?",
+        "options": [
+          "RAG",
+          "Fine-tuning",
+          "Prompt engineering",
+          "Reinforcement learning"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does the Vercel AI SDK provide?",
+        "options": [
+          "React hooks for streaming LLM responses",
+          "Database ORM",
+          "Authentication",
+          "Deployment tools"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for semantic code search?",
+        "options": [
+          "ChromaDB",
+          "Redis",
+          "PostgreSQL",
+          "MongoDB"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the maximum execution time for AWS Lambda?",
+        "options": [
+          "15 minutes",
+          "5 minutes",
+          "1 hour",
+          "30 seconds"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which strategy reduces LLM costs by caching similar queries?",
+        "options": [
+          "Semantic caching",
+          "Prompt caching",
+          "Model distillation",
+          "Quantization"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main security risk of AI-generated code?",
+        "options": [
+          "Vulnerabilities like SQL injection",
+          "Slow performance",
+          "High memory usage",
+          "Poor readability"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which library is used for prompt optimization?",
+        "options": [
+          "DSPy",
+          "LangChain",
+          "CrewAI",
+          "OpenAI"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a typical use of the 'generateObject' function in Vercel AI SDK?",
+        "options": [
+          "Structured data extraction",
+          "Chat completion",
+          "Streaming text",
+          "Image generation"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which metric is used to evaluate code generation?",
+        "options": [
+          "Pass@k",
+          "BLEU",
+          "ROUGE",
+          "Perplexity"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the role of a 'Critic Agent' in multi-agent systems?",
+        "options": [
+          "Review and provide feedback",
+          "Generate code",
+          "Manage tasks",
+          "Deploy applications"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique helps reduce hallucinations in RAG?",
+        "options": [
+          "Grounding with retrieved context",
+          "Higher temperature",
+          "Fewer examples",
+          "Smaller model"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a feature store?",
+        "options": [
+          "Centralize feature definitions",
+          "Store models",
+          "Version datasets",
+          "Manage pipelines"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for LLM observability?",
+        "options": [
+          "LangSmith",
+          "Prometheus",
+          "Grafana",
+          "Datadog"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main advantage of prompt caching?",
+        "options": [
+          "Reduces cost and latency",
+          "Improves accuracy",
+          "Increases token limit",
+          "Simplifies prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack targets AI models via malicious inputs?",
+        "options": [
+          "Adversarial attack",
+          "SQL injection",
+          "XSS",
+          "CSRF"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of self-consistency in CoT?",
+        "options": [
+          "Majority vote over multiple reasoning paths",
+          "Single path reasoning",
+          "Few-shot examples",
+          "Role prompting"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which deployment pattern is best for long-running agents?",
+        "options": [
+          "Asynchronous queue",
+          "Synchronous API",
+          "Serverless function",
+          "Edge computing"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the role of a 'Router Agent'?",
+        "options": [
+          "Direct tasks to specialists",
+          "Generate final output",
+          "Review code",
+          "Deploy models"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which library is used for vector embeddings?",
+        "options": [
+          "ChromaDB",
+          "Prisma",
+          "Express",
+          "Next.js"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common method to mitigate prompt injection?",
+        "options": [
+          "Input sanitization and delimiters",
+          "Higher temperature",
+          "More examples",
+          "Smaller model"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for automated code review?",
+        "options": [
+          "Semgrep",
+          "ESLint",
+          "Prettier",
+          "Webpack"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the benefit of model routing?",
+        "options": [
+          "Cost-performance optimization",
+          "Increased accuracy",
+          "Simpler prompts",
+          "Faster training"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "aidev_code1",
+        "q": "Write a line to define a tool in CrewAI with a schema.",
+        "keywords": [
+          "@tool",
+          "def",
+          "description"
+        ]
+      },
+      {
+        "id": "aidev_code2",
+        "q": "Write a line to create a ChromaDB collection.",
+        "keywords": [
+          "chromadb.Client",
+          "create_collection"
+        ]
+      },
+      {
+        "id": "aidev_code3",
+        "q": "Write a line to stream a response using Vercel AI SDK.",
+        "keywords": [
+          "streamText",
+          "toDataStreamResponse"
+        ]
+      },
+      {
+        "id": "aidev_code4",
+        "q": "Write a command to deploy a Next.js app to Vercel.",
+        "keywords": [
+          "vercel",
+          "--prod"
+        ]
+      },
+      {
+        "id": "aidev_code5",
+        "q": "Write a line to load environment variables in Python.",
+        "keywords": [
+          "load_dotenv"
+        ]
+      }
+    ]
+  },
+  "prompt-engineering-beginner": {
+    "mcq": [
+      {
+        "q": "What is a token in the context of LLMs?",
+        "options": [
+          "A chunk of text",
+          "A word",
+          "A sentence",
+          "A paragraph"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which component of a prompt defines the task?",
+        "options": [
+          "Instruction",
+          "Context",
+          "Input data",
+          "Output indicator"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does 'temperature' control in LLM responses?",
+        "options": [
+          "Randomness",
+          "Length",
+          "Grammar",
+          "Speed"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is 'role prompting'?",
+        "options": [
+          "Assigning a persona to the AI",
+          "Giving examples",
+          "Setting output format",
+          "Providing context"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which prompting technique uses examples?",
+        "options": [
+          "Few-shot",
+          "Zero-shot",
+          "Chain-of-thought",
+          "Role prompting"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the effect of a high temperature setting?",
+        "options": [
+          "More creative responses",
+          "More deterministic responses",
+          "Faster responses",
+          "Shorter responses"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a hallucination in LLMs?",
+        "options": [
+          "Confidently generating false information",
+          "Generating random text",
+          "Refusing to answer",
+          "Repeating the prompt"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a good practice for prompt clarity?",
+        "options": [
+          "Use specific instructions",
+          "Be vague",
+          "Use complex words",
+          "Avoid examples"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of the 'system' message?",
+        "options": [
+          "Set overall behavior",
+          "User query",
+          "Model response",
+          "Error handling"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How can you reduce hallucinations?",
+        "options": [
+          "Ask the model to say 'I don't know'",
+          "Increase temperature",
+          "Use shorter prompts",
+          "Remove examples"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is zero-shot prompting?",
+        "options": [
+          "No examples given",
+          "One example given",
+          "Multiple examples given",
+          "Role assigned"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a good prompt for summarization?",
+        "options": [
+          "Summarize the following text in 2 sentences",
+          "Tell me about this",
+          "What is this?",
+          "Explain"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the typical context window of GPT-4 Turbo?",
+        "options": [
+          "128k tokens",
+          "4k tokens",
+          "8k tokens",
+          "16k tokens"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which format is easiest for LLMs to output structured data?",
+        "options": [
+          "JSON",
+          "Plain text",
+          "Markdown",
+          "HTML"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the first step in iterative prompt refinement?",
+        "options": [
+          "Analyze the failure",
+          "Change the model",
+          "Increase temperature",
+          "Add more examples"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is an effective persona?",
+        "options": [
+          "Act as a patent attorney",
+          "Act as a human",
+          "Act as a computer",
+          "Act as a dog"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of output indicators?",
+        "options": [
+          "Specify desired format",
+          "Give context",
+          "Provide examples",
+          "Set temperature"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How can you make an LLM admit uncertainty?",
+        "options": [
+          "Prompt: 'If unsure, say I don't know'",
+          "Set temperature to 0",
+          "Use role prompting",
+          "Add more context"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common use of few-shot prompting?",
+        "options": [
+          "Classification",
+          "Summarization",
+          "Translation",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "Which parameter controls the length of output?",
+        "options": [
+          "max_tokens",
+          "temperature",
+          "top_p",
+          "frequency_penalty"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the role of context in a prompt?",
+        "options": [
+          "Provide background information",
+          "Give the instruction",
+          "Specify output format",
+          "Add examples"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a bad prompt?",
+        "options": [
+          "Tell me everything",
+          "Summarize in 3 bullet points",
+          "Explain like I'm 10",
+          "List pros and cons"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does 'top_p' control?",
+        "options": [
+          "Nucleus sampling",
+          "Temperature",
+          "Token count",
+          "Beam search"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "How can you ensure the model follows output format?",
+        "options": [
+          "Provide an example",
+          "Use higher temperature",
+          "Use shorter prompts",
+          "Remove instructions"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main limitation of LLMs regarding knowledge?",
+        "options": [
+          "Knowledge cutoff date",
+          "Lack of reasoning",
+          "Slow response",
+          "High cost"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "prompt_beginner_code1",
+        "q": "Write a simple prompt to summarize a paragraph in one sentence.",
+        "keywords": [
+          "summarize",
+          "one sentence"
+        ]
+      },
+      {
+        "id": "prompt_beginner_code2",
+        "q": "Write a role prompt: 'Act as a ...' for a technical support agent.",
+        "keywords": [
+          "Act as",
+          "technical support"
+        ]
+      },
+      {
+        "id": "prompt_beginner_code3",
+        "q": "Write a prompt that asks the model to output JSON.",
+        "keywords": [
+          "JSON",
+          "output only"
+        ]
+      },
+      {
+        "id": "prompt_beginner_code4",
+        "q": "Write a zero-shot CoT prompt for a math problem.",
+        "keywords": [
+          "Let's think step by step"
+        ]
+      },
+      {
+        "id": "prompt_beginner_code5",
+        "q": "Write a prompt that instructs the model to say 'I don't know' if unsure.",
+        "keywords": [
+          "If you don't know",
+          "say I don't know"
+        ]
+      }
+    ]
+  },
+  "prompt-engineering-associate": {
+    "mcq": [
+      {
+        "q": "What does Chain-of-Thought (CoT) prompting do?",
+        "options": [
+          "Breaks reasoning into steps",
+          "Uses examples",
+          "Assigns a role",
+          "Sets output format"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique runs multiple CoT paths and takes a majority vote?",
+        "options": [
+          "Self-consistency",
+          "Tree-of-Thoughts",
+          "ReAct",
+          "Few-shot"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the ReAct pattern?",
+        "options": [
+          "Interleaving reasoning and actions",
+          "Chain of thought only",
+          "Role playing",
+          "Few-shot learning"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which metric is used to compare generated text to reference?",
+        "options": [
+          "ROUGE",
+          "Accuracy",
+          "F1",
+          "AUC"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of automatic prompt engineering?",
+        "options": [
+          "Generate prompts using LLMs",
+          "Manually write prompts",
+          "Test prompts",
+          "Deploy prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique explores multiple reasoning branches?",
+        "options": [
+          "Tree-of-Thoughts",
+          "Zero-shot CoT",
+          "Few-shot",
+          "ReAct"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common defense against prompt injection?",
+        "options": [
+          "Use delimiters",
+          "Increase temperature",
+          "Add examples",
+          "Shorten prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What does RAG stand for?",
+        "options": [
+          "Retrieval-Augmented Generation",
+          "Recursive Attention Graph",
+          "Random Access Generator",
+          "Reasoning and Acting Guide"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which evaluation method uses an LLM to judge outputs?",
+        "options": [
+          "LLM-as-a-judge",
+          "BLEU",
+          "ROUGE",
+          "Human evaluation"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the benefit of prompt caching?",
+        "options": [
+          "Reduces cost",
+          "Increases accuracy",
+          "Speeds up training",
+          "Simplifies prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which framework is used for automatic prompt optimization?",
+        "options": [
+          "DSPy",
+          "LangChain",
+          "CrewAI",
+          "OpenAI"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main challenge of evaluating LLM outputs?",
+        "options": [
+          "Subjectivity",
+          "Speed",
+          "Cost",
+          "Model size"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique helps mitigate bias in LLM outputs?",
+        "options": [
+          "Debiasing prompts",
+          "Higher temperature",
+          "More examples",
+          "Shorter prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a rubric in LLM-as-a-judge?",
+        "options": [
+          "Standardize evaluation criteria",
+          "Increase randomness",
+          "Reduce cost",
+          "Speed up evaluation"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a ReAct tool?",
+        "options": [
+          "search",
+          "calculate",
+          "read_file",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the primary advantage of few-shot over zero-shot?",
+        "options": [
+          "Better format control",
+          "Lower cost",
+          "Faster response",
+          "Less context"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which metric is most important for RAG evaluation?",
+        "options": [
+          "Hit rate",
+          "Accuracy",
+          "Precision",
+          "Recall"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the role of a 'critic' in multi-agent debate?",
+        "options": [
+          "Evaluate and provide feedback",
+          "Generate initial response",
+          "Summarize",
+          "Search web"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique is used to reduce positional bias in LLM-as-a-judge?",
+        "options": [
+          "Swap order of candidates",
+          "Increase temperature",
+          "Add more examples",
+          "Shorten prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of 'temperature' in ReAct agents?",
+        "options": [
+          "Balance exploration vs exploitation",
+          "Control output length",
+          "Set role",
+          "Add context"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a prompt injection defense?",
+        "options": [
+          "Input sanitization",
+          "Lower temperature",
+          "Longer prompts",
+          "More examples"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main limitation of zero-shot CoT?",
+        "options": [
+          "May not always trigger reasoning",
+          "Too many examples",
+          "High cost",
+          "Slow speed"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which algorithm is used for semantic caching?",
+        "options": [
+          "Embedding similarity",
+          "Exact match",
+          "Regex",
+          "Levenshtein distance"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a 'prompt template'?",
+        "options": [
+          "Reusable structure for prompts",
+          "Model architecture",
+          "Dataset format",
+          "Evaluation metric"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which of the following is a best practice for RAG prompting?",
+        "options": [
+          "Cite sources",
+          "Ignore context",
+          "Use high temperature",
+          "Short prompts"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "prompt_assoc_code1",
+        "q": "Write a prompt that implements ReAct with a search tool.",
+        "keywords": [
+          "Thought",
+          "Action",
+          "Observation",
+          "Final Answer"
+        ]
+      },
+      {
+        "id": "prompt_assoc_code2",
+        "q": "Write a line to evaluate a prompt using LLM-as-a-judge with a rubric.",
+        "keywords": [
+          "rubric",
+          "score",
+          "judge"
+        ]
+      },
+      {
+        "id": "prompt_assoc_code3",
+        "q": "Write a DSPy module definition for a RAG system.",
+        "keywords": [
+          "dspy.Module",
+          "retrieve",
+          "generate_answer"
+        ]
+      },
+      {
+        "id": "prompt_assoc_code4",
+        "q": "Write a line to set up semantic caching with Redis.",
+        "keywords": [
+          "Redis",
+          "embedding",
+          "similarity"
+        ]
+      },
+      {
+        "id": "prompt_assoc_code5",
+        "q": "Write a prompt that includes a delimiter to separate instructions from user input.",
+        "keywords": [
+          "<USER_TEXT>",
+          "</USER_TEXT>"
+        ]
+      }
+    ]
+  },
+  "prompt-engineering-professional": {
+    "mcq": [
+      {
+        "q": "What is the key insight of viewing LLMs as reasoning engines?",
+        "options": [
+          "They can perform multi-step reasoning",
+          "They are just chatbots",
+          "They have no memory",
+          "They are deterministic"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which multi-agent pattern involves two agents arguing?",
+        "options": [
+          "Debate",
+          "Round-robin",
+          "Manager-worker",
+          "Hierarchical"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main benefit of parallel tool calling?",
+        "options": [
+          "Reduced latency",
+          "Higher accuracy",
+          "Lower cost",
+          "Simpler prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which framework allows declarative prompt programming?",
+        "options": [
+          "DSPy",
+          "LangChain",
+          "CrewAI",
+          "OpenAI"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a 'judge' in LLM-as-a-judge?",
+        "options": [
+          "Evaluate output quality",
+          "Generate responses",
+          "Train models",
+          "Deploy prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which reliability pattern retries failed API calls?",
+        "options": [
+          "Exponential backoff",
+          "Fallback model",
+          "Output validation",
+          "Caching"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main defense against prompt injection in production?",
+        "options": [
+          "Input sanitization + delimiters",
+          "Higher temperature",
+          "More examples",
+          "Shorter prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique reduces cost by routing easy queries to smaller models?",
+        "options": [
+          "Model routing",
+          "Caching",
+          "Quantization",
+          "Distillation"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the role of a 'manager' agent in hierarchical systems?",
+        "options": [
+          "Decompose tasks and delegate",
+          "Generate final output",
+          "Review work",
+          "Search web"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which observability tool is designed for LLM applications?",
+        "options": [
+          "LangSmith",
+          "Prometheus",
+          "Grafana",
+          "Jaeger"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of speculative decoding?",
+        "options": [
+          "Speed up generation",
+          "Improve accuracy",
+          "Reduce cost",
+          "Simplify prompts"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which pattern uses a small model to classify query difficulty?",
+        "options": [
+          "Model routing",
+          "Caching",
+          "Fallback",
+          "Retry"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is a common metric for monitoring LLM systems?",
+        "options": [
+          "p95 latency",
+          "Temperature",
+          "Top_p",
+          "Max_tokens"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which attack involves stealing a model via queries?",
+        "options": [
+          "Model extraction",
+          "Data poisoning",
+          "Evasion",
+          "Inversion"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main advantage of DSPy over manual prompting?",
+        "options": [
+          "Automatic optimization",
+          "Lower cost",
+          "Faster inference",
+          "Better security"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which technique is used to handle LLM timeouts?",
+        "options": [
+          "Fallback model",
+          "Retry",
+          "Caching",
+          "Batch processing"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a 'critic' agent in multi-agent systems?",
+        "options": [
+          "Review and refine outputs",
+          "Generate initial drafts",
+          "Manage tasks",
+          "Deploy models"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which tool is used for tracing LLM calls?",
+        "options": [
+          "OpenTelemetry",
+          "DVC",
+          "MLflow",
+          "Kubeflow"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the benefit of using a 'manager' agent?",
+        "options": [
+          "Better task decomposition",
+          "Faster execution",
+          "Lower cost",
+          "Simpler code"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which strategy reduces LLM costs by reusing responses?",
+        "options": [
+          "Semantic caching",
+          "Model routing",
+          "Fallback",
+          "Retry"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the main security risk of function calling?",
+        "options": [
+          "Unauthorized tool execution",
+          "Higher cost",
+          "Slower response",
+          "Poor accuracy"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which pattern is used for human escalation?",
+        "options": [
+          "Human-in-the-loop",
+          "Automatic retry",
+          "Caching",
+          "Model routing"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "What is the purpose of a 'guardrail' LLM?",
+        "options": [
+          "Detect harmful inputs",
+          "Generate responses",
+          "Optimize prompts",
+          "Cache results"
+        ],
+        "ans": 0
+      },
+      {
+        "q": "Which metric is most important for production LLM systems?",
+        "options": [
+          "Cost per request",
+          "Accuracy",
+          "Speed",
+          "All of the above"
+        ],
+        "ans": 3
+      },
+      {
+        "q": "What is the main limitation of LLM-as-a-judge?",
+        "options": [
+          "Potential bias",
+          "High cost",
+          "Slow speed",
+          "Poor accuracy"
+        ],
+        "ans": 0
+      }
+    ],
+    "coding": [
+      {
+        "id": "prompt_prof_code1",
+        "q": "Write a DSPy signature for a sentiment analysis module.",
+        "keywords": [
+          "dspy.Signature",
+          "input",
+          "output"
+        ]
+      },
+      {
+        "id": "prompt_prof_code2",
+        "q": "Write a line to set up exponential backoff retry with tenacity.",
+        "keywords": [
+          "@retry",
+          "wait_exponential",
+          "stop_after_attempt"
+        ]
+      },
+      {
+        "id": "prompt_prof_code3",
+        "q": "Write a code snippet for model routing based on query length.",
+        "keywords": [
+          "if len(query) < threshold",
+          "model = 'gpt-3.5-turbo'",
+          "else 'gpt-4'"
+        ]
+      },
+      {
+        "id": "prompt_prof_code4",
+        "q": "Write a line to add a span in OpenTelemetry for an LLM call.",
+        "keywords": [
+          "tracer.start_as_current_span",
+          "set_attribute"
+        ]
+      },
+      {
+        "id": "prompt_prof_code5",
+        "q": "Write a defense prompt that uses XML tags to separate instructions from user input.",
+        "keywords": [
+          "<SYSTEM_INSTRUCTION>",
+          "<USER_TEXT>",
+          "</USER_TEXT>"
         ]
       }
     ]
