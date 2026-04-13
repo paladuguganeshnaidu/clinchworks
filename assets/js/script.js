@@ -132,12 +132,63 @@
     const revealObserver = new IntersectionObserver(
       (entries) => { 
         entries.forEach(e => { 
+          // Custom check for GSAP managed elements
+          if (e.target.classList.contains('bento-item') || e.target.classList.contains('team-card')) {
+            return; // Managed by GSAP
+          }
           if (e.isIntersecting) e.target.classList.add('visible'); 
         }); 
       },
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
     document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+    
+    // Defer GSAP specific animations
+    setTimeout(initGSAPAnimations, 100);
+  }
+
+  function initGSAPAnimations() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const bentoContainers = document.querySelectorAll('.bento-grid-trigger');
+    bentoContainers.forEach(container => {
+      const items = container.querySelectorAll('.bento-item');
+      gsap.fromTo(items, 
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        }
+      );
+    });
+
+    const teamContainers = document.querySelectorAll('.team-bento-trigger');
+    teamContainers.forEach(container => {
+      const items = container.querySelectorAll('.team-card');
+      gsap.fromTo(items, 
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: container,
+            start: "top 80%",
+            toggleActions: "play none none none"
+          }
+        }
+      );
+    });
   }
 
   /**

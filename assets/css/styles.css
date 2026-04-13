@@ -623,10 +623,10 @@ section,
 /* 4. Gold Cards (Service-Card) */
 .service-card,
 .project-card {
-  background: var(--primary-gold) !important;
-  color: var(--white-text) !important;
-  border-radius: 12px !important;
-  border: none !important;
+  background: var(--primary-gold);
+  color: var(--white-text);
+  border-radius: 24px;
+  border: none;
   box-shadow: 0 4px 15px rgba(241, 175, 44, 0.15);
   transition: 0.3s ease-in-out;
 }
@@ -634,7 +634,7 @@ section,
 .service-card p,
 .service-card span,
 .service-card h3 {
-  color: var(--white-text) !important;
+  color: var(--white-text);
 }
 
 .service-card:hover {
@@ -736,47 +736,26 @@ button:hover,
 
 
 /* =========================================================
-       CORE REVEAL ANIMATIONS (Fix for Hidden Cards)
+       CORE REVEAL ANIMATIONS
    ========================================================= */
 
-.section-reveal {
+.section-reveal:not(.bento-item):not(.team-card) {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.section-reveal.visible {
+.section-reveal:not(.bento-item):not(.team-card).visible {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
 
 /* Fallback for cases where JS fails */
 @media (prefers-reduced-motion: reduce) {
-  .section-reveal {
+  .section-reveal, .bento-item, .team-card {
     opacity: 1 !important;
     transform: none !important;
   }
-}
-
-/* =========================================================
-       EMERGENCY CONTENT VISIBILITY OVERRIDE
-   ========================================================= */
-
-/* Forcing all reveal-gated content to 100% opacity to resolve blank page issues. */
-.section-reveal,
-#about,
-.service-card,
-.project-card {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: translateY(0) !important;
-  display: flex !important;
-  /* Matches standard member card layout */
-}
-
-/* Ensure the Member Cards flex layout is maintained */
-.flex-col.md\:flex-row {
-  display: flex !important;
 }
 
 /* =========================================================

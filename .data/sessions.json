@@ -124,6 +124,21 @@
           "updatedAt": 1775708018551
         }
       }
+    },
+    "87a16b3aff9860703754877b6ce4a66cfabc1cd8e2c5976f": {
+      "username": "Ganesh Naidu",
+      "createdAt": 1776107169552,
+      "lastSeen": 1776107170275,
+      "courses": {
+        "burp-suite-basics": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776107170293
+        }
+      }
     }
   }
 }
