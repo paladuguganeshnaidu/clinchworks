@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | ClinchWorks</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body class="overflow-x-hidden w-full relative bg-[#0b1220]">
+
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-strong">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+            <a href="../index.html" class="flex items-center gap-0 group z-10 w-full justify-center sm:justify-start">
+                <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                    <img src="../assets/images/logo.png" alt="Clinch Works Logo" class="h-5 sm:h-8 w-auto object-contain rounded-[9px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" onerror="this.style.display='none'" />
+                </div>
+                <span class="font-semibold text-xs sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+            </a>
+        </div>
+    </header>
+
+    <section class="relative min-h-screen flex items-center justify-center py-24 overflow-hidden">
+        <div class="absolute inset-0 hero-bg"></div>
+        <div class="hero-grid"></div>
+
+        <div class="max-w-md w-full mx-auto px-5 sm:px-6 relative z-10 section-reveal opacity-0 translate-y-10">
+            <div class="service-card rounded-[24px] p-8 sm:p-10 flex flex-col relative overflow-hidden group w-full shadow-2xl" style="background: var(--primary-gold);">
+                
+                <div class="absolute inset-0 bg-gradient-to-tl from-[#c9a84c] to-[#F1AF2C] opacity-100 pointer-events-none z-0"></div>
+
+                <div class="relative z-10 w-full flex flex-col items-center text-center">
+                    <p class="text-xs font-bold tracking-widest uppercase mb-2" style="color: var(--dark-text);">Join Us</p>
+                    <h3 class="text-3xl sm:text-4xl font-black mb-8" style="color: var(--white-text);">Register</h3>
+
+                    <form id="register-form" class="w-full flex flex-col gap-3">
+                        <div class="flex gap-3">
+                            <input type="text" id="reg-firstname" placeholder="First Name" class="w-1/2 px-4 py-3.5 rounded-xl bg-white text-black border-2 border-transparent focus:border-black outline-none transition-all text-sm font-medium shadow-inner" style="color: black !important;" required />
+                            <input type="text" id="reg-lastname" placeholder="Last Name" class="w-1/2 px-4 py-3.5 rounded-xl bg-white text-black border-2 border-transparent focus:border-black outline-none transition-all text-sm font-medium shadow-inner" style="color: black !important;" required />
+                        </div>
+                        
+                        <input type="tel" id="reg-phone" placeholder="Phone Number" class="w-full px-4 py-3.5 rounded-xl bg-white text-black border-2 border-transparent focus:border-black outline-none transition-all text-sm font-medium shadow-inner" style="color: black !important;" required />
+                        
+                        <input type="email" id="reg-email" placeholder="Email Address" class="w-full px-4 py-3.5 rounded-xl bg-white text-black border-2 border-transparent focus:border-black outline-none transition-all text-sm font-medium shadow-inner" style="color: black !important;" required />
+                        
+                        <input type="password" id="reg-password" placeholder="Password (Min 6 chars)" class="w-full px-4 py-3.5 rounded-xl bg-white text-black border-2 border-transparent focus:border-black outline-none transition-all text-sm font-medium shadow-inner" style="color: black !important;" required />
+                        
+                        <input type="password" id="reg-confirm-password" placeholder="Confirm Password" class="w-full px-4 py-3.5 rounded-xl bg-white text-black border-2 border-transparent focus:border-black outline-none transition-all text-sm font-medium shadow-inner" style="color: black !important;" required />
+                        
+                        <button type="submit" id="btn-register" class="w-full mt-3 px-6 py-3.5 rounded-full text-sm font-black uppercase tracking-widest transition-all hover:scale-105 shadow-lg flex justify-center items-center" style="background: var(--dark-text) !important; color: var(--primary-gold) !important; min-height: 48px;">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <button id="google-login" 
+class="w-full mt-3 px-6 py-3.5 rounded-full text-sm font-black uppercase tracking-widest bg-white text-black hover:scale-105 transition-all shadow-lg">
+                        Continue with Google
+                    </button>
+
+                    <div id="auth-msg" class="mt-4 text-sm font-bold text-center hidden min-h-[20px]" style="color: #7f1d1d;"></div>
+                    
+                    <p class="mt-6 text-sm font-semibold" style="color: var(--white-text);">
+                        Already have an account? 
+                        <a href="login.html" class="underline hover:opacity-80 transition-opacity" style="color: var(--dark-text);">Log in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Essential Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof gsap !== 'undefined') {
+                gsap.to(".section-reveal", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    delay: 0.1
+                });
+            }
+        });
+    </script>
+</body>
+</html>
