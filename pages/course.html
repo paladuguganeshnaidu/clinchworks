@@ -225,6 +225,9 @@
     let currentCourseId = null;
     let globalUser = null;
     let globalUserData = null;
+    
+    let authPromiseResolve;
+    const authReady = new Promise(r => authPromiseResolve = r);
 
     onAuthStateChanged(auth, async (user) => {
         globalUser = user;
@@ -236,6 +239,7 @@
                 }
             } catch (err) {}
         }
+        authPromiseResolve();
     });
 
     function escapeHtml(value) {
@@ -261,6 +265,7 @@
     }
 
     window.attemptStartCourse = async (courseId) => {
+        await authReady;
         if (!globalUser) {
              const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
              alert("Please log in to access courses.");

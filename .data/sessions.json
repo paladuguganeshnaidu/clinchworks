@@ -160,6 +160,21 @@
       "createdAt": 1776159249470,
       "lastSeen": 1776159249473,
       "courses": {}
+    },
+    "6c1330f346f94080327ffb4a1a74b5be9dac8344d48c620e": {
+      "username": "GANESH NAIDU",
+      "createdAt": 1776160601428,
+      "lastSeen": 1776160601432,
+      "courses": {
+        "c-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776160601464
+        }
+      }
     }
   }
 }

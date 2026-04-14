@@ -333,6 +333,7 @@
 
           resultBox.classList.remove('hidden');
           if (passed) {
+            btnSubmit.style.display = 'none';
             const certId = `CW-${globalUser.uid.substring(0, 5).toUpperCase()}-${Date.now().toString(36).toUpperCase()}`;
             try {
                 const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);

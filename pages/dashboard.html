@@ -137,7 +137,25 @@
   </footer>
 
   <script src="../assets/js/script.js"></script>
-  <script>
+  <script type="module">
+    import { auth, db } from '../assets/js/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+    let globalUser = null;
+    let authPromiseResolve;
+    const authReady = new Promise(r => authPromiseResolve = r);
+
+    onAuthStateChanged(auth, (user) => {
+        globalUser = user;
+        if (!user) {
+             const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
+             window.location.href = `login.html?redirect=${targetUrl}`;
+             return;
+        }
+        authPromiseResolve();
+    });
+
     function escapeHtml(value) {
       return String(value)
         .replace(/&/g, "&amp;")
@@ -148,15 +166,21 @@
     }
 
     (async function() {
+      await authReady;
       try {
-        const [coursesResponse, progressResponse] = await Promise.all([
-          fetch('../courses-content.json'),
-          fetch('/api/progress/all', { credentials: 'same-origin' })
+        const coursesResponse = await fetch('../courses-content.json');
+
+        const [data, snapshot] = await Promise.all([
+          coursesResponse.json(),
+          getDocs(collection(db, 'users', globalUser.uid, 'progress'))
         ]);
 
-        const data = await coursesResponse.json();
-        const progressPayload = progressResponse.ok ? await progressResponse.json() : { courses: {} };
-        const progressByCourse = progressPayload && progressPayload.courses ? progressPayload.courses : {};
+        const progressByCourse = {};
+        if (!snapshot.empty) {
+             snapshot.forEach(doc => {
+                 progressByCourse[doc.id] = doc.data();
+             });
+        }
         
         const dashboardList = document.getElementById('dashboard-list');
         dashboardList.innerHTML = '';

@@ -253,7 +253,7 @@
       document.body.style.overflow = '';
     };
 
-    const renderDetails = (user) => {
+    const renderDetails = (user, progress) => {
       const fields = [
         ['First Name', user.firstName],
         ['Last Name', user.lastName],
@@ -271,12 +271,26 @@
         ['UID', user.uid]
       ];
 
-      detailContentEl.innerHTML = fields.map(([label, value]) => `
+      let html = fields.map(([label, value]) => `
         <div class="rounded-xl p-3 border" style="border-color: var(--border-color); background: var(--bg-secondary);">
           <p class="text-xs font-bold uppercase mb-1" style="color: var(--text-faint);">${escapeHtml(label)}</p>
           <p class="text-sm font-semibold break-all" style="color: var(--text-primary);">${escapeHtml(value || 'N/A')}</p>
         </div>
       `).join('');
+
+      if (progress && Object.keys(progress).length > 0) {
+        html += `<div class="col-span-full mt-4 border-t pt-4" style="border-color: var(--border-color);"><h3 class="text-sm font-bold uppercase mb-3" style="color: var(--text-primary);">Course Progress Tracking</h3><div class="grid grid-cols-1 gap-3">`;
+        for (const [courseId, state] of Object.entries(progress)) {
+           html += `<div class="p-3 border rounded-xl" style="background: rgba(247, 199, 99, 0.05); border-color: rgba(247, 199, 99, 0.2);">
+               <p class="font-bold text-sm mb-1">${escapeHtml(courseId)}</p>
+               <p class="text-xs mb-1" style="color: var(--text-faint);">Completed: ${state.completed ? '<span style="color:#16a34a;font-weight:bold;">Yes</span>' : 'No'} | Exam: ${state.examPassed ? '<span style="color:#16a34a;font-weight:bold;">Passed</span>' : 'Pending'}</p>
+               <p class="text-[10px] font-mono p-1 rounded bg-black/5" style="color: var(--text-secondary);">Cert ID: ${escapeHtml(state.certificateId || 'Unissued')}</p>
+           </div>`;
+        }
+        html += `</div></div>`;
+      }
+
+      detailContentEl.innerHTML = html;
     };
 
     const loadUserDetails = async (uid) => {
@@ -292,7 +306,7 @@
           showError('Unable to load user details.');
           return;
         }
-        renderDetails(user);
+        renderDetails(user, payload.progress || {});
         openModal();
       } catch (error) {
         showError(normalizeCallableError(error));

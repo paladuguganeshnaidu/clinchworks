@@ -533,6 +533,7 @@
         }
 
         btnNext.onclick = (isLast || state.completed) ? async () => {
+          btnNext.disabled = true;
           if (!state.completed) {
             state.completed = true;
             state.currentModule = Math.max(state.currentModule, courseData.modules.length - 1);

@@ -157,7 +157,14 @@ exports.getUserDetails = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError("not-found", "User not found.");
     }
 
+    const progressSnap = await db.collection("users").doc(uid).collection("progress").get();
+    const progress = {};
+    progressSnap.forEach(doc => {
+        progress[doc.id] = doc.data();
+    });
+
     return {
-        user: toUserRecord(uid, userSnap.data() || {})
+        user: toUserRecord(uid, userSnap.data() || {}),
+        progress: progress
     };
 });
