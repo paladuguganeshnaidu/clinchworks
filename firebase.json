@@ -18,6 +18,38 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "rewrites": [
+      {
+        "source": "/profile",
+        "destination": "/pages/profile.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/pages/login.html"
+      },
+      {
+        "source": "/register",
+        "destination": "/pages/register.html"
+      },
+      {
+        "source": "/services",
+        "destination": "/pages/services.html"
+      },
+      {
+        "source": "/projects",
+        "destination": "/pages/projects.html"
+      },
+      {
+        "source": "/domain",
+        "destination": "/pages/domain.html"
+      },
+      {
+        "source": "/book-call",
+        "destination": "/pages/book-call.html"
+      }
     ]
   }
 }

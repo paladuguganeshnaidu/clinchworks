@@ -1,4 +1,4 @@
-const http = require("http");
+﻿const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
@@ -7,6 +7,7 @@ const PORT = Number(process.env.PORT) || 8080;
 const ROOT = path.resolve(__dirname);
 const DATA_DIR = path.join(ROOT, ".data");
 const SESSION_DB_PATH = path.join(DATA_DIR, "sessions.json");
+const LEADS_DB_PATH = path.join(DATA_DIR, "leads.json");
 
 const SESSION_COOKIE_NAME = "cw_session";
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -44,6 +45,10 @@ function ensureDataStore() {
     const initial = { sessions: {} };
     fs.writeFileSync(SESSION_DB_PATH, JSON.stringify(initial, null, 2), "utf8");
   }
+  if (!fs.existsSync(LEADS_DB_PATH)) {
+    const initialLeads = { contact: [], bookCalls: [] };
+    fs.writeFileSync(LEADS_DB_PATH, JSON.stringify(initialLeads, null, 2), "utf8");
+  }
 }
 
 function loadSessionStore() {
@@ -68,6 +73,69 @@ function persistSessionStore() {
   } catch (err) {
     console.error("Failed to persist session store:", err.message);
   }
+}
+
+function loadLeadStore() {
+  ensureDataStore();
+  try {
+    const raw = fs.readFileSync(LEADS_DB_PATH, "utf8");
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") {
+      return { contact: [], bookCalls: [] };
+    }
+    if (!Array.isArray(parsed.contact)) parsed.contact = [];
+    if (!Array.isArray(parsed.bookCalls)) parsed.bookCalls = [];
+    return parsed;
+  } catch (err) {
+    return { contact: [], bookCalls: [] };
+  }
+}
+
+let leadStore = loadLeadStore();
+
+function persistLeadStore() {
+  try {
+    fs.writeFileSync(LEADS_DB_PATH, JSON.stringify(leadStore, null, 2), "utf8");
+  } catch (err) {
+    console.error("Failed to persist lead store:", err.message);
+  }
+}
+
+function sanitizeText(value, maxLen = 500) {
+  const raw = String(value || "").replace(/\s+/g, " ").trim();
+  const safe = raw.replace(/[\u0000-\u001F\u007F]/g, "");
+  return safe.slice(0, maxLen);
+}
+
+function sanitizeEmail(value) {
+  return sanitizeText(value, 254).toLowerCase();
+}
+
+function sanitizePhone(value) {
+  const digits = String(value || "").replace(/[^\d]/g, "");
+  return digits.slice(0, 20);
+}
+
+function sanitizeCountryCode(value) {
+  const code = String(value || "").trim();
+  if (!/^\+\d{1,4}$/.test(code)) return "";
+  return code;
+}
+
+function isValidEmail(value) {
+  const email = String(value || "").trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function appendLead(collectionName, entry) {
+  if (!Array.isArray(leadStore[collectionName])) {
+    leadStore[collectionName] = [];
+  }
+  leadStore[collectionName].push(entry);
+  if (leadStore[collectionName].length > 5000) {
+    leadStore[collectionName] = leadStore[collectionName].slice(-5000);
+  }
+  persistLeadStore();
 }
 
 function clampInt(value, min, max) {
@@ -378,6 +446,82 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
 
   if (method === "GET" && pathname === "/api/session") {
     return sendJson(res, 200, { username: session.username || "" }, isHttps, noStore);
+  }
+
+  if (method === "POST" && pathname === "/api/contact") {
+    let body;
+    try {
+      body = await parseJsonBody(req);
+    } catch (err) {
+      const status = err.message === "PAYLOAD_TOO_LARGE" ? 413 : 400;
+      return sendJson(res, status, { error: "Invalid request body" }, isHttps, noStore);
+    }
+
+    const name = sanitizeText(body.name, 120);
+    const email = sanitizeEmail(body.email);
+    const service = sanitizeText(body.service || "general", 80);
+    const details = sanitizeText(body.details, 4000);
+
+    if (name.length < 2) {
+      return sendJson(res, 400, { error: "Valid name is required" }, isHttps, noStore);
+    }
+    if (!isValidEmail(email)) {
+      return sendJson(res, 400, { error: "Valid email is required" }, isHttps, noStore);
+    }
+    if (details.length < 10) {
+      return sendJson(res, 400, { error: "Please provide more project details" }, isHttps, noStore);
+    }
+
+    appendLead("contact", {
+      id: crypto.randomBytes(10).toString("hex"),
+      name,
+      email,
+      service,
+      details,
+      createdAt: new Date().toISOString(),
+      ip: String(req.socket?.remoteAddress || ""),
+      userAgent: sanitizeText(req.headers["user-agent"] || "", 300)
+    });
+
+    return sendJson(res, 200, { ok: true, message: "Contact request submitted successfully" }, isHttps, noStore);
+  }
+
+  if (method === "POST" && pathname === "/api/book-call") {
+    let body;
+    try {
+      body = await parseJsonBody(req);
+    } catch (err) {
+      const status = err.message === "PAYLOAD_TOO_LARGE" ? 413 : 400;
+      return sendJson(res, status, { error: "Invalid request body" }, isHttps, noStore);
+    }
+
+    const name = sanitizeText(body.name, 120);
+    const countryCode = sanitizeCountryCode(body.countryCode);
+    const mobile = sanitizePhone(body.mobile);
+    const address = sanitizeText(body.address, 500);
+
+    if (name.length < 2) {
+      return sendJson(res, 400, { error: "Valid full name is required" }, isHttps, noStore);
+    }
+    if (!countryCode) {
+      return sendJson(res, 400, { error: "Valid country code is required" }, isHttps, noStore);
+    }
+    if (mobile.length < 7 || mobile.length > 15) {
+      return sendJson(res, 400, { error: "Valid mobile number is required" }, isHttps, noStore);
+    }
+
+    appendLead("bookCalls", {
+      id: crypto.randomBytes(10).toString("hex"),
+      name,
+      countryCode,
+      mobile,
+      address,
+      createdAt: new Date().toISOString(),
+      ip: String(req.socket?.remoteAddress || ""),
+      userAgent: sanitizeText(req.headers["user-agent"] || "", 300)
+    });
+
+    return sendJson(res, 200, { ok: true, message: "Call request submitted successfully" }, isHttps, noStore);
   }
 
   if (method === "POST" && pathname === "/api/session/start") {
@@ -721,3 +865,4 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Secure development server running at http://localhost:${PORT}`);
 });
+

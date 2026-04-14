@@ -1,5 +1,5 @@
-/* =========================================================
-       CSS CUSTOM PROPERTIES â€” LIGHT (default) & DARK themes
+﻿/* =========================================================
+       CSS CUSTOM PROPERTIES - LIGHT (default) & DARK themes
     ========================================================= */
 :root {
   --bg-primary: #ffffff;
@@ -1117,3 +1117,4 @@ pre {
     grid-template-columns: 1fr;
   }
 }
+

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Clinch Works</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/logo-transparent.png?v=3" />
+  <link rel="shortcut icon" href="../assets/images/logo-transparent.png?v=3" />
+  <link rel="apple-touch-icon" href="../assets/images/logo-transparent.png?v=3" />
+</head>
+<body class="auth-cloak">
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="../index.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">About</a></li>
+          <li class="nav-item-wrapper"><a href="services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">Services</a></li>
+          <li class="nav-item-wrapper"><a href="domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">Training</a></li>
+          <li class="nav-item-wrapper"><a href="projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">Projects</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <a id="nav-auth-btn" href="#" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="border: 2px solid #F7C763; color: var(--text-primary); border-radius: 999px; padding: 6px 18px; min-width: 80px;">Log Out</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu lg:hidden">
+    <div class="w-full flex justify-end px-5 py-4"></div>
+    <a href="../index.html">About</a>
+    <a href="services">Services</a>
+    <a href="domain">Training</a>
+    <a href="projects">Projects</a>
+  </div>
+
+  <div class="pt-24 min-h-screen">
+    <section class="relative pb-16 pt-6 sm:pb-24 sm:pt-8 lg:pb-32 lg:pt-10">
+      <div class="max-w-6xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal visible">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4" style="color: var(--text-primary);">Admin Panel</h1>
+          <p class="text-base sm:text-lg leading-relaxed mb-10" style="color: var(--text-faint);">Manage users securely through backend-verified admin operations.</p>
+        </div>
+
+        <div class="service-card rounded-2xl p-5 sm:p-6 mb-6 flex flex-col md:flex-row md:items-center gap-4">
+          <input id="admin-search" type="text" placeholder="Search by name, email, phone, city, country" class="w-full md:flex-1 px-4 py-3 rounded-xl border outline-none transition-all text-sm" style="background: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);" />
+          <select id="admin-filter" class="w-full md:w-52 px-4 py-3 rounded-xl border outline-none text-sm" style="background: var(--bg-secondary); border-color: var(--border-color); color: var(--text-primary);">
+            <option value="all">All Profiles</option>
+            <option value="complete">Profile Complete</option>
+            <option value="incomplete">Profile Incomplete</option>
+          </select>
+          <button id="admin-refresh" class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]" style="background: #F7C763; color: #0b1220;">Refresh</button>
+        </div>
+
+        <div id="admin-msg" class="hidden mb-4 p-4 rounded-xl text-sm font-semibold" style="background: rgba(220, 38, 38, 0.10); border: 1px solid rgba(220, 38, 38, 0.35); color: #b91c1c;"></div>
+        <div id="admin-loading" class="mb-4 text-sm font-semibold" style="color: var(--text-faint);">Loading users...</div>
+
+        <div class="service-card rounded-2xl p-0 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead>
+                <tr style="background: rgba(247, 199, 99, 0.15);">
+                  <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Name</th>
+                  <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Email</th>
+                  <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Phone</th>
+                  <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Profile Status</th>
+                  <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="admin-modal" class="fixed inset-0 z-[90] hidden items-center justify-center px-4">
+    <div id="admin-modal-backdrop" class="absolute inset-0 bg-black/65"></div>
+    <div class="service-card rounded-2xl p-6 sm:p-8 w-full max-w-2xl relative z-10 max-h-[80vh] overflow-y-auto">
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <h2 class="text-2xl font-bold" style="color: var(--text-primary);">User Details</h2>
+        <button id="admin-close-modal" class="px-4 py-2 rounded-lg text-sm font-bold" style="background: #F7C763; color: #0b1220;">Close</button>
+      </div>
+      <div id="admin-detail-content" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+    </div>
+  </div>
+
+  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+      <span class="text-xs font-mono" style="color: var(--footer-text);">(c) 2026 Clinch Works</span>
+      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/script.js"></script>
+  <script type="module">
+    import { auth } from '../assets/js/firebase.js';
+    import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js';
+    import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/12.12.0/firebase-functions.js';
+
+    const functions = getFunctions();
+    const getAllUsers = httpsCallable(functions, 'getAllUsers');
+    const getUserDetails = httpsCallable(functions, 'getUserDetails');
+
+    const searchInput = document.getElementById('admin-search');
+    const filterInput = document.getElementById('admin-filter');
+    const refreshBtn = document.getElementById('admin-refresh');
+    const loadingEl = document.getElementById('admin-loading');
+    const msgEl = document.getElementById('admin-msg');
+    const bodyEl = document.getElementById('admin-users-body');
+    const modalEl = document.getElementById('admin-modal');
+    const modalBackdrop = document.getElementById('admin-modal-backdrop');
+    const closeModalBtn = document.getElementById('admin-close-modal');
+    const detailContentEl = document.getElementById('admin-detail-content');
+    const logoutBtn = document.getElementById('nav-auth-btn');
+
+    let usersCache = [];
+    let listInFlight = false;
+    let detailsInFlight = false;
+    let debounceTimer = null;
+
+    const escapeHtml = (value) => {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    };
+
+    const formatDate = (value) => {
+      if (!value) return 'N/A';
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) return 'N/A';
+      return parsed.toLocaleString();
+    };
+
+    const setLoading = (value) => {
+      loadingEl.style.display = value ? 'block' : 'none';
+      refreshBtn.disabled = value;
+      refreshBtn.style.opacity = value ? '0.7' : '1';
+    };
+
+    const showError = (message) => {
+      msgEl.textContent = message;
+      msgEl.classList.remove('hidden');
+    };
+
+    const clearError = () => {
+      msgEl.textContent = '';
+      msgEl.classList.add('hidden');
+    };
+
+    const profileStatusBadge = (isComplete) => {
+      return isComplete
+        ? '<span class="px-2 py-1 rounded text-xs font-bold" style="background: rgba(22, 163, 74, 0.15); color: #166534;">Complete</span>'
+        : '<span class="px-2 py-1 rounded text-xs font-bold" style="background: rgba(234, 179, 8, 0.18); color: #92400e;">Incomplete</span>';
+    };
+
+    const renderRows = (users) => {
+      if (!users.length) {
+        bodyEl.innerHTML = '<tr><td colspan="5" class="px-4 py-6 text-center" style="color: var(--text-faint);">No users found.</td></tr>';
+        return;
+      }
+
+      bodyEl.innerHTML = users.map((user) => {
+        const name = escapeHtml(user.name || 'N/A');
+        const email = escapeHtml(user.email || 'N/A');
+        const phone = escapeHtml(user.phone || 'N/A');
+        const uid = escapeHtml(user.uid || '');
+
+        return `
+          <tr class="border-t" style="border-color: var(--border-color);">
+            <td class="px-4 py-3" style="color: var(--text-primary);">${name}</td>
+            <td class="px-4 py-3" style="color: var(--text-primary);">${email}</td>
+            <td class="px-4 py-3" style="color: var(--text-primary);">${phone}</td>
+            <td class="px-4 py-3">${profileStatusBadge(Boolean(user.profileComplete))}</td>
+            <td class="px-4 py-3">
+              <button class="view-user-btn px-3 py-2 rounded-lg text-xs font-bold" data-uid="${uid}" style="background: #F7C763; color: #0b1220;">View</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    };
+
+    const applyFilter = () => {
+      const query = String(searchInput.value || '').trim().toLowerCase();
+      const status = filterInput.value;
+
+      const filtered = usersCache.filter((user) => {
+        const haystack = `${user.name || ''} ${user.email || ''} ${user.phone || ''}`.toLowerCase();
+        const matchQuery = !query || haystack.includes(query);
+        const matchStatus = status === 'all'
+          || (status === 'complete' && user.profileComplete)
+          || (status === 'incomplete' && !user.profileComplete);
+        return matchQuery && matchStatus;
+      });
+
+      renderRows(filtered);
+    };
+
+    const normalizeCallableError = (error) => {
+      const code = String(error && error.code ? error.code : '');
+      if (code.includes('permission-denied')) return 'Admin access required.';
+      if (code.includes('unauthenticated')) return 'Please log in again.';
+      if (code.includes('not-found')) return 'Requested user does not exist.';
+      return 'Request failed. Please try again.';
+    };
+
+    const loadUsers = async () => {
+      if (listInFlight) return;
+      listInFlight = true;
+      clearError();
+      setLoading(true);
+
+      try {
+        const search = String(searchInput.value || '').trim();
+        const response = await getAllUsers({ search });
+        const payload = response && response.data ? response.data : { users: [] };
+        usersCache = Array.isArray(payload.users) ? payload.users : [];
+        applyFilter();
+      } catch (error) {
+        usersCache = [];
+        renderRows([]);
+        showError(normalizeCallableError(error));
+      } finally {
+        setLoading(false);
+        listInFlight = false;
+      }
+    };
+
+    const openModal = () => {
+      modalEl.classList.remove('hidden');
+      modalEl.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      modalEl.classList.remove('flex');
+      modalEl.classList.add('hidden');
+      detailContentEl.innerHTML = '';
+      document.body.style.overflow = '';
+    };
+
+    const renderDetails = (user) => {
+      const fields = [
+        ['First Name', user.firstName],
+        ['Last Name', user.lastName],
+        ['Email', user.email],
+        ['Phone', user.phone],
+        ['Date of Birth', user.dob],
+        ['Gender', user.gender],
+        ['Address', user.address],
+        ['City', user.city],
+        ['Country', user.country],
+        ['Provider', user.provider],
+        ['Profile Complete', user.profileComplete ? 'Yes' : 'No'],
+        ['Created At', formatDate(user.createdAt)],
+        ['Last Login', formatDate(user.lastLogin)],
+        ['UID', user.uid]
+      ];
+
+      detailContentEl.innerHTML = fields.map(([label, value]) => `
+        <div class="rounded-xl p-3 border" style="border-color: var(--border-color); background: var(--bg-secondary);">
+          <p class="text-xs font-bold uppercase mb-1" style="color: var(--text-faint);">${escapeHtml(label)}</p>
+          <p class="text-sm font-semibold break-all" style="color: var(--text-primary);">${escapeHtml(value || 'N/A')}</p>
+        </div>
+      `).join('');
+    };
+
+    const loadUserDetails = async (uid) => {
+      if (!uid || detailsInFlight) return;
+      detailsInFlight = true;
+      clearError();
+
+      try {
+        const response = await getUserDetails({ uid });
+        const payload = response && response.data ? response.data : {};
+        const user = payload.user || null;
+        if (!user) {
+          showError('Unable to load user details.');
+          return;
+        }
+        renderDetails(user);
+        openModal();
+      } catch (error) {
+        showError(normalizeCallableError(error));
+      } finally {
+        detailsInFlight = false;
+      }
+    };
+
+    bodyEl.addEventListener('click', (event) => {
+      const btn = event.target.closest('.view-user-btn');
+      if (!btn) return;
+      const uid = btn.getAttribute('data-uid') || '';
+      loadUserDetails(uid);
+    });
+
+    searchInput.addEventListener('input', () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        applyFilter();
+      }, 200);
+    });
+
+    filterInput.addEventListener('change', applyFilter);
+    refreshBtn.addEventListener('click', loadUsers);
+    closeModalBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', closeModal);
+
+    logoutBtn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      try {
+        await signOut(auth);
+      } finally {
+        window.location.href = 'login.html';
+      }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = `login.html?redirect=${encodeURIComponent('/pages/admin.html')}`;
+        return;
+      }
+
+      // Enforce backend verification before exposing UI
+      try {
+        const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js');
+        const db = getFirestore();
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        
+        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+           throw new Error("Unauthorized");
+        }
+        
+        document.body.classList.remove('auth-cloak');
+        document.body.classList.add('auth-resolved');
+        loadUsers();
+      } catch (err) {
+        document.body.innerHTML = "<div style='padding:2rem;text-align:center;color:red;font-family:sans-serif;'><h1>403 Forbidden</h1><p>Admin privileges required.</p></div>";
+      }
+    });
+  </script>
+</body>
+</html>

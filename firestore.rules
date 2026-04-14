@@ -1,22 +1,151 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read: if request.auth != null && request.auth.uid == userId;
-      
-      // CREATE: Allow only if user doesn't try to sneak a role in
-      allow create: if request.auth != null 
-                    && request.auth.uid == userId
-                    && !request.resource.data.keys().hasAny(['role']);
-                    
-      // UPDATE: Allow if they don't touch 'role', or if 'role' remains unchanged
-      allow update: if request.auth != null 
-                    && request.auth.uid == userId
-                    && (!request.resource.data.keys().hasAny(['role']) 
-                        || request.resource.data.role == resource.data.role);
+    function isSignedIn() {
+      return request.auth != null;
     }
-    match /logs/{userId} {
-      allow write: if request.auth != null && request.auth.uid == userId;
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function userKeys() {
+      return [
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'dob',
+        'gender',
+        'address',
+        'city',
+        'country',
+        'provider',
+        'createdAt',
+        'lastLogin',
+        'profileComplete'
+      ];
+    }
+
+    function hasExactCreateKeys() {
+      return request.resource.data.keys().hasOnly(userKeys()) &&
+             request.resource.data.keys().hasAll(userKeys());
+    }
+
+    function hasAllowedUpdateKeys() {
+      return request.resource.data.keys().hasOnly([
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'dob',
+        'gender',
+        'address',
+        'city',
+        'country',
+        'provider',
+        'createdAt',
+        'lastLogin',
+        'profileComplete',
+        'role'
+      ]) && request.resource.data.keys().hasAll(userKeys());
+    }
+
+    function validStr(field, maxLen) {
+      return field is string && field.size() <= maxLen;
+    }
+
+    function validUserSchema() {
+      return validStr(request.resource.data.firstName, 80) &&
+             validStr(request.resource.data.lastName, 80) &&
+             validStr(request.resource.data.email, 254) &&
+             validStr(request.resource.data.phone, 25) &&
+             validStr(request.resource.data.dob, 10) &&
+             validStr(request.resource.data.gender, 32) &&
+             validStr(request.resource.data.address, 240) &&
+             validStr(request.resource.data.city, 120) &&
+             validStr(request.resource.data.country, 120) &&
+             request.resource.data.provider in ['google', 'email'] &&
+             request.resource.data.createdAt is timestamp &&
+             request.resource.data.lastLogin is timestamp &&
+             request.resource.data.profileComplete is bool;
+    }
+
+    function createdAtLocked() {
+      return (
+        resource.data.keys().hasAny(['createdAt']) &&
+        request.resource.data.createdAt == resource.data.createdAt
+      ) || (
+        !resource.data.keys().hasAny(['createdAt']) &&
+        request.resource.data.createdAt is timestamp
+      );
+    }
+
+    function emailLocked() {
+      return (
+        resource.data.keys().hasAny(['email']) &&
+        request.resource.data.email == resource.data.email
+      ) || (
+        !resource.data.keys().hasAny(['email']) &&
+        validStr(request.resource.data.email, 254)
+      );
+    }
+
+    function providerLocked() {
+      return (
+        !resource.data.keys().hasAny(['provider']) &&
+        request.resource.data.provider in ['google', 'email']
+      ) || (
+        resource.data.keys().hasAny(['provider']) &&
+        request.resource.data.provider == resource.data.provider
+      ) || (
+        resource.data.keys().hasAny(['provider']) &&
+        resource.data.provider == 'password' &&
+        request.resource.data.provider == 'email'
+      );
+    }
+
+    function protectedFieldsSafe() {
+      return createdAtLocked() &&
+             emailLocked() &&
+             providerLocked();
+    }
+
+    function roleUnchanged() {
+      return (
+        !request.resource.data.keys().hasAny(['role']) &&
+        !resource.data.keys().hasAny(['role'])
+      ) || (
+        request.resource.data.keys().hasAny(['role']) &&
+        resource.data.keys().hasAny(['role']) &&
+        request.resource.data.role == resource.data.role
+      );
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+
+      allow create: if isOwner(uid) &&
+                    !request.resource.data.keys().hasAny(['role']) &&
+                    hasExactCreateKeys() &&
+                    validUserSchema();
+
+      allow update: if isOwner(uid) &&
+                    hasAllowedUpdateKeys() &&
+                    validUserSchema() &&
+                    protectedFieldsSafe() &&
+                    roleUnchanged();
+
+      allow delete: if false;
+    }
+
+    match /logs/{uid} {
+      allow read, write: if isOwner(uid);
+      allow delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

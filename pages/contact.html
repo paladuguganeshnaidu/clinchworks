@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services — Clinch Works</title>
+  <title>Contact - Clinch Works</title>
   <meta name="description"
     content="Clinch Works is a software engineering company specializing in developmentv, cloud, and AI. We solve and deliver real systems." />
   <meta name="keywords" content="software engineering, web development , cloud, AI, system design, automation" />
@@ -54,7 +54,7 @@
       </a>
 
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
-      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, );">
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
           <li class="nav-item-wrapper"><a href="../index.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
@@ -130,7 +130,7 @@
 
         <div class="mt-12 sm:mt-16 section-reveal visible">
             <!-- Utilizing the service-card style to house the form seamlessly -->
-            <form action="#" method="POST" class="service-card rounded-2xl p-8 sm:p-10 flex flex-col gap-6" onsubmit="event.preventDefault(); alert('Thank you for reaching out! We will contact you soon.');">
+            <form id="contact-form" class="service-card rounded-2xl p-8 sm:p-10 flex flex-col gap-6">
                 
                 <div class="flex flex-col gap-2">
                     <label for="name" class="text-sm font-medium" style="color: var(--text-primary);">Full Name / Company Name</label>
@@ -164,10 +164,11 @@
                 </div>
 
                 <div class="mt-4">
-                    <button type="submit" class="btn-contact w-full border text-sm px-8 py-4 rounded-lg font-bold transition-all text-center tracking-wide" style="background: var(--accent); color: var(--bg-primary); border-color: transparent;">
+                    <button id="contact-submit" type="submit" class="btn-contact w-full border text-sm px-8 py-4 rounded-lg font-bold transition-all text-center tracking-wide" style="background: var(--accent); color: var(--bg-primary); border-color: transparent;">
                         Submit Request
                     </button>
                 </div>
+                <div id="contact-msg" class="hidden text-sm font-medium p-3 rounded-lg border" style="background: rgba(247, 199, 99, 0.12); border-color: rgba(247, 199, 99, 0.45); color: #0b1220;"></div>
             </form>
         </div>
 
@@ -178,7 +179,7 @@
 
     <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
     <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">� 2026 Clinch Works</span>
+      <span class="text-xs font-mono" style="color: var(--footer-text);">(c) 2026 Clinch Works</span>
       <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
     </div>
   </footer>
@@ -193,9 +194,66 @@
        JAVASCRIPT
   ======================================== -->
   <script src="../assets/js/script.js"></script>
+  <script>
+    (function () {
+      const form = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('contact-submit');
+      const msg = document.getElementById('contact-msg');
+
+      if (!form || !submitBtn || !msg) return;
+
+      const showMsg = (text, isError) => {
+        msg.textContent = text;
+        msg.classList.remove('hidden');
+        msg.style.borderColor = isError ? 'rgba(220, 38, 38, 0.45)' : 'rgba(247, 199, 99, 0.45)';
+        msg.style.background = isError ? 'rgba(220, 38, 38, 0.1)' : 'rgba(247, 199, 99, 0.12)';
+        msg.style.color = isError ? '#b91c1c' : '#0b1220';
+      };
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.75';
+        msg.classList.add('hidden');
+
+        const payload = {
+          name: (document.getElementById('name')?.value || '').trim(),
+          email: (document.getElementById('email')?.value || '').trim(),
+          service: (document.getElementById('service')?.value || 'general').trim(),
+          details: (document.getElementById('details')?.value || '').trim()
+        };
+
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify(payload)
+          });
+
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            showMsg(data.error || 'Unable to submit request. Please try again.', true);
+            return;
+          }
+
+          form.reset();
+          showMsg('Thank you. Your request has been submitted successfully.', false);
+        } catch (err) {
+          showMsg('Network error. Please try again in a moment.', true);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>
+
+
+
 
 
 
