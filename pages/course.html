@@ -220,7 +220,7 @@
   <script type="module">
     import { auth, db } from '../assets/js/firebase.js';
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
-    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
     let currentCourseId = null;
     let globalUser = null;
@@ -286,6 +286,16 @@
             fullName = fullName.trim();
         } else if (globalUser.email) {
             fullName = globalUser.email.split('@')[0];
+        }
+
+        try {
+            const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
+            await setDoc(docRef, {
+                 registeredAt: new Date().toISOString(),
+                 lastUpdated: new Date().toISOString()
+            }, { merge: true });
+        } catch(e) {
+            console.error("Critical: Failed to register course natively in db block", e);
         }
 
         try {
