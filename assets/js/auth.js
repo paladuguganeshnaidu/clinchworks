@@ -24,7 +24,7 @@ window.addEventListener('pageshow', (event) => {
     if (event.persisted) window.location.reload();
 });
 
-setPersistence(auth, browserLocalPersistence).catch(() => {});
+setPersistence(auth, browserLocalPersistence).catch(() => { });
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^\+?\d{7,15}$/;
@@ -103,13 +103,13 @@ const getSessionFlag = (key) => {
 const setSessionFlag = (key, value) => {
     try {
         sessionStorage.setItem(key, value);
-    } catch (error) {}
+    } catch (error) { }
 };
 
 const clearSessionFlag = (key) => {
     try {
         sessionStorage.removeItem(key);
-    } catch (error) {}
+    } catch (error) { }
 };
 
 const initAuth = () => {
@@ -432,20 +432,6 @@ const initAuth = () => {
             };
             btns.navAuth.parentNode.appendChild(logoutBtn);
         }
-
-        if (!document.getElementById('inject-dashboard')) {
-            const rightContainer = document.querySelector('.flex.items-center.justify-end.gap-3.z-10');
-            const hamburger = document.getElementById('hamburger');
-            if (rightContainer && hamburger) {
-                 const dashboardBtn = document.createElement('a');
-                 dashboardBtn.id = 'inject-dashboard';
-                 dashboardBtn.href = isPagesPath ? 'dashboard.html' : 'pages/dashboard.html';
-                 dashboardBtn.textContent = 'Dashboard';
-                 dashboardBtn.className = 'hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105';
-                 dashboardBtn.style = 'border: 2px solid #F7C763; color: #F7C763; background: transparent; border-radius: 999px; padding: 6px 18px; margin-right: 5px;';
-                 rightContainer.insertBefore(dashboardBtn, hamburger);
-            }
-        }
     };
 
     if (forms.login) {
@@ -726,7 +712,7 @@ const initAuth = () => {
         } catch (error) {
             console.error('Session synchronization failed:', error);
             if (!isAuthPage) {
-                await signOut(auth).catch(() => {});
+                await signOut(auth).catch(() => { });
                 window.location.href = resolvePath('login');
             }
         } finally {

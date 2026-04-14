@@ -41,55 +41,94 @@
   <!-- Master Header -->
   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
-      
+
       <!-- LOGO (Left Aligned) -->
       <a href="../" class="flex items-center gap-0 group z-10 w-1/4">
-        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+        <div
+          class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
+            class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm"
+            style="overflow: hidden;" />
         </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch
+          Works</span>
       </a>
 
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
-      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
+      <nav id="top-nav"
+        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
+        style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="../index.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
-          
-          <li class="nav-item-wrapper"><a href="projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+          <li class="nav-item-wrapper"><a href="../index.html"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="training">Training</a></li>
+
+          <li class="nav-item-wrapper"><a href="projects"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="projects">Projects</a></li>
         </ul>
       </nav>
 
       <!-- RIGHT ACTIONS (Right Aligned) -->
       <div class="flex items-center justify-end gap-3 z-10 w-1/4">
-        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
-          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden"
+          aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+            <path
+              d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
         </button>
-        <a href="book-call" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
-        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+        <a href="book-call"
+          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
+          style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2"
+          aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
 
       <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
-      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
-        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+      <div id="secondary-nav"
+        class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center"
+          style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
           <!-- Services Options -->
-          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="google-ads" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
-            <li><a href="social-media-marketing" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
-            <li><a href="website-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
-            <li><a href="video-graphic-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
-            <li><a href="youtube-management" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
-            <li><a href="projects" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
+          <ul id="dropdown-services"
+            class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="google-ads" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="social-media-marketing" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Social Media</a></li>
+            <li><a href="website-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Website Design</a></li>
+            <li><a href="video-graphic-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Video & Graphics</a></li>
+            <li><a href="youtube-management" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">YouTube</a></li>
+            <li><a href="projects" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Projects</a></li>
           </ul>
-                              <!-- Training Options -->
-          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
-            <li><a href="domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
-            <li><a href="domain?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
-            <li><a href="domain?category=Artificial%20Intelligence" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="domain?category=Database%20Engineering" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a></li>
-            <li><a href="domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          <!-- Training Options -->
+          <ul id="dropdown-training"
+            class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
+            <li><a href="domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain?category=Cyber%20Security"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Cloud</a></li>
+            <li><a href="domain?category=Artificial%20Intelligence"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
+            <li><a href="domain?category=Database%20Engineering"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
+            </li>
+            <li><a href="domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">All Courses</a></li>
           </ul>
         </div>
       </div>
@@ -101,7 +140,7 @@
     <a href="../index.html" data-section="about">About</a>
     <a href="services" data-section="services">Services</a>
     <a href="domain" data-section="training">Training</a>
-    
+
     <a href="projects" data-section="projects">Projects</a>
     <a href="book-call" style="color: #F1AF2C; margin-top: 1rem;">Contact &rarr;</a>
   </div>
@@ -220,26 +259,22 @@
   <script type="module">
     import { auth, db } from '../assets/js/firebase.js';
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
-    import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
     let currentCourseId = null;
     let globalUser = null;
     let globalUserData = null;
-    
-    let authPromiseResolve;
-    const authReady = new Promise(r => authPromiseResolve = r);
 
     onAuthStateChanged(auth, async (user) => {
-        globalUser = user;
-        if (user) {
-            try {
-                const snap = await getDoc(doc(db, 'users', user.uid));
-                if (snap.exists()) {
-                    globalUserData = snap.data();
-                }
-            } catch (err) {}
-        }
-        authPromiseResolve();
+      globalUser = user;
+      if (user) {
+        try {
+          const snap = await getDoc(doc(db, 'users', user.uid));
+          if (snap.exists()) {
+            globalUserData = snap.data();
+          }
+        } catch (err) { }
+      }
     });
 
     function escapeHtml(value) {
@@ -265,47 +300,36 @@
     }
 
     window.attemptStartCourse = async (courseId) => {
-        await authReady;
-        if (!globalUser) {
-             const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
-             alert("Please log in to access courses.");
-             window.location.href = `login.html?redirect=${targetUrl}`;
-             return;
-        }
+      if (!globalUser) {
+        const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
+        alert("Please log in to access courses.");
+        window.location.href = `login.html?redirect=${targetUrl}`;
+        return;
+      }
 
-        const btn = document.getElementById("btn-start");
-        if (btn) {
-            btn.style.pointerEvents = "none";
-            btn.style.opacity = "0.7";
-            btn.innerHTML = 'Starting... <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
-        }
+      const btn = document.getElementById("btn-start");
+      if (btn) {
+        btn.style.pointerEvents = "none";
+        btn.style.opacity = "0.7";
+        btn.innerHTML = 'Starting... <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+      }
 
-        let fullName = "Student";
-        if (globalUserData && globalUserData.firstName) {
-            fullName = globalUserData.firstName + " " + (globalUserData.lastName || "");
-            fullName = fullName.trim();
-        } else if (globalUser.email) {
-            fullName = globalUser.email.split('@')[0];
-        }
+      let fullName = "Student";
+      if (globalUserData && globalUserData.firstName) {
+        fullName = globalUserData.firstName + " " + (globalUserData.lastName || "");
+        fullName = fullName.trim();
+      } else if (globalUser.email) {
+        fullName = globalUser.email.split('@')[0];
+      }
 
-        try {
-            const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
-            await setDoc(docRef, {
-                 registeredAt: new Date().toISOString(),
-                 lastUpdated: new Date().toISOString()
-            }, { merge: true });
-        } catch(e) {
-            console.error("Critical: Failed to register course natively in db block", e);
-        }
-
-        try {
-            await startSecureSession(courseId, fullName);
-            window.location.href = `player?id=${encodeURIComponent(courseId)}`;
-        } catch (err) {
-            console.warn("Secure session failed, falling back to local state:", err);
-            localStorage.setItem(`cw_name_${courseId}`, fullName);
-            window.location.href = `player?id=${encodeURIComponent(courseId)}`;
-        }
+      try {
+        await startSecureSession(courseId, fullName);
+        window.location.href = `player?id=${encodeURIComponent(courseId)}`;
+      } catch (err) {
+        console.warn("Secure session failed, falling back to local state:", err);
+        localStorage.setItem(`cw_name_${courseId}`, fullName);
+        window.location.href = `player?id=${encodeURIComponent(courseId)}`;
+      }
     };
 
     (async function () {
@@ -377,6 +401,16 @@
       }
     })();
   </script>
+</body>
+
+</html>
+});
+}
+} catch (e) {
+console.error(e);
+}
+})();
+</script>
 </body>
 
 </html>

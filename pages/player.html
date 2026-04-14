@@ -114,7 +114,7 @@
           <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="training">Training</a></li>
-          
+
           <li class="nav-item-wrapper"><a href="projects"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="projects">Projects</a></li>
@@ -187,7 +187,7 @@
     <a href="../#about" data-section="about">About</a>
     <a href="services" data-section="services">Services</a>
     <a href="domain" data-section="training">Training</a>
-    
+
     <a href="projects" data-section="projects">Projects</a>
     <a href="book-call" style="color: #F1AF2C; margin-top: 1rem;">Contact &rarr;</a>
   </div>
@@ -266,27 +266,8 @@
     </main>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-  <script type="module">
-    import { auth, db } from '../assets/js/firebase.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
-    import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-
-    let globalUser = null;
-    let authPromiseResolve;
-    const authReady = new Promise(r => authPromiseResolve = r);
-
-    onAuthStateChanged(auth, (user) => {
-        globalUser = user;
-        if (!user) {
-             const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
-             window.location.href = `login.html?redirect=${targetUrl}`;
-             return;
-        }
-        authPromiseResolve();
-    });
-
-    (async function () {
-      await authReady;
+  <script>
+    (function () {
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('id');
       const encodedCourseId = encodeURIComponent(String(courseId || ''));
@@ -372,34 +353,52 @@
 
       async function fetchCourseState() {
         try {
-          const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
-          const snap = await getDoc(docRef);
-          if (snap.exists()) {
-             state = normalizeState(snap.data(), state.totalModules);
-          } else {
-             state = normalizeState({}, state.totalModules);
+          const response = await fetch(`/api/progress?courseId=${encodedCourseId}`, { credentials: 'same-origin' });
+          if (!response.ok) {
+            throw new Error('Server API failed');
           }
+          const payload = await response.json();
+          state = normalizeState(payload.state || {}, state.totalModules);
         } catch (err) {
-          console.warn("Firebase progress fetch failed:", err);
-          state = normalizeState({}, state.totalModules);
+          console.warn("API progress fetch failed, trying localStorage:", err);
+          const local = localStorage.getItem(`cw_progress_${courseId}`);
+          if (local) {
+            state = normalizeState(JSON.parse(local), state.totalModules);
+          } else {
+            state = normalizeState({}, state.totalModules);
+          }
         }
       }
 
       async function saveCourseState(partialState) {
         state = normalizeState(Object.assign({}, state, partialState), state.totalModules);
+
         try {
-          const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
-          await setDoc(docRef, {
-             currentModule: state.currentModule,
-             totalModules: state.totalModules,
-             completed: state.completed,
-             examPassed: state.examPassed,
-             certificateIssued: state.certificateIssued,
-             lastUpdated: new Date().toISOString()
-          }, { merge: true });
+          const response = await fetch('/api/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              courseId,
+              state: {
+                currentModule: state.currentModule,
+                totalModules: state.totalModules,
+                completed: state.completed
+              }
+            })
+          });
+
+          if (response.ok) {
+            const payload = await response.json();
+            state = normalizeState(payload.state || state, state.totalModules);
+            return;
+          }
         } catch (err) {
-          console.error("Firebase progress save failed:", err);
+          console.warn("API progress save failed, using localStorage:", err);
         }
+
+        // Always sync with localStorage as fallback/backup
+        localStorage.setItem(`cw_progress_${courseId}`, JSON.stringify(state));
       }
 
       async function init() {
@@ -478,14 +477,14 @@
         document.getElementById('sidebar-course-title').textContent = courseData.title;
       }
 
-      async function renderModule() {
+      function renderModule() {
         if (!courseData || !courseData.modules[currentModuleIndex]) return;
 
         // Progress validation
         if (!state.completed) {
           if (currentModuleIndex > state.currentModule) {
             state.currentModule = currentModuleIndex;
-            await saveCourseState({ currentModule: state.currentModule }).catch(() => { });
+            saveCourseState({ currentModule: state.currentModule }).catch(() => { });
           }
         }
 
@@ -533,27 +532,22 @@
         }
 
         btnNext.onclick = (isLast || state.completed) ? async () => {
-          btnNext.disabled = true;
           if (!state.completed) {
             state.completed = true;
             state.currentModule = Math.max(state.currentModule, courseData.modules.length - 1);
             await saveCourseState({ completed: true, currentModule: state.currentModule });
           }
           window.location.href = `exam?id=${encodedCourseId}`;
-        } : async () => {
-          btnNext.disabled = true;
+        } : () => {
           currentModuleIndex++;
           window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-          await renderModule();
-          btnNext.disabled = false;
+          renderModule();
         };
 
-        btnPrev.onclick = async () => {
-          btnPrev.disabled = true;
+        btnPrev.onclick = () => {
           currentModuleIndex--;
           window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-          await renderModule();
-          btnPrev.disabled = false;
+          renderModule();
         };
 
         // Sidebar logic update
@@ -567,13 +561,11 @@
           } else {
             el.style.opacity = '1';
             el.style.cursor = 'pointer';
-            el.onclick = async () => {
-              el.style.pointerEvents = 'none';
+            el.onclick = () => {
               currentModuleIndex = idx;
               window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-              await renderModule();
+              renderModule();
               sidebarContent.scrollIntoView();
-              el.style.pointerEvents = 'auto';
             };
           }
         });
