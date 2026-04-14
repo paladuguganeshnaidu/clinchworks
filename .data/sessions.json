@@ -139,6 +139,21 @@
           "updatedAt": 1776107170293
         }
       }
+    },
+    "abe1f5d3cdd117b17ac36464598887fd8f0ff7a472e856ad": {
+      "username": "Ganesh",
+      "createdAt": 1776150811677,
+      "lastSeen": 1776150812321,
+      "courses": {
+        "c-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776150812336
+        }
+      }
     }
   }
 }

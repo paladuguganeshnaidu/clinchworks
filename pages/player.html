@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,77 +12,172 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     /* Scope-specific Player Overrides */
-    body { background: #fdfdfd; overflow: hidden; height: 100vh; width: 100vw; }
-    #player-layout { display: grid; grid-template-columns: 320px 1fr; height: calc(100vh - 65px); margin-top: 65px; background: white; }
-    .player-sidebar { border-right: 1px solid #e2e8f0; background: #f8fafc; overflow-y: auto; display: flex; flex-direction: column; }
-    .player-main { overflow-y: auto; padding: 0; background: white; position: relative; }
-    .content-card { max-width: 900px; margin: 40px auto; padding: 40px; border-radius: 24px; background: white; }
-    .sidebar-active { background: #fffbeb !important; border-left: 4px solid #F7C763 !important; color: #0b1220 !important; font-weight: 700 !important; }
-    
+    body {
+      background: #fdfdfd;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #player-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: calc(100vh - 65px);
+      margin-top: 65px;
+      background: white;
+    }
+
+    .player-sidebar {
+      border-right: 1px solid #e2e8f0;
+      background: #f8fafc;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .player-main {
+      overflow-y: auto;
+      padding: 0;
+      background: white;
+      position: relative;
+    }
+
+    .content-card {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 40px;
+      border-radius: 24px;
+      background: white;
+    }
+
+    .sidebar-active {
+      background: #fffbeb !important;
+      border-left: 4px solid #F7C763 !important;
+      color: #0b1220 !important;
+      font-weight: 700 !important;
+    }
+
     /* Code block fixes */
-    pre code { font-family: 'JetBrains Mono', monospace !important; font-size: 0.9rem !important; line-height: 1.6 !important; }
-    .clinch-code-block { margin: 2rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
-    
+    pre code {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 0.9rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .clinch-code-block {
+      margin: 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    }
+
     @media (max-width: 1024px) {
-      #player-layout { grid-template-columns: 1fr; }
-      .player-sidebar { display: none; }
+      #player-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .player-sidebar {
+        display: none;
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- Master Header -->
   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
-      
+
       <!-- LOGO (Left Aligned) -->
       <a href="../" class="flex items-center gap-0 group z-10 w-1/4">
-        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+        <div
+          class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
+            class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm"
+            style="overflow: hidden;" />
         </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch
+          Works</span>
       </a>
 
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
-      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
+      <nav id="top-nav"
+        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
+        style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="../index.html" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="realestate">Real Estate</a></li>
-          <li class="nav-item-wrapper"><a href="projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+          <li class="nav-item-wrapper"><a href="../index.html"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="training">Training</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-realestate"><a href="#"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="realestate">Real Estate</a></li>
+          <li class="nav-item-wrapper"><a href="projects"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="projects">Projects</a></li>
         </ul>
       </nav>
 
       <!-- RIGHT ACTIONS (Right Aligned) -->
       <div class="flex items-center justify-end gap-3 z-10 w-1/4">
-        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
-          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden"
+          aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+            <path
+              d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
         </button>
-        <a href="book-call" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
-        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+        <a href="book-call"
+          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
+          style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2"
+          aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
 
       <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
-      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
-        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+      <div id="secondary-nav"
+        class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center"
+          style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
           <!-- Services Options -->
-          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="google-ads" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Google Ads</a></li>
-            <li><a href="social-media-marketing" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Social Media</a></li>
-            <li><a href="website-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Website Design</a></li>
-            <li><a href="video-graphic-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Video & Graphics</a></li>
-            <li><a href="youtube-management" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">YouTube</a></li>
-            <li><a href="projects" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Projects</a></li>
+          <ul id="dropdown-services"
+            class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="google-ads" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Google Ads</a></li>
+            <li><a href="social-media-marketing" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Social Media</a></li>
+            <li><a href="website-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Website Design</a></li>
+            <li><a href="video-graphic-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Video & Graphics</a></li>
+            <li><a href="youtube-management" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">YouTube</a></li>
+            <li><a href="projects" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Projects</a></li>
           </ul>
 
-                              <!-- Training Options -->
-          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
-            <li><a href="domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
-            <li><a href="domain?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
-            <li><a href="domain?category=Artificial%20Intelligence" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="domain?category=Database%20Engineering" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a></li>
-            <li><a href="domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          <!-- Training Options -->
+          <ul id="dropdown-training"
+            class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
+            <li><a href="domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Programming</a></li>
+            <li><a href="domain?category=Cyber%20Security"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">Cloud</a></li>
+            <li><a href="domain?category=Artificial%20Intelligence"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
+            <li><a href="domain?category=Database%20Engineering"
+                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
+            </li>
+            <li><a href="domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+                style="color: #0b1220;">All Courses</a></li>
           </ul>
         </div>
       </div>
@@ -90,7 +186,7 @@
 
   <div id="mobile-menu" class="mobile-menu lg:hidden">
     <div class="w-full flex justify-end px-5 py-4"></div>
-    <a href="../index.html" data-section="about">About</a>
+    <a href="../#about" data-section="about">About</a>
     <a href="services" data-section="services">Services</a>
     <a href="domain" data-section="training">Training</a>
     <a href="#" data-section="realestate">Real Estate</a>
@@ -103,7 +199,8 @@
     <!-- Sidebar Navigation -->
     <aside class="player-sidebar">
       <div class="p-6 border-bottom border-slate-200">
-        <h2 id="sidebar-course-title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Course Index</h2>
+        <h2 id="sidebar-course-title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Course
+          Index</h2>
       </div>
       <div id="sidebar-modules" class="flex-1">
         <!-- Dynamic module items -->
@@ -116,51 +213,63 @@
         <div class="max-w-4xl mx-auto px-10 py-5 flex items-center justify-between">
           <div class="flex-1">
             <div class="flex items-center gap-4 mb-1">
-               <span id="progress-percent" class="text-[10px] font-black uppercase tracking-widest -[#F7C763]">Progress: 0%</span>
-               <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden max-w-[200px]">
-                 <div id="progress-bar" class="h-full -[#F7C763] transition-all duration-500" style="width: 0%"></div>
-               </div>
+              <span id="progress-percent" class="text-[10px] font-black uppercase tracking-widest -[#F7C763]">Progress:
+                0%</span>
+              <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden max-w-[200px]">
+                <div id="progress-bar" class="h-full -[#F7C763] transition-all duration-500" style="width: 0%"></div>
+              </div>
             </div>
             <p id="progress" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Module 0 of 0</p>
           </div>
           <div class="flex items-center gap-3">
-            <button id="btn-prev" class="p-2.5 rounded-xl border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all disabled:opacity-30">
-               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            <button id="btn-prev"
+              class="p-2.5 rounded-xl border border-slate-200 text-slate-400 hover:text-slate-900 hover:border-slate-900 transition-all disabled:opacity-30">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+              </svg>
             </button>
-            <button id="btn-next" class="px-6 py-2.5 bg-slate-900 -[#F7C763] font-bold text-xs uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
-               Continue <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            <button id="btn-next"
+              class="px-6 py-2.5 bg-slate-900 -[#F7C763] font-bold text-xs uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+              Continue <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           </div>
         </div>
       </div>
 
       <div class="content-card">
-        <h1 id="module-title" class="text-4xl sm:text-5xl font-black text-slate-900 leading-tight mb-8 tracking-tighter">Synchronizing course data...</h1>
+        <h1 id="module-title"
+          class="text-4xl sm:text-5xl font-black text-slate-900 leading-tight mb-8 tracking-tighter">Synchronizing
+          course data...</h1>
         <div id="module-meta" class="flex items-center gap-4 mb-12">
-           <!-- Dynamic Meta Tags -->
+          <!-- Dynamic Meta Tags -->
         </div>
         <div id="module-content" class="text-lg text-slate-700 leading-relaxed space-y-6">
-           <div class="py-24 flex flex-col items-center justify-center opacity-20">
-              <div class="w-12 h-12 border-4 border-slate-200 -[#F7C763] rounded-full animate-spin mb-6"></div>
-              <p class="font-mono text-xs uppercase tracking-[0.3em]">Accessing Cryptography Node</p>
-           </div>
+          <div class="py-24 flex flex-col items-center justify-center opacity-20">
+            <div class="w-12 h-12 border-4 border-slate-200 -[#F7C763] rounded-full animate-spin mb-6"></div>
+            <p class="font-mono text-xs uppercase tracking-[0.3em]">Accessing Cryptography Node</p>
+          </div>
         </div>
       </div>
-      
+
       <footer class="max-w-4xl mx-auto px-10 py-20 border-t border-slate-100 mt-20">
-         <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Professional Training System &copy; 2026 Clinchworks</p>
-            <div class="flex gap-8">
-               <a href="#" class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Documentation</a>
-               <a href="#" class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Support</a>
-            </div>
-         </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Professional Training System &copy;
+            2026 Clinchworks</p>
+          <div class="flex gap-8">
+            <a href="#"
+              class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Documentation</a>
+            <a href="#"
+              class="text-[10px] font-bold text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Support</a>
+          </div>
+        </div>
       </footer>
     </main>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
   <script>
-    (function() {
+    (function () {
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('id');
       const encodedCourseId = encodeURIComponent(String(courseId || ''));
@@ -305,7 +414,7 @@
           const response = await fetch('../courses-content.json');
           const data = await response.json();
           courseData = data.courses.find(c => c.id === courseId);
-          
+
           if (!courseData) {
             modTitle.textContent = "Registry Error";
             modContent.textContent = "Course not found.";
@@ -318,7 +427,7 @@
           await fetchCourseState();
           state.totalModules = courseData.modules.length;
           await saveCourseState({ totalModules: state.totalModules });
-          
+
           // Anti-back navigation / specific module
           const reqModStr = params.get('module');
           if (reqModStr !== null && !isNaN(parseInt(reqModStr))) {
@@ -336,9 +445,9 @@
 
           // Safety progress logic
           if (!state.completed && currentModuleIndex > state.currentModule && currentModuleIndex < state.totalModules) {
-             state.currentModule = currentModuleIndex;
+            state.currentModule = currentModuleIndex;
           }
-          saveCourseState({ currentModule: state.currentModule }).catch(() => {});
+          saveCourseState({ currentModule: state.currentModule }).catch(() => { });
 
           renderSidebar();
           renderModule();
@@ -354,7 +463,7 @@
         sidebarContent.innerHTML = '';
         courseData.modules.forEach((mod, idx) => {
           const item = document.createElement('div');
-          
+
           item.className = `p-5 pl-8 cursor-pointer transition-all border-l-4 border-transparent hover:bg-slate-100 flex items-center gap-4 ${idx === currentModuleIndex ? 'sidebar-active' : 'text-slate-500'}`;
           const idxTag = document.createElement('span');
           idxTag.className = 'text-[10px] font-black opacity-30';
@@ -364,7 +473,7 @@
           titleTag.textContent = String(mod.title || 'Untitled Module');
           item.appendChild(idxTag);
           item.appendChild(titleTag);
-          
+
           sidebarContent.appendChild(item);
         });
         document.getElementById('sidebar-course-title').textContent = courseData.title;
@@ -372,75 +481,75 @@
 
       function renderModule() {
         if (!courseData || !courseData.modules[currentModuleIndex]) return;
-        
+
         // Progress validation
         if (!state.completed) {
-            if (currentModuleIndex > state.currentModule) {
-               state.currentModule = currentModuleIndex;
-               saveCourseState({ currentModule: state.currentModule }).catch(() => {});
-            }
+          if (currentModuleIndex > state.currentModule) {
+            state.currentModule = currentModuleIndex;
+            saveCourseState({ currentModule: state.currentModule }).catch(() => { });
+          }
         }
 
         const module = courseData.modules[currentModuleIndex];
         const isLast = currentModuleIndex === courseData.modules.length - 1;
-        
+
         modTitle.textContent = module.title;
         renderContent(module.content);
-        
+
         // Update UI
-           let pct = 0;
-           if (courseData.modules.length <= 1) {
+        let pct = 0;
+        if (courseData.modules.length <= 1) {
           pct = state.completed ? 100 : 0;
-           } else {
+        } else {
           pct = Math.round((currentModuleIndex / (courseData.modules.length - 1)) * 100) || 0;
-           }
+        }
         progPercent.textContent = `Progress: ${pct}%`;
         progBar.style.width = `${pct}%`;
         progress.textContent = `Module ${currentModuleIndex + 1} of ${courseData.modules.length}`;
-        
+
         // Metadata
         const meta = document.getElementById('module-meta');
-           meta.innerHTML = '';
-           const catTag = document.createElement('span');
-           catTag.className = 'px-3 py-1 bg-white text-slate-900 border border-[#F7C763] text-[9px] font-black uppercase rounded-full';
-           catTag.textContent = String(courseData.category || 'Training');
-           const durTag = document.createElement('span');
-           durTag.className = 'px-3 py-1 bg-slate-100 text-slate-500 text-[9px] font-black uppercase rounded-full';
-           durTag.textContent = String(courseData.duration || 'N/A');
-           meta.appendChild(catTag);
-           meta.appendChild(durTag);
-           if (state.completed) {
+        meta.innerHTML = '';
+        const catTag = document.createElement('span');
+        catTag.className = 'px-3 py-1 bg-white text-slate-900 border border-[#F7C763] text-[9px] font-black uppercase rounded-full';
+        catTag.textContent = String(courseData.category || 'Training');
+        const durTag = document.createElement('span');
+        durTag.className = 'px-3 py-1 bg-slate-100 text-slate-500 text-[9px] font-black uppercase rounded-full';
+        durTag.textContent = String(courseData.duration || 'N/A');
+        meta.appendChild(catTag);
+        meta.appendChild(durTag);
+        if (state.completed) {
           const reviewTag = document.createElement('span');
           reviewTag.className = 'px-3 py-1 bg-green-100 text-green-800 text-[9px] font-black uppercase rounded-full';
           reviewTag.textContent = 'Course Completed (Review)';
           meta.appendChild(reviewTag);
-           }
+        }
 
         // Nav logic
         btnPrev.disabled = currentModuleIndex === 0;
-           if (isLast || state.completed) {
+        if (isLast || state.completed) {
           btnNext.textContent = state.completed ? 'Review Mode - See Exam ->' : 'Take Final Assessment';
-           } else {
+        } else {
           btnNext.textContent = 'Continue ->';
-           }
-        
-           btnNext.onclick = (isLast || state.completed) ? async () => {
-             if (!state.completed) {
-              state.completed = true;
-              state.currentModule = Math.max(state.currentModule, courseData.modules.length - 1);
-              await saveCourseState({ completed: true, currentModule: state.currentModule });
-             }
-             window.location.href = `exam?id=${encodedCourseId}`;
-           } : () => {
-             currentModuleIndex++;
-             window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-             renderModule();
-           };
-        
-        btnPrev.onclick = () => { 
-             currentModuleIndex--; 
-             window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-             renderModule(); 
+        }
+
+        btnNext.onclick = (isLast || state.completed) ? async () => {
+          if (!state.completed) {
+            state.completed = true;
+            state.currentModule = Math.max(state.currentModule, courseData.modules.length - 1);
+            await saveCourseState({ completed: true, currentModule: state.currentModule });
+          }
+          window.location.href = `exam?id=${encodedCourseId}`;
+        } : () => {
+          currentModuleIndex++;
+          window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
+          renderModule();
+        };
+
+        btnPrev.onclick = () => {
+          currentModuleIndex--;
+          window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
+          renderModule();
         };
 
         // Sidebar logic update
@@ -448,18 +557,18 @@
           el.className = `p-5 pl-8 cursor-pointer transition-all border-l-4 border-transparent hover:bg-slate-100 flex items-center gap-4 ${idx === currentModuleIndex ? 'sidebar-active' : 'text-slate-500'}`;
           let isLocked = (!state.completed && idx > state.currentModule);
           if (isLocked) {
-             el.style.opacity = '0.5';
-             el.style.cursor = 'not-allowed';
-             el.onclick = null;
+            el.style.opacity = '0.5';
+            el.style.cursor = 'not-allowed';
+            el.onclick = null;
           } else {
-             el.style.opacity = '1';
-             el.style.cursor = 'pointer';
-             el.onclick = () => { 
-                currentModuleIndex = idx;
-               window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-                renderModule(); 
-                sidebarContent.scrollIntoView(); 
-             };
+            el.style.opacity = '1';
+            el.style.cursor = 'pointer';
+            el.onclick = () => {
+              currentModuleIndex = idx;
+              window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
+              renderModule();
+              sidebarContent.scrollIntoView();
+            };
           }
         });
 
@@ -483,25 +592,25 @@
             modContent.appendChild(p);
           }
         });
-        
+
         modContent.querySelectorAll('pre code').forEach(block => {
-           if (window.hljs) hljs.highlightElement(block);
-           const p = block.parentElement;
-           p.className = "p-6 bg-slate-900 rounded-xl my-8 overflow-x-auto";
+          if (window.hljs) hljs.highlightElement(block);
+          const p = block.parentElement;
+          p.className = "p-6 bg-slate-900 rounded-xl my-8 overflow-x-auto";
         });
       }
 
       window.addEventListener('popstate', () => {
-         const params = new URLSearchParams(window.location.search);
-         const mod = parseInt(params.get('module'));
-         if (!isNaN(mod) && mod >= 0 && (mod <= state.currentModule || state.completed)) {
-            currentModuleIndex = mod;
-            renderModule();
-         } else {
-            currentModuleIndex = state.currentModule;
+        const params = new URLSearchParams(window.location.search);
+        const mod = parseInt(params.get('module'));
+        if (!isNaN(mod) && mod >= 0 && (mod <= state.currentModule || state.completed)) {
+          currentModuleIndex = mod;
+          renderModule();
+        } else {
+          currentModuleIndex = state.currentModule;
           window.history.replaceState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-            renderModule();
-         }
+          renderModule();
+        }
       });
 
       init();
@@ -514,4 +623,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="../assets/js/script.js"></script>
 </body>
+
 </html>
