@@ -141,7 +141,25 @@
     </section>
   </div>
 
-  <script>
+  <script type="module">
+    import { auth, db } from '../assets/js/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+    import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+    let globalUser = null;
+    let authPromiseResolve;
+    const authReady = new Promise(r => authPromiseResolve = r);
+
+    onAuthStateChanged(auth, (user) => {
+        globalUser = user;
+        if (!user) {
+             const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
+             window.location.href = `login.html?redirect=${targetUrl}`;
+             return;
+        }
+        authPromiseResolve();
+    });
+
     function escapeHtml(value) {
       return String(value)
         .replace(/&/g, "&amp;")
@@ -152,6 +170,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
+      await authReady;
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('id');
       const safeCourseId = encodeURIComponent(String(courseId || ''));
@@ -186,19 +205,15 @@
         return;
       }
 
-      let state;
+      let state = {};
       try {
-        const stateResponse = await fetch(`/api/progress?courseId=${safeCourseId}`, { credentials: 'same-origin' });
-        if (stateResponse.ok) {
-          const statePayload = await stateResponse.json();
-          state = statePayload.state || {};
-        } else {
-          throw new Error("API failed");
+        const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
+        const snap = await getDoc(docRef);
+        if (snap.exists()) {
+           state = snap.data();
         }
       } catch (err) {
-        console.warn("Exam progress check failed, using local fallback:", err);
-        const local = localStorage.getItem(`cw_progress_${courseId}`);
-        state = local ? JSON.parse(local) : {};
+        console.warn("Firebase progress check failed:", err);
       }
 
       if (!state.completed) {
@@ -318,8 +333,18 @@
 
           resultBox.classList.remove('hidden');
           if (passed) {
-            // Backup pass status in localStorage
-            localStorage.setItem(`cw_exam_passed_${courseId}`, "true");
+            const certId = `CW-${globalUser.uid.substring(0, 5).toUpperCase()}-${Date.now().toString(36).toUpperCase()}`;
+            try {
+                const docRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
+                await setDoc(docRef, {
+                    examPassed: true,
+                    certificateId: certId,
+                    lastUpdated: new Date().toISOString()
+                }, { merge: true });
+            } catch(e) {
+                console.error("Failed to commit certification to Firebase:", e);
+                localStorage.setItem(`cw_exam_passed_${courseId}`, certId);
+            }
             
             resultBox.style.backgroundColor = 'rgba(22, 163, 74, 0.1)';
             resultBox.style.borderColor = '#16a34a';

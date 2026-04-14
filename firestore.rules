@@ -137,6 +137,10 @@ service cloud.firestore {
                     roleUnchanged();
 
       allow delete: if false;
+
+      match /progress/{courseId} {
+        allow read, write: if isOwner(uid);
+      }
     }
 
     match /logs/{uid} {

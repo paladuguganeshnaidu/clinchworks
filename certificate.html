@@ -270,8 +270,9 @@
                 </div>
             </div>
 
-            <div class="footer-note">
+            <div class="footer-note" style="flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
                 <div class="emblem">✦ ClinchWorks Verified ✦</div>
+                <div id="cert-id-display" style="font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #a0aec0; letter-spacing: 2px;"></div>
             </div>
         </div>
     </div>
@@ -285,17 +286,31 @@
 
     <!-- Using html2pdf for high quality PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-        <script>
-                async function fetchJson(url, options) {
-                    const response = await fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
-                    let payload = null;
-                    try {
-                        payload = await response.json();
-                    } catch (err) {
-                        payload = null;
+        <script type="module">
+                import { auth, db } from './assets/js/firebase.js';
+                import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+                import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+                let globalUser = null;
+                let globalUserData = null;
+                let authPromiseResolve;
+                const authReady = new Promise(r => authPromiseResolve = r);
+
+                onAuthStateChanged(auth, async (user) => {
+                    globalUser = user;
+                    if (user) {
+                        try {
+                            const snap = await getDoc(doc(db, 'users', user.uid));
+                            if (snap.exists()) {
+                                globalUserData = snap.data();
+                            }
+                        } catch(e) {}
+                        authPromiseResolve();
+                    } else {
+                        const targetUrl = encodeURIComponent(window.location.pathname + window.location.search);
+                        window.location.href = `login.html?redirect=${targetUrl}`;
                     }
-                    return { response, payload };
-                }
+                });
 
                 function setButtonIssuedState(btn) {
                     btn.textContent = "Certificate already issued";
@@ -304,6 +319,7 @@
                 }
 
                 document.addEventListener("DOMContentLoaded", async () => {
+                        await authReady;
                         const params = new URLSearchParams(window.location.search);
                         const courseId = params.get('id');
                         const safeCourseId = encodeURIComponent(String(courseId || ''));
@@ -311,56 +327,51 @@
                         const recipientNameEl = document.querySelector('.recipient-name');
                         const courseNameEl = document.querySelector('.course-name');
                         const levelBadgeEl = document.querySelector('.level-badge');
+                        const certIdDisplay = document.getElementById('cert-id-display');
                         const btn = document.getElementById('download-btn');
 
                         let certificateAlreadyIssued = false;
                         let resolvedName = "ClinchWorks Student";
 
+                        if (globalUserData && globalUserData.firstName) {
+                             resolvedName = globalUserData.firstName + " " + (globalUserData.lastName || "");
+                             resolvedName = resolvedName.trim();
+                        } else if (globalUser.email) {
+                             resolvedName = globalUser.email.split('@')[0];
+                        }
+
                         if (courseId) {
                                 try {
-                                    const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
-                                    if (statusResult.response.ok && statusResult.payload) {
-                                        if (!statusResult.payload.examPassed) {
+                                    const progressRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
+                                    const progressSnap = await getDoc(progressRef);
+                                    if (progressSnap.exists()) {
+                                        const progressData = progressSnap.data();
+                                        if (!progressData.examPassed) {
                                             alert("You have not passed the final exam yet.");
                                             window.location.href = `pages/exam?id=${safeCourseId}`;
                                             return;
                                         }
 
-                                        if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
-                                            resolvedName = String(statusResult.payload.username).trim();
+                                        if (progressData.certificateId) {
+                                            certIdDisplay.textContent = `ID: ${progressData.certificateId}`;
                                         }
-
-                                        certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
+                                        certificateAlreadyIssued = !!progressData.certificateIssued;
                                     } else {
-                                        throw new Error("API failed");
+                                        throw new Error("No progression found.");
                                     }
                                 } catch (err) {
-                                    console.warn("Certificate API failed, checking local fallback:", err);
+                                    console.error("Firebase Certificate Verification failed:", err);
                                     const localPass = localStorage.getItem(`cw_exam_passed_${courseId}`);
-                                    if (localPass !== "true") {
-                                        alert("Unable to verify exam status. Please ensure you have passed the exam on this device.");
+                                    if (!localPass) {
+                                        alert("Unable to verify exam status. Please ensure you have passed the exam.");
                                         window.location.href = `pages/exam?id=${safeCourseId}`;
                                         return;
-                                    }
-                                    const localName = localStorage.getItem(`cw_name_${courseId}`);
-                                    if (localName) {
-                                        resolvedName = localName;
                                     }
                                 }
                                 
                                 if (certificateAlreadyIssued) {
                                         setButtonIssuedState(btn);
                                 }
-                        }
-
-                        if (resolvedName === "ClinchWorks Student") {
-                            const sessionResult = await fetchJson('/api/session');
-                            if (sessionResult.response.ok && sessionResult.payload && sessionResult.payload.username) {
-                                const candidate = String(sessionResult.payload.username).trim();
-                                if (candidate) {
-                                    resolvedName = candidate;
-                                }
-                            }
                         }
 
                         recipientNameEl.textContent = resolvedName;
@@ -406,16 +417,12 @@
                                         btnArea.style.display = 'block';
 
                                         if (courseId) {
-                                                const issueResult = await fetchJson('/api/certificate/issue', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ courseId })
-                                                });
-
-                                                if (issueResult.response.ok) {
+                                                try {
+                                                    const progressRef = doc(db, 'users', globalUser.uid, 'progress', courseId);
+                                                    await setDoc(progressRef, { certificateIssued: true }, { merge: true });
                                                     certificateAlreadyIssued = true;
                                                     setButtonIssuedState(btn);
-                                                }
+                                                } catch(e) {}
                                         }
                                 }).catch(() => {
                                         btnArea.style.display = 'block';
