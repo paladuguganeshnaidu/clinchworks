@@ -434,17 +434,6 @@ const initAuth = () => {
         }
     };
 
-    const injectWelcomeBanner = (firstName) => {
-        const hero = document.getElementById('hero');
-        if (!hero || document.getElementById('welcome-banner')) return;
-
-        const banner = document.createElement('div');
-        banner.id = 'welcome-banner';
-        banner.className = 'absolute top-24 left-1/2 transform -translate-x-1/2 z-40 bg-green-500/10 border border-green-500/20 text-green-400 px-6 py-2 rounded-full font-bold text-sm shadow-lg backdrop-blur-md transition-all';
-        banner.textContent = `Welcome, ${firstName}`;
-        hero.appendChild(banner);
-    };
-
     if (forms.login) {
         forms.login.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -705,10 +694,8 @@ const initAuth = () => {
 
                 const fallbackName = sanitizeName((user.email || 'user').split('@')[0], 80);
                 const firstName = sanitizeName(data.firstName || fallbackName, 80);
-
                 hydrateProfileForm(data, user);
                 setNavStateForUser(data);
-                injectWelcomeBanner(firstName);
 
                 document.body.classList.remove('auth-cloak');
                 document.body.classList.add('auth-resolved');
