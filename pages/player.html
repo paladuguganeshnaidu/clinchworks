@@ -478,14 +478,14 @@
         document.getElementById('sidebar-course-title').textContent = courseData.title;
       }
 
-      function renderModule() {
+      async function renderModule() {
         if (!courseData || !courseData.modules[currentModuleIndex]) return;
 
         // Progress validation
         if (!state.completed) {
           if (currentModuleIndex > state.currentModule) {
             state.currentModule = currentModuleIndex;
-            saveCourseState({ currentModule: state.currentModule }).catch(() => { });
+            await saveCourseState({ currentModule: state.currentModule }).catch(() => { });
           }
         }
 
@@ -540,16 +540,20 @@
             await saveCourseState({ completed: true, currentModule: state.currentModule });
           }
           window.location.href = `exam?id=${encodedCourseId}`;
-        } : () => {
+        } : async () => {
+          btnNext.disabled = true;
           currentModuleIndex++;
           window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-          renderModule();
+          await renderModule();
+          btnNext.disabled = false;
         };
 
-        btnPrev.onclick = () => {
+        btnPrev.onclick = async () => {
+          btnPrev.disabled = true;
           currentModuleIndex--;
           window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-          renderModule();
+          await renderModule();
+          btnPrev.disabled = false;
         };
 
         // Sidebar logic update
@@ -563,11 +567,13 @@
           } else {
             el.style.opacity = '1';
             el.style.cursor = 'pointer';
-            el.onclick = () => {
+            el.onclick = async () => {
+              el.style.pointerEvents = 'none';
               currentModuleIndex = idx;
               window.history.pushState({}, '', `player?id=${encodedCourseId}&module=${currentModuleIndex}`);
-              renderModule();
+              await renderModule();
               sidebarContent.scrollIntoView();
+              el.style.pointerEvents = 'auto';
             };
           }
         });
