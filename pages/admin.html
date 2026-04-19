@@ -57,6 +57,9 @@
             <button id="admin-logout-btn" type="button" class="nav-user-item" role="menuitem">Log Out</button>
           </div>
         </div>
+        <a href="book-call"
+          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
+          style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
         <button id="hamburger" class="hamburger lg:hidden ml-2"
           aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
@@ -133,12 +136,7 @@
     </div>
   </div>
 
-  <footer class="py-8 sm:py-12" style="border-top: 1px solid var(--footer-border);">
-    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-      <span class="text-xs font-mono" style="color: var(--footer-text);">(c) 2026 Clinch Works</span>
-      <span class="text-xs" style="color: var(--footer-text-faint);">hello@clinchworks.in</span>
-    </div>
-  </footer>
+    <div id="site-footer"></div>
 
   <script src="../assets/js/script.js"></script>
   <script type="module">
@@ -421,6 +419,7 @@
       }
     });
   </script>
+  <script src="/assets/js/footer-loader.js"></script>
 </body>
 
 </html>

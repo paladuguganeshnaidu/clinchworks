@@ -13,6 +13,15 @@ const SESSION_COOKIE_NAME = "cw_session";
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_BODY_BYTES = 1024 * 1024;
 const SESSION_SECRET = process.env.CW_SESSION_SECRET || crypto.randomBytes(32).toString("hex");
+const RATE_LIMIT_CLEANUP_INTERVAL_MS = 60 * 1000;
+const RATE_LIMIT_RULES = Object.freeze({
+  writeGlobal: { limit: 240, windowMs: 60 * 1000 },
+  contact: { limit: 10, windowMs: 10 * 60 * 1000 },
+  bookCall: { limit: 10, windowMs: 10 * 60 * 1000 },
+  sessionStart: { limit: 30, windowMs: 10 * 60 * 1000 },
+  examSubmit: { limit: 20, windowMs: 5 * 60 * 1000 },
+  certificateIssue: { limit: 10, windowMs: 10 * 60 * 1000 }
+});
 const PRIVATE_STATIC_FILES = new Set([
   "dev-server.js",
   "examquestions.json",
@@ -66,6 +75,8 @@ function loadSessionStore() {
 }
 
 let sessionStore = loadSessionStore();
+const rateLimitBuckets = new Map();
+let lastRateLimitCleanupAt = 0;
 
 function persistSessionStore() {
   try {
@@ -120,6 +131,66 @@ function sanitizeCountryCode(value) {
   const code = String(value || "").trim();
   if (!/^\+\d{1,4}$/.test(code)) return "";
   return code;
+}
+
+function getClientIp(req) {
+  const forwardedFor = String(req.headers["x-forwarded-for"] || "");
+  const forwardedIp = forwardedFor.split(",").map((item) => item.trim()).find(Boolean);
+  const ip = forwardedIp || String(req.socket?.remoteAddress || "unknown");
+  return sanitizeText(ip, 80);
+}
+
+function cleanupRateLimitBuckets(now = Date.now()) {
+  if ((now - lastRateLimitCleanupAt) < RATE_LIMIT_CLEANUP_INTERVAL_MS) {
+    return;
+  }
+
+  lastRateLimitCleanupAt = now;
+  for (const [key, bucket] of rateLimitBuckets.entries()) {
+    if (!bucket || typeof bucket !== "object" || now >= bucket.resetAt) {
+      rateLimitBuckets.delete(key);
+    }
+  }
+}
+
+function consumeRateLimit(req, scope, limit, windowMs) {
+  const now = Date.now();
+  cleanupRateLimitBuckets(now);
+
+  const key = `${scope}:${getClientIp(req)}`;
+  let bucket = rateLimitBuckets.get(key);
+
+  if (!bucket || typeof bucket !== "object" || now >= bucket.resetAt) {
+    bucket = { count: 0, resetAt: now + windowMs };
+  }
+
+  bucket.count += 1;
+  rateLimitBuckets.set(key, bucket);
+
+  return {
+    allowed: bucket.count <= limit,
+    retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000))
+  };
+}
+
+function enforceRateLimit(req, res, isHttps, noStoreHeaders, scope, rule, message) {
+  const result = consumeRateLimit(req, scope, rule.limit, rule.windowMs);
+  if (result.allowed) {
+    return false;
+  }
+
+  sendJson(
+    res,
+    429,
+    { error: message || "Too many requests. Please try again later." },
+    isHttps,
+    {
+      ...noStoreHeaders,
+      "Retry-After": String(result.retryAfterSeconds)
+    }
+  );
+
+  return true;
 }
 
 function isValidEmail(value) {
@@ -199,7 +270,7 @@ function serializeSessionCookie(cookieValue, isHttps) {
     `${SESSION_COOKIE_NAME}=${cookieValue}`,
     "Path=/",
     "HttpOnly",
-    "SameSite=Lax",
+    "SameSite=Strict",
     "Max-Age=2592000"
   ];
   if (isHttps) {
@@ -225,7 +296,18 @@ function isTrustedWriteRequest(req) {
   }
 
   const host = String(req.headers.host || "").toLowerCase();
+  if (!host) {
+    return false;
+  }
+
   const originHeader = String(req.headers.origin || "").trim();
+  const refererHeader = String(req.headers.referer || "").trim();
+  const contentType = String(req.headers["content-type"] || "").toLowerCase();
+
+  if (!contentType.includes("application/json")) {
+    return false;
+  }
+
   if (originHeader) {
     try {
       const origin = new URL(originHeader);
@@ -237,8 +319,23 @@ function isTrustedWriteRequest(req) {
     }
   }
 
+  if (refererHeader) {
+    try {
+      const referer = new URL(refererHeader);
+      if (referer.host.toLowerCase() !== host) {
+        return false;
+      }
+    } catch (err) {
+      return false;
+    }
+  }
+
   const secFetchSite = String(req.headers["sec-fetch-site"] || "").toLowerCase();
   if (secFetchSite && !["same-origin", "same-site", "none"].includes(secFetchSite)) {
+    return false;
+  }
+
+  if (!originHeader && !refererHeader && !secFetchSite) {
     return false;
   }
 
@@ -439,9 +536,14 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
   const pathname = requestUrl.pathname;
 
   const noStore = { "Cache-Control": "no-store" };
+  const isWriteMethod = ["POST", "PUT", "PATCH", "DELETE"].includes(method);
 
   if (!isTrustedWriteRequest(req)) {
     return sendJson(res, 403, { error: "Cross-origin write request blocked" }, isHttps, noStore);
+  }
+
+  if (isWriteMethod && enforceRateLimit(req, res, isHttps, noStore, "api-write", RATE_LIMIT_RULES.writeGlobal)) {
+    return;
   }
 
   if (method === "GET" && pathname === "/api/session") {
@@ -449,6 +551,10 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
   }
 
   if (method === "POST" && pathname === "/api/contact") {
+    if (enforceRateLimit(req, res, isHttps, noStore, "contact", RATE_LIMIT_RULES.contact, "Too many contact requests. Please try again later.")) {
+      return;
+    }
+
     let body;
     try {
       body = await parseJsonBody(req);
@@ -487,6 +593,10 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
   }
 
   if (method === "POST" && pathname === "/api/book-call") {
+    if (enforceRateLimit(req, res, isHttps, noStore, "book-call", RATE_LIMIT_RULES.bookCall, "Too many call requests. Please try again later.")) {
+      return;
+    }
+
     let body;
     try {
       body = await parseJsonBody(req);
@@ -525,6 +635,10 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
   }
 
   if (method === "POST" && pathname === "/api/session/start") {
+    if (enforceRateLimit(req, res, isHttps, noStore, "session-start", RATE_LIMIT_RULES.sessionStart, "Too many session starts. Please wait and try again.")) {
+      return;
+    }
+
     let body;
     try {
       body = await parseJsonBody(req);
@@ -661,6 +775,10 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
   }
 
   if (method === "POST" && pathname === "/api/exam/submit") {
+    if (enforceRateLimit(req, res, isHttps, noStore, "exam-submit", RATE_LIMIT_RULES.examSubmit, "Too many exam submissions. Please wait and try again.")) {
+      return;
+    }
+
     let body;
     try {
       body = await parseJsonBody(req);
@@ -753,6 +871,10 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
   }
 
   if (method === "POST" && pathname === "/api/certificate/issue") {
+    if (enforceRateLimit(req, res, isHttps, noStore, "certificate-issue", RATE_LIMIT_RULES.certificateIssue, "Too many certificate requests. Please wait and try again.")) {
+      return;
+    }
+
     let body;
     try {
       body = await parseJsonBody(req);
@@ -790,7 +912,13 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
 const server = http.createServer(async (req, res) => {
   const isHttps = !!(req.socket && req.socket.encrypted) || req.headers["x-forwarded-proto"] === "https";
 
-  const requestUrl = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
+  let requestUrl;
+  try {
+    requestUrl = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
+  } catch (err) {
+    return sendJson(res, 400, { error: "Invalid request URL" }, isHttps);
+  }
+
   const decoded = safeDecodeURIComponent(requestUrl.pathname);
   if (decoded === null || String(decoded).includes("\0")) {
     return sendJson(res, 400, { error: "Bad request path" }, isHttps);

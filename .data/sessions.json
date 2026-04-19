@@ -280,6 +280,29 @@
           "updatedAt": 1776576410863
         }
       }
+    },
+    "41f7f3e59885bf49617f5780b7c2cec075aecc3c36fc4c2e": {
+      "username": "GANESH NAIDU",
+      "createdAt": 1776586971145,
+      "lastSeen": 1776586979244,
+      "courses": {
+        "c-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776586971488
+        },
+        "prompt-engineering-associate": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776586979256
+        }
+      }
     }
   }
 }
