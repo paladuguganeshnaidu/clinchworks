@@ -42,10 +42,21 @@
       </nav>
 
       <div class="flex items-center justify-end gap-3 z-10 w-1/4">
-        <a id="nav-auth-btn" href="#"
-          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
-          style="border: 2px solid #F7C763; color: var(--text-primary); border-radius: 999px; padding: 6px 18px; min-width: 80px;">Log
-          Out</a>
+        <div id="admin-user-menu" class="nav-user-menu hidden sm:flex">
+          <a id="nav-auth-btn" href="#" class="nav-user-trigger" aria-label="User menu">
+            <span class="nav-user-avatar-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21a8 8 0 0 0-16 0"></path>
+                <circle cx="12" cy="8" r="4"></circle>
+              </svg>
+            </span>
+            <span class="nav-user-avatar-text" aria-hidden="true">A</span>
+          </a>
+          <div id="admin-user-dropdown" class="nav-user-dropdown" role="menu">
+            <a id="admin-profile-link" href="profile.html" class="nav-user-item" role="menuitem">Profile</a>
+            <button id="admin-logout-btn" type="button" class="nav-user-item" role="menuitem">Log Out</button>
+          </div>
+        </div>
         <button id="hamburger" class="hamburger lg:hidden ml-2"
           aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
@@ -149,7 +160,10 @@
     const modalBackdrop = document.getElementById('admin-modal-backdrop');
     const closeModalBtn = document.getElementById('admin-close-modal');
     const detailContentEl = document.getElementById('admin-detail-content');
-    const logoutBtn = document.getElementById('nav-auth-btn');
+    const userMenu = document.getElementById('admin-user-menu');
+    const userTrigger = document.getElementById('nav-auth-btn');
+    const logoutBtn = document.getElementById('admin-logout-btn');
+    const avatarText = userTrigger ? userTrigger.querySelector('.nav-user-avatar-text') : null;
 
     let usersCache = [];
     let listInFlight = false;
@@ -341,24 +355,52 @@
       }, 200);
     });
 
+    const setMenuOpen = (open) => {
+      if (!userMenu || !userTrigger) return;
+      userMenu.classList.toggle('open', open);
+      userTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    if (userMenu && userTrigger) {
+      userTrigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        setMenuOpen(!userMenu.classList.contains('open'));
+      });
+
+      userMenu.addEventListener('mouseenter', () => setMenuOpen(true));
+      userMenu.addEventListener('mouseleave', () => setMenuOpen(false));
+
+      document.addEventListener('click', (event) => {
+        if (!userMenu.contains(event.target)) {
+          setMenuOpen(false);
+        }
+      });
+    }
+
     filterInput.addEventListener('change', applyFilter);
     refreshBtn.addEventListener('click', loadUsers);
     closeModalBtn.addEventListener('click', closeModal);
     modalBackdrop.addEventListener('click', closeModal);
 
-    logoutBtn.addEventListener('click', async (event) => {
-      event.preventDefault();
-      try {
-        await signOut(auth);
-      } finally {
-        window.location.href = 'login.html';
-      }
-    });
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async (event) => {
+        event.preventDefault();
+        try {
+          await signOut(auth);
+        } finally {
+          window.location.href = 'login.html';
+        }
+      });
+    }
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = `login.html?redirect=${encodeURIComponent('/pages/admin.html')}`;
         return;
+      }
+
+      if (avatarText) {
+        avatarText.textContent = String(user.email || 'A').charAt(0).toUpperCase();
       }
 
       // Enforce backend verification before exposing UI

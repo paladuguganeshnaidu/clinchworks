@@ -6,19 +6,66 @@
 (function () {
   'use strict';
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const currentPath = window.location.pathname.toLowerCase();
+  const isPlayerRoute = /\/(?:pages\/)?player(?:\.html)?$/.test(currentPath);
+
   document.addEventListener('DOMContentLoaded', () => {
     initApp();
   });
 
   function initApp() {
+    initTheme();
+    if (!isPlayerRoute) {
+      initPageTransitions();
+    }
     initHoverNav();
     initMobileMenu();
     initScrollEffects();
-    initRevealAnimations();
+
+    if (!isPlayerRoute) {
+      initRevealAnimations();
+      initParallaxEffects();
+      initMicroInteractions();
+    }
+
     initSmoothScroll();
-    
-    updateActiveNav();
-    window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+    if (!isPlayerRoute) {
+      updateActiveNav();
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+    }
+  }
+
+  function initTheme() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+
+    toggle.classList.remove('hidden');
+
+    const savedTheme = localStorage.getItem('cw-theme');
+    const initialTheme = savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark';
+    applyTheme(initialTheme, false);
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next, true);
+    });
+  }
+
+  function applyTheme(theme, persist) {
+    document.documentElement.setAttribute('data-theme', theme);
+
+    const toggle = document.getElementById('theme-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      toggle.title = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    }
+
+    if (persist) {
+      localStorage.setItem('cw-theme', theme);
+    }
   }
 
   /**
@@ -134,14 +181,22 @@
         entries.forEach(e => { 
           // Custom check for GSAP managed elements
           if (e.target.classList.contains('bento-item') || e.target.classList.contains('team-card')) {
+            revealObserver.unobserve(e.target);
             return; // Managed by GSAP
           }
-          if (e.isIntersecting) e.target.classList.add('visible'); 
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            revealObserver.unobserve(e.target);
+          }
         }); 
       },
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
-    document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+
+    document.querySelectorAll('.section-reveal').forEach((el, index) => {
+      el.style.setProperty('--reveal-delay', `${(index % 5) * 60}ms`);
+      revealObserver.observe(el);
+    });
     
     // Defer GSAP specific animations
     setTimeout(initGSAPAnimations, 100);
@@ -175,10 +230,12 @@
     teamContainers.forEach(container => {
       const items = container.querySelectorAll('.team-card');
       gsap.fromTo(items, 
-        { opacity: 0 },
+        { opacity: 0, y: 28, scale: 0.985 },
         {
           opacity: 1,
-          duration: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.95,
           stagger: 0.2,
           ease: "power2.out",
           scrollTrigger: {
@@ -188,6 +245,100 @@
           }
         }
       );
+    });
+  }
+
+  function initParallaxEffects() {
+    if (prefersReducedMotion) return;
+    if (window.innerWidth < 1024) return;
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return;
+
+    let ticking = false;
+
+    const update = () => {
+      const y = window.scrollY || window.pageYOffset;
+      const root = document.documentElement;
+
+      root.style.setProperty('--parallax-grid', `${(y * -0.055).toFixed(2)}px`);
+      root.style.setProperty('--parallax-glow', `${(y * 0.04).toFixed(2)}px`);
+      root.style.setProperty('--parallax-orb', `${(y * -0.03).toFixed(2)}px`);
+
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();
+  }
+
+  function initMicroInteractions() {
+    if (prefersReducedMotion || window.matchMedia('(hover: none)').matches) return;
+
+    const cards = Array.from(document.querySelectorAll('.service-card, .project-card, .module-card, .content-card'));
+    if (!cards.length || cards.length > 16) return;
+
+    cards.forEach((card) => {
+      let frameId = null;
+      let pendingX = 50;
+      let pendingY = 50;
+
+      const flush = () => {
+        card.style.setProperty('--mx', `${pendingX.toFixed(2)}%`);
+        card.style.setProperty('--my', `${pendingY.toFixed(2)}%`);
+        frameId = null;
+      };
+
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        pendingX = ((event.clientX - rect.left) / rect.width) * 100;
+        pendingY = ((event.clientY - rect.top) / rect.height) * 100;
+
+        if (frameId === null) {
+          frameId = window.requestAnimationFrame(flush);
+        }
+      }, { passive: true });
+
+      card.addEventListener('pointerleave', () => {
+        pendingX = 50;
+        pendingY = 50;
+
+        if (frameId === null) {
+          frameId = window.requestAnimationFrame(flush);
+        }
+      });
+    });
+  }
+
+  function initPageTransitions() {
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+      if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (link.target === '_blank' || link.hasAttribute('download')) return;
+
+      const nextUrl = new URL(link.href, window.location.href);
+      if (nextUrl.origin !== window.location.origin) return;
+
+      event.preventDefault();
+      document.body.classList.add('page-leave');
+
+      window.setTimeout(() => {
+        window.location.href = nextUrl.href;
+      }, 100);
+    });
+
+    window.addEventListener('pageshow', () => {
+      document.body.classList.remove('page-leave');
     });
   }
 

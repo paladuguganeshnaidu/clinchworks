@@ -179,6 +179,23 @@ const initAuth = () => {
         return isPagesPath ? '../index.html' : 'index.html';
     };
 
+    const protectedRouteNames = new Set([
+        'admin',
+        'profile',
+        'dashboard',
+        'domain',
+        'course',
+        'player',
+        'exam'
+    ]);
+
+    const isProtectedRoute = (pathname) => {
+        const normalized = String(pathname || '').toLowerCase().replace(/\/+$/, '');
+        const segments = normalized.split('/').filter(Boolean);
+        const lastSegment = (segments[segments.length - 1] || '').replace(/\.html$/, '');
+        return protectedRouteNames.has(lastSegment);
+    };
+
     const isSafeInternalRedirect = (path) => {
         if (!path || typeof path !== 'string') return false;
         if (!path.startsWith('/')) return false;
@@ -210,6 +227,123 @@ const initAuth = () => {
             return defaultPath;
         }
     };
+
+    const createNavUserMenu = () => {
+        if (!btns.navAuth || !btns.navAuth.parentNode) return null;
+
+        const trigger = btns.navAuth;
+        const parent = trigger.parentNode;
+
+        let wrapper = trigger.closest('.nav-user-menu');
+        if (!wrapper) {
+            wrapper = document.createElement('div');
+            wrapper.className = 'nav-user-menu hidden sm:flex';
+            parent.insertBefore(wrapper, trigger);
+            wrapper.appendChild(trigger);
+        }
+
+        trigger.removeAttribute('style');
+        trigger.className = 'nav-user-trigger';
+        trigger.setAttribute('href', '#');
+        trigger.setAttribute('aria-haspopup', 'menu');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.setAttribute('aria-label', 'User menu');
+
+        let avatarIcon = trigger.querySelector('.nav-user-avatar-icon');
+        if (!avatarIcon) {
+            avatarIcon = document.createElement('span');
+            avatarIcon.className = 'nav-user-avatar-icon';
+            avatarIcon.setAttribute('aria-hidden', 'true');
+            avatarIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg>';
+            trigger.appendChild(avatarIcon);
+        }
+
+        let avatarText = trigger.querySelector('.nav-user-avatar-text');
+        if (!avatarText) {
+            avatarText = document.createElement('span');
+            avatarText.className = 'nav-user-avatar-text hidden';
+            avatarText.setAttribute('aria-hidden', 'true');
+            avatarText.textContent = 'U';
+            trigger.appendChild(avatarText);
+        }
+
+        let dropdown = wrapper.querySelector('.nav-user-dropdown');
+        let profileItem = null;
+        let logoutItem = null;
+
+        if (!dropdown) {
+            dropdown = document.createElement('div');
+            dropdown.className = 'nav-user-dropdown';
+            dropdown.setAttribute('role', 'menu');
+
+            profileItem = document.createElement('a');
+            profileItem.className = 'nav-user-item';
+            profileItem.textContent = 'Profile';
+            profileItem.setAttribute('role', 'menuitem');
+            dropdown.appendChild(profileItem);
+
+            logoutItem = document.createElement('button');
+            logoutItem.type = 'button';
+            logoutItem.className = 'nav-user-item';
+            logoutItem.textContent = 'Log Out';
+            logoutItem.setAttribute('role', 'menuitem');
+            dropdown.appendChild(logoutItem);
+
+            wrapper.appendChild(dropdown);
+        } else {
+            profileItem = dropdown.querySelector('a.nav-user-item');
+            logoutItem = dropdown.querySelector('button.nav-user-item');
+        }
+
+        let closeTimer = null;
+        const setOpen = (open) => {
+            if (open) {
+                if (closeTimer) clearTimeout(closeTimer);
+                wrapper.classList.add('open');
+                trigger.setAttribute('aria-expanded', 'true');
+                return;
+            }
+
+            closeTimer = setTimeout(() => {
+                wrapper.classList.remove('open');
+                trigger.setAttribute('aria-expanded', 'false');
+            }, 90);
+        };
+
+        wrapper.addEventListener('mouseenter', () => setOpen(true));
+        wrapper.addEventListener('mouseleave', () => setOpen(false));
+
+        trigger.addEventListener('click', (event) => {
+            event.preventDefault();
+            const isOpen = wrapper.classList.contains('open');
+            setOpen(!isOpen);
+        });
+
+        trigger.addEventListener('focus', () => setOpen(true));
+        wrapper.addEventListener('focusout', (event) => {
+            if (!wrapper.contains(event.relatedTarget)) {
+                setOpen(false);
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!wrapper.contains(event.target)) {
+                wrapper.classList.remove('open');
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        return {
+            wrapper,
+            trigger,
+            avatarIcon,
+            avatarText,
+            profileItem,
+            logoutItem
+        };
+    };
+
+    const navMenu = createNavUserMenu();
 
     const toInitials = (firstName, lastName) => {
         const first = String(firstName || '').trim().charAt(0);
@@ -401,37 +535,46 @@ const initAuth = () => {
     };
 
     const setNavStateForUser = (userData) => {
-        if (!btns.navAuth) return;
+        if (!navMenu) return;
 
-        const currentPath = window.location.pathname.toLowerCase();
-        const isProfilePage = currentPath.includes('/profile');
-        const targetPath = userData && userData.role === 'admin' ? resolvePath('admin') : resolvePath('profile');
+        const initials = toInitials(userData && userData.firstName, userData && userData.lastName);
+        const firstLetter = (initials.charAt(0) || 'U').toUpperCase();
 
-        btns.navAuth.textContent = isProfilePage ? 'Log Out' : (userData && userData.role === 'admin' ? 'Admin' : 'Profile');
-        btns.navAuth.href = isProfilePage ? '#' : targetPath;
-        btns.navAuth.onclick = (event) => {
-            if (!isProfilePage) return;
+        navMenu.avatarText.textContent = firstLetter;
+        navMenu.avatarText.classList.remove('hidden');
+        navMenu.avatarIcon.classList.add('hidden');
+
+        navMenu.profileItem.href = resolvePath('profile');
+        navMenu.profileItem.textContent = 'Profile';
+
+        navMenu.logoutItem.textContent = 'Log Out';
+        navMenu.logoutItem.onclick = async (event) => {
             event.preventDefault();
-            signOut(auth).then(() => {
+            try {
+                await signOut(auth);
+            } finally {
                 window.location.href = resolvePath('login');
-            });
+            }
         };
+    };
 
-        if (!isProfilePage && !document.getElementById('inject-logout') && btns.navAuth.parentNode) {
-            const logoutBtn = document.createElement('a');
-            logoutBtn.id = 'inject-logout';
-            logoutBtn.href = '#';
-            logoutBtn.textContent = 'Log Out';
-            logoutBtn.className = 'hidden sm:block text-xs sm:text-sm font-bold ml-2 hover:underline';
-            logoutBtn.style.color = '#F7C763';
-            logoutBtn.onclick = (event) => {
-                event.preventDefault();
-                signOut(auth).then(() => {
-                    window.location.href = resolvePath('login');
-                });
-            };
-            btns.navAuth.parentNode.appendChild(logoutBtn);
-        }
+    const setNavStateForGuest = () => {
+        if (!navMenu) return;
+
+        const target = encodeURIComponent(window.location.pathname + window.location.search);
+        const loginPath = `${resolvePath('login')}?redirect=${target}`;
+
+        navMenu.avatarText.classList.add('hidden');
+        navMenu.avatarIcon.classList.remove('hidden');
+
+        navMenu.profileItem.href = loginPath;
+        navMenu.profileItem.textContent = 'Profile';
+
+        navMenu.logoutItem.textContent = 'Log Out';
+        navMenu.logoutItem.onclick = (event) => {
+            event.preventDefault();
+            window.location.href = loginPath;
+        };
     };
 
     if (forms.login) {
@@ -677,6 +820,7 @@ const initAuth = () => {
 
         const path = window.location.pathname.toLowerCase();
         const isAuthPage = path.includes('/login') || path.includes('/register');
+        const isProtectedPage = isProtectedRoute(path);
         const isVerified = user && (user.emailVerified || user.providerData.some((p) => p.providerId !== 'password'));
 
         try {
@@ -691,30 +835,34 @@ const initAuth = () => {
 
                 const refreshedSnap = await getDoc(doc(db, 'users', user.uid));
                 const data = refreshedSnap.exists() ? (refreshedSnap.data() || {}) : {};
-
-                const fallbackName = sanitizeName((user.email || 'user').split('@')[0], 80);
-                const firstName = sanitizeName(data.firstName || fallbackName, 80);
                 hydrateProfileForm(data, user);
                 setNavStateForUser(data);
 
                 document.body.classList.remove('auth-cloak');
                 document.body.classList.add('auth-resolved');
             } else {
-                if (!isAuthPage) {
+                if (!isAuthPage && isProtectedPage) {
                     const target = encodeURIComponent(window.location.pathname + window.location.search);
                     window.location.href = `${resolvePath('login')}?redirect=${target}`;
                     return;
                 }
+
+                setNavStateForGuest();
 
                 document.body.classList.remove('auth-cloak');
                 document.body.classList.add('auth-resolved');
             }
         } catch (error) {
             console.error('Session synchronization failed:', error);
-            if (!isAuthPage) {
+            if (!isAuthPage && isProtectedPage) {
                 await signOut(auth).catch(() => { });
                 window.location.href = resolvePath('login');
+                return;
             }
+
+            setNavStateForGuest();
+            document.body.classList.remove('auth-cloak');
+            document.body.classList.add('auth-resolved');
         } finally {
             authSyncInFlight = false;
         }
