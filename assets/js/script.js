@@ -16,7 +16,7 @@
 
   function initApp() {
     initTheme();
-    if (!isPlayerRoute) {
+    if (!isPlayerRoute && !prefersReducedMotion) {
       initPageTransitions();
     }
     initHoverNav();
@@ -176,6 +176,28 @@
    * Reveal Animations
    */
   function initRevealAnimations() {
+    if (prefersReducedMotion) {
+      document.querySelectorAll('.section-reveal').forEach((el) => el.classList.add('visible'));
+      return;
+    }
+
+    // Prepare stagger targets for premium sequential entrances.
+    // This does not change HTML structure; it only adds classes/styles at runtime.
+    document.querySelectorAll('.section-reveal').forEach((container) => {
+      if (container.classList.contains('bento-item') || container.classList.contains('team-card')) return;
+
+      const isGridOrList = container.classList.contains('grid') || container.tagName === 'UL' || container.tagName === 'OL';
+      if (!isGridOrList) return;
+
+      const children = Array.from(container.querySelectorAll(':scope > a, :scope > .service-card, :scope > .project-card, :scope > .module-card, :scope > .content-card'));
+      if (children.length < 2) return;
+
+      children.forEach((child, idx) => {
+        child.classList.add('cw-reveal-item');
+        child.style.setProperty('--cw-stagger-delay', `${Math.min(idx * 80, 560)}ms`);
+      });
+    });
+
     const revealObserver = new IntersectionObserver(
       (entries) => { 
         entries.forEach(e => { 
@@ -186,6 +208,11 @@
           }
           if (e.isIntersecting) {
             e.target.classList.add('visible');
+
+            // If the reveal target is a grid/list container, also stagger-reveal its children.
+            const staggerChildren = e.target.querySelectorAll(':scope > .cw-reveal-item');
+            staggerChildren.forEach((child) => child.classList.add('cw-visible'));
+
             revealObserver.unobserve(e.target);
           }
         }); 
@@ -194,7 +221,8 @@
     );
 
     document.querySelectorAll('.section-reveal').forEach((el, index) => {
-      el.style.setProperty('--reveal-delay', `${(index % 5) * 60}ms`);
+      // Global reveal staggering for standalone blocks (0.05–0.1s per item)
+      el.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);
       revealObserver.observe(el);
     });
     
@@ -334,7 +362,7 @@
 
       window.setTimeout(() => {
         window.location.href = nextUrl.href;
-      }, 100);
+      }, 220);
     });
 
     window.addEventListener('pageshow', () => {

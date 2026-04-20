@@ -168,15 +168,13 @@ const initAuth = () => {
         btn.style.cursor = isLoading ? 'not-allowed' : 'pointer';
     };
 
-    const isPagesPath = window.location.pathname.toLowerCase().includes('/pages/');
-
     const resolvePath = (target) => {
-        if (target === 'index') return isPagesPath ? '../index.html' : 'index.html';
-        if (target === 'login') return isPagesPath ? 'login.html' : 'pages/login.html';
-        if (target === 'register') return isPagesPath ? 'register.html' : 'pages/register.html';
-        if (target === 'profile') return isPagesPath ? 'profile.html' : 'pages/profile.html';
-        if (target === 'admin') return isPagesPath ? 'admin.html' : 'pages/admin.html';
-        return isPagesPath ? '../index.html' : 'index.html';
+        if (target === 'index') return '/';
+        if (target === 'login') return '/login';
+        if (target === 'register') return '/register';
+        if (target === 'profile') return '/profile';
+        if (target === 'admin') return '/admin';
+        return '/';
     };
 
     const protectedRouteNames = new Set([

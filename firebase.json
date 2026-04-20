@@ -16,12 +16,100 @@
     "public": "./",
     "ignore": [
       "firebase.json",
+      "dev-server.js",
+      ".data/**",
+      "functions/**",
+      "examquestions.json",
+      "firestore.indexes.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/pages/:page.html",
+        "destination": "/:page",
+        "type": 301
+      },
+      {
+        "source": "/pages/:page",
+        "destination": "/:page",
+        "type": 301
+      },
+      {
+        "source": "/:page.html",
+        "destination": "/:page",
+        "type": 301
+      }
+    ],
+    "headers": [
+      {
+        "source": "/assets/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          }
+        ]
+      },
+      {
+        "source": "/assets/partials/**",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com;"
+          }
+        ]
+      }
+    ],
     "rewrites": [
+      {
+        "source": "/admin",
+        "destination": "/pages/admin.html"
+      },
       {
         "source": "/profile",
         "destination": "/pages/profile.html"
@@ -35,20 +123,84 @@
         "destination": "/pages/register.html"
       },
       {
+        "source": "/dashboard",
+        "destination": "/pages/dashboard.html"
+      },
+      {
         "source": "/services",
         "destination": "/pages/services.html"
+      },
+      {
+        "source": "/ai-development",
+        "destination": "/pages/ai-development.html"
+      },
+      {
+        "source": "/web-development",
+        "destination": "/pages/web-development.html"
+      },
+      {
+        "source": "/web-hosting",
+        "destination": "/pages/web-hosting.html"
+      },
+      {
+        "source": "/growth-optimization",
+        "destination": "/pages/growth-optimization.html"
+      },
+      {
+        "source": "/google-ads",
+        "destination": "/pages/google-ads.html"
       },
       {
         "source": "/projects",
         "destination": "/pages/projects.html"
       },
       {
+        "source": "/contact",
+        "destination": "/pages/contact.html"
+      },
+      {
         "source": "/domain",
         "destination": "/pages/domain.html"
       },
       {
+        "source": "/training",
+        "destination": "/pages/training.html"
+      },
+      {
+        "source": "/content-marketing",
+        "destination": "/pages/content-marketing.html"
+      },
+      {
+        "source": "/social-media-marketing",
+        "destination": "/pages/social-media-marketing.html"
+      },
+      {
+        "source": "/video-graphic-design",
+        "destination": "/pages/video-graphic-design.html"
+      },
+      {
+        "source": "/website-design",
+        "destination": "/pages/website-design.html"
+      },
+      {
+        "source": "/youtube-management",
+        "destination": "/pages/youtube-management.html"
+      },
+      {
         "source": "/book-call",
         "destination": "/pages/book-call.html"
+      },
+      {
+        "source": "/course",
+        "destination": "/pages/course.html"
+      },
+      {
+        "source": "/player",
+        "destination": "/pages/player.html"
+      },
+      {
+        "source": "/exam",
+        "destination": "/pages/exam.html"
       }
     ]
   }

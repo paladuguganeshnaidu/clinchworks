@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Hosting / VPS | Managed Deployments, Speed, Reliability</title>
+  <meta name="description" content="Managed web hosting/VPS for SaaS teams: speed optimization, deployment pipelines, backups, monitoring, and reliability controls." />
+  <meta name="keywords" content="managed VPS hosting, deployment pipelines, uptime monitoring, backups, performance optimization" />
+  <meta name="author" content="Clinch Works" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css?v=177659729621367" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/logo-transparent.png?v=3">
+  <link rel="shortcut icon" href="../assets/images/logo-transparent.png?v=3">
+  <link rel="apple-touch-icon" href="../assets/images/logo-transparent.png?v=3">
+</head>
+
+<body>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+
+      <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
+            class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm"
+            style="overflow: hidden;" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <nav id="top-nav"
+        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
+        style="border: 1px solid rgba(247, 199, 99, 0.4);">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="/" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper"><a href="/projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+            <path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
+        </button>
+        <a id="nav-auth-btn" href="/login" class="nav-user-trigger hidden sm:flex" aria-label="User menu">
+          <span class="nav-user-avatar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21a8 8 0 0 0-16 0"></path>
+              <circle cx="12" cy="8" r="4"></circle>
+            </svg>
+          </span>
+          <span class="nav-user-avatar-text hidden" aria-hidden="true">U</span>
+        </a>
+        <a href="/book-call" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Strategy Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+      <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="/ai-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">AI Development</a></li>
+            <li><a href="/web-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Development</a></li>
+            <li><a href="/web-hosting" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Hosting / VPS</a></li>
+            <li><a href="/growth-optimization" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Growth Optimization</a></li>
+          </ul>
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
+            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="/domain?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
+            <li><a href="/domain?category=Artificial%20Intelligence" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
+            <li><a href="/domain?category=Database%20Engineering" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a></li>
+            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu lg:hidden">
+    <div class="w-full flex justify-end px-5 py-4"></div>
+    <a href="/" data-section="about">About</a>
+    <a href="/services" data-section="services">Services</a>
+    <a href="/domain" data-section="training">Training</a>
+    <a href="/projects" data-section="projects">Projects</a>
+    <a href="/book-call" style="color: #F1AF2C; margin-top: 1rem;">Book a Strategy Call &rarr;</a>
+  </div>
+
+  <div class="pt-24 min-h-screen">
+
+    <!-- HERO -->
+    <section class="relative pb-12 pt-6 sm:pb-16 sm:pt-8 lg:pb-20 lg:pt-10">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal visible">
+          <div class="accent-line mb-4"></div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">Web Hosting / VPS & Reliability</h1>
+          <p class="mt-4 sm:mt-6 text-base sm:text-lg max-w-3xl leading-relaxed" style="color: var(--text-faint);">
+            Managed VPS, deployment pipelines, and reliability controls for SaaS teams that need predictable speed, stable releases, and uptime discipline.
+          </p>
+        </div>
+
+        <div class="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 section-reveal visible">
+          <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="color: var(--cta-text); border: 1px solid var(--cta-border);">Get a Free System Audit</a>
+          <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">Book a Strategy Call</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HUB SUB-NAV -->
+    <section class="relative pb-10 sm:pb-12">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="service-card section-reveal visible rounded-full p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center justify-between">
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/ai-development" data-service="ai-development">AI Development</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/web-development" data-service="web-development">Web Development</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/web-hosting" data-service="web-hosting">Web Hosting / VPS</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/growth-optimization" data-service="growth-optimization">Growth Optimization</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Reliability Problems That Hurt Revenue</h2>
+          <p class="mt-4 text-sm sm:text-base max-w-3xl mx-auto" style="color: var(--text-faint);">If your platform is slow or unstable, conversion drops and teams lose time firefighting instead of shipping.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 section-reveal">
+          <div class="service-card rounded-2xl p-6"><h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Slow TTFB / Response</h3><p class="text-sm" style="color: var(--text-faint);">Backend latency and caching gaps create inconsistent UX and lower conversion.</p></div>
+          <div class="service-card rounded-2xl p-6"><h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Risky Deployments</h3><p class="text-sm" style="color: var(--text-faint);">No staging, no rollback, and manual releases lead to outages and regressions.</p></div>
+          <div class="service-card rounded-2xl p-6"><h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Missing Monitoring</h3><p class="text-sm" style="color: var(--text-faint);">Issues are discovered by users instead of alerts; MTTR stays high.</p></div>
+          <div class="service-card rounded-2xl p-6"><h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Backup Weakness</h3><p class="text-sm" style="color: var(--text-faint);">Without tested backups and restore paths, incidents become existential.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="service-card rounded-2xl p-8 section-reveal">
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-5" style="color: var(--text-primary);">The Solution: Managed Hosting with Discipline</h2>
+            <p class="text-sm sm:text-base leading-relaxed mb-4" style="color: var(--text-faint);">We implement hosting and deployment as an operating system: repeatable, observable, and safe to change.</p>
+            <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-faint);">This is not “just a server.” It’s speed + reliability + release hygiene that supports growth.</p>
+          </div>
+
+          <div class="service-card rounded-2xl p-8 section-reveal">
+            <h3 class="text-xl font-bold mb-5" style="color: var(--text-primary);">What’s Included</h3>
+            <div class="space-y-4">
+              <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <p class="text-xs font-mono mb-1" style="color: var(--accent);">Speed Optimization</p>
+                <p class="text-sm" style="color: var(--text-faint);">Caching strategy, compression, static asset delivery, and server tuning to reduce latency.</p>
+              </div>
+              <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <p class="text-xs font-mono mb-1" style="color: var(--accent);">Deployment Pipelines</p>
+                <p class="text-sm" style="color: var(--text-faint);">Staging, CI/CD, rollbacks, and release checks to ship safely and consistently.</p>
+              </div>
+              <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <p class="text-xs font-mono mb-1" style="color: var(--accent);">Uptime Reliability</p>
+                <p class="text-sm" style="color: var(--text-faint);">Monitoring, alerts, backups, and incident playbooks to reduce downtime and MTTR.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Business Outcomes</h2>
+          <p class="mt-4 text-sm sm:text-base max-w-3xl mx-auto" style="color: var(--text-faint);">Reliability outcomes that protect revenue and engineering velocity.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 section-reveal">
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">More stable performance under load with controlled caching and tuning.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Safer releases with staging + rollback paths to reduce downtime risk.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Lower MTTR with monitoring and alerting that triggers fast response.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Backups + restore discipline so incidents don’t become existential.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Lower latency for better conversion and user trust perception.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Less firefighting and more execution time per sprint.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Process</h2>
+          <p class="mt-4 text-sm sm:text-base max-w-3xl mx-auto" style="color: var(--text-faint);">Audit → build → optimize with reliability baselines.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 section-reveal">
+          <div class="service-card rounded-2xl p-6"><p class="text-xs font-mono mb-2" style="color: var(--accent);">01 Audit</p><p class="text-sm" style="color: var(--text-faint);">Assess current hosting, deployment risk, performance bottlenecks, and monitoring gaps.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-xs font-mono mb-2" style="color: var(--accent);">02 Build</p><p class="text-sm" style="color: var(--text-faint);">Implement VPS baseline, CI/CD, backups, and alerting with safe release practices.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-xs font-mono mb-2" style="color: var(--accent);">03 Optimize</p><p class="text-sm" style="color: var(--text-faint);">Tune caching/performance and improve observability to reduce latency and incidents.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Case Study Snapshot</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 section-reveal">
+          <div class="project-card rounded-2xl p-7">
+            <h3 class="font-bold text-xl mb-4" style="color: var(--text-primary);">Deployment Pipeline Stabilization</h3>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Problem:</strong> Manual releases caused outages and slow rollbacks.</p>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Solution:</strong> Staging + CI/CD + rollback discipline + checks.</p>
+            <p class="text-sm" style="color: var(--text-secondary);"><strong>Metrics to move:</strong> deploy frequency, rollback time, incident rate.</p>
+          </div>
+          <div class="project-card rounded-2xl p-7">
+            <h3 class="font-bold text-xl mb-4" style="color: var(--text-primary);">Performance + Uptime Baseline</h3>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Problem:</strong> Unpredictable latency and downtime reduced trust.</p>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Solution:</strong> Caching + monitoring + backups + tuning.</p>
+            <p class="text-sm" style="color: var(--text-secondary);"><strong>Metrics to move:</strong> p95 latency, uptime %, MTTR.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative pb-20 sm:pb-24">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="service-card rounded-2xl p-8 sm:p-10 text-center section-reveal">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Book a Strategy Call</h2>
+          <p class="mt-4 text-sm sm:text-base leading-relaxed" style="color: var(--text-faint);">Get a hosting + deployment audit with a reliability roadmap.</p>
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">Book a Strategy Call</a>
+            <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium" style="color: var(--cta-text); border: 1px solid var(--cta-border);">Get a Free System Audit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="/assets/js/footer-loader.js"></script>
+  <script>
+    (function initServicesHubSubnav() {
+      const links = Array.from(document.querySelectorAll('.service-hub-link'));
+      if (!links.length) return;
+
+      const inactiveStyle = 'color: var(--cta-text); border: 1px solid var(--cta-border); background: transparent;';
+      const activeStyle = 'background: #F7C763; color: #0b1220; border: 1px solid rgba(255,255,255,0.2);';
+
+      const path = (window.location.pathname || '').toLowerCase();
+      const normalizedPath = path.replace(/\/+$/, '');
+      const currentService =
+        (normalizedPath.endsWith('/ai-development') || normalizedPath.endsWith('/ai-development.html')) ? 'ai-development' :
+        (normalizedPath.endsWith('/web-development') || normalizedPath.endsWith('/web-development.html')) ? 'web-development' :
+        (normalizedPath.endsWith('/web-hosting') || normalizedPath.endsWith('/web-hosting.html')) ? 'web-hosting' :
+        (normalizedPath.endsWith('/growth-optimization') || normalizedPath.endsWith('/growth-optimization.html')) ? 'growth-optimization' :
+        null;
+
+      links.forEach((link) => {
+        link.setAttribute('style', inactiveStyle);
+        link.removeAttribute('aria-current');
+
+        if (currentService && link.getAttribute('data-service') === currentService) {
+          link.setAttribute('style', activeStyle);
+          link.setAttribute('aria-current', 'page');
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>

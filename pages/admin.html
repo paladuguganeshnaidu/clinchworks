@@ -15,7 +15,7 @@
 <body class="auth-cloak">
   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
-      <a href="../index.html" class="flex items-center gap-0 group z-10 w-1/4">
+      <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
         <div
           class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
           <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
@@ -30,13 +30,13 @@
         class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
         style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="../index.html"
+            <li class="nav-item-wrapper"><a href="/"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">About</a></li>
-          <li class="nav-item-wrapper"><a href="services"
+            <li class="nav-item-wrapper"><a href="/services"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">Services</a></li>
-          <li class="nav-item-wrapper"><a href="domain"
+            <li class="nav-item-wrapper"><a href="/domain"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">Training</a></li>
-          <li class="nav-item-wrapper"><a href="projects"
+            <li class="nav-item-wrapper"><a href="/projects"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors">Projects</a></li>
         </ul>
       </nav>
@@ -53,11 +53,11 @@
             <span class="nav-user-avatar-text" aria-hidden="true">A</span>
           </a>
           <div id="admin-user-dropdown" class="nav-user-dropdown" role="menu">
-            <a id="admin-profile-link" href="profile.html" class="nav-user-item" role="menuitem">Profile</a>
+            <a id="admin-profile-link" href="/profile" class="nav-user-item" role="menuitem">Profile</a>
             <button id="admin-logout-btn" type="button" class="nav-user-item" role="menuitem">Log Out</button>
           </div>
         </div>
-        <a href="book-call"
+        <a href="/book-call"
           class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
           style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
         <button id="hamburger" class="hamburger lg:hidden ml-2"
@@ -68,10 +68,10 @@
 
   <div id="mobile-menu" class="mobile-menu lg:hidden">
     <div class="w-full flex justify-end px-5 py-4"></div>
-    <a href="../index.html">About</a>
-    <a href="services">Services</a>
-    <a href="domain">Training</a>
-    <a href="projects">Projects</a>
+    <a href="/">About</a>
+    <a href="/services">Services</a>
+    <a href="/domain">Training</a>
+    <a href="/projects">Projects</a>
   </div>
 
   <div class="pt-24 min-h-screen">
@@ -386,14 +386,14 @@
         try {
           await signOut(auth);
         } finally {
-          window.location.href = 'login.html';
+          window.location.href = '/login';
         }
       });
     }
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        window.location.href = `login.html?redirect=${encodeURIComponent('/pages/admin.html')}`;
+        window.location.href = `/login?redirect=${encodeURIComponent('/admin')}`;
         return;
       }
 

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Development | Chatbots, Automation, SaaS Integrations</title>
+  <meta name="description" content="AI development for SaaS teams: chatbot systems, workflow automation, and production integrations across CRM and internal tools." />
+  <meta name="keywords" content="AI development services, chatbot development, workflow automation, SaaS integrations, CRM automation" />
+  <meta name="author" content="Clinch Works" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css?v=177659729621367" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/logo-transparent.png?v=3">
+  <link rel="shortcut icon" href="../assets/images/logo-transparent.png?v=3">
+  <link rel="apple-touch-icon" href="../assets/images/logo-transparent.png?v=3">
+</head>
+
+<body>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+
+      <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
+            class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm"
+            style="overflow: hidden;" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <nav id="top-nav"
+        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
+        style="border: 1px solid rgba(247, 199, 99, 0.4);">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+            <li class="nav-item-wrapper"><a href="/"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="about">About</a></li>
+            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="services">Services</a></li>
+            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="training">Training</a></li>
+
+            <li class="nav-item-wrapper"><a href="/projects"
+              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
+              data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden" aria-label="Toggle theme">
+          <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+            <path
+              d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
+        </button>
+        <a id="nav-auth-btn" href="/login" class="nav-user-trigger hidden sm:flex" aria-label="User menu">
+          <span class="nav-user-avatar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21a8 8 0 0 0-16 0"></path>
+              <circle cx="12" cy="8" r="4"></circle>
+            </svg>
+          </span>
+          <span class="nav-user-avatar-text hidden" aria-hidden="true">U</span>
+        </a>
+        <a href="/book-call"
+          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
+          style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Strategy Call</a>
+        <button id="hamburger" class="hamburger lg:hidden ml-2" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+
+      <div id="secondary-nav"
+        class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
+        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center"
+          style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
+
+          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
+            <li><a href="/ai-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">AI Development</a></li>
+            <li><a href="/web-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Development</a></li>
+            <li><a href="/web-hosting" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Hosting / VPS</a></li>
+            <li><a href="/growth-optimization" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Growth Optimization</a></li>
+          </ul>
+
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
+            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="/domain?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
+            <li><a href="/domain?category=Artificial%20Intelligence" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
+            <li><a href="/domain?category=Database%20Engineering" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a></li>
+            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu lg:hidden">
+    <div class="w-full flex justify-end px-5 py-4"></div>
+    <a href="/" data-section="about">About</a>
+    <a href="/services" data-section="services">Services</a>
+    <a href="/domain" data-section="training">Training</a>
+
+    <a href="/projects" data-section="projects">Projects</a>
+    <a href="/book-call" style="color: #F1AF2C; margin-top: 1rem;">Book a Strategy Call &rarr;</a>
+  </div>
+
+  <div class="pt-24 min-h-screen">
+
+    <!-- HERO -->
+    <section class="relative pb-12 pt-6 sm:pb-16 sm:pt-8 lg:pb-20 lg:pt-10">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal visible">
+          <div class="accent-line mb-4"></div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight" style="color: var(--text-primary);">
+            AI Development & Intelligent Automation
+          </h1>
+          <p class="mt-4 sm:mt-6 text-base sm:text-lg max-w-3xl leading-relaxed" style="color: var(--text-faint);">
+            Production AI systems for SaaS: chatbots, workflow automation, and integrations that reduce manual ops and improve response speed across acquisition, onboarding, and support.
+          </p>
+        </div>
+
+        <div class="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 section-reveal visible">
+          <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            style="color: var(--cta-text); border: 1px solid var(--cta-border);">
+            Get a Free System Audit
+          </a>
+          <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+            style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">
+            Book a Strategy Call
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HUB SUB-NAV -->
+    <section class="relative pb-10 sm:pb-12">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="service-card section-reveal visible rounded-full p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center justify-between">
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90"
+            href="/ai-development" data-service="ai-development">AI Development</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90"
+            href="/web-development" data-service="web-development">Web Development</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90"
+            href="/web-hosting" data-service="web-hosting">Web Hosting / VPS</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90"
+            href="/growth-optimization" data-service="growth-optimization">Growth Optimization</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">The Problems AI Should Solve</h2>
+          <p class="mt-4 text-sm sm:text-base max-w-3xl mx-auto" style="color: var(--text-faint);">
+            If your team is manually triaging leads, chasing context, or answering repeat questions, you’re paying an operational tax that slows conversion.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 section-reveal">
+          <div class="service-card rounded-2xl p-6">
+            <h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Slow Lead Qualification</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--text-faint);">High-intent leads wait for responses, context is missing, and booking rates drop.</p>
+          </div>
+          <div class="service-card rounded-2xl p-6">
+            <h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Support Repetition</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--text-faint);">Teams answer the same questions across email/chat while escalation logic stays inconsistent.</p>
+          </div>
+          <div class="service-card rounded-2xl p-6">
+            <h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">Tool Fragmentation</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--text-faint);">CRM, product, and support data don’t connect cleanly, creating lost follow-ups and poor reporting.</p>
+          </div>
+          <div class="service-card rounded-2xl p-6">
+            <h3 class="font-bold text-lg mb-2" style="color: var(--text-primary);">No Decision System</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--text-faint);">Without routing and scoring logic, the funnel becomes subjective and hard to optimize.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="service-card rounded-2xl p-8 section-reveal">
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-5" style="color: var(--text-primary);">The Solution: AI Systems That Ship</h2>
+            <p class="text-sm sm:text-base leading-relaxed mb-4" style="color: var(--text-faint);">
+              We build AI features as product systems, not demos: defined inputs/outputs, safe fallbacks, clear handoff to humans, and measurable performance targets.
+            </p>
+            <p class="text-sm sm:text-base leading-relaxed" style="color: var(--text-faint);">
+              Scope is anchored to business outcomes: faster response SLAs, reduced manual hours, improved lead quality, and consistent support resolution.
+            </p>
+          </div>
+
+          <div class="service-card rounded-2xl p-8 section-reveal">
+            <h3 class="text-xl font-bold mb-5" style="color: var(--text-primary);">What We Build</h3>
+            <div class="space-y-4">
+              <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <p class="text-xs font-mono mb-1" style="color: var(--accent);">Chatbot Systems</p>
+                <p class="text-sm" style="color: var(--text-faint);">Lead qualification bots, support assistants, and in-product guidance with escalation logic and data capture.</p>
+              </div>
+              <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <p class="text-xs font-mono mb-1" style="color: var(--accent);">Workflow Automation</p>
+                <p class="text-sm" style="color: var(--text-faint);">Routing, enrichment, onboarding tasks, ticket triage, and lifecycle triggers tied to your funnel.</p>
+              </div>
+              <div class="p-4 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <p class="text-xs font-mono mb-1" style="color: var(--accent);">SaaS Integrations</p>
+                <p class="text-sm" style="color: var(--text-faint);">API + CRM + tool integrations so AI actions actually update systems of record and improve visibility.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Business Outcomes</h2>
+          <p class="mt-4 text-sm sm:text-base max-w-3xl mx-auto" style="color: var(--text-faint);">Concrete outcomes we target and measure after launch.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 section-reveal">
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Lower lead response time with automated qualification and routing.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Reduce manual ops hours by automating repetitive lifecycle tasks.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Increase lead quality by enforcing consistent scoring criteria and data capture.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Deflect repetitive support tickets with grounded responses and escalation rules.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Improve reporting by syncing AI actions to systems of record (CRM/support).</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-sm" style="color: var(--text-faint);">Reduce funnel leakage by standardizing follow-up and handoff behavior.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS (AUDIT → BUILD → OPTIMIZE) -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Process</h2>
+          <p class="mt-4 text-sm sm:text-base max-w-3xl mx-auto" style="color: var(--text-faint);">Audit → build → optimize, tied to measurable KPI movement.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 section-reveal">
+          <div class="service-card rounded-2xl p-6"><p class="text-xs font-mono mb-2" style="color: var(--accent);">01 Audit</p><p class="text-sm" style="color: var(--text-faint);">Define the workflows to automate, the data required, and the KPIs to move.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-xs font-mono mb-2" style="color: var(--accent);">02 Build</p><p class="text-sm" style="color: var(--text-faint);">Implement chatbot flows, integrations, monitoring, and safe fallbacks for production behavior.</p></div>
+          <div class="service-card rounded-2xl p-6"><p class="text-xs font-mono mb-2" style="color: var(--accent);">03 Optimize</p><p class="text-sm" style="color: var(--text-faint);">Iterate using transcripts, conversion data, and operational metrics to increase coverage and quality.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE STUDY (KPI SNAPSHOT) -->
+    <section class="relative pb-16 sm:pb-20 lg:pb-24">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="section-reveal text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Case Study Snapshot</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 section-reveal">
+          <div class="project-card rounded-2xl p-7">
+            <h3 class="font-bold text-xl mb-4" style="color: var(--text-primary);">Lead Qualification Automation</h3>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Problem:</strong> Slow responses and inconsistent lead scoring created missed demos.</p>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Solution:</strong> Chat qualification + CRM sync + routing rules with human handoff.</p>
+            <p class="text-sm" style="color: var(--text-secondary);"><strong>Metrics to move:</strong> response SLA, demo conversion, qualified lead rate.</p>
+          </div>
+          <div class="project-card rounded-2xl p-7">
+            <h3 class="font-bold text-xl mb-4" style="color: var(--text-primary);">Support Deflection + Escalation</h3>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Problem:</strong> Repetitive tickets slowed onboarding and product execution.</p>
+            <p class="text-sm mb-3" style="color: var(--text-faint);"><strong>Solution:</strong> Grounded assistant with escalation rules and structured data capture.</p>
+            <p class="text-sm" style="color: var(--text-secondary);"><strong>Metrics to move:</strong> deflection rate, time-to-first-response, activation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative pb-20 sm:pb-24">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="service-card rounded-2xl p-8 sm:p-10 text-center section-reveal">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">Book a Strategy Call</h2>
+          <p class="mt-4 text-sm sm:text-base leading-relaxed" style="color: var(--text-faint);">
+            Get a scoped AI plan: workflows to automate, integrations required, and KPI targets.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+              style="background: var(--accent); color: var(--bg-primary); border: 1px solid var(--accent);">Book a Strategy Call</a>
+            <a href="/book-call" class="text-sm px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+              style="color: var(--cta-text); border: 1px solid var(--cta-border);">Get a Free System Audit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="/assets/js/footer-loader.js"></script>
+  <script>
+    (function initServicesHubSubnav() {
+      const links = Array.from(document.querySelectorAll('.service-hub-link'));
+      if (!links.length) return;
+
+      const inactiveStyle = 'color: var(--cta-text); border: 1px solid var(--cta-border); background: transparent;';
+      const activeStyle = 'background: #F7C763; color: #0b1220; border: 1px solid rgba(255,255,255,0.2);';
+
+      const path = (window.location.pathname || '').toLowerCase();
+      const normalizedPath = path.replace(/\/+$/, '');
+      const currentService =
+        (normalizedPath.endsWith('/ai-development') || normalizedPath.endsWith('/ai-development.html')) ? 'ai-development' :
+        (normalizedPath.endsWith('/web-development') || normalizedPath.endsWith('/web-development.html')) ? 'web-development' :
+        (normalizedPath.endsWith('/web-hosting') || normalizedPath.endsWith('/web-hosting.html')) ? 'web-hosting' :
+        (normalizedPath.endsWith('/growth-optimization') || normalizedPath.endsWith('/growth-optimization.html')) ? 'growth-optimization' :
+        null;
+
+      links.forEach((link) => {
+        link.setAttribute('style', inactiveStyle);
+        link.removeAttribute('aria-current');
+
+        if (currentService && link.getAttribute('data-service') === currentService) {
+          link.setAttribute('style', activeStyle);
+          link.setAttribute('aria-current', 'page');
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>

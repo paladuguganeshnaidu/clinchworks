@@ -303,6 +303,116 @@
           "updatedAt": 1776586979256
         }
       }
+    },
+    "64d894f95995075bf5c148084f3ef05a342a69e41c134e19": {
+      "username": "GANESH NAIDU",
+      "createdAt": 1776673613735,
+      "lastSeen": 1776673614385,
+      "courses": {
+        "c-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776673614412
+        }
+      }
+    },
+    "cdc9f9aa3751c9c6d339f3946d77f53f3e70faafab1f6198": {
+      "username": "",
+      "createdAt": 1776686071148,
+      "lastSeen": 1776686335874,
+      "courses": {
+        "c-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "python-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "java-programming": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "burp-suite-basics": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "gobuster-recon": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "ai-cyber-beginner": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "ai-cyber-associate": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "ai-dev-professional": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "prompt-engineering-beginner": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "prompt-engineering-associate": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        },
+        "prompt-engineering-professional": {
+          "currentModule": 0,
+          "totalModules": 10,
+          "completed": false,
+          "examPassed": false,
+          "certificateIssued": false,
+          "updatedAt": 1776686335902
+        }
+      }
     }
   }
 }

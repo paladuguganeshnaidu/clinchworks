@@ -2,6 +2,8 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const zlib = require("zlib");
+const { pipeline } = require("stream");
 
 const PORT = Number(process.env.PORT) || 8080;
 const ROOT = path.resolve(__dirname);
@@ -25,19 +27,31 @@ const RATE_LIMIT_RULES = Object.freeze({
 const PRIVATE_STATIC_FILES = new Set([
   "dev-server.js",
   "examquestions.json",
-  ".htaccess"
+  ".htaccess",
+  "firebase.json",
+  "firestore.indexes.json",
+  "firestore.rules",
+  "functions/package.json",
+  "functions/package-lock.json"
 ]);
+
+const PRIVATE_STATIC_PREFIXES = [
+  "functions/"
+];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".gif": "image/gif",
   ".svg": "image/svg+xml",
+  ".webp": "image/webp",
+  ".avif": "image/avif",
   ".webmanifest": "application/manifest+json",
   ".ico": "image/x-icon",
   ".txt": "text/plain; charset=utf-8",
@@ -45,6 +59,59 @@ const mimeTypes = {
   ".woff": "font/woff",
   ".woff2": "font/woff2"
 };
+
+function buildWeakEtag(stats) {
+  return `W/\"${stats.size}-${Math.floor(stats.mtimeMs)}\"`;
+}
+
+function getCacheControl(publicPath, extname) {
+  if (publicPath.startsWith("/assets/")) {
+    return "public,max-age=31536000,immutable";
+  }
+
+  if (extname === ".html") {
+    return "no-cache";
+  }
+
+  if (extname === ".json" || extname === ".xml") {
+    return "no-cache";
+  }
+
+  return "no-cache";
+}
+
+function isCompressibleContentType(contentType) {
+  if (!contentType) return false;
+  return (
+    contentType.startsWith("text/") ||
+    contentType.startsWith("application/javascript") ||
+    contentType.startsWith("application/json") ||
+    contentType.startsWith("application/xml") ||
+    contentType.startsWith("application/manifest+json") ||
+    contentType.startsWith("image/svg+xml")
+  );
+}
+
+function pickContentEncoding(req) {
+  const acceptEncoding = String(req.headers["accept-encoding"] || "").toLowerCase();
+  if (acceptEncoding.includes("br")) return "br";
+  if (acceptEncoding.includes("gzip")) return "gzip";
+  return null;
+}
+
+function createCompressionStream(encoding) {
+  if (encoding === "br") {
+    return zlib.createBrotliCompress({
+      params: {
+        [zlib.constants.BROTLI_PARAM_QUALITY]: 5
+      }
+    });
+  }
+  if (encoding === "gzip") {
+    return zlib.createGzip({ level: 6 });
+  }
+  return null;
+}
 
 function ensureDataStore() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -512,7 +579,12 @@ function redirectExtensionless(req, res, pathname, isHttps) {
   if (!pathname.endsWith(".html")) return false;
 
   let target;
-  if (pathname.endsWith("/index.html")) {
+
+  // Canonicalize nested /pages/<slug>.html directly to /<slug>.
+  if (pathname.startsWith("/pages/") && !pathname.slice("/pages/".length).includes("/")) {
+    const slug = pathname.slice("/pages/".length).replace(/\.html$/, "");
+    target = `/${slug}`;
+  } else if (pathname.endsWith("/index.html")) {
     target = pathname.replace(/index\.html$/, "");
     if (!target) target = "/";
   } else {
@@ -526,6 +598,30 @@ function redirectExtensionless(req, res, pathname, isHttps) {
   applySecurityHeaders(res, isHttps);
   res.statusCode = 301;
   res.setHeader("Location", target);
+  res.end();
+  return true;
+}
+
+function redirectPagesToCanonical(req, res, pathname, isHttps) {
+  const method = (req.method || "GET").toUpperCase();
+  if (method !== "GET" && method !== "HEAD") return false;
+
+  if (!pathname.startsWith("/pages/")) return false;
+
+  const rest = pathname.slice("/pages/".length).replace(/^\/+/, "").replace(/\/+$/, "");
+  if (!rest) return false;
+  if (rest.includes("/")) return false;
+
+  const candidate = path.join(ROOT, "pages", `${rest}.html`);
+  try {
+    if (!fs.existsSync(candidate) || !fs.statSync(candidate).isFile()) return false;
+  } catch {
+    return false;
+  }
+
+  applySecurityHeaders(res, isHttps);
+  res.statusCode = 301;
+  res.setHeader("Location", `/${rest}`);
   res.end();
   return true;
 }
@@ -935,6 +1031,10 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (redirectPagesToCanonical(req, res, pathname, isHttps)) {
+    return;
+  }
+
   const publicPath = pathname;
   let filePath = path.resolve(ROOT, `.${publicPath}`);
 
@@ -955,11 +1055,21 @@ const server = http.createServer(async (req, res) => {
     if (fs.existsSync(htmlCandidate) && fs.statSync(htmlCandidate).isFile()) {
       filePath = htmlCandidate;
       extname = ".html";
+    } else if (!publicPath.startsWith("/pages/")) {
+      const candidateSlug = publicPath.replace(/^\/+/, "");
+      const pagesCandidate = path.join(ROOT, "pages", `${candidateSlug}.html`);
+      if (fs.existsSync(pagesCandidate) && fs.statSync(pagesCandidate).isFile()) {
+        filePath = pagesCandidate;
+        extname = ".html";
+      }
     }
   }
 
   const relativePath = path.relative(ROOT, filePath).replace(/\\/g, "/");
-  if (!relativePath || hasHiddenPathSegment(relativePath) || PRIVATE_STATIC_FILES.has(relativePath.toLowerCase())) {
+  const relativePathLower = relativePath.toLowerCase();
+  const isPrivatePrefix = PRIVATE_STATIC_PREFIXES.some((prefix) => relativePathLower.startsWith(prefix));
+
+  if (!relativePath || hasHiddenPathSegment(relativePath) || PRIVATE_STATIC_FILES.has(relativePathLower) || isPrivatePrefix) {
     applySecurityHeaders(res, isHttps);
     res.statusCode = 403;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -975,19 +1085,114 @@ const server = http.createServer(async (req, res) => {
 
   const contentType = mimeTypes[extname] || "application/octet-stream";
 
-  fs.readFile(filePath, (err, content) => {
+  let stats;
+  try {
+    stats = fs.statSync(filePath);
+  } catch (err) {
     applySecurityHeaders(res, isHttps);
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    return res.end(`Server Error: ${err.code || "UNKNOWN"}`);
+  }
 
-    if (err) {
+  const etag = buildWeakEtag(stats);
+  const ifNoneMatch = String(req.headers["if-none-match"] || "");
+  const method = (req.method || "GET").toUpperCase();
+
+  // Prevent accidental indexing of partials.
+  const isPartials = publicPath.startsWith("/assets/partials/");
+
+  // Range requests for streaming-friendly media.
+  const rangeHeader = String(req.headers.range || "");
+  const hasRange = rangeHeader.startsWith("bytes=");
+
+  // Compression for text-like assets (only when not serving ranges).
+  const encoding = !hasRange ? pickContentEncoding(req) : null;
+  const shouldCompress = !hasRange && encoding && isCompressibleContentType(contentType) && stats.size > 1024;
+
+  applySecurityHeaders(res, isHttps);
+  res.setHeader("Content-Type", contentType);
+  res.setHeader("ETag", etag);
+  res.setHeader("Cache-Control", getCacheControl(publicPath, extname));
+  if (isPartials) {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  }
+
+  if (ifNoneMatch && ifNoneMatch === etag && (method === "GET" || method === "HEAD")) {
+    res.statusCode = 304;
+    return res.end();
+  }
+
+  if (hasRange && stats.size > 0) {
+    const match = /^bytes=(\d*)-(\d*)$/i.exec(rangeHeader);
+    if (!match) {
+      res.statusCode = 416;
+      res.setHeader("Content-Range", `bytes */${stats.size}`);
+      return res.end();
+    }
+
+    let start = match[1] ? Number.parseInt(match[1], 10) : 0;
+    let end = match[2] ? Number.parseInt(match[2], 10) : stats.size - 1;
+
+    if (Number.isNaN(start) || Number.isNaN(end) || start < 0 || end < 0 || start > end || start >= stats.size) {
+      res.statusCode = 416;
+      res.setHeader("Content-Range", `bytes */${stats.size}`);
+      return res.end();
+    }
+
+    end = Math.min(end, stats.size - 1);
+    const chunkSize = end - start + 1;
+
+    res.statusCode = 206;
+    res.setHeader("Accept-Ranges", "bytes");
+    res.setHeader("Content-Range", `bytes ${start}-${end}/${stats.size}`);
+    res.setHeader("Content-Length", String(chunkSize));
+
+    if (method === "HEAD") {
+      return res.end();
+    }
+
+    const stream = fs.createReadStream(filePath, { start, end });
+    stream.on("error", () => {
+      if (!res.headersSent) res.statusCode = 500;
+      res.end();
+    });
+    return stream.pipe(res);
+  }
+
+  if (shouldCompress) {
+    res.setHeader("Content-Encoding", encoding);
+    res.setHeader("Vary", "Accept-Encoding");
+
+    if (method === "HEAD") {
+      res.statusCode = 200;
+      return res.end();
+    }
+
+    const compressor = createCompressionStream(encoding);
+    const src = fs.createReadStream(filePath);
+    pipeline(src, compressor, res, () => {});
+    return;
+  }
+
+  res.statusCode = 200;
+  res.setHeader("Content-Length", String(stats.size));
+
+  if (method === "HEAD") {
+    return res.end();
+  }
+
+  const stream = fs.createReadStream(filePath);
+  stream.on("error", (err) => {
+    if (!res.headersSent) {
       res.statusCode = 500;
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
       return res.end(`Server Error: ${err.code || "UNKNOWN"}`);
     }
-
-    res.statusCode = 200;
-    res.setHeader("Content-Type", contentType);
-    res.end(content);
+    res.end();
   });
+
+  stream.pipe(res);
 });
 
 server.listen(PORT, () => {

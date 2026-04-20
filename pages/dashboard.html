@@ -43,7 +43,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
 
       <!-- LOGO (Left Aligned) -->
-      <a href="../" class="flex items-center gap-0 group z-10 w-1/4">
+      <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
         <div
           class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
           <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
@@ -57,19 +57,19 @@
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
       <nav id="top-nav"
         class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
-        style="border: 1px solid rgba(247, 199, 99, );">
+        style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="../index.html"
+            <li class="nav-item-wrapper"><a href="/"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="about">About</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="services"
+            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="services">Services</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="domain"
+            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="training">Training</a></li>
 
-          <li class="nav-item-wrapper"><a href="projects"
+            <li class="nav-item-wrapper"><a href="/projects"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="projects">Projects</a></li>
         </ul>
@@ -85,7 +85,7 @@
           </svg>
         </button>
                 <!-- User Menu Trigger -->
-        <a id="nav-auth-btn" href="login.html" class="nav-user-trigger hidden sm:flex" aria-label="User menu">
+        <a id="nav-auth-btn" href="/login" class="nav-user-trigger hidden sm:flex" aria-label="User menu">
           <span class="nav-user-avatar-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21a8 8 0 0 0-16 0"></path>
@@ -94,7 +94,7 @@
           </span>
           <span class="nav-user-avatar-text hidden" aria-hidden="true">U</span>
         </a>
-        <a href="book-call"
+        <a href="/book-call"
           class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
           style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
         <button id="hamburger" class="hamburger lg:hidden ml-2"
@@ -108,38 +108,30 @@
           style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
 
           <!-- Services Options -->
-          <ul id="dropdown-services"
+            <ul id="dropdown-services"
             class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="google-ads" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Google Ads</a></li>
-            <li><a href="social-media-marketing" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Social Media</a></li>
-            <li><a href="website-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Website Design</a></li>
-            <li><a href="video-graphic-design" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Video & Graphics</a></li>
-            <li><a href="youtube-management" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">YouTube</a></li>
-            <li><a href="projects" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Projects</a></li>
-          </ul>
+            <li><a href="/ai-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">AI Development</a></li>
+            <li><a href="/web-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Development</a></li>
+            <li><a href="/web-hosting" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Hosting / VPS</a></li>
+            <li><a href="/growth-optimization" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Growth Optimization</a></li>
+            </ul>
 
           <!-- Training Options -->
           <ul id="dropdown-training"
             class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
-            <li><a href="domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Programming</a></li>
-            <li><a href="domain?category=Cyber%20Security"
+            <li><a href="/domain?category=Cyber%20Security"
                 class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">Cloud</a></li>
-            <li><a href="domain?category=Artificial%20Intelligence"
+            <li><a href="/domain?category=Artificial%20Intelligence"
                 class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="domain?category=Database%20Engineering"
+            <li><a href="/domain?category=Database%20Engineering"
                 class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
             </li>
-            <li><a href="domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
+            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
                 style="color: #0b1220;">All Courses</a></li>
           </ul>
 
@@ -150,12 +142,12 @@
 
   <div id="mobile-menu" class="mobile-menu lg:hidden">
     <div class="w-full flex justify-end px-5 py-4"></div>
-    <a href="../index.html" data-section="about">About</a>
-    <a href="services" data-section="services">Services</a>
-    <a href="domain" data-section="training">Training</a>
+    <a href="/" data-section="about">About</a>
+    <a href="/services" data-section="services">Services</a>
+    <a href="/domain" data-section="training">Training</a>
 
-    <a href="projects" data-section="projects">Projects</a>
-    <a href="book-call" style="color: #F1AF2C; margin-top: 1rem;">Contact &rarr;</a>
+    <a href="/projects" data-section="projects">Projects</a>
+    <a href="/book-call" style="color: #F1AF2C; margin-top: 1rem;">Contact &rarr;</a>
   </div>
 
 
@@ -261,7 +253,7 @@
             </div>
           `;
 
-          const btnLink = statusText === 'Not Started' ? `course?id=${safeCourseId}` : `player?id=${safeCourseId}`;
+          const btnLink = statusText === 'Not Started' ? `/course?id=${safeCourseId}` : `/player?id=${safeCourseId}`;
 
           const rightSide = `
             <div class="flex-shrink-0">
