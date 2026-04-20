@@ -21,6 +21,8 @@
     "ignore": [
       "firebase.json",
       "dev-server.js",
+      "tools/**",
+      "ASSET_OPTIMIZATION_PLAN.md",
       ".data/**",
       "functions/**",
       "examquestions.json",
