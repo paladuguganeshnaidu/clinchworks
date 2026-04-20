@@ -7,6 +7,9 @@
     {
       "source": "functions",
       "codebase": "default",
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
       "ignore": [
         "node_modules",
         ".git",
@@ -106,12 +109,16 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://www.gstatic.com 'sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc=' 'sha256-8W9r6m8kBf4sSLqcEhV/3LtrQwbAu+QKxvBUbmEV/mE=' 'sha256-FSpsRoLCiiXmqjfys1ylb/y/TbprzhIz+enlmTTtn1U=' 'sha256-IH1I+NY8GprnR1ibfkqWG4hiFVaJI2Ac8UA8sr1ba/A=' 'sha256-MoTDg/o2dp1nY3+59jLzavKsG4iB0xWjDDyKhg0xbeo=' 'sha256-Ny6ysY8wLISwgHaUD5NSffbS7qVwEii6ABpMVTsSGf4=' 'sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU=' 'sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng=' 'sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=' 'sha256-lUFrArWVazuKl3RrNAa3GyA8rMPBmntK5MKbSRYxv8M=' 'sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA=' 'sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc=' 'sha256-yK+yAeGXXIkSPGwaHkSemiSd1+EsAl+4azJhA7Uril8=' 'sha256-zM2osY2eN6Bwc8x6O9wrHWil46eh+GLwERtlxNtE2xU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com;"
+            "value": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://www.gstatic.com 'sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc=' 'sha256-IH1I+NY8GprnR1ibfkqWG4hiFVaJI2Ac8UA8sr1ba/A=' 'sha256-MoTDg/o2dp1nY3+59jLzavKsG4iB0xWjDDyKhg0xbeo=' 'sha256-Ny6ysY8wLISwgHaUD5NSffbS7qVwEii6ABpMVTsSGf4=' 'sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU=' 'sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng=' 'sha256-SYhnAvLepqS3X7v9gt2Qx1FqlHK4o9empmT4D+hdE+I=' 'sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=' 'sha256-YeFzxNHmkSwfx90XElxmz3vE7VhOUkpOZqzNmCRdJYw=' 'sha256-gyorwW+4JHxtAxntECOMW8YX705QyxDd52Dfovtvd04=' 'sha256-lUFrArWVazuKl3RrNAa3GyA8rMPBmntK5MKbSRYxv8M=' 'sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA=' 'sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com;"
           }
         ]
       }
     ],
     "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      },
       {
         "source": "/admin",
         "destination": "/pages/admin.html"

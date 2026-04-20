@@ -195,6 +195,7 @@
     </section>
   </div>
 
+  <script type="module" src="../assets/js/api-fetch-patch.js"></script>
   <script>
     function escapeHtml(value) {
       return String(value)
@@ -243,6 +244,11 @@
       let state;
       try {
         const stateResponse = await fetch(`/api/progress?courseId=${safeCourseId}`, { credentials: 'same-origin' });
+        if (stateResponse.status === 401 || stateResponse.status === 403) {
+          const target = encodeURIComponent(window.location.pathname + window.location.search);
+          showBlockedState('Login Required', 'Please log in to access the exam.', 'Log In', `/login?redirect=${target}`);
+          return;
+        }
         if (stateResponse.ok) {
           const statePayload = await stateResponse.json();
           state = statePayload.state || {};

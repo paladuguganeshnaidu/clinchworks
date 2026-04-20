@@ -177,6 +177,7 @@
     <div id="site-footer"></div>
 
   <script src="../assets/js/script.js"></script>
+  <script type="module" src="../assets/js/api-fetch-patch.js"></script>
   <script>
     function escapeHtml(value) {
       return String(value)
@@ -187,7 +188,7 @@
         .replace(/'/g, "&#39;");
     }
 
-    (async function () {
+    document.addEventListener('DOMContentLoaded', () => (async function () {
       try {
         const [coursesResponse, progressResponse] = await Promise.all([
           fetch('../courses-content.json'),
@@ -271,7 +272,7 @@
       } catch (err) {
         console.error('Failed to load dashboard:', err);
       }
-    })();
+    })());
   </script>
   <script src="/assets/js/footer-loader.js"></script>
 </body>

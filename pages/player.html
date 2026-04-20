@@ -351,7 +351,9 @@
     </main>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script type="module" src="../assets/js/api-fetch-patch.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
     (function () {
       const params = new URLSearchParams(window.location.search);
       const courseId = params.get('id');
@@ -620,7 +622,8 @@
           const isLocked = !state.completed && idx > state.currentModule;
           const isActive = idx === currentModuleIndex;
 
-          el.classList.toggle('sidebar-active', isActive);
+    })();
+    });
           el.classList.toggle('sidebar-locked', isLocked);
           el.setAttribute('aria-disabled', isLocked ? 'true' : 'false');
         });
@@ -763,6 +766,7 @@
 
       init();
     })();
+    });
   </script>
   <!-- ========================================
        JAVASCRIPT
