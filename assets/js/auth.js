@@ -179,6 +179,7 @@ const initAuth = () => {
 
     const protectedRouteNames = new Set([
         'admin',
+        'reception',
         'profile',
         'dashboard',
         'domain',

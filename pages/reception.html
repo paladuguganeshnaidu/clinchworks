@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Reception Panel - Clinch Works</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css?v=177659729621367" />
+</head>
+
+<body class="overflow-x-hidden w-full relative" style="background: var(--bg-root);">
+
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+      <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
+        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+        </div>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+      </a>
+
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
+        <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+          <li class="nav-item-wrapper"><a href="/" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper"><a href="/domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper"><a href="/projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+        </ul>
+      </nav>
+
+      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+        <a id="nav-auth-btn" href="/login" class="nav-user-trigger hidden sm:flex" aria-label="User menu">
+          <span class="nav-user-avatar-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21a8 8 0 0 0-16 0"></path>
+              <circle cx="12" cy="8" r="4"></circle>
+            </svg>
+          </span>
+          <span class="nav-user-avatar-text hidden" aria-hidden="true">U</span>
+        </a>
+        <a href="/book-call" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-28 pb-20 min-h-screen">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6">
+      <div class="section-reveal visible mb-10">
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight" style="color: var(--text-primary);">Reception Panel</h1>
+        <p class="mt-2 text-sm sm:text-base" style="color: var(--text-secondary);">Live booking requests (newest first). Mark leads Active/Inactive.</p>
+      </div>
+
+      <div class="glass-strong rounded-3xl p-6 sm:p-8 section-reveal visible" style="border: 1px solid var(--border-color); background: var(--bg-surface);">
+        <div id="reception-status" class="text-sm font-semibold mb-4" style="color: var(--text-secondary);">Loading…</div>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-[1100px] w-full text-left">
+            <thead>
+              <tr class="text-xs uppercase tracking-widest" style="color: var(--text-faint);">
+                <th class="py-3 pr-4">Name</th>
+                <th class="py-3 pr-4">Service</th>
+                <th class="py-3 pr-4">Mobile</th>
+                <th class="py-3 pr-4">WhatsApp</th>
+                <th class="py-3 pr-4">Description</th>
+                <th class="py-3 pr-4">Status</th>
+                <th class="py-3 pr-4">Created</th>
+                <th class="py-3 pr-0">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookings-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="site-footer" class="mt-10"></div>
+    </div>
+  </main>
+
+  <script src="../assets/js/script.js"></script>
+
+  <script type="module">
+    import { auth, db } from "../assets/js/firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+    import {
+      collection,
+      doc,
+      getDoc,
+      onSnapshot,
+      orderBy,
+      query,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+    const statusEl = document.getElementById('reception-status');
+    const bodyEl = document.getElementById('bookings-body');
+
+    const escapeHtml = (value) => {
+      const s = String(value ?? '');
+      return s.replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[c]));
+    };
+
+    const formatCreatedAt = (createdAt) => {
+      try {
+        const dt = createdAt && typeof createdAt.toDate === 'function' ? createdAt.toDate() : null;
+        return dt ? dt.toLocaleString() : '—';
+      } catch {
+        return '—';
+      }
+    };
+
+    const setStatusText = (text) => {
+      if (!statusEl) return;
+      statusEl.textContent = text;
+    };
+
+    const renderRows = (docs) => {
+      if (!bodyEl) return;
+      if (!docs.length) {
+        bodyEl.innerHTML = `
+          <tr>
+            <td colspan="8" class="py-10 text-center text-sm" style="color: var(--text-secondary);">No bookings yet.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      bodyEl.innerHTML = docs.map((d) => {
+        const data = d.data() || {};
+        const status = String(data.status || 'inactive').toLowerCase() === 'active' ? 'active' : 'inactive';
+        const statusColor = status === 'active' ? 'var(--success)' : 'var(--danger)';
+
+        return `
+          <tr class="border-t" style="border-color: var(--border-color);">
+            <td class="py-4 pr-4 align-top text-sm font-semibold" style="color: var(--text-primary);">${escapeHtml(data.name || '')}</td>
+            <td class="py-4 pr-4 align-top text-sm" style="color: var(--text-secondary);">${escapeHtml(data.service || '')}</td>
+            <td class="py-4 pr-4 align-top text-sm" style="color: var(--text-secondary);">${escapeHtml(data.mobile || '')}</td>
+            <td class="py-4 pr-4 align-top text-sm" style="color: var(--text-secondary);">${escapeHtml(data.whatsapp || '')}</td>
+            <td class="py-4 pr-4 align-top text-sm" style="color: var(--text-secondary);">${escapeHtml(data.description || '')}</td>
+            <td class="py-4 pr-4 align-top text-xs font-black uppercase tracking-widest" style="color: ${statusColor};">${escapeHtml(status)}</td>
+            <td class="py-4 pr-4 align-top text-xs" style="color: var(--text-faint);">${escapeHtml(formatCreatedAt(data.createdAt))}</td>
+            <td class="py-4 pr-0 align-top">
+              <div class="flex items-center gap-2">
+                <button data-action="active" data-id="${escapeHtml(d.id)}" class="px-3 py-2 rounded-xl text-xs font-black transition-all" style="background: var(--accent); color: var(--on-accent);">Mark Active</button>
+                <button data-action="inactive" data-id="${escapeHtml(d.id)}" class="px-3 py-2 rounded-xl text-xs font-black transition-all border" style="border-color: var(--border-color); color: var(--text-primary); background: transparent;">Mark Inactive</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    };
+
+    const wireActions = () => {
+      if (!bodyEl) return;
+
+      bodyEl.addEventListener('click', async (event) => {
+        const btn = event.target && event.target.closest ? event.target.closest('button[data-id][data-action]') : null;
+        if (!btn) return;
+
+        const id = btn.getAttribute('data-id');
+        const action = btn.getAttribute('data-action');
+        const nextStatus = action === 'active' ? 'active' : 'inactive';
+
+        if (!id) return;
+
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+
+        try {
+          await updateDoc(doc(db, 'bookings', id), { status: nextStatus });
+        } catch (err) {
+          console.error('Status update failed:', err);
+          alert('Unable to update status.');
+        } finally {
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }
+      }, { passive: true });
+    };
+
+    wireActions();
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        const target = encodeURIComponent('/reception');
+        window.location.href = `/login?redirect=${target}`;
+        return;
+      }
+
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        const role = userDoc.exists() ? String(userDoc.data().role || '').toLowerCase() : '';
+
+        if (role !== 'admin' && role !== 'reception') {
+          document.body.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--danger);font-family:system-ui;'><h1 style='font-size:2rem;font-weight:800;'>403 Forbidden</h1><p style='margin-top:0.75rem;color:var(--text-secondary);'>Reception privileges required.</p></div>";
+          return;
+        }
+
+        setStatusText('Listening for live updates…');
+
+        const bookingsRef = collection(db, 'bookings');
+        const q = query(bookingsRef, orderBy('createdAt', 'desc'));
+
+        onSnapshot(q, (snapshot) => {
+          renderRows(snapshot.docs);
+          setStatusText(`Total bookings: ${snapshot.size}`);
+        }, (err) => {
+          console.error('Realtime listener failed:', err);
+          setStatusText('Failed to load bookings.');
+        });
+      } catch (err) {
+        console.error('Reception auth check failed:', err);
+        setStatusText('Unable to verify permissions.');
+      }
+    });
+  </script>
+
+  <script src="/assets/js/footer-loader.js"></script>
+</body>
+
+</html>

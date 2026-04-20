@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2026-04-20T12:29:28.645Z",
+  "htmlFilesScanned": [
+    "assets/partials/footer.html",
+    "certificate.html",
+    "index.html",
+    "pages/admin.html",
+    "pages/ai-development.html",
+    "pages/book-call.html",
+    "pages/contact.html",
+    "pages/content-marketing.html",
+    "pages/course.html",
+    "pages/dashboard.html",
+    "pages/domain.html",
+    "pages/exam.html",
+    "pages/google-ads.html",
+    "pages/growth-optimization.html",
+    "pages/login.html",
+    "pages/player.html",
+    "pages/profile.html",
+    "pages/projects.html",
+    "pages/reception.html",
+    "pages/register.html",
+    "pages/services.html",
+    "pages/social-media-marketing.html",
+    "pages/training.html",
+    "pages/video-graphic-design.html",
+    "pages/web-development.html",
+    "pages/web-hosting.html",
+    "pages/website-design.html",
+    "pages/youtube-management.html"
+  ],
+  "inlineScriptHashCount": 14,
+  "inlineScriptHashes": [
+    "sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc=",
+    "sha256-4hn3/MzeLNAv8dVTQPrLzFQSq2TnyYwZky08jCrK7NQ=",
+    "sha256-FSpsRoLCiiXmqjfys1ylb/y/TbprzhIz+enlmTTtn1U=",
+    "sha256-IH1I+NY8GprnR1ibfkqWG4hiFVaJI2Ac8UA8sr1ba/A=",
+    "sha256-KGuN2O3Ihg+OkZpNaDGZYTDhQ1eTRTgtlEFWgeqSB5I=",
+    "sha256-MoTDg/o2dp1nY3+59jLzavKsG4iB0xWjDDyKhg0xbeo=",
+    "sha256-Ny6ysY8wLISwgHaUD5NSffbS7qVwEii6ABpMVTsSGf4=",
+    "sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU=",
+    "sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng=",
+    "sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=",
+    "sha256-kqeg1GnYQvunNyN6GXt+4bsLg4BuW1JBnQJdS08oapU=",
+    "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA=",
+    "sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc=",
+    "sha256-yK+yAeGXXIkSPGwaHkSemiSd1+EsAl+4azJhA7Uril8="
+  ],
+  "perFile": [
+    {
+      "file": "certificate.html",
+      "hashes": [
+        "sha256-KGuN2O3Ihg+OkZpNaDGZYTDhQ1eTRTgtlEFWgeqSB5I="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/admin.html",
+      "hashes": [
+        "sha256-MoTDg/o2dp1nY3+59jLzavKsG4iB0xWjDDyKhg0xbeo="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/ai-development.html",
+      "hashes": [
+        "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/book-call.html",
+      "hashes": [
+        "sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/contact.html",
+      "hashes": [
+        "sha256-4hn3/MzeLNAv8dVTQPrLzFQSq2TnyYwZky08jCrK7NQ="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/course.html",
+      "hashes": [
+        "sha256-Ny6ysY8wLISwgHaUD5NSffbS7qVwEii6ABpMVTsSGf4="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/dashboard.html",
+      "hashes": [
+        "sha256-FSpsRoLCiiXmqjfys1ylb/y/TbprzhIz+enlmTTtn1U="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/domain.html",
+      "hashes": [
+        "sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/exam.html",
+      "hashes": [
+        "sha256-kqeg1GnYQvunNyN6GXt+4bsLg4BuW1JBnQJdS08oapU="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/growth-optimization.html",
+      "hashes": [
+        "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/login.html",
+      "hashes": [
+        "sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=",
+        "sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc="
+      ],
+      "blocks": 2
+    },
+    {
+      "file": "pages/player.html",
+      "hashes": [
+        "sha256-yK+yAeGXXIkSPGwaHkSemiSd1+EsAl+4azJhA7Uril8="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/profile.html",
+      "hashes": [
+        "sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=",
+        "sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU="
+      ],
+      "blocks": 2
+    },
+    {
+      "file": "pages/reception.html",
+      "hashes": [
+        "sha256-IH1I+NY8GprnR1ibfkqWG4hiFVaJI2Ac8UA8sr1ba/A="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/register.html",
+      "hashes": [
+        "sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=",
+        "sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc="
+      ],
+      "blocks": 2
+    },
+    {
+      "file": "pages/services.html",
+      "hashes": [
+        "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/web-development.html",
+      "hashes": [
+        "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA="
+      ],
+      "blocks": 1
+    },
+    {
+      "file": "pages/web-hosting.html",
+      "hashes": [
+        "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA="
+      ],
+      "blocks": 1
+    }
+  ]
+}
