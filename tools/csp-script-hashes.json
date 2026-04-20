@@ -1,6 +1,7 @@
 {
-  "generatedAt": "2026-04-20T12:29:28.645Z",
+  "generatedAt": "2026-04-20T13:09:30.254Z",
   "htmlFilesScanned": [
+    "404.html",
     "assets/partials/footer.html",
     "certificate.html",
     "index.html",
@@ -33,25 +34,32 @@
   "inlineScriptHashCount": 14,
   "inlineScriptHashes": [
     "sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc=",
-    "sha256-4hn3/MzeLNAv8dVTQPrLzFQSq2TnyYwZky08jCrK7NQ=",
+    "sha256-8W9r6m8kBf4sSLqcEhV/3LtrQwbAu+QKxvBUbmEV/mE=",
     "sha256-FSpsRoLCiiXmqjfys1ylb/y/TbprzhIz+enlmTTtn1U=",
     "sha256-IH1I+NY8GprnR1ibfkqWG4hiFVaJI2Ac8UA8sr1ba/A=",
-    "sha256-KGuN2O3Ihg+OkZpNaDGZYTDhQ1eTRTgtlEFWgeqSB5I=",
     "sha256-MoTDg/o2dp1nY3+59jLzavKsG4iB0xWjDDyKhg0xbeo=",
     "sha256-Ny6ysY8wLISwgHaUD5NSffbS7qVwEii6ABpMVTsSGf4=",
     "sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU=",
     "sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng=",
     "sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=",
-    "sha256-kqeg1GnYQvunNyN6GXt+4bsLg4BuW1JBnQJdS08oapU=",
+    "sha256-lUFrArWVazuKl3RrNAa3GyA8rMPBmntK5MKbSRYxv8M=",
     "sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA=",
     "sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc=",
-    "sha256-yK+yAeGXXIkSPGwaHkSemiSd1+EsAl+4azJhA7Uril8="
+    "sha256-yK+yAeGXXIkSPGwaHkSemiSd1+EsAl+4azJhA7Uril8=",
+    "sha256-zM2osY2eN6Bwc8x6O9wrHWil46eh+GLwERtlxNtE2xU="
   ],
   "perFile": [
     {
+      "file": "404.html",
+      "hashes": [
+        "sha256-8W9r6m8kBf4sSLqcEhV/3LtrQwbAu+QKxvBUbmEV/mE="
+      ],
+      "blocks": 1
+    },
+    {
       "file": "certificate.html",
       "hashes": [
-        "sha256-KGuN2O3Ihg+OkZpNaDGZYTDhQ1eTRTgtlEFWgeqSB5I="
+        "sha256-lUFrArWVazuKl3RrNAa3GyA8rMPBmntK5MKbSRYxv8M="
       ],
       "blocks": 1
     },
@@ -73,13 +81,6 @@
       "file": "pages/book-call.html",
       "hashes": [
         "sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng="
-      ],
-      "blocks": 1
-    },
-    {
-      "file": "pages/contact.html",
-      "hashes": [
-        "sha256-4hn3/MzeLNAv8dVTQPrLzFQSq2TnyYwZky08jCrK7NQ="
       ],
       "blocks": 1
     },
@@ -107,7 +108,7 @@
     {
       "file": "pages/exam.html",
       "hashes": [
-        "sha256-kqeg1GnYQvunNyN6GXt+4bsLg4BuW1JBnQJdS08oapU="
+        "sha256-zM2osY2eN6Bwc8x6O9wrHWil46eh+GLwERtlxNtE2xU="
       ],
       "blocks": 1
     },

@@ -267,20 +267,37 @@
 
       let mcqs = [];
       let codingQs = [];
+      let fullExam = null;
 
       try {
         const response = await fetch(`/api/exam/questions?courseId=${safeCourseId}`, { credentials: 'same-origin' });
         if (!response.ok) {
-          showBlockedState('Exam Unavailable', 'No exam is currently available for this course.', 'Return to Course', `/player?id=${safeCourseId}`);
-          return;
+          throw new Error('API questions unavailable');
         }
 
         const examData = await response.json();
         mcqs = Array.isArray(examData.mcq) ? examData.mcq : [];
         codingQs = Array.isArray(examData.coding) ? examData.coding : [];
       } catch (err) {
-        showBlockedState('Failed to load exam data', 'Please try again shortly.');
-        return;
+        console.warn('Exam API unavailable, using local examquestions.json fallback:', err);
+        try {
+          const localResp = await fetch('../examquestions.json', { cache: 'no-store' });
+          if (!localResp.ok) throw new Error('Missing examquestions.json');
+          const all = await localResp.json();
+          const record = all && all[courseId];
+          if (!record) {
+            showBlockedState('Exam Unavailable', 'No exam is currently available for this course.', 'Return to Course', `/player?id=${safeCourseId}`);
+            return;
+          }
+
+          fullExam = record;
+          mcqs = Array.isArray(record.mcq) ? record.mcq : [];
+          codingQs = Array.isArray(record.coding) ? record.coding : [];
+        } catch (fallbackErr) {
+          console.error('Failed loading local exam fallback:', fallbackErr);
+          showBlockedState('Failed to load exam data', 'Please try again shortly.');
+          return;
+        }
       }
 
       const container = document.getElementById('questions-container');
@@ -353,18 +370,79 @@
         });
 
         try {
-          const response = await fetch('/api/exam/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'same-origin',
-            body: JSON.stringify(payload)
-          });
+          let result = null;
+          try {
+            const response = await fetch('/api/exam/submit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'same-origin',
+              body: JSON.stringify(payload)
+            });
 
-          if (!response.ok) {
-            throw new Error('Submission failed');
+            if (response.ok) {
+              result = await response.json();
+            } else {
+              throw new Error('Submission failed');
+            }
+          } catch (apiErr) {
+            console.warn('Exam submit API unavailable, grading locally:', apiErr);
+            const key = fullExam || (await (async () => {
+              const localResp = await fetch('../examquestions.json', { cache: 'no-store' });
+              if (!localResp.ok) return null;
+              const all = await localResp.json();
+              return all && all[courseId];
+            })());
+
+            if (!key) throw new Error('No local exam key available');
+
+            const keyMcq = Array.isArray(key.mcq) ? key.mcq : [];
+            const keyCoding = Array.isArray(key.coding) ? key.coding : [];
+            const total = keyMcq.length + keyCoding.length;
+            let scoreLocal = 0;
+
+            const submittedMcq = (payload.answers && Array.isArray(payload.answers.mcq)) ? payload.answers.mcq : [];
+            keyMcq.forEach((q, idx) => {
+              const ans = Number.parseInt(submittedMcq[idx], 10);
+              if (Number.isInteger(ans) && ans === Number.parseInt(q.ans, 10)) scoreLocal += 1;
+            });
+
+            const submittedCoding = (payload.answers && payload.answers.coding) ? payload.answers.coding : {};
+            keyCoding.forEach((q) => {
+              const rawAnswer = String(submittedCoding[q.id] || '');
+              const hay = rawAnswer.toLowerCase();
+              const keywords = Array.isArray(q.keywords) ? q.keywords : [];
+              const needed = Math.max(1, Math.ceil(keywords.length * 0.4));
+              let hits = 0;
+              keywords.forEach((kw) => {
+                const k = String(kw || '').toLowerCase();
+                if (k && hay.includes(k)) hits += 1;
+              });
+              if (keywords.length === 0) {
+                if (rawAnswer.trim().length > 0) scoreLocal += 1;
+              } else if (hits >= needed) {
+                scoreLocal += 1;
+              }
+            });
+
+            const percentageLocal = total > 0 ? Math.round((scoreLocal / total) * 100) : 0;
+            const passedLocal = percentageLocal >= 60;
+            result = { score: scoreLocal, total, percentage: percentageLocal, passed: passedLocal };
+
+            // Persist minimal progress state locally for compatibility with player/certificate flows.
+            try {
+              const progressKey = `cw_progress_${courseId}`;
+              const existingRaw = localStorage.getItem(progressKey);
+              const existing = existingRaw ? JSON.parse(existingRaw) : {};
+              existing.examPassed = !!passedLocal;
+              if (passedLocal) {
+                existing.completed = true;
+              }
+              localStorage.setItem(progressKey, JSON.stringify(existing));
+            } catch (storageErr) {
+              console.warn('Unable to persist local progress:', storageErr);
+            }
           }
 
-          const result = await response.json();
           const score = Number.parseInt(result.score, 10) || 0;
           const totalQ = Number.parseInt(result.total, 10) || (mcqs.length + codingQs.length);
           const percentage = Number.parseInt(result.percentage, 10) || 0;

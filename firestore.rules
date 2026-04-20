@@ -80,5 +80,32 @@ service cloud.firestore {
 
       allow delete: if isAdmin();
     }
+
+    // Contact messages: public create, staff-only read/update/delete.
+    match /contactMessages/{messageId} {
+      allow create: if true
+        && request.resource.data.keys().hasOnly([
+          'name',
+          'email',
+          'service',
+          'details',
+          'status',
+          'createdAt',
+          'page'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.service is string
+        && request.resource.data.details is string
+        && request.resource.data.status == 'new'
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.page is string;
+
+      allow read: if isStaff();
+
+      allow update: if isStaff();
+
+      allow delete: if isAdmin();
+    }
   }
 }

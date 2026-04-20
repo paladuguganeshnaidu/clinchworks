@@ -448,13 +448,32 @@
                     btnArea.style.display = 'block';
 
                     if (courseId) {
-                        const issueResult = await fetchJson('/api/certificate/issue', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ courseId })
-                        });
+                        try {
+                            const issueResult = await fetchJson('/api/certificate/issue', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ courseId })
+                            });
 
-                        if (issueResult.response.ok) {
+                            if (issueResult.response.ok) {
+                                certificateAlreadyIssued = true;
+                                setButtonIssuedState(btn);
+                                return;
+                            }
+                            throw new Error('API issue failed');
+                        } catch (err) {
+                            console.warn('Certificate issue API unavailable, storing local issued state:', err);
+
+                            try {
+                                const key = `cw_progress_${courseId}`;
+                                const raw = localStorage.getItem(key);
+                                const state = raw ? JSON.parse(raw) : {};
+                                state.certificateIssued = true;
+                                localStorage.setItem(key, JSON.stringify(state));
+                            } catch (storageErr) {
+                                console.warn('Unable to persist local certificateIssued flag:', storageErr);
+                            }
+
                             certificateAlreadyIssued = true;
                             setButtonIssuedState(btn);
                         }

@@ -196,60 +196,7 @@
        JAVASCRIPT
   ======================================== -->
   <script src="../assets/js/script.js"></script>
-  <script>
-    (function () {
-      const form = document.getElementById('contact-form');
-      const submitBtn = document.getElementById('contact-submit');
-      const msg = document.getElementById('contact-msg');
-
-      if (!form || !submitBtn || !msg) return;
-
-      const showMsg = (text, isError) => {
-        msg.textContent = text;
-        msg.classList.remove('hidden');
-        msg.style.borderColor = isError ? 'rgba(220, 38, 38, 0.45)' : 'rgba(247, 199, 99, 0.45)';
-        msg.style.background = isError ? 'rgba(220, 38, 38, 0.1)' : 'rgba(247, 199, 99, 0.12)';
-        msg.style.color = isError ? '#b91c1c' : '#0b1220';
-      };
-
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.75';
-        msg.classList.add('hidden');
-
-        const payload = {
-          name: (document.getElementById('name')?.value || '').trim(),
-          email: (document.getElementById('email')?.value || '').trim(),
-          service: (document.getElementById('service')?.value || 'general').trim(),
-          details: (document.getElementById('details')?.value || '').trim()
-        };
-
-        try {
-          const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'same-origin',
-            body: JSON.stringify(payload)
-          });
-
-          const data = await response.json().catch(() => ({}));
-          if (!response.ok) {
-            showMsg(data.error || 'Unable to submit request. Please try again.', true);
-            return;
-          }
-
-          form.reset();
-          showMsg('Thank you. Your request has been submitted successfully.', false);
-        } catch (err) {
-          showMsg('Network error. Please try again in a moment.', true);
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.style.opacity = '1';
-        }
-      });
-    })();
-  </script>
+  <script type="module" src="../assets/js/contact.js"></script>
   <script src="/assets/js/footer-loader.js"></script>
 </body>
 
