@@ -8,7 +8,7 @@
     <title>ClinchWorks | Official Certificate of Completion</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/styles.css?v=177659729621367" />
+    <link rel="stylesheet" href="/assets/css/styles.css?v=177659729621367" />
 
     <!-- Elegant serif + sans-serif pairing for classic certificate feel -->
     <link
@@ -258,7 +258,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
             <a href="/" class="flex items-center gap-0 group z-10">
                 <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                    <img src="assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-5 sm:h-8 w-auto object-contain rounded-[9px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+                    <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-5 sm:h-8 w-auto object-contain rounded-[9px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
                 </div>
                 <span class="font-semibold text-xs sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
             </a>
@@ -291,7 +291,7 @@
     <div class="certificate-container">
         <div class="certificate">
             <span style="display:inline-flex; align-items:center; gap: 2px;">
-                <img src="assets/images/logo-transparent.png?v=3" alt="Clinch Works Logo"
+                <img src="/assets/images/logo-transparent.png?v=3" alt="Clinch Works Logo"
                     style="height:30px; width:auto; object-fit:contain;">
                 <p style="font-size: 20px; font-weight: bold; color: #0b1220; margin: 0;">CLINCHWORKS.IN</p>
             </span>
@@ -327,7 +327,8 @@
 
     <!-- Using html2pdf for high quality PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script type="module" src="assets/js/api-fetch-patch.js"></script>
+    <script src="/assets/js/notification.js"></script>
+    <script type="module" src="/assets/js/api-fetch-patch.js"></script>
     <script>
         async function fetchJson(url, options) {
             const response = await fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
@@ -364,7 +365,10 @@
                     const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
                     if (statusResult.response.ok && statusResult.payload) {
                         if (!statusResult.payload.examPassed) {
-                            alert("You have not passed the final exam yet.");
+                            await showModal("Final Exam Required", "You have not passed the final exam yet.", {
+                                type: "warning",
+                                confirmText: "Go to Exam"
+                            });
                             window.location.href = `/exam?id=${safeCourseId}`;
                             return;
                         }
@@ -381,7 +385,10 @@
                     console.warn("Certificate API failed, checking local fallback:", err);
                     const localPass = localStorage.getItem(`cw_exam_passed_${courseId}`);
                     if (localPass !== "true") {
-                        alert("Unable to verify exam status. Please ensure you have passed the exam on this device.");
+                        await showModal("Verification Failed", "Unable to verify exam status. Please ensure you have passed the exam on this device.", {
+                            type: "error",
+                            confirmText: "Go to Exam"
+                        });
                         window.location.href = `/exam?id=${safeCourseId}`;
                         return;
                     }
@@ -488,7 +495,7 @@
     <!-- ========================================
        JAVASCRIPT
   ======================================== -->
-    <script src="assets/js/script.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 
 </html>

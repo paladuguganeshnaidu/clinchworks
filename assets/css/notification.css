@@ -211,13 +211,11 @@
 }
 
 .cw-modal-layer {
-  position: fixed;
+  position: fixed !important;
   inset: 0;
   z-index: 13000;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: max(14px, env(safe-area-inset-top)) 12px 14px;
+  display: block;
+  padding: 0;
   pointer-events: none;
 }
 
@@ -240,7 +238,9 @@
 }
 
 .cw-modal-panel {
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
   width: min(94vw, 380px);
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -248,14 +248,14 @@
   color: #f2f4f8;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.56);
   overflow: hidden;
-  transform: translateY(-10px) scale(0.98);
+  transform: translate(-50%, calc(-50% + 10px)) scale(0.98);
   opacity: 0;
   transition: transform 280ms var(--cw-note-ease), opacity 280ms var(--cw-note-ease);
   font-family: "Poppins", "Inter", "DM Sans", "Segoe UI", sans-serif;
 }
 
 .cw-modal-layer.is-visible .cw-modal-panel {
-  transform: translateY(0) scale(1);
+  transform: translate(-50%, -50%) scale(1);
   opacity: 1;
 }
 
@@ -442,6 +442,16 @@
     left: 12px;
     right: 12px;
     width: auto;
+  }
+
+  .cw-modal-panel {
+    top: max(16px, env(safe-area-inset-top));
+    left: 50%;
+    transform: translate(-50%, -8px) scale(0.98);
+  }
+
+  .cw-modal-layer.is-visible .cw-modal-panel {
+    transform: translate(-50%, 0) scale(1);
   }
 
   .cw-modal-content {

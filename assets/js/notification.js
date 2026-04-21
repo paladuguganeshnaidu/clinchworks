@@ -93,7 +93,8 @@
     toastRegion.className = "cw-toast-region";
     toastRegion.setAttribute("aria-live", "polite");
     toastRegion.setAttribute("aria-atomic", "false");
-    document.body.appendChild(toastRegion);
+    const mountRoot = document.documentElement || document.body;
+    mountRoot.appendChild(toastRegion);
     return toastRegion;
   }
 
@@ -283,6 +284,24 @@
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-modal", "true");
 
+    // Hard enforce viewport-floating behavior, even if stale CSS is cached.
+    const isMobileViewport = window.matchMedia("(max-width: 640px)").matches;
+    layer.style.setProperty("position", "fixed", "important");
+    layer.style.setProperty("inset", "0", "important");
+    layer.style.setProperty("z-index", "13000", "important");
+    layer.style.setProperty("pointer-events", "none", "important");
+
+    panel.style.setProperty("position", "fixed", "important");
+    panel.style.setProperty("left", "50%", "important");
+    panel.style.setProperty("opacity", "0", "important");
+    if (isMobileViewport) {
+      panel.style.setProperty("top", "max(16px, env(safe-area-inset-top))", "important");
+      panel.style.setProperty("transform", "translate(-50%, -8px) scale(0.98)", "important");
+    } else {
+      panel.style.setProperty("top", "50%", "important");
+      panel.style.setProperty("transform", "translate(-50%, calc(-50% + 10px)) scale(0.98)", "important");
+    }
+
     const content = document.createElement("div");
     content.className = "cw-modal-content";
 
@@ -359,7 +378,8 @@
 
     layer.appendChild(backdrop);
     layer.appendChild(panel);
-    document.body.appendChild(layer);
+    const mountRoot = document.documentElement || document.body;
+    mountRoot.appendChild(layer);
 
     const previousFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
@@ -376,6 +396,13 @@
 
       document.removeEventListener("keydown", onKeyDown);
       layer.classList.remove("is-visible");
+      layer.style.setProperty("pointer-events", "none", "important");
+      if (isMobileViewport) {
+        panel.style.setProperty("transform", "translate(-50%, -8px) scale(0.98)", "important");
+      } else {
+        panel.style.setProperty("transform", "translate(-50%, calc(-50% + 10px)) scale(0.98)", "important");
+      }
+      panel.style.setProperty("opacity", "0", "important");
 
       window.setTimeout(() => {
         if (layer.parentNode) {
@@ -415,6 +442,13 @@
 
     window.requestAnimationFrame(() => {
       layer.classList.add("is-visible");
+      layer.style.setProperty("pointer-events", "auto", "important");
+      if (isMobileViewport) {
+        panel.style.setProperty("transform", "translate(-50%, 0) scale(1)", "important");
+      } else {
+        panel.style.setProperty("transform", "translate(-50%, -50%) scale(1)", "important");
+      }
+      panel.style.setProperty("opacity", "1", "important");
       if (confirmBtn) {
         confirmBtn.focus();
       } else if (closeButton.style.display !== "none") {
@@ -476,6 +510,18 @@
   function isNotificationSoundEnabled() {
     return soundEnabled;
   }
+
+  const nativeAlert = typeof window.alert === "function" ? window.alert.bind(window) : null;
+  window.alert = function patchedAlert(message) {
+    try {
+      showToast("warning", String(message || ""), {
+        title: "Notice",
+        duration: 4200
+      });
+    } catch (err) {
+      if (nativeAlert) nativeAlert(String(message || ""));
+    }
+  };
 
   window.showToast = showToast;
   window.showModal = showModal;

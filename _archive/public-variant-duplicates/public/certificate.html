@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<!--
+Page: Certificate
+Purpose: Displays and prints learner completion certificate.
+Linked from: Dashboard and exam completion flow.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="noindex, nofollow" />
+    <title>ClinchWorks | Official Certificate of Completion</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css?v=177659729621367" />
+
+    <!-- Elegant serif + sans-serif pairing for classic certificate feel -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e9edf2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            padding: calc(2rem + 90px) 2rem 2rem;
+            position: relative;
+        }
+
+        .certificate-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .certificate {
+            background: #ffffff;
+            border: 2px solid #d4af37;
+            border-radius: 4px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem 2.8rem 2.8rem 2.8rem;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            pointer-events: none;
+            border-radius: 2px;
+        }
+
+        .brand {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2c3e4e;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .brand span {
+            font-weight: 300;
+            color: #b68b40;
+            letter-spacing: 1px;
+        }
+
+        .certificate-content {
+            text-align: center;
+        }
+
+        .cert-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 2.7rem;
+            letter-spacing: 2px;
+            color: #1e2a36;
+            margin-top: 0.5rem;
+            margin-bottom: 1.8rem;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .cert-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: #d4af37;
+        }
+
+        .recipient-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 3.2rem;
+            color: #0a1c2a;
+            margin: 0.75rem 0 0.5rem 0;
+            letter-spacing: 1px;
+            word-break: break-word;
+        }
+
+        .course-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #2c5282;
+            margin: 0.75rem 0 1.2rem 0;
+            background: #f8fafc;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            letter-spacing: -0.2px;
+        }
+
+        .description {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #2d3e50;
+            max-width: 80%;
+            margin: 1.2rem auto 1.2rem auto;
+            border-left: 3px solid #e2bc7c;
+            border-right: 3px solid #e2bc7c;
+            padding: 0.6rem 1rem;
+            background: #fefcf7;
+        }
+
+        .date-row {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            margin: 1.5rem 0 0.8rem 0;
+            color: #2c3e50;
+            letter-spacing: 0.3px;
+        }
+
+        .date-row strong {
+            font-weight: 600;
+            color: #b68b40;
+        }
+
+        .level-badge {
+            display: inline-block;
+            margin-top: 1.2rem;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1.2px;
+            background: #1e2a36;
+            color: #f5e7d9;
+            padding: 0.5rem 1.6rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            border: 1px solid #c9a96b;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.8rem;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            border-top: 1px solid #ece9e0;
+            padding-top: 1.5rem;
+            font-weight: 400;
+        }
+
+        .emblem {
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .no-print {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        @media print {
+            #header {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                align-items: flex-start;
+                justify-content: flex-start;
+            }
+
+            .certificate-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .certificate {
+                box-shadow: none;
+                border: 2px solid #aaa;
+                padding: 1.8rem;
+                break-inside: avoid;
+            }
+
+            .certificate::before {
+                border: 1px solid #ccc;
+            }
+
+            .brand {
+                color: #111;
+            }
+
+            .level-badge {
+                background: #e0e0e0;
+                color: #1e2a36;
+                border: 1px solid #aaa;
+            }
+
+            .description {
+                background: none;
+                border-left: 2px solid #bbb;
+                border-right: 2px solid #bbb;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
+            <a href="/" class="flex items-center gap-0 group z-10">
+                <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                    <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-5 sm:h-8 w-auto object-contain rounded-[9px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+                </div>
+                <span class="font-semibold text-xs sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
+            </a>
+
+            <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center shadow-sm z-50 lg:mx-4" style="border: 1px solid rgba(247, 200, 99, 0.9);">
+                <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
+                    <li class="nav-item-wrapper"><a href="/" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+                    <li class="nav-item-wrapper"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+                    <li class="nav-item-wrapper"><a href="/domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+                    <li class="nav-item-wrapper"><a href="/projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
+                </ul>
+            </nav>
+
+            <div class="flex items-center justify-end gap-3 z-10">
+                <a id="nav-auth-btn" href="/login" class="nav-user-trigger hidden sm:flex" aria-label="User menu">
+                    <span class="nav-user-avatar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                            <circle cx="12" cy="8" r="4"></circle>
+                        </svg>
+                    </span>
+                    <span class="nav-user-avatar-text hidden" aria-hidden="true">U</span>
+                </a>
+
+                <a href="/book-call" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="certificate-container">
+        <div class="certificate">
+            <span style="display:inline-flex; align-items:center; gap: 2px;">
+                <img src="/assets/images/logo-transparent.png?v=3" alt="Clinch Works Logo"
+                    style="height:30px; width:auto; object-fit:contain;">
+                <p style="font-size: 20px; font-weight: bold; color: #0b1220; margin: 0;">CLINCHWORKS.IN</p>
+            </span>
+
+            <div class="certificate-content">
+                <div class="cert-title">CERTIFICATE OF COMPLETION</div>
+                <div class="recipient-name">ClinchWorks Student</div>
+                <div class="course-name">Engineering Protocol</div>
+                <div class="description">
+                    This certifies that the above individual has successfully completed
+                    the training program and demonstrated practical competency in real-world scenarios.
+                </div>
+                <div class="date-row">
+                    <strong>Date:</strong> <span id="cert-date">April 5, 2026</span>
+                </div>
+                <div class="level-badge">
+                    PROGRAMMING | BEGINNER
+                </div>
+            </div>
+
+            <div class="footer-note">
+                <div class="emblem">✦ ClinchWorks Verified ✦</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-print">
+        <button id="download-btn"
+            style="background: #2c5282; color: white; padding: 14px 28px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.15); transition: 0.2s ease;">
+            Download PDF Certificate ⬇
+        </button>
+    </div>
+
+    <!-- Using html2pdf for high quality PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script type="module" src="/assets/js/api-fetch-patch.js"></script>
+    <script>
+        async function fetchJson(url, options) {
+            const response = await fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
+            let payload = null;
+            try {
+                payload = await response.json();
+            } catch (err) {
+                payload = null;
+            }
+            return { response, payload };
+        }
+
+        function setButtonIssuedState(btn) {
+            btn.textContent = "Certificate already issued";
+            btn.style.pointerEvents = "none";
+            btn.style.opacity = "0.5";
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id');
+            const safeCourseId = encodeURIComponent(String(courseId || ''));
+
+            const recipientNameEl = document.querySelector('.recipient-name');
+            const courseNameEl = document.querySelector('.course-name');
+            const levelBadgeEl = document.querySelector('.level-badge');
+            const btn = document.getElementById('download-btn');
+
+            let certificateAlreadyIssued = false;
+            let resolvedName = "ClinchWorks Student";
+
+            if (courseId) {
+                try {
+                    const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
+                    if (statusResult.response.ok && statusResult.payload) {
+                        if (!statusResult.payload.examPassed) {
+                            alert("You have not passed the final exam yet.");
+                            window.location.href = `/exam?id=${safeCourseId}`;
+                            return;
+                        }
+
+                        if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
+                            resolvedName = String(statusResult.payload.username).trim();
+                        }
+
+                        certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
+                    } else {
+                        throw new Error("API failed");
+                    }
+                } catch (err) {
+                    console.warn("Certificate API failed, checking local fallback:", err);
+                    const localPass = localStorage.getItem(`cw_exam_passed_${courseId}`);
+                    if (localPass !== "true") {
+                        alert("Unable to verify exam status. Please ensure you have passed the exam on this device.");
+                        window.location.href = `/exam?id=${safeCourseId}`;
+                        return;
+                    }
+                    const localName = localStorage.getItem(`cw_name_${courseId}`);
+                    if (localName) {
+                        resolvedName = localName;
+                    }
+                }
+
+                if (certificateAlreadyIssued) {
+                    setButtonIssuedState(btn);
+                }
+            }
+
+            if (resolvedName === "ClinchWorks Student") {
+                const sessionResult = await fetchJson('/api/session');
+                if (sessionResult.response.ok && sessionResult.payload && sessionResult.payload.username) {
+                    const candidate = String(sessionResult.payload.username).trim();
+                    if (candidate) {
+                        resolvedName = candidate;
+                    }
+                }
+            }
+
+            recipientNameEl.textContent = resolvedName;
+
+            if (courseId) {
+                try {
+                    const response = await fetch('courses-content.json');
+                    const data = await response.json();
+                    const cd = data.courses.find(c => c.id === courseId);
+                    if (cd) {
+                        courseNameEl.textContent = cd.title;
+                        levelBadgeEl.textContent = `${cd.category.toUpperCase()} | ${cd.level.toUpperCase()}`;
+                    }
+                } catch (err) {
+                    console.error("Failed fetching certificate metadata");
+                }
+            }
+
+            const dOpts = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US', dOpts);
+
+            btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
+            btn.addEventListener('mouseleave', () => btn.style.transform = 'translateY(0)');
+
+            btn.addEventListener('click', () => {
+                if (certificateAlreadyIssued) {
+                    return;
+                }
+
+                const btnArea = document.querySelector('.no-print');
+                btnArea.style.display = 'none';
+
+                const element = document.querySelector('.certificate-container');
+                const opt = {
+                    margin: 0.5,
+                    filename: `ClinchWorks_Certificate_${courseId || 'Certified'}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
+
+                html2pdf().set(opt).from(element).save().then(async () => {
+                    btnArea.style.display = 'block';
+
+                    if (courseId) {
+                        try {
+                            const issueResult = await fetchJson('/api/certificate/issue', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ courseId })
+                            });
+
+                            if (issueResult.response.ok) {
+                                certificateAlreadyIssued = true;
+                                setButtonIssuedState(btn);
+                                return;
+                            }
+                            throw new Error('API issue failed');
+                        } catch (err) {
+                            console.warn('Certificate issue API unavailable, storing local issued state:', err);
+
+                            try {
+                                const key = `cw_progress_${courseId}`;
+                                const raw = localStorage.getItem(key);
+                                const state = raw ? JSON.parse(raw) : {};
+                                state.certificateIssued = true;
+                                localStorage.setItem(key, JSON.stringify(state));
+                            } catch (storageErr) {
+                                console.warn('Unable to persist local certificateIssued flag:', storageErr);
+                            }
+
+                            certificateAlreadyIssued = true;
+                            setButtonIssuedState(btn);
+                        }
+                    }
+                }).catch(() => {
+                    btnArea.style.display = 'block';
+                });
+            });
+        });
+    </script>
+    <!-- ========================================
+       JAVASCRIPT
+  ======================================== -->
+    <script src="/assets/js/script.js"></script>
+</body>
+
+</html>
