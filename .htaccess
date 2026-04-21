@@ -36,7 +36,6 @@ Options -Indexes
     # 3) Internally rewrite /slug -> /pages/slug.html for non-files/non-dirs
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} ^(.*/)[^/]+/?$
-    RewriteCond %1pages/$1.html -f
+    RewriteCond pages/$1.html -f
     RewriteRule ^([^/]+)$ pages/$1.html [L]
 </IfModule>
