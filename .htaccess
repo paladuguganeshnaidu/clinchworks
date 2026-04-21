@@ -25,23 +25,17 @@ Options -Indexes
     RewriteRule (^|/)(dev-server\.js|examquestions\.json|firebase\.json|firestore\.indexes\.json|firestore\.rules)$ - [F,L,NC]
     RewriteRule (^|/)functions(/|$) - [F,L,NC]
 
-    # 1. Externally redirect direct requests for .html files to extensionless URL
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+    # 1) Canonicalize /index and /index.html to site root
+    RewriteCond %{THE_REQUEST} \s/+index(?:\.html)?(?:[\s?]|$) [NC]
+    RewriteRule ^index(?:\.html)?$ / [R=301,L]
 
-    # 2. Redirect direct requests for index to root path
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^(.*)index$ /$1 [R=301,L]
+    # 2) Canonicalize direct .html requests to extensionless URLs (no loop)
+    RewriteCond %{THE_REQUEST} \s/+([^\s?]+?)\.html(?:[\s?]|$) [NC]
+    RewriteRule ^(.+)\.html$ /$1 [R=301,L]
 
-    # 3. Internally rewrite /slug -> /pages/slug.html when present
+    # 3) Internally rewrite /slug -> /pages/slug.html for non-files/non-dirs
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{DOCUMENT_ROOT}/pages/$1.html -f
+    RewriteCond pages/$1.html -f
     RewriteRule ^([^/]+)$ pages/$1.html [L]
-
-    # 4. Internally rewrite extensionless URLs to .html if file exists
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME}.html -f
-    RewriteRule ^(.*)$ $1.html [L]
 </IfModule>
