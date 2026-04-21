@@ -1,4 +1,4 @@
-﻿const http = require("http");
+const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
@@ -7,7 +7,7 @@ const { pipeline } = require("stream");
 
 const PORT = Number(process.env.PORT) || 8080;
 const ROOT = path.resolve(__dirname);
-const DATA_DIR = path.join(ROOT, ".data");
+const DATA_DIR = process.env.CW_DATA_DIR || "/var/lib/clinchworks-data";
 const SESSION_DB_PATH = path.join(DATA_DIR, "sessions.json");
 const LEADS_DB_PATH = path.join(DATA_DIR, "leads.json");
 
@@ -290,7 +290,7 @@ function buildSecurityHeaders(isHttps) {
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Cross-Origin-Resource-Policy": "same-origin",
-    "Content-Security-Policy": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://www.gstatic.com 'sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc=' 'sha256-IH1I+NY8GprnR1ibfkqWG4hiFVaJI2Ac8UA8sr1ba/A=' 'sha256-MoTDg/o2dp1nY3+59jLzavKsG4iB0xWjDDyKhg0xbeo=' 'sha256-Ny6ysY8wLISwgHaUD5NSffbS7qVwEii6ABpMVTsSGf4=' 'sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU=' 'sha256-Rwu7Q93Ky5OCrXpzMAHDOwBDKPnfeU/6d8E3uLzc3Ng=' 'sha256-SYhnAvLepqS3X7v9gt2Qx1FqlHK4o9empmT4D+hdE+I=' 'sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=' 'sha256-YeFzxNHmkSwfx90XElxmz3vE7VhOUkpOZqzNmCRdJYw=' 'sha256-gyorwW+4JHxtAxntECOMW8YX705QyxDd52Dfovtvd04=' 'sha256-lUFrArWVazuKl3RrNAa3GyA8rMPBmntK5MKbSRYxv8M=' 'sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA=' 'sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com;"
+    "Content-Security-Policy": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://www.gstatic.com 'sha256-/uH9eaHW33pFZt192hyYREvS0Sa3hEWAOvuOcbtlpME=' 'sha256-1V9OeVOgczaU1mkVyVpychYYRxedP/Wdx5a3dq3vD5s=' 'sha256-C5ry726bOCl5elxCqbrJpI0X/Nhn/sp0Lnyq6MfS4Kg=' 'sha256-ClMJFFMc3cVr188UPQRgEkRvqcWmbbkajP470VoCxQU=' 'sha256-HwV37WUTpx+6yiIJfTO7UJKy0fL2soLvFVjpNHvwcLw=' 'sha256-NAdMEbX60CC06HmZ4+iTx8hPmAIlx62rrQxZplagQhs=' 'sha256-NELZYEq1I23t0m7vC+I6FuyCs+6qdES3rNFdlwowIJY=' 'sha256-Ogei2FOlDBlRG3niHeZ0ZHOouV2JuVAED110T9ECBJg=' 'sha256-RHtye2qmNEs7Pmi+bDlpttnp6LXZzPlWysCQaPeSIVw=' 'sha256-WI9WUbBvx9KDFmINDQolhbAUquSnLOXSiMUNuJ5hJ9A=' 'sha256-Z9e72IcgVPv9DvgcvmKn3/jyYdb/b+0xGcfI09vGO34=' 'sha256-pvnggaYi7vBvwOI8arfVhcg+Oubw8nQx7lQX8HKJY7Q=' 'sha256-tCPdgxOvIa4r8PDzaACletZHhSjwbrcHT8MzFbjIYNI=' 'sha256-uWMk06ltVnAzH5qhmiUm9ucEclypCLeFwCOGI2OJuOU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com;"
   };
 
   if (isHttps) {
@@ -702,29 +702,62 @@ async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
     }
 
     const name = sanitizeText(body.name, 120);
-    const countryCode = sanitizeCountryCode(body.countryCode);
     const mobile = sanitizePhone(body.mobile);
-    const address = sanitizeText(body.address, 500);
+    const service = sanitizeText(body.service, 120);
+    const whatsapp = sanitizePhone(body.whatsapp);
+    const description = sanitizeText(body.description, 4000);
 
     if (name.length < 2) {
       return sendJson(res, 400, { error: "Valid full name is required" }, isHttps, noStore);
-    }
-    if (!countryCode) {
-      return sendJson(res, 400, { error: "Valid country code is required" }, isHttps, noStore);
     }
     if (mobile.length < 7 || mobile.length > 15) {
       return sendJson(res, 400, { error: "Valid mobile number is required" }, isHttps, noStore);
     }
 
-    appendLead("bookCalls", {
+    const commonLead = {
       id: crypto.randomBytes(10).toString("hex"),
       name,
-      countryCode,
       mobile,
-      address,
       createdAt: new Date().toISOString(),
       ip: String(req.socket?.remoteAddress || ""),
       userAgent: sanitizeText(req.headers["user-agent"] || "", 300)
+    };
+
+    const isBookingPayload = service.length > 0 || whatsapp.length > 0 || description.length > 0;
+
+    if (isBookingPayload) {
+      if (!service) {
+        return sendJson(res, 400, { error: "Valid service is required" }, isHttps, noStore);
+      }
+      if (whatsapp.length < 7 || whatsapp.length > 15) {
+        return sendJson(res, 400, { error: "Valid WhatsApp number is required" }, isHttps, noStore);
+      }
+      if (description.length < 5) {
+        return sendJson(res, 400, { error: "Please add a short project description" }, isHttps, noStore);
+      }
+
+      appendLead("bookCalls", {
+        ...commonLead,
+        service,
+        whatsapp,
+        description,
+        status: "active"
+      });
+
+      return sendJson(res, 200, { ok: true, message: "Booking request submitted successfully" }, isHttps, noStore);
+    }
+
+    // Backward-compatible payload shape.
+    const countryCode = sanitizeCountryCode(body.countryCode);
+    const address = sanitizeText(body.address, 500);
+    if (!countryCode) {
+      return sendJson(res, 400, { error: "Valid country code is required" }, isHttps, noStore);
+    }
+
+    appendLead("bookCalls", {
+      ...commonLead,
+      countryCode,
+      address
     });
 
     return sendJson(res, 200, { ok: true, message: "Call request submitted successfully" }, isHttps, noStore);
@@ -1051,15 +1084,19 @@ const server = http.createServer(async (req, res) => {
     filePath = path.join(filePath, "index.html");
     extname = ".html";
   } else if (!extname) {
-    const htmlCandidate = `${filePath}.html`;
-    if (fs.existsSync(htmlCandidate) && fs.statSync(htmlCandidate).isFile()) {
-      filePath = htmlCandidate;
-      extname = ".html";
-    } else if (!publicPath.startsWith("/pages/")) {
+    if (!publicPath.startsWith("/pages/")) {
       const candidateSlug = publicPath.replace(/^\/+/, "");
       const pagesCandidate = path.join(ROOT, "pages", `${candidateSlug}.html`);
       if (fs.existsSync(pagesCandidate) && fs.statSync(pagesCandidate).isFile()) {
         filePath = pagesCandidate;
+        extname = ".html";
+      }
+    }
+
+    if (!extname) {
+      const htmlCandidate = `${filePath}.html`;
+      if (fs.existsSync(htmlCandidate) && fs.statSync(htmlCandidate).isFile()) {
+        filePath = htmlCandidate;
         extname = ".html";
       }
     }
@@ -1077,9 +1114,32 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    const custom404Candidates = [
+      path.join(ROOT, "pages", "404.html"),
+      path.join(ROOT, "404.html")
+    ];
+
+    const custom404Path = custom404Candidates.find((candidate) => {
+      try {
+        return fs.existsSync(candidate) && fs.statSync(candidate).isFile();
+      } catch {
+        return false;
+      }
+    });
+
     applySecurityHeaders(res, isHttps);
     res.statusCode = 404;
     res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache");
+
+    if (custom404Path) {
+      try {
+        return res.end(fs.readFileSync(custom404Path));
+      } catch (err) {
+        return res.end("<h1>404 Not Found</h1>");
+      }
+    }
+
     return res.end("<h1>404 Not Found</h1>");
   }
 
@@ -1195,7 +1255,7 @@ const server = http.createServer(async (req, res) => {
   stream.pipe(res);
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, "127.0.0.1", () => {
   console.log(`Secure development server running at http://localhost:${PORT}`);
 });
 
