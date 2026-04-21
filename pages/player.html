@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+Page: Course Player
+Purpose: Delivers module content, progress updates, and exam transition.
+Linked from: Course page and dashboard learning actions.
+-->
 <html lang="en">
 
 <head>
@@ -6,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow" />
   <title>Course Player | Clinch Works</title>
-  <link rel="stylesheet" href="../assets/css/styles.css?v=177659729621367">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=177659729621367">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -174,6 +179,13 @@
       }
     }
   </style>
+
+  <!-- Favicon Configuration -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="shortcut icon" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="apple-touch-icon" href="/assets/images/logo-transparent.png?v=1">
+
 </head>
 
 <body>
@@ -185,7 +197,7 @@
       <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
         <div
           class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo"
+          <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo"
             class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm"
             style="overflow: hidden;" />
         </div>
@@ -351,7 +363,7 @@
     </main>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-  <script type="module" src="../assets/js/api-fetch-patch.js"></script>
+  <script type="module" src="/assets/js/api-fetch-patch.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
     (function () {
@@ -621,9 +633,6 @@
         Array.from(sidebarContent.children).forEach((el, idx) => {
           const isLocked = !state.completed && idx > state.currentModule;
           const isActive = idx === currentModuleIndex;
-
-    })();
-    });
           el.classList.toggle('sidebar-locked', isLocked);
           el.setAttribute('aria-disabled', isLocked ? 'true' : 'false');
         });
@@ -771,7 +780,7 @@
   <!-- ========================================
        JAVASCRIPT
   ======================================== -->
-  <script src="../assets/js/script.js"></script>
+  <script src="/assets/js/script.js"></script>
   <script src="/assets/js/footer-loader.js"></script>
 </body>
 

@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="404 Error - Page Not Found">
+    <title>404 - Page Not Found | ClinchWorks</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-base: #050508;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-gold: #fbbf24;
+            --font-main: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient Background Glows */
+        .ambient-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a0a14 0%, var(--bg-base) 100%);
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: drift 20s infinite alternate ease-in-out;
+            mix-blend-mode: screen;
+        }
+
+        .glow-blue {
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+            top: -30vw;
+            left: -20vw;
+            animation-duration: 25s;
+        }
+
+        .glow-gold {
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 60%);
+            bottom: -20vw;
+            right: -20vw;
+            animation-delay: -7s;
+            animation-direction: alternate-reverse;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(3vw, 5vw) scale(1.05); }
+            100% { transform: translate(-4vw, -2vw) scale(0.95); }
+        }
+
+        /* Particles Canvas */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Main Content Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            animation: slideFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideFadeUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & 404 Glitch Effect */
+        .error-code {
+            font-size: clamp(8rem, 25vw, 15rem);
+            font-weight: 800;
+            line-height: 0.8;
+            margin: 0 0 1rem 0;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Subtle sliced glitch overlay */
+        .error-code::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: var(--text-primary);
+            -webkit-text-fill-color: var(--text-primary);
+            background: transparent;
+            opacity: 0.8;
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            animation: glitchEffect 5s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0); 
+                filter: drop-shadow(0 10px 20px rgba(59, 130, 246, 0.2)); 
+            }
+            50% { 
+                transform: translateY(-20px); 
+                filter: drop-shadow(0 20px 30px rgba(251, 191, 36, 0.3)); 
+            }
+        }
+
+        @keyframes glitchEffect {
+            0%, 80% { clip-path: inset(50% 0 50% 0); transform: translate(0, 0); }
+            82% { clip-path: inset(10% 0 80% 0); transform: translate(4px, 0); }
+            84% { clip-path: inset(80% 0 10% 0); transform: translate(-4px, 0); }
+            86% { clip-path: inset(30% 0 50% 0); transform: translate(4px, 0); }
+            88% { clip-path: inset(50% 0 30% 0); transform: translate(-4px, 0); }
+            90%, 100% { clip-path: inset(50% 0 50% 0); transform: translate(0, 0); }
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 2.5rem auto;
+            line-height: 1.6;
+        }
+
+        /* Call to Action Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 2.25rem;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--text-primary);
+            color: var(--bg-base);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background-color: #f1f5f9;
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Accessibility: Reduce motion */
+        @media (prefers-reduced-motion: reduce) {
+            .container { animation: none; opacity: 1; transform: translateY(0); }
+            .error-code, .error-code::after, .glow { animation: none; }
+            .btn:hover { transform: none; }
+        }
+    </style>
+
+  <!-- Favicon Configuration -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="shortcut icon" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="apple-touch-icon" href="/assets/images/logo-transparent.png?v=1">
+
+</head>
+<body>
+
+    <!-- Ambient Background Effects -->
+    <div class="ambient-layer">
+        <div class="glow glow-blue"></div>
+        <div class="glow glow-gold"></div>
+    </div>
+    <canvas id="particles" aria-hidden="true"></canvas>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h1 class="error-code" data-text="404">404</h1>
+        <h2>Page Not Found</h2>
+        <p>The page you're looking for doesn't exist or has been moved. Let's get you back to where you need to be.</p>
+        
+        <div class="btn-group">
+            <a href="/" class="btn btn-primary" onclick="goBack(event)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Go Back Home
+            </a>
+            <a href="/contact" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Contact Us
+            </a>
+        </div>
+    </main>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // 1. History Back Navigation
+        function goBack(event) {
+            // Only capture the event if there is a window history to navigate back to
+            if (window.history.length > 1) {
+                event.preventDefault();
+                window.history.back();
+            }
+            // If no history, the default anchor href="/" handles the fallback gracefully
+        }
+
+        // 2. Subtle Background Particles Animation
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let width, height, particlesArray;
+
+        // Respect reduced motion preferences
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function initParticles() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particlesArray = [];
+            
+            // Adjust density based on screen size
+            const particleCount = Math.floor(width / 30);
+            
+            for (let i = 0; i < particleCount; i++) {
+                particlesArray.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 1.5 + 0.5,
+                    speedX: (Math.random() - 0.5) * 0.4,
+                    speedY: (Math.random() - 0.5) * 0.4,
+                    baseOpacity: Math.random() * 0.4 + 0.1
+                });
+            }
+        }
+
+        function animateParticles() {
+            if (prefersReducedMotion) return;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            particlesArray.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                
+                // Wrap around edges seamlessly
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+                
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.baseOpacity})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize and handle resizing efficiently
+        if (!prefersReducedMotion) {
+            window.addEventListener('resize', () => {
+                // Debounce resize slightly
+                clearTimeout(window.resizeTimeout);
+                window.resizeTimeout = setTimeout(initParticles, 200);
+            });
+            initParticles();
+            animateParticles();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "dev-server.js",
+      "tools/**",
+      "ASSET_OPTIMIZATION_PLAN.md",
+      "admin.html",
+      "ai-development.html",
+      "book-call.html",
+      "contact.html",
+      "content-marketing.html",
+      "course.html",
+      "dashboard.html",
+      "domain.html",
+      "exam.html",
+      "google-ads.html",
+      "growth-optimization.html",
+      "login.html",
+      "player.html",
+      "profile.html",
+      "projects.html",
+      "reception.html",
+      "register.html",
+      "services.html",
+      "social-media-marketing.html",
+      "training.html",
+      "video-graphic-design.html",
+      "web-development.html",
+      "web-hosting.html",
+      "website-design.html",
+      "youtube-management.html",
+      ".data/**",
+      "functions/**",
+      "examquestions.json",
+      "firestore.indexes.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "/index.html",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/pages/:page.html",
+        "destination": "/:page",
+        "type": 301
+      },
+      {
+        "source": "/pages/:page",
+        "destination": "/:page",
+        "type": 301
+      },
+      {
+        "source": "/:page.html",
+        "destination": "/:page",
+        "type": 301
+      }
+    ],
+    "headers": [
+      {
+        "source": "/assets/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          }
+        ]
+      },
+      {
+        "source": "/assets/partials/**",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://www.gstatic.com 'sha256-1V9OeVOgczaU1mkVyVpychYYRxedP/Wdx5a3dq3vD5s=' 'sha256-3f9eqhHOXVBsGxXI21KkWe+tYactjyv1AFAXRJVc1xc=' 'sha256-5Fh5cnZN863k0Nhuq/R0JrJBNynL1Zp8EsqVnAOjwrg=' 'sha256-HhcuCFAFyj/tzLxuW6hNi0vR6F8KQt3yNvFnrwxwkPs=' 'sha256-Pc+AinygybJgTmWHzkW4yb+2FtISAUCU+19wLHDQGFU=' 'sha256-QgT8bSXCFdRFtUwPG3p+nmT84KFOKesrobiUtnqrvs8=' 'sha256-WV1uE1RBUBDsZaFohde0pvj/TH8aTzJwC26j+6P6PFw=' 'sha256-XMdr/QAPhu9Au02SuKn6W+qaD32gHxyMD6OXf1TczdI=' 'sha256-YThqGKQOI6IqQ+klhSa6WFF3eMdzhNDoujpKhLUlZlw=' 'sha256-YeFzxNHmkSwfx90XElxmz3vE7VhOUkpOZqzNmCRdJYw=' 'sha256-cy7Ksp7APzgFDUvaRtPP4RN7TMbMBage/z15CWaAoGM=' 'sha256-gyorwW+4JHxtAxntECOMW8YX705QyxDd52Dfovtvd04=' 'sha256-x7O/qr8g264+IH+ysRdODVT/2o7Dk0yCc89f6xDatJA=' 'sha256-xJ/JzQD9w6xKgJKG2uc7PfKuLcR7WtFTdOjTB0r+QNc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com;"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      },
+      {
+        "source": "/admin",
+        "destination": "/pages/admin.html"
+      },
+      {
+        "source": "/reception",
+        "destination": "/pages/reception.html"
+      },
+      {
+        "source": "/profile",
+        "destination": "/pages/profile.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/pages/login.html"
+      },
+      {
+        "source": "/register",
+        "destination": "/pages/register.html"
+      },
+      {
+        "source": "/dashboard",
+        "destination": "/pages/dashboard.html"
+      },
+      {
+        "source": "/services",
+        "destination": "/pages/services.html"
+      },
+      {
+        "source": "/ai-development",
+        "destination": "/pages/ai-development.html"
+      },
+      {
+        "source": "/web-development",
+        "destination": "/pages/web-development.html"
+      },
+      {
+        "source": "/web-hosting",
+        "destination": "/pages/web-hosting.html"
+      },
+      {
+        "source": "/growth-optimization",
+        "destination": "/pages/growth-optimization.html"
+      },
+      {
+        "source": "/google-ads",
+        "destination": "/pages/google-ads.html"
+      },
+      {
+        "source": "/projects",
+        "destination": "/pages/projects.html"
+      },
+      {
+        "source": "/contact",
+        "destination": "/pages/contact.html"
+      },
+      {
+        "source": "/domain",
+        "destination": "/pages/domain.html"
+      },
+      {
+        "source": "/training",
+        "destination": "/pages/training.html"
+      },
+      {
+        "source": "/content-marketing",
+        "destination": "/pages/content-marketing.html"
+      },
+      {
+        "source": "/social-media-marketing",
+        "destination": "/pages/social-media-marketing.html"
+      },
+      {
+        "source": "/video-graphic-design",
+        "destination": "/pages/video-graphic-design.html"
+      },
+      {
+        "source": "/website-design",
+        "destination": "/pages/website-design.html"
+      },
+      {
+        "source": "/youtube-management",
+        "destination": "/pages/youtube-management.html"
+      },
+      {
+        "source": "/book-call",
+        "destination": "/pages/book-call.html"
+      },
+      {
+        "source": "/course",
+        "destination": "/pages/course.html"
+      },
+      {
+        "source": "/player",
+        "destination": "/pages/player.html"
+      },
+      {
+        "source": "/exam",
+        "destination": "/pages/exam.html"
+      }
+    ]
+  }
+}

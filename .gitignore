@@ -9,3 +9,19 @@ firebase-debug.*.log
 
 # Mac
 .DS_Store
+
+# Secrets and environment files
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# Logs
+*.log
+
+# Local/private runtime and editor files
+.data/
+.vscode/

@@ -25,23 +25,21 @@ Options -Indexes
     RewriteRule (^|/)(dev-server\.js|examquestions\.json|firebase\.json|firestore\.indexes\.json|firestore\.rules)$ - [F,L,NC]
     RewriteRule (^|/)functions(/|$) - [F,L,NC]
 
-    # 1. Externally redirect direct requests for .html files to extensionless URL
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+    # 1. Canonicalize direct file-style URLs to clean URLs
+    RewriteRule ^index\.html$ / [R=301,L,NC]
+    RewriteRule ^pages/([A-Za-z0-9-]+)\.html$ /$1 [R=301,L,NC]
+    RewriteRule ^pages/([A-Za-z0-9-]+)/?$ /$1 [R=301,L,NC]
+    RewriteRule ^([A-Za-z0-9-]+)\.html$ /$1 [R=301,L,NC]
 
-    # 2. Redirect direct requests for index to root path
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteRule ^(.*)index$ /$1 [R=301,L]
-
-    # 3. Internally rewrite /slug -> /pages/slug.html when present
+    # 2. Internally rewrite /slug -> /pages/slug.html when present
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{DOCUMENT_ROOT}/pages/$1.html -f
-    RewriteRule ^([^/]+)$ pages/$1.html [L]
+    RewriteRule ^([A-Za-z0-9-]+)$ pages/$1.html [L]
 
-    # 4. Internally rewrite extensionless URLs to .html if file exists
+    # 3. Fallback: rewrite /slug -> /slug.html when present at root
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME}.html -f
-    RewriteRule ^(.*)$ $1.html [L]
+    RewriteRule ^([A-Za-z0-9-]+)$ $1.html [L]
 </IfModule>

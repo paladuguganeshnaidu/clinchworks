@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+Page: Book a Call
+Purpose: Lead conversion form for strategy calls and consultations.
+Linked from: CTA buttons across home, services, and footer.
+-->
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -9,7 +14,7 @@
   
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <link rel="stylesheet" href="../assets/css/styles.css?v=177659729621367" />
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260421u1" />
 
   <style>
     img[src*='logo.png?v=3'], img[src*='favicon'] {
@@ -21,9 +26,16 @@
     }
   </style>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/logo-transparent.png?v=3">
-  <link rel="shortcut icon" href="../assets/images/logo-transparent.png?v=3">
-  <link rel="apple-touch-icon" href="../assets/images/logo-transparent.png?v=3">
+  
+  
+  
+
+  <!-- Favicon Configuration -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="shortcut icon" href="/assets/images/logo-transparent.png?v=1">
+  <link rel="apple-touch-icon" href="/assets/images/logo-transparent.png?v=1">
+
 </head>
 
 <body>
@@ -33,7 +45,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
       <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
         <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <img src="../assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
+          <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
         </div>
         <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
       </a>
@@ -182,9 +194,10 @@
 
     <div id="site-footer"></div>
 
-  <script src="../assets/js/script.js"></script>
+  <script src="/assets/js/script.js"></script>
+  <script src="/assets/js/notification.js?v=20260421f3"></script>
   <script type="module">
-    import { db } from "../assets/js/firebase.js";
+    import { db } from "/assets/js/firebase.js";
     import { addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
     (function () {
@@ -247,23 +260,52 @@
         const description = String(elDescription.value || '').trim();
 
         if (!name || !service || !mobile || !whatsapp || !description) {
-          alert('Please fill all required fields.');
+          showToast('warning', 'Please fill all required fields before submitting.');
           return;
         }
 
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.75';
+        submitBtn.textContent = 'Submitting...';
 
         try {
-          await addDoc(collection(db, 'bookings'), {
-            name,
-            service,
-            mobile,
-            whatsapp,
-            description,
-            status: 'active',
-            createdAt: serverTimestamp()
-          });
+          let persisted = false;
+
+          try {
+            await addDoc(collection(db, 'bookings'), {
+              name,
+              service,
+              mobile,
+              whatsapp,
+              description,
+              status: 'active',
+              createdAt: serverTimestamp()
+            });
+            persisted = true;
+          } catch (firebaseErr) {
+            console.warn('Firestore write failed, falling back to API:', firebaseErr);
+          }
+
+          if (!persisted) {
+            const fallbackResp = await fetch('/api/book-call', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                name,
+                countryCode: cc,
+                service,
+                mobile,
+                whatsapp,
+                description,
+                address: description
+              })
+            });
+
+            if (!fallbackResp.ok) {
+              const payload = await fallbackResp.json().catch(() => ({}));
+              throw new Error(payload && payload.error ? payload.error : 'Fallback request failed');
+            }
+          }
 
           form.reset();
           elWhatsapp.readOnly = false;
@@ -272,12 +314,14 @@
 
           form.style.display = 'none';
           successMsg.classList.remove('hidden');
+          showToast('success', 'Your request has been submitted successfully.');
         } catch (err) {
           console.error('Booking submission failed:', err);
-          alert('Unable to submit call request. Please try again.');
+          showToast('error', 'Unable to submit call request. Please try again.');
         } finally {
           submitBtn.disabled = false;
           submitBtn.style.opacity = '1';
+          submitBtn.textContent = 'Confirm Booking';
         }
       });
     })();
