@@ -357,12 +357,8 @@
       const nextUrl = new URL(link.href, window.location.href);
       if (nextUrl.origin !== window.location.origin) return;
 
-      event.preventDefault();
+      // Allow native browser routing instantly, but append the exit animation
       document.body.classList.add('page-leave');
-
-      window.setTimeout(() => {
-        window.location.href = nextUrl.href;
-      }, 380);
     });
 
     window.addEventListener('pageshow', () => {

@@ -11,14 +11,14 @@ import {
     updatePassword,
     setPersistence,
     browserLocalPersistence
-} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import {
     doc,
     setDoc,
     getDoc,
     runTransaction,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) window.location.reload();
