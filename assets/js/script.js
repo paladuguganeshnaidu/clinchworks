@@ -362,7 +362,7 @@
 
       window.setTimeout(() => {
         window.location.href = nextUrl.href;
-      }, 220);
+      }, 380);
     });
 
     window.addEventListener('pageshow', () => {
