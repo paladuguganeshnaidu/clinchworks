@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Training Path - Clinch Works</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/assets/css/tailwind-compiled.css" />
 
 
   <link rel="stylesheet" href="/assets/css/styles.css?v=177659729621367" />
@@ -64,7 +64,7 @@
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
       <nav id="top-nav"
         class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
-        style="border: 1px solid rgba(247, 199, 99, 0.4);">
+        style="background: #228B22; border: 1px solid rgba(34, 139, 34, 0.9);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
             <li class="nav-item-wrapper"><a href="/"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
@@ -182,7 +182,7 @@
 
     <div id="site-footer"></div>
 
-  <script src="/assets/js/script.js"></script>
+  <script src="/assets/js/script.js" defer></script>
   <script>
     function escapeHtml(value) {
       return String(value)
@@ -259,10 +259,12 @@
       }
     })();
   </script>
-  <script src="/assets/js/footer-loader.js"></script>
+  <script src="/assets/js/footer-loader.js" defer></script>
 </body>
 
 </html>
+
+
 
 
 

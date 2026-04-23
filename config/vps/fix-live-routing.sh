@@ -120,7 +120,7 @@ server {
     error_page 404 /404.html;
     location = /404.html {
         # Prefer pages/404.html so your added file works without moving.
-        try_files /pages/404.html /404.html =404;
+        try_files /pages/404.html /404 .html =404;
     }
 
     # Block all hidden files/directories except .well-known (for Let's Encrypt)
