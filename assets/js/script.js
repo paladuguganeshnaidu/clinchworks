@@ -25,8 +25,6 @@
 
     if (!isPlayerRoute) {
       initRevealAnimations();
-      initParallaxEffects();
-      initMicroInteractions();
     }
 
     initSmoothScroll();
@@ -183,13 +181,12 @@
 
     // Prepare stagger targets for premium sequential entrances.
     // This does not change HTML structure; it only adds classes/styles at runtime.
-    document.querySelectorAll('.section-reveal').forEach((container) => {
-      if (container.classList.contains('bento-item') || container.classList.contains('team-card')) return;
+    document.querySelectorAll('.section-reveal, .bento-grid-trigger, .team-bento-trigger').forEach((container) => {
 
-      const isGridOrList = container.classList.contains('grid') || container.tagName === 'UL' || container.tagName === 'OL';
+      const isGridOrList = container.classList.contains('grid') || container.tagName === 'UL' || container.tagName === 'OL' || container.classList.contains('flex');
       if (!isGridOrList) return;
 
-      const children = Array.from(container.querySelectorAll(':scope > a, :scope > .service-card, :scope > .project-card, :scope > .module-card, :scope > .content-card'));
+      const children = Array.from(container.querySelectorAll(':scope > a, :scope > .service-card, :scope > .project-card, :scope > .module-card, :scope > .content-card, :scope > .bento-item, :scope > .team-card'));
       if (children.length < 2) return;
 
       children.forEach((child, idx) => {
@@ -200,13 +197,7 @@
 
     const revealObserver = new IntersectionObserver(
       (entries) => { 
-        entries.forEach(e => { 
-          // Custom check for GSAP managed elements
-          if (e.target.classList.contains('bento-item') || e.target.classList.contains('team-card')) {
-            revealObserver.unobserve(e.target);
-            return; // Managed by GSAP
-          }
-          if (e.isIntersecting) {
+        entries.forEach(e => {          if (e.isIntersecting) {
             e.target.classList.add('visible');
 
             // If the reveal target is a grid/list container, also stagger-reveal its children.
@@ -220,127 +211,20 @@
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
 
-    document.querySelectorAll('.section-reveal').forEach((el, index) => {
-      // Global reveal staggering for standalone blocks (0.05–0.1s per item)
+    document.querySelectorAll('.section-reveal, .bento-grid-trigger, .team-bento-trigger').forEach((el, index) => {
+      // Global reveal staggering for standalone blocks (0.05Ã¢â‚¬â€œ0.1s per item)
       el.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);
       revealObserver.observe(el);
     });
     
     // Defer GSAP specific animations
-    setTimeout(initGSAPAnimations, 100);
   }
 
-  function initGSAPAnimations() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
 
-    const bentoContainers = document.querySelectorAll('.bento-grid-trigger');
-    bentoContainers.forEach(container => {
-      const items = container.querySelectorAll('.bento-item');
-      gsap.fromTo(items, 
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: container,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          }
-        }
-      );
-    });
 
-    const teamContainers = document.querySelectorAll('.team-bento-trigger');
-    teamContainers.forEach(container => {
-      const items = container.querySelectorAll('.team-card');
-      gsap.fromTo(items, 
-        { opacity: 0, y: 28, scale: 0.985 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.95,
-          stagger: 0.2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: container,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
-        }
-      );
-    });
-  }
 
-  function initParallaxEffects() {
-    if (prefersReducedMotion) return;
-    if (window.innerWidth < 1024) return;
-    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return;
 
-    let ticking = false;
 
-    const update = () => {
-      const y = window.scrollY || window.pageYOffset;
-      const root = document.documentElement;
-
-      root.style.setProperty('--parallax-grid', `${(y * -0.055).toFixed(2)}px`);
-      root.style.setProperty('--parallax-glow', `${(y * 0.04).toFixed(2)}px`);
-      root.style.setProperty('--parallax-orb', `${(y * -0.03).toFixed(2)}px`);
-
-      ticking = false;
-    };
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(update);
-        ticking = true;
-      }
-    }, { passive: true });
-
-    update();
-  }
-
-  function initMicroInteractions() {
-    if (prefersReducedMotion || window.matchMedia('(hover: none)').matches) return;
-
-    const cards = Array.from(document.querySelectorAll('.service-card, .project-card, .module-card, .content-card'));
-    if (!cards.length || cards.length > 16) return;
-
-    cards.forEach((card) => {
-      let frameId = null;
-      let pendingX = 50;
-      let pendingY = 50;
-
-      const flush = () => {
-        card.style.setProperty('--mx', `${pendingX.toFixed(2)}%`);
-        card.style.setProperty('--my', `${pendingY.toFixed(2)}%`);
-        frameId = null;
-      };
-
-      card.addEventListener('pointermove', (event) => {
-        const rect = card.getBoundingClientRect();
-        pendingX = ((event.clientX - rect.left) / rect.width) * 100;
-        pendingY = ((event.clientY - rect.top) / rect.height) * 100;
-
-        if (frameId === null) {
-          frameId = window.requestAnimationFrame(flush);
-        }
-      }, { passive: true });
-
-      card.addEventListener('pointerleave', () => {
-        pendingX = 50;
-        pendingY = 50;
-
-        if (frameId === null) {
-          frameId = window.requestAnimationFrame(flush);
-        }
-      });
-    });
-  }
 
   function initPageTransitions() {
     document.addEventListener('click', (event) => {
@@ -409,3 +293,5 @@
   }
 
 })();
+
+

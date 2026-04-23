@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 @import url("/assets/css/notification.css");
 
 /* =========================================================
@@ -210,32 +210,24 @@ body::before {
   top: -18vw;
   left: -12vw;
   background: var(--gold-accent);
-  animation: orb-float-1 26s var(--ease-premium) infinite;
+  
 }
 
 body::after {
   right: -14vw;
   bottom: -20vw;
   background: var(--gold-deep);
-  animation: orb-float-2 32s var(--ease-premium) infinite;
+  
 }
 
-@keyframes orb-float-1 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
+
 
   50% {
     transform: translate(18px, 12px) scale(1.05);
   }
 }
 
-@keyframes orb-float-2 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
+
 
   50% {
     transform: translate(-16px, -14px) scale(1.08);
@@ -361,20 +353,17 @@ img {
 .c-glow::before {
   border: 2px solid var(--glow-ring);
   border-right-color: transparent;
-  animation: c-rotate 26s linear infinite;
+  
 }
 
 .c-glow::after {
   inset: 12px;
   border: 1px solid var(--glow-ring-accent);
   border-left-color: transparent;
-  animation: c-rotate 34s linear infinite reverse;
+  
 }
 
-@keyframes c-rotate {
-  to {
-    transform: rotate(360deg);
-  }
+
 }
 
 /* =========================================================
@@ -675,7 +664,7 @@ a[href*="book-call"]:hover {
 /* =========================================================
    Motion System
    ========================================================= */
-.section-reveal:not(.bento-item):not(.team-card) {
+.section-reveal {
   --cw-reveal-y: 20px;
   opacity: 0;
   transform: translate3d(0, var(--cw-reveal-y), 0);
@@ -684,7 +673,7 @@ a[href*="book-call"]:hover {
   will-change: transform, opacity;
 }
 
-.section-reveal:not(.bento-item):not(.team-card).visible {
+.section-reveal.visible {
   opacity: 1;
   --cw-reveal-y: 0px;
 }
@@ -1170,3 +1159,5 @@ footer span {
     filter: none !important;
   }
 }
+
+
