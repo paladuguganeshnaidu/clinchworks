@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth overflow-x-hidden">
 
 <head>
@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Reception Panel - Clinch Works</title>
 
-  <link rel="stylesheet" href="/assets/css/tailwind-compiled.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260421u1" />
 
   <!-- Favicon Configuration -->
@@ -29,7 +29,7 @@
         <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
       </a>
 
-      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="background: #228B22; border: 1px solid rgba(34, 139, 34, 0.9);">
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
           <li class="nav-item-wrapper"><a href="/" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
           <li class="nav-item-wrapper"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
@@ -61,7 +61,7 @@
       </div>
 
       <div class="glass-strong rounded-3xl p-6 sm:p-8 section-reveal visible" style="border: 1px solid var(--border-color); background: var(--bg-surface);">
-        <div id="reception-status" class="text-sm font-semibold mb-4" style="color: var(--text-secondary);">Loadingâ€¦</div>
+        <div id="reception-status" class="text-sm font-semibold mb-4" style="color: var(--text-secondary);">Loading…</div>
 
         <div class="overflow-x-auto">
           <table class="min-w-[1100px] w-full text-left">
@@ -86,8 +86,8 @@
     </div>
   </main>
 
-  <script src="/assets/js/script.js" defer></script>
-  <script src="/assets/js/notification.js?v=20260421f3" defer></script>
+  <script src="/assets/js/script.js"></script>
+  <script src="/assets/js/notification.js?v=20260421f3"></script>
 
   <script type="module">
     import { auth, db } from "/assets/js/firebase.js";
@@ -119,9 +119,9 @@
     const formatCreatedAt = (createdAt) => {
       try {
         const dt = createdAt && typeof createdAt.toDate === 'function' ? createdAt.toDate() : null;
-        return dt ? dt.toLocaleString() : 'â€”';
+        return dt ? dt.toLocaleString() : '—';
       } catch {
-        return 'â€”';
+        return '—';
       }
     };
 
@@ -212,7 +212,7 @@
           return;
         }
 
-        setStatusText('Listening for live updatesâ€¦');
+        setStatusText('Listening for live updates…');
 
         const bookingsRef = collection(db, 'bookings');
         const q = query(bookingsRef, orderBy('createdAt', 'desc'));
@@ -231,9 +231,7 @@
     });
   </script>
 
-  <script src="/assets/js/footer-loader.js" defer></script>
+  <script src="/assets/js/footer-loader.js"></script>
 </body>
 
 </html>
-
-

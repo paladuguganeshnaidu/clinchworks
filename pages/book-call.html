@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 Page: Book a Call
 Purpose: Lead conversion form for strategy calls and consultations.
@@ -9,17 +9,15 @@ Linked from: CTA buttons across home, services, and footer.
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Book a call with Clinch Works to discuss AI development, web development, hosting/VPS, or growth optimization." />
+  <meta name="description" content="Book a call with Clinch Works to discuss AI development, web development, hosting/VPS, or growth optimization." />
   <title>Book a Call - Clinch Works</title>
-
-  <link rel="stylesheet" href="/assets/css/tailwind-compiled.css" />
-
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260421u1" />
 
   <style>
-    img[src*='logo.png?v=3'],
-    img[src*='favicon'] {
+    img[src*='logo.png?v=3'], img[src*='favicon'] {
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
       image-rendering: auto;
@@ -28,9 +26,9 @@ Linked from: CTA buttons across home, services, and footer.
     }
   </style>
 
-
-
-
+  
+  
+  
 
   <!-- Favicon Configuration -->
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/logo-transparent.png?v=1">
@@ -41,38 +39,24 @@ Linked from: CTA buttons across home, services, and footer.
 </head>
 
 <body>
-
+  
   <!-- NAVBAR GOES HERE: Replaced automatically by script but keeping fallback just in case -->
   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative">
       <a href="/" class="flex items-center gap-0 group z-10 w-1/4">
-        <div
-          class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-          <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo"
-            class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm"
-            style="overflow: hidden;" />
+        <div class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+          <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo" class="h-6 sm:h-8 w-auto object-contain rounded-[10px] border border-slate-200/50 shadow-sm" style="overflow: hidden;" />
         </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch
-          Works</span>
+        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch Works</span>
       </a>
 
-      <nav id="top-nav"
-        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
-        style="border: 1px solid rgba(247, 199, 99, 0.4);">
+      <nav id="top-nav" class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50" style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
-          <li class="nav-item-wrapper"><a href="/"
-              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
-              data-section="about">About</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services"
-              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
-              data-section="services">Services</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain"
-              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
-              data-section="training">Training</a></li>
-
-          <li class="nav-item-wrapper"><a href="/projects"
-              class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
-              data-section="projects">Projects</a></li>
+          <li class="nav-item-wrapper"><a href="/" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          
+          <li class="nav-item-wrapper"><a href="/projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
         </ul>
       </nav>
 
@@ -87,51 +71,31 @@ Linked from: CTA buttons across home, services, and footer.
           </span>
           <span class="nav-user-avatar-text hidden" aria-hidden="true">U</span>
         </a>
-        <a href="/book-call"
-          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
-          style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
+        <a href="/book-call" class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105" style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
       </div>
 
       <!-- SECONDARY NAVIGATION MENU -->
-      <div id="sub-nav-container"
-        class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] min-w-[450px] flex justify-center">
-        <div class="glass-strong rounded-full px-6 py-3 shadow-md w-max"
-          style="border: 1px solid rgba(247, 199, 99, 0.4); background: rgba(255,255,255,0.98);">
+      <div id="sub-nav-container" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] min-w-[450px] flex justify-center">
+        <div class="glass-strong rounded-full px-6 py-3 shadow-md w-max" style="border: 1px solid rgba(247, 199, 99, 0.4); background: rgba(255,255,255,0.98);">
           <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center gap-6 m-0 p-0">
-            <li><a href="/ai-development" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">AI Development</a></li>
-            <li><a href="/web-development" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">Web Development</a></li>
-            <li><a href="/web-hosting" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">Web Hosting / VPS</a></li>
-            <li><a href="/growth-optimization" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">Growth Optimization</a></li>
+            <li><a href="/ai-development" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">AI Development</a></li>
+            <li><a href="/web-development" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">Web Development</a></li>
+            <li><a href="/web-hosting" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">Web Hosting / VPS</a></li>
+            <li><a href="/growth-optimization" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">Growth Optimization</a></li>
           </ul>
-          <!-- Training Options -->
-          <ul id="dropdown-training"
-            class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
-            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Programming</a></li>
-            <li><a href="/domain?category=Cyber%20Security"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Cloud</a></li>
-            <li><a href="/domain?category=Artificial%20Intelligence"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="/domain?category=Database%20Engineering"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
-            </li>
-            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">All Courses</a></li>
+                    <!-- Training Options -->
+          <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
+            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
+            <li><a href="/domain?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
+            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cloud</a></li>
+            <li><a href="/domain?category=Artificial%20Intelligence" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
+            <li><a href="/domain?category=Database%20Engineering" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a></li>
+            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">All Courses</a></li>
           </ul>
           <ul id="dropdown-realestate" class="dropdown-content hidden flex-row items-center gap-6 m-0 p-0">
-            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">Residential Properties</a></li>
-            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">Commercial Spaces</a></li>
-            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors"
-                style="color: #0b1220;">Consulting</a></li>
+            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">Residential Properties</a></li>
+            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">Commercial Spaces</a></li>
+            <li><a href="#" class="text-[13px] font-semibold hover:text-[#F7C763] transition-colors" style="color: #0b1220;">Consulting</a></li>
           </ul>
         </div>
       </div>
@@ -143,7 +107,7 @@ Linked from: CTA buttons across home, services, and footer.
     <a href="/" data-section="about">About</a>
     <a href="/services" data-section="services">Services</a>
     <a href="/domain" data-section="training">Training</a>
-
+    
     <a href="/projects" data-section="projects">Projects</a>
     <a href="/book-call" style="color: #F1AF2C; margin-top: 1rem;">Contact &rarr;</a>
   </div>
@@ -151,110 +115,87 @@ Linked from: CTA buttons across home, services, and footer.
 
   <div class="pt-32 pb-20 min-h-screen">
     <div class="max-w-3xl mx-auto px-5 sm:px-6">
-
+      
       <div class="section-reveal visible text-center mb-12">
         <h1 class="text-3xl lg:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">
           Book a Call
         </h1>
         <p class="mt-4 text-base leading-relaxed" style="color: var(--text-secondary);">
-          Let's discuss how we can engineer growth for your brand, secure your systems, or train your team. Fill out the
-          details below.
+          Let's discuss how we can engineer growth for your brand, secure your systems, or train your team. Fill out the details below.
         </p>
       </div>
 
       <!-- Booking Form Setup -->
-      <div class="glass-strong rounded-3xl p-8 sm:p-12 section-reveal visible"
-        style="border: 1px solid var(--border-color); background: var(--bg-secondary);">
-
+      <div class="glass-strong rounded-3xl p-8 sm:p-12 section-reveal visible" style="border: 1px solid var(--border-color); background: var(--bg-secondary);">
+        
         <form id="bookingForm" class="flex flex-col gap-6">
-
+          
           <div class="flex flex-col gap-2">
-            <label for="name" class="text-sm font-semibold" style="color: var(--text-primary);">Full Name <span
-                style="color: var(--accent);">*</span></label>
-            <input type="text" id="name" required placeholder="John Doe"
-              class="w-full px-4 py-3 rounded-xl border outline-none transition-colors"
-              style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);" />
+            <label for="name" class="text-sm font-semibold" style="color: var(--text-primary);">Full Name <span style="color: var(--accent);">*</span></label>
+            <input type="text" id="name" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl border outline-none transition-colors" style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);" />
           </div>
 
           <div class="flex flex-col gap-2">
-            <label for="phone" class="text-sm font-semibold" style="color: var(--text-primary);">Mobile Number <span
-                style="color: var(--accent);">*</span></label>
+            <label for="phone" class="text-sm font-semibold" style="color: var(--text-primary);">Mobile Number <span style="color: var(--accent);">*</span></label>
             <div class="flex gap-3">
               <!-- Country Code Select -->
-              <select id="country-code" class="px-3 py-3 rounded-xl border outline-none font-medium"
-                style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);">
+              <select id="country-code" class="px-3 py-3 rounded-xl border outline-none font-medium" style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);">
                 <option value="+91">+91 (IN)</option>
                 <option value="+1">+1 (US)</option>
                 <option value="+44">+44 (UK)</option>
                 <option value="+61">+61 (AU)</option>
               </select>
               <!-- Number Input -->
-              <input type="tel" id="mobile" required placeholder="9876543210"
-                class="flex-grow px-4 py-3 rounded-xl border outline-none transition-colors"
-                style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);" />
+              <input type="tel" id="mobile" required placeholder="9876543210" class="flex-grow px-4 py-3 rounded-xl border outline-none transition-colors" style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);" />
             </div>
           </div>
 
           <div class="flex flex-col gap-2">
-            <label for="service" class="text-sm font-semibold" style="color: var(--text-primary);">Service <span
-                style="color: var(--accent);">*</span></label>
-            <select id="service" required
-              class="w-full px-4 py-3 rounded-xl border outline-none transition-colors font-medium"
-              style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);">
+            <label for="service" class="text-sm font-semibold" style="color: var(--text-primary);">Service <span style="color: var(--accent);">*</span></label>
+            <select id="service" required class="w-full px-4 py-3 rounded-xl border outline-none transition-colors font-medium" style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);">
               <option value="" selected disabled>Select a service</option>
               <option value="AI Development">AI Development</option>
               <option value="Web Development">Web Development</option>
-              <option value="Digital FootPrint">Digital FootPrint</option>
               <option value="Web Hosting / VPS">Web Hosting / VPS</option>
               <option value="Growth Optimization">Growth Optimization</option>
             </select>
           </div>
 
           <div class="flex flex-col gap-2">
-            <label for="whatsapp" class="text-sm font-semibold" style="color: var(--text-primary);">WhatsApp Number
-              <span style="color: var(--accent);">*</span></label>
+            <label for="whatsapp" class="text-sm font-semibold" style="color: var(--text-primary);">WhatsApp Number <span style="color: var(--accent);">*</span></label>
             <div class="flex flex-col gap-2">
               <label class="inline-flex items-center gap-2 text-sm" style="color: var(--text-secondary);">
                 <input id="whatsapp-same" type="checkbox" class="w-4 h-4" style="accent-color: var(--accent);" />
                 Same as mobile
               </label>
-              <input type="tel" id="whatsapp" required placeholder="+919876543210"
-                class="w-full px-4 py-3 rounded-xl border outline-none transition-colors"
-                style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);" />
+              <input type="tel" id="whatsapp" required placeholder="+919876543210" class="w-full px-4 py-3 rounded-xl border outline-none transition-colors" style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);" />
             </div>
           </div>
 
           <div class="flex flex-col gap-2">
-            <label for="description" class="text-sm font-semibold" style="color: var(--text-primary);">Description <span
-                style="color: var(--accent);">*</span></label>
-            <textarea id="description" rows="3" required placeholder="Tell us briefly what you need..."
-              class="w-full px-4 py-3 rounded-xl border outline-none transition-colors resize-none"
-              style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);"></textarea>
+            <label for="description" class="text-sm font-semibold" style="color: var(--text-primary);">Description <span style="color: var(--accent);">*</span></label>
+            <textarea id="description" rows="3" required placeholder="Tell us briefly what you need..." class="w-full px-4 py-3 rounded-xl border outline-none transition-colors resize-none" style="background: var(--bg-primary); border-color: var(--border-color); color: var(--text-primary);"></textarea>
           </div>
 
-          <button id="booking-submit" type="submit"
-            class="mt-4 px-6 py-4 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] active:scale-95 shadow-md flex items-center justify-center gap-2"
-            style="background: #F7C763; color: #0b1220;">
+          <button id="booking-submit" type="submit" class="mt-4 px-6 py-4 rounded-xl text-sm font-bold transition-all hover:scale-[1.02] active:scale-95 shadow-md flex items-center justify-center gap-2" style="background: #F7C763; color: #0b1220;">
             Confirm Booking
           </button>
         </form>
 
-        <div id="successMessage" class="hidden mt-8 p-6 rounded-xl text-center"
-          style="background: rgba(247, 199, 99, 0.12); border: 1px solid rgba(247, 199, 99, 0.45);">
+        <div id="successMessage" class="hidden mt-8 p-6 rounded-xl text-center" style="background: rgba(247, 199, 99, 0.12); border: 1px solid rgba(247, 199, 99, 0.45);">
           <div class="text-3xl mb-2">OK</div>
           <h3 class="font-bold text-lg mb-1" style="color: var(--text-primary);">Request Received</h3>
-          <p class="text-sm" style="color: var(--text-secondary);">We will be in touch shortly to finalize your meeting
-            time!</p>
+          <p class="text-sm" style="color: var(--text-secondary);">We will be in touch shortly to finalize your meeting time!</p>
         </div>
 
       </div>
     </div>
   </div>
 
-  <div id="site-footer"></div>
+    <div id="site-footer"></div>
 
-  <script src="/assets/js/script.js" defer></script>
-  <script src="/assets/js/notification.js?v=20260421f3" defer></script>
+  <script src="/assets/js/script.js"></script>
+  <script src="/assets/js/notification.js?v=20260421f3"></script>
   <script type="module">
     import { db } from "/assets/js/firebase.js";
     import { addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -385,7 +326,10 @@ Linked from: CTA buttons across home, services, and footer.
       });
     })();
   </script>
-  <script src="/assets/js/footer-loader.js" defer></script>
+  <script src="/assets/js/footer-loader.js"></script>
 </body>
-
 </html>
+
+
+
+

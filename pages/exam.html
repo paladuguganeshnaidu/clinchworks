@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 Page: Final Exam
 Purpose: Runs assessment flow and writes pass/fail progress state.
@@ -10,9 +10,9 @@ Linked from: Course player completion workflow.
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Final Exam â€” Clinch Works</title>
+  <title>Final Exam — Clinch Works</title>
 
-  <link rel="stylesheet" href="/assets/css/tailwind-compiled.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
 
   <link rel="stylesheet" href="/assets/css/styles.css?v=177659729621367" />
@@ -70,7 +70,7 @@ Linked from: Course player completion workflow.
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
       <nav id="top-nav"
         class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
-        style="background: #228B22; border: 1px solid rgba(34, 139, 34, 0.9);">
+        style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
             <li class="nav-item-wrapper"><a href="/"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
@@ -474,7 +474,7 @@ Linked from: Course player completion workflow.
             resultBox.style.backgroundColor = 'rgba(22, 163, 74, 0.1)';
             resultBox.style.borderColor = '#16a34a';
             resultBox.innerHTML = `
-              <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Passed âœ…</div>
+              <div style="color: #16a34a; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Passed ✅</div>
               You scored ${score}/${totalQ} (${percentage}%). Your certificate has been successfully unlocked.
             `;
             btnReturn.textContent = 'Download Certificate Now';
@@ -483,7 +483,7 @@ Linked from: Course player completion workflow.
             resultBox.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
             resultBox.style.borderColor = '#ef4444';
             resultBox.innerHTML = `
-              <div style="color: #ef4444; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Failed âŒ</div>
+              <div style="color: #ef4444; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">Exam Failed ❌</div>
               You scored ${score}/${totalQ} (${percentage}%). A minimum of 60% is required to pass.
             `;
             btnReturn.textContent = 'Return to Course';
@@ -512,8 +512,7 @@ Linked from: Course player completion workflow.
   <!-- ========================================
        JAVASCRIPT
   ======================================== -->
-  <script src="/assets/js/script.js" defer></script>
+  <script src="/assets/js/script.js"></script>
 </body>
 
 </html>
-
