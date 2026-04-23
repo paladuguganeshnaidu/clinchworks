@@ -1182,3 +1182,39 @@ footer span {
     box-shadow: none !important;
   }
 }
+
+
+/* SURGICAL PERFORMANCE OVERRIDES FOR 1GB DROPLET */
+/* Strip all entrance animations, scroll jacking, and page transitions */
+*, *::before, *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+body.page-leave {
+  opacity: 1 !important;
+}
+
+.section-reveal, .cw-reveal-item, .visible, .cw-visible, [data-aos], .aos-init, .aos-animate {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+#loader, .loader, .spinner {
+  display: none !important;
+}
+
+#main-content, .auth-cloak {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force standard scroll container and disable virtual smooth scrollers */
+html, body {
+  overflow-y: auto !important;
+  overscroll-behavior-y: none;
+}

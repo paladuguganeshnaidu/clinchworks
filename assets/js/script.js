@@ -194,26 +194,9 @@
       });
     });
 
-    const revealObserver = new IntersectionObserver(
-      (entries) => { 
-        entries.forEach(e => {          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-
-            // If the reveal target is a grid/list container, also stagger-reveal its children.
-            const staggerChildren = e.target.querySelectorAll(':scope > .cw-reveal-item');
-            staggerChildren.forEach((child) => child.classList.add('cw-visible'));
-
-            revealObserver.unobserve(e.target);
-          }
-        }); 
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    document.querySelectorAll('.section-reveal, .bento-grid-trigger, .team-bento-trigger').forEach((el, index) => {
-      // Global reveal staggering for standalone blocks (0.05Ã¢â‚¬â€œ0.1s per item)
-      el.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);
-      revealObserver.observe(el);
+    // Animations and Observers completely removed for maximum VPS performance.
+    document.querySelectorAll('.section-reveal, .bento-grid-trigger, .team-bento-trigger, .cw-reveal-item').forEach(el => {
+        el.classList.add('visible', 'cw-visible');
     });
     
     // Defer GSAP specific animations
@@ -226,27 +209,7 @@
 
 
   function initPageTransitions() {
-    document.addEventListener('click', (event) => {
-      const link = event.target.closest('a[href]');
-      if (!link) return;
-
-      const href = link.getAttribute('href');
-      if (!href) return;
-      if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-
-      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      if (link.target === '_blank' || link.hasAttribute('download')) return;
-
-      const nextUrl = new URL(link.href, window.location.href);
-      if (nextUrl.origin !== window.location.origin) return;
-
-      // Allow native browser routing instantly, but append the exit animation
-      document.body.classList.add('page-leave');
-    });
-
-    window.addEventListener('pageshow', () => {
-      document.body.classList.remove('page-leave');
-    });
+    // Page transitions completely disabled for instant navigation on low-resource droplets.
   }
 
   /**
