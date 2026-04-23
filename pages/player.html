@@ -131,6 +131,21 @@ Linked from: Course page and dashboard learning actions.
       min-width: 0;
     }
 
+    .sidebar-header {
+      padding: 36px 24px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-course-title {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+      line-height: 1.5;
+    }
+
     /* Code block fixes */
     pre code {
       font-family: 'JetBrains Mono', monospace !important;
@@ -249,9 +264,8 @@ Linked from: Course page and dashboard learning actions.
   <div id="player-layout">
     <!-- Sidebar Navigation -->
     <aside class="player-sidebar">
-      <div class="p-6 border-bottom border-slate-200">
-        <h2 id="sidebar-course-title" class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Course
-          Index</h2>
+      <div class="sidebar-header border-b border-white/5">
+        <h2 id="sidebar-course-title" class="sidebar-course-title">Course Index</h2>
       </div>
       <div id="sidebar-modules" class="flex-1">
         <!-- Dynamic module items -->
