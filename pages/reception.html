@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth overflow-x-hidden">
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
@@ -61,7 +61,7 @@
       </div>
 
       <div class="glass-strong rounded-3xl p-6 sm:p-8 section-reveal visible" style="border: 1px solid var(--border-color); background: var(--bg-surface);">
-        <div id="reception-status" class="text-sm font-semibold mb-4" style="color: var(--text-secondary);">Loading…</div>
+        <div id="reception-status" class="text-sm font-semibold mb-4" style="color: var(--text-secondary);">Loadingâ€¦</div>
 
         <div class="overflow-x-auto">
           <table class="min-w-[1100px] w-full text-left">
@@ -119,9 +119,9 @@
     const formatCreatedAt = (createdAt) => {
       try {
         const dt = createdAt && typeof createdAt.toDate === 'function' ? createdAt.toDate() : null;
-        return dt ? dt.toLocaleString() : '—';
+        return dt ? dt.toLocaleString() : 'â€”';
       } catch {
-        return '—';
+        return 'â€”';
       }
     };
 
@@ -212,7 +212,7 @@
           return;
         }
 
-        setStatusText('Listening for live updates…');
+        setStatusText('Listening for live updatesâ€¦');
 
         const bookingsRef = collection(db, 'bookings');
         const q = query(bookingsRef, orderBy('createdAt', 'desc'));
@@ -235,3 +235,4 @@
 </body>
 
 </html>
+
