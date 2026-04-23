@@ -125,9 +125,10 @@ Linked from: Course page and dashboard learning actions.
       font-weight: 700;
       letter-spacing: 0.03em;
       text-transform: uppercase;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.4;
+      white-space: normal;
+      overflow-wrap: break-word;
+      min-width: 0;
     }
 
     /* Code block fixes */
@@ -207,7 +208,7 @@ Linked from: Course page and dashboard learning actions.
 
       <!-- MAIN NAVIGATION (Center Aligned, Expanded) -->
       <nav id="top-nav"
-        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden lg:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
+        class="top-nav glass-strong rounded-full px-5 py-2.5 hidden xl:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 min-w-[500px] shadow-sm z-50"
         style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
             <li class="nav-item-wrapper"><a href="/"
@@ -227,7 +228,7 @@ Linked from: Course page and dashboard learning actions.
       </nav>
 
       <!-- RIGHT ACTIONS (Right Aligned) -->
-      <div class="flex items-center justify-end gap-3 z-10 w-1/4">
+      <div class="flex items-center justify-end gap-2 sm:gap-4 z-10 w-auto lg:w-1/4">
         <button id="theme-toggle" class="theme-toggle flex items-center justify-center hidden"
           aria-label="Toggle theme">
           <svg class="icon-moon" fill="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
@@ -291,16 +292,16 @@ Linked from: Course page and dashboard learning actions.
             </div>
             <p id="progress" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Module 0 of 0</p>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-4 sm:gap-6">
             <button id="btn-prev"
-              class="p-2.5 rounded-xl border border-white/20 text-slate-300 hover:text-white hover:border-[#ffd54f] transition-all disabled:opacity-30">
+              class="flex-shrink-0 p-2.5 rounded-xl border border-white/20 text-slate-300 hover:text-white hover:border-[#ffd54f] transition-all disabled:opacity-30">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button id="btn-next"
-              class="px-6 py-2.5 font-bold text-xs uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
-              style="background: var(--gradient-brand); color: #ffffff; box-shadow: 0 12px 28px rgba(255, 193, 7, 0.28);">
+              class="flex-shrink-0 px-6 py-2.5 font-bold text-xs uppercase tracking-widest rounded-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2"
+              style="background: var(--gradient-brand); color: #ffffff; box-shadow: 0 8px 20px rgba(255, 193, 7, 0.2);">
               Continue <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
               </svg>
