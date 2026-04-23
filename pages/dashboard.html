@@ -75,10 +75,10 @@ Linked from: Post-login redirects and protected navigation.
             <li class="nav-item-wrapper"><a href="/"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="about">About</a></li>
-            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services"
+            <li class="nav-item-wrapper"><a href="/services"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="services">Services</a></li>
-            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain"
+            <li class="nav-item-wrapper"><a href="/domain"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="training">Training</a></li>
 
@@ -112,43 +112,6 @@ Linked from: Post-login redirects and protected navigation.
           style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
         <button id="hamburger" class="hamburger lg:hidden ml-2"
           aria-label="Open menu"><span></span><span></span><span></span></button>
-      </div>
-
-      <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
-      <div id="secondary-nav"
-        class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
-        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center"
-          style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
-
-          <!-- Services Options -->
-            <ul id="dropdown-services"
-            class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="/ai-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">AI Development</a></li>
-            <li><a href="/web-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Development</a></li>
-            <li><a href="/web-hosting" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Hosting / VPS</a></li>
-            <li><a href="/growth-optimization" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Growth Optimization</a></li>
-            </ul>
-
-          <!-- Training Options -->
-          <ul id="dropdown-training"
-            class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
-            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Programming</a></li>
-            <li><a href="/domain?category=Cyber%20Security"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Cloud</a></li>
-            <li><a href="/domain?category=Artificial%20Intelligence"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="/domain?category=Database%20Engineering"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
-            </li>
-            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">All Courses</a></li>
-          </ul>
-
-        </div>
       </div>
     </div>
   </header>
@@ -190,102 +153,7 @@ Linked from: Post-login redirects and protected navigation.
 
   <script src="/assets/js/script.js"></script>
   <script type="module" src="/assets/js/api-fetch-patch.js"></script>
-  <script>
-    function escapeHtml(value) {
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
-    document.addEventListener('DOMContentLoaded', () => (async function () {
-      try {
-        const [coursesResponse, progressResponse] = await Promise.all([
-          fetch('../courses-content.json'),
-          fetch('/api/progress/all', { credentials: 'same-origin' })
-        ]);
-
-        const data = await coursesResponse.json();
-        const progressPayload = progressResponse.ok ? await progressResponse.json() : { courses: {} };
-        const progressByCourse = progressPayload && progressPayload.courses ? progressPayload.courses : {};
-
-        const dashboardList = document.getElementById('dashboard-list');
-        dashboardList.innerHTML = '';
-
-        if (!data.courses || data.courses.length === 0) {
-          dashboardList.innerHTML = '<p style="color: var(--text-faint);">No courses available.</p>';
-          return;
-        }
-
-        data.courses.forEach(course => {
-          let percent = 0;
-          let statusText = "Not Started";
-          let btnText = "Start";
-          let btnColor = "var(--accent)";
-
-          const pData = progressByCourse[course.id];
-          if (pData && typeof pData === 'object') {
-            const totalModules = Math.max(0, Number.parseInt(pData.totalModules, 10) || 0);
-            const maxIndex = Math.max(1, totalModules - 1);
-            const currentModule = Math.max(0, Number.parseInt(pData.currentModule, 10) || 0);
-
-            percent = Math.min(100, Math.round((Math.min(currentModule, maxIndex) / maxIndex) * 100));
-            if (pData.completed) percent = 100;
-
-            if (pData.completed) {
-              statusText = "Completed";
-              btnText = "View";
-              btnColor = "var(--success, #16a34a)";
-            } else if (currentModule > 0 || percent > 0) {
-              statusText = "In Progress";
-              btnText = "Resume";
-            }
-          }
-
-          const card = document.createElement('div');
-          card.className = 'service-card p-6 sm:p-8 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6';
-
-          const safeCategory = escapeHtml(course.category || 'TRAINING');
-          const safeTitle = escapeHtml(course.title || 'Untitled Course');
-          const safeStatus = escapeHtml(statusText);
-          const safePercent = Number.isFinite(percent) ? percent : 0;
-          const safeCourseId = encodeURIComponent(String(course.id || ''));
-
-          const leftSide = `
-            <div class="flex-1">
-              <div class="flex items-center gap-3 mb-2">
-                <span class="text-xs font-mono px-2 py-1 rounded" style="background: var(--tag-bg); color: var(--tag-text);">${safeCategory}</span>
-                <span class="text-xs font-mono" style="color: ${statusText === 'Completed' ? 'var(--success, #16a34a)' : (statusText === 'In Progress' ? 'var(--accent)' : 'var(--text-faint)')};">${safeStatus}</span>
-              </div>
-              <h2 class="text-xl sm:text-2xl font-bold mb-2" style="color: var(--text-primary);">${safeTitle}</h2>
-              <div class="w-full h-1.5 rounded-full overflow-hidden mt-4" style="background: var(--border-color, rgba(255,255,255,0.05)); max-w-xs;">
-                <div class="h-full transition-all duration-500 ease-out" style="width: ${safePercent}%; background: ${btnColor};"></div>
-              </div>
-              <span class="text-xs font-mono mt-2 inline-block" style="color: var(--text-faint);">${safePercent}% Completed</span>
-            </div>
-          `;
-
-          const btnLink = statusText === 'Not Started' ? `/course?id=${safeCourseId}` : `/player?id=${safeCourseId}`;
-
-          const rightSide = `
-            <div class="flex-shrink-0">
-              <a href="${btnLink}" class="inline-block text-sm px-8 py-3 rounded-xl font-bold transition-all border text-center min-w-[120px]" style="background: ${btnColor}; border-color: ${btnColor}; color: var(--bg-primary);">
-                ${btnText}
-              </a>
-            </div>
-          `;
-
-          card.innerHTML = leftSide + rightSide;
-          dashboardList.appendChild(card);
-        });
-
-      } catch (err) {
-        console.error('Failed to load dashboard:', err);
-      }
-    })());
-  </script>
+  <script src="/assets/js/dashboard-init.js"></script>
   <script src="/assets/js/footer-loader.js"></script>
 </body>
 

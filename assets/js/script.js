@@ -295,6 +295,26 @@
     });
   }
 
+  function initDomainHubSubnav() {
+    const links = Array.from(document.querySelectorAll('.domain-hub-link'));
+    if (!links.length) return;
+
+    const inactiveStyle = 'color: var(--cta-text); border: 1px solid var(--cta-border); background: transparent;';
+    const activeStyle = 'background: #F7C763; color: #0b1220; border: 1px solid rgba(255,255,255,0.2);';
+
+    const params = new URLSearchParams(window.location.search);
+    const currentCategory = params.get('category') || 'all';
+
+    links.forEach((link) => {
+      link.setAttribute('style', inactiveStyle);
+      if (link.getAttribute('data-domain').toLowerCase() === currentCategory.toLowerCase()) {
+        link.setAttribute('style', activeStyle);
+      }
+    });
+  }
+
+  initDomainHubSubnav();
+
 })();
 
 

@@ -42,8 +42,8 @@
         style="border: 1px solid rgba(247, 199, 99, 0.4);">
         <ul class="flex items-center gap-3 sm:gap-6 w-full justify-center m-0 p-0">
           <li class="nav-item-wrapper"><a href="/" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="about">About</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
-          <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
+          <li class="nav-item-wrapper"><a href="/services" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="services">Services</a></li>
+          <li class="nav-item-wrapper"><a href="/domain" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="training">Training</a></li>
           <li class="nav-item-wrapper"><a href="/projects" class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors" data-section="projects">Projects</a></li>
         </ul>
       </nav>
@@ -69,12 +69,6 @@
 
       <div id="secondary-nav" class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
         <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center" style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
-          <ul id="dropdown-services" class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="/ai-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">AI Development</a></li>
-            <li><a href="/web-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Development</a></li>
-            <li><a href="/web-hosting" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Hosting / VPS</a></li>
-            <li><a href="/growth-optimization" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Growth Optimization</a></li>
-          </ul>
           <ul id="dropdown-training" class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
             <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Programming</a></li>
             <li><a href="/domain?category=Cyber%20Security" class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Cybersecurity</a></li>
@@ -98,6 +92,17 @@
   </div>
 
   <div class="pt-24 min-h-screen">
+    <!-- HUB SUB-NAV -->
+    <section class="relative pb-10 sm:pb-12">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="service-card section-reveal visible rounded-full p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center justify-between">
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/ai-development" data-service="ai-development">AI Development</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/web-development" data-service="web-development">Web Development</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/web-hosting" data-service="web-hosting">Web Hosting / VPS</a>
+          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/growth-optimization" data-service="growth-optimization">Growth Optimization</a>
+        </div>
+      </div>
+    </section>
 
     <!-- HERO -->
     <section class="relative pb-12 pt-6 sm:pb-16 sm:pt-8 lg:pb-20 lg:pt-10">
@@ -117,17 +122,7 @@
       </div>
     </section>
 
-    <!-- HUB SUB-NAV -->
-    <section class="relative pb-10 sm:pb-12">
-      <div class="max-w-5xl mx-auto px-5 sm:px-6">
-        <div class="service-card section-reveal visible rounded-full p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center justify-between">
-          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/ai-development" data-service="ai-development">AI Development</a>
-          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/web-development" data-service="web-development">Web Development</a>
-          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/web-hosting" data-service="web-hosting">Web Hosting / VPS</a>
-          <a class="service-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/growth-optimization" data-service="growth-optimization">Growth Optimization</a>
-        </div>
-      </div>
-    </section>
+
 
     <!-- PROBLEM -->
     <section class="relative pb-16 sm:pb-20 lg:pb-24">

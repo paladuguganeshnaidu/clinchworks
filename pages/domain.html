@@ -69,10 +69,10 @@
             <li class="nav-item-wrapper"><a href="/"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="about">About</a></li>
-            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-services"><a href="/services"
+            <li class="nav-item-wrapper"><a href="/services"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="services">Services</a></li>
-            <li class="nav-item-wrapper nav-has-dropdown" data-target="dropdown-training"><a href="/domain"
+            <li class="nav-item-wrapper"><a href="/domain"
               class="top-nav-item block px-3 py-1 text-sm font-medium rounded-xl transition-colors"
               data-section="training">Training</a></li>
           
@@ -107,43 +107,6 @@
         <button id="hamburger" class="hamburger lg:hidden ml-2"
           aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
-
-      <!-- SECONDARY NAVIGATION MENU (Full Width Dropdown) -->
-      <div id="secondary-nav"
-        class="absolute top-[65px] left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none transition-all duration-300 ease-out z-40 translate-y-[-10px] w-full max-w-4xl px-4 flex justify-center">
-        <div class="rounded-full px-6 py-2 shadow-lg w-full flex justify-center text-center"
-          style="background: #F7C763; border: 1px solid rgba(255,255,255,0.2);">
-
-          <!-- Services Options -->
-            <ul id="dropdown-services"
-            class="dropdown-content hidden flex-row items-center justify-between w-full m-0 p-0 mx-4">
-            <li><a href="/ai-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">AI Development</a></li>
-            <li><a href="/web-development" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Development</a></li>
-            <li><a href="/web-hosting" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Web Hosting / VPS</a></li>
-            <li><a href="/growth-optimization" class="text-[13px] font-bold hover:opacity-70 transition-opacity">Growth Optimization</a></li>
-            </ul>
-
-          <!-- Training Options -->
-          <ul id="dropdown-training"
-            class="dropdown-content hidden flex-row items-center justify-center gap-4 w-full m-0 p-0">
-            <li><a href="/domain?category=Programming" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Programming</a></li>
-            <li><a href="/domain?category=Cyber%20Security"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Cybersecurity</a></li>
-            <li><a href="/domain?category=Cloud" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">Cloud</a></li>
-            <li><a href="/domain?category=Artificial%20Intelligence"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">AI</a></li>
-            <li><a href="/domain?category=Database%20Engineering"
-                class="text-[13px] font-bold hover:opacity-70 transition-opacity" style="color: #0b1220;">Databases</a>
-            </li>
-            <li><a href="/domain" class="text-[13px] font-bold hover:opacity-70 transition-opacity"
-                style="color: #0b1220;">All Courses</a></li>
-          </ul>
-
-        </div>
-      </div>
     </div>
   </header>
 
@@ -159,6 +122,20 @@
 
 
   <div class="min-h-screen bg-slate-50 pt-32 pb-24">
+    <!-- HUB SUB-NAV FOR DOMAINS -->
+    <section class="relative pb-10 sm:pb-12">
+      <div class="max-w-5xl mx-auto px-5 sm:px-6">
+        <div class="service-card section-reveal visible rounded-[24px] sm:rounded-full p-2 sm:p-3 flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch sm:items-center justify-between">
+          <a class="domain-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/domain" data-domain="all">All</a>
+          <a class="domain-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/domain?category=Programming" data-domain="Programming">Programming</a>
+          <a class="domain-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/domain?category=Cyber%20Security" data-domain="Cyber Security">Cybersecurity</a>
+          <a class="domain-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/domain?category=Cloud" data-domain="Cloud">Cloud</a>
+          <a class="domain-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/domain?category=Artificial%20Intelligence" data-domain="Artificial Intelligence">AI</a>
+          <a class="domain-hub-link flex-1 text-center text-xs sm:text-sm font-bold rounded-full px-4 py-2 transition-all duration-300 hover:opacity-90" href="/domain?category=Database%20Engineering" data-domain="Database Engineering">Databases</a>
+        </div>
+      </div>
+    </section>
+
     <section class="max-w-6xl mx-auto px-6">
       <div class="section-reveal visible mb-16 px-4 flex flex-col items-start">
         <h1 id="category-title" class="text-4xl sm:text-6xl font-black text-slate-900 tracking-tighter mb-6 w-full">
@@ -183,82 +160,7 @@
     <div id="site-footer"></div>
 
   <script src="/assets/js/script.js"></script>
-  <script>
-    function escapeHtml(value) {
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
-    (async function () {
-      const params = new URLSearchParams(window.location.search);
-      const category = params.get('category');
-
-      try {
-        const response = await fetch('../courses-content.json');
-        const data = await response.json();
-
-        // Filter by category if specified, else show all
-        const courses = category
-          ? data.courses.filter(c => c.category.toLowerCase() === category.toLowerCase())
-          : data.courses;
-
-        if (category) {
-          const titleEl = document.getElementById('category-title');
-          titleEl.textContent = '';
-          titleEl.appendChild(document.createTextNode(`${category} `));
-          const suffix = document.createElement('span');
-          suffix.className = 'text-slate-400';
-          suffix.textContent = 'Path';
-          titleEl.appendChild(suffix);
-        }
-
-        const container = document.getElementById('course-list');
-        container.innerHTML = '';
-
-        if (courses.length === 0) {
-          const empty = document.createElement('div');
-          empty.className = 'col-span-full py-24 text-center text-slate-400 italic';
-          empty.textContent = 'No programs found in this category.';
-          container.appendChild(empty);
-          return;
-        }
-
-        courses.forEach(course => {
-          const safeId = encodeURIComponent(String(course.id || ''));
-          const card = document.createElement('div');
-          card.className = 'group bg-[#F7C763] rounded-[32px] p-10 border border-transparent shadow-xl shadow-slate-200 transition-all duration-300 hover:translate-y-[-8px] hover:shadow-2xl cursor-pointer relative overflow-hidden';
-          card.onclick = () => window.location.href = `/course?id=${safeId}`;
-
-          card.innerHTML = `
-            <div class="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-bl-full transform translate-x-12 translate-y-[-12px] group-hover:scale-150 transition-transform duration-500"></div>
-            
-            <div class="flex items-center gap-4 mb-10">
-              <span class="text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 bg-white text-black border border-slate-100 rounded-lg">${escapeHtml(course.level)}</span>
-              <span class="text-[9px] font-bold text-slate-800 uppercase tracking-widest">${escapeHtml(course.duration)}</span>
-            </div>
-            
-            <h3 class="text-2xl font-black text-slate-900 mb-6 leading-tight">${escapeHtml(course.title)}</h3>
-            
-            <p class="text-slate-800 text-sm leading-relaxed mb-10 line-clamp-3">
-              ${escapeHtml(course.description)}
-            </p>
-            
-            <div class="flex items-center gap-3 text-black font-bold text-xs uppercase tracking-widest pt-6 border-t border-slate-800/10">
-              Explore Roadmap 
-              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      } catch (e) {
-        console.error('Failed to load courses', e);
-      }
-    })();
-  </script>
+  <script src="/assets/js/domain-init.js"></script>
   <script src="/assets/js/footer-loader.js"></script>
 </body>
 
