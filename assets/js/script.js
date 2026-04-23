@@ -30,8 +30,7 @@
     initSmoothScroll();
 
     if (!isPlayerRoute) {
-      updateActiveNav();
-      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      initActiveNavObserver();
     }
   }
 
@@ -253,19 +252,23 @@
   /**
    * Navigation Active State Logic
    */
-  function updateActiveNav() {
+  function initActiveNavObserver() {
     const navItems = document.querySelectorAll('.top-nav-item');
     const sections = document.querySelectorAll('section[id]');
+    if (!sections.length || !navItems.length) return;
 
-    let current = '';
-    const scrollPos = window.scrollY + window.innerHeight / 2;
-    sections.forEach(s => {
-      if (scrollPos >= s.offsetTop && scrollPos < s.offsetTop + s.offsetHeight) {
-        current = s.getAttribute('id');
-      }
-    });
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const currentId = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            item.classList.toggle('active', item.dataset.section === currentId);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -60% 0px', threshold: 0 });
 
-    navItems.forEach(item => item.classList.toggle('active', item.dataset.section === current));
+    sections.forEach(s => navObserver.observe(s));
   }
 
   /**

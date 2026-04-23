@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -96,7 +96,7 @@
       collection,
       doc,
       getDoc,
-      onSnapshot,
+      getDocs,
       orderBy,
       query,
       updateDoc
@@ -217,13 +217,14 @@
         const bookingsRef = collection(db, 'bookings');
         const q = query(bookingsRef, orderBy('createdAt', 'desc'));
 
-        onSnapshot(q, (snapshot) => {
+        try {
+          const snapshot = await getDocs(q);
           renderRows(snapshot.docs);
           setStatusText(`Total bookings: ${snapshot.size}`);
-        }, (err) => {
-          console.error('Realtime listener failed:', err);
+        } catch (err) {
+          console.error('Fetch failed:', err);
           setStatusText('Failed to load bookings.');
-        });
+        }
       } catch (err) {
         console.error('Reception auth check failed:', err);
         setStatusText('Unable to verify permissions.');
