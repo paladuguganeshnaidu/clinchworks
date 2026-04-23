@@ -148,13 +148,9 @@
 
   <script src="/assets/js/script.js"></script>
   <script type="module">
-    import { auth } from '/assets/js/firebase.js';
+    import { auth, db } from '/assets/js/firebase.js';
     import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-    import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js';
-
-    const functions = getFunctions();
-    const getAllUsers = httpsCallable(functions, 'getAllUsers');
-    const getUserDetails = httpsCallable(functions, 'getUserDetails');
+    import { collection, getDocs, doc, getDoc, query, limit } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
     const searchInput = document.getElementById('admin-search');
     const filterInput = document.getElementById('admin-filter');
@@ -264,22 +260,34 @@
       return 'Request failed. Please try again.';
     };
 
-    const loadUsers = async () => {
+        const loadUsers = async () => {
       if (listInFlight) return;
       listInFlight = true;
       clearError();
       setLoading(true);
 
       try {
-        const search = String(searchInput.value || '').trim();
-        const response = await getAllUsers({ search });
-        const payload = response && response.data ? response.data : { users: [] };
-        usersCache = Array.isArray(payload.users) ? payload.users : [];
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, limit(1000));
+        const snapshot = await getDocs(q);
+        
+        usersCache = [];
+        snapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          usersCache.push({
+            uid: docSnap.id,
+            name: (`${data.firstName || ''} ${data.lastName || ''}`.trim() || 'Student'),
+            email: data.email || '',
+            phone: data.phone || '',
+            profileComplete: !!data.profileComplete
+          });
+        });
+        
         applyFilter();
       } catch (error) {
         usersCache = [];
         renderRows([]);
-        showError(normalizeCallableError(error));
+        showError('Request failed. ' + error.message);
       } finally {
         setLoading(false);
         listInFlight = false;
@@ -325,23 +333,32 @@
       `).join('');
     };
 
-    const loadUserDetails = async (uid) => {
+        const loadUserDetails = async (uid) => {
       if (!uid || detailsInFlight) return;
       detailsInFlight = true;
       clearError();
 
       try {
-        const response = await getUserDetails({ uid });
-        const payload = response && response.data ? response.data : {};
-        const user = payload.user || null;
-        if (!user) {
-          showError('Unable to load user details.');
+        const docSnap = await getDoc(doc(db, 'users', uid));
+        if (!docSnap.exists()) {
+          showError('User not found.');
           return;
         }
-        renderDetails(user);
+        
+        const data = docSnap.data();
+        data.uid = uid;
+        
+        if (data.createdAt && data.createdAt.toDate) {
+          data.createdAt = data.createdAt.toDate().toISOString();
+        }
+        if (data.lastLogin && data.lastLogin.toDate) {
+          data.lastLogin = data.lastLogin.toDate().toISOString();
+        }
+        
+        renderDetails(data);
         openModal();
       } catch (error) {
-        showError(normalizeCallableError(error));
+        showError('Request failed. ' + error.message);
       } finally {
         detailsInFlight = false;
       }

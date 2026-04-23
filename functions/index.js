@@ -1,4 +1,4 @@
-const { onRequest } = require("firebase-functions/v2/https");
+﻿const { onRequest, onCall, HttpsError } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
 
@@ -428,5 +428,87 @@ exports.api = onRequest(
     }
 
     return sendJson(res, 404, { error: "Not found" });
+  }
+);
+
+
+// --- Admin Callable Functions ---
+
+async function verifyAdmin(request) {
+  if (!request.auth || !request.auth.uid) {
+    throw new HttpsError("unauthenticated", "Must be logged in");
+  }
+  const snap = await db.collection("users").doc(request.auth.uid).get();
+  if (!snap.exists || snap.data().role !== "admin") {
+    throw new HttpsError("permission-denied", "Admin access required");
+  }
+}
+
+exports.getAllUsers = onCall(
+  { region: "asia-south1", maxInstances: 10 },
+  async (request) => {
+    await verifyAdmin(request);
+    const search = (request.data.search || "").toLowerCase();
+    
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.limit(1000).get();
+    
+    let users = [];
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const uid = doc.id;
+      const firstName = String(data.firstName || "").trim();
+      const lastName = String(data.lastName || "").trim();
+      const name = \\ \\.trim();
+      const email = String(data.email || "");
+      const phone = String(data.phone || "");
+      
+      const user = {
+        uid,
+        name,
+        email,
+        phone,
+        profileComplete: !!data.profileComplete
+      };
+      
+      if (search) {
+        const haystack = \\ \ \\.toLowerCase();
+        if (haystack.includes(search)) {
+          users.push(user);
+        }
+      } else {
+        users.push(user);
+      }
+    });
+    
+    return { users };
+  }
+);
+
+exports.getUserDetails = onCall(
+  { region: "asia-south1", maxInstances: 10 },
+  async (request) => {
+    await verifyAdmin(request);
+    const uid = request.data.uid;
+    if (!uid) {
+      throw new HttpsError("invalid-argument", "Missing uid parameter");
+    }
+    
+    const docSnap = await db.collection("users").doc(uid).get();
+    if (!docSnap.exists) {
+      throw new HttpsError("not-found", "User not found");
+    }
+    
+    const data = docSnap.data();
+    data.uid = uid;
+    
+    if (data.createdAt && data.createdAt.toDate) {
+      data.createdAt = data.createdAt.toDate().toISOString();
+    }
+    if (data.lastLogin && data.lastLogin.toDate) {
+      data.lastLogin = data.lastLogin.toDate().toISOString();
+    }
+    
+    return { user: data };
   }
 );
