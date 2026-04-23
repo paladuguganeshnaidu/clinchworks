@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -69,7 +69,7 @@
         <div class="absolute inset-0 hero-bg"></div>
         <div class="hero-grid"></div>
 
-        <div class="max-w-md w-full mx-auto px-5 sm:px-6 relative z-10 section-reveal opacity-0 translate-y-10">
+        <div class="max-w-md w-full mx-auto px-5 sm:px-6 relative z-10">
             <div class="service-card rounded-[24px] p-8 sm:p-10 flex flex-col relative overflow-hidden group w-full shadow-2xl" style="background: var(--primary-gold);">
                 
                 <div class="absolute inset-0 bg-gradient-to-tl from-[#c9a84c] to-[#F1AF2C] opacity-100 pointer-events-none z-0"></div>
@@ -115,19 +115,7 @@ class="w-full mt-3 px-6 py-3.5 rounded-full text-sm font-black uppercase trackin
 
     <!-- Essential Scripts -->
     <script type="module" src="/assets/js/auth.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if (typeof gsap !== 'undefined') {
-                gsap.to(".section-reveal", {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power3.out",
-                    delay: 0.1
-                });
-            }
-        });
-    </script>
+
 </body>
 </html>
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 Page: Course Catalog
 Purpose: Displays available course tracks and routes learners into player flow.
@@ -383,7 +383,7 @@ Linked from: Training/domain pages and authenticated student flow.
         courseData.modules.forEach((mod, idx) => {
           const lessonCount = Array.isArray(mod.videos) ? mod.videos.length : 0;
           const card = document.createElement("div");
-          card.className = "module-card sm:hover:scale-[1.03] transition-transform duration-300 transform opacity-0 translate-y-8";
+          card.className = "module-card sm:hover:scale-[1.03] transition-transform duration-300 transform";
           card.innerHTML = `
               <div class="flex items-center gap-6">
                  <div class="w-14 h-14 bg-white text-black border border-slate-200 flex items-center justify-center rounded-2xl font-black text-xl">
@@ -398,19 +398,7 @@ Linked from: Training/domain pages and authenticated student flow.
           card.onclick = () => window.attemptStartCourse(courseData.id);
           list.appendChild(card);
         });
-        if (typeof gsap !== 'undefined') {
-          gsap.to(".module-card", {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: "back.out(1.5)",
-            scrollTrigger: {
-              trigger: "#module-list",
-              start: "top 85%"
-            }
-          });
-        }
+
       } catch (e) {
         console.error(e);
       }

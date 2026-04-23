@@ -67,7 +67,7 @@
         <div class="absolute inset-0 hero-bg"></div>
         <div class="hero-grid"></div>
 
-        <div class="w-full max-w-4xl mx-auto px-5 sm:px-6 relative z-10 section-reveal opacity-0 translate-y-10">
+        <div class="w-full max-w-4xl mx-auto px-5 sm:px-6 relative z-10 ">
             <div class="service-card rounded-[24px] p-8 sm:p-10 flex flex-col relative overflow-hidden group w-full shadow-2xl bg-[#F1AF2C]">
                 <div class="absolute inset-0 bg-gradient-to-tl from-[#c9a84c] to-[#F1AF2C] opacity-100 pointer-events-none z-0"></div>
 
@@ -159,16 +159,8 @@
     </section>
 
     <script type="module" src="/assets/js/auth.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if (typeof gsap !== 'undefined') {
-                gsap.to(".section-reveal", {
-                    opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.1
-                });
-            }
-        });
-    </script>
-</body>
+    </body>
 </html>
+
 
 
