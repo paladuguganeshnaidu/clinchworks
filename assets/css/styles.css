@@ -1,4 +1,4 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 @import url("/assets/css/notification.css");
 
 /* =========================================================
@@ -169,9 +169,16 @@
   box-sizing: border-box;
 }
 
-html,
+html {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-root);
+}
+
 body {
   width: 100%;
+  min-height: 100vh;
 }
 
 body {

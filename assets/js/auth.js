@@ -5,6 +5,7 @@ import {
     signOut,
     onAuthStateChanged,
     GoogleAuthProvider,
+    GithubAuthProvider,
     signInWithPopup,
     sendEmailVerification,
     sendPasswordResetEmail,
@@ -71,6 +72,7 @@ const sanitizeGender = (value) => {
 const formatProvider = (providerValue) => {
     const provider = String(providerValue || '').toLowerCase();
     if (provider === 'google') return 'Google';
+    if (provider === 'github') return 'GitHub';
     if (provider === 'email') return 'Email';
     return 'Unknown';
 };
@@ -121,6 +123,7 @@ const initAuth = () => {
 
     const btns = {
         google: document.getElementById('google-login'),
+        github: document.getElementById('github-login'),
         forgot: document.getElementById('forgot-password'),
         changePass: document.getElementById('change-password'),
         navAuth: document.getElementById('nav-auth-btn')
@@ -160,6 +163,11 @@ const initAuth = () => {
         msgDiv.classList.add('hidden');
     };
 
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('msg') === 'verify_email') {
+        showMsg('Verification email sent! Please check your inbox and spam folder to verify your account before logging in.', false);
+    }
+
     const setLoading = (btn, isLoading, originalText = 'Submit') => {
         if (!btn) return;
         btn.disabled = isLoading;
@@ -185,7 +193,8 @@ const initAuth = () => {
         'domain',
         'course',
         'player',
-        'exam'
+        'exam',
+        'training'
     ]);
 
     const isProtectedRoute = (pathname) => {
@@ -352,6 +361,7 @@ const initAuth = () => {
     };
 
     const detectProviderFromUser = (user) => {
+        if (user.providerData.some((p) => p.providerId === 'github.com')) return 'github';
         return user.providerData.some((p) => p.providerId === 'google.com') ? 'google' : 'email';
     };
 
@@ -365,7 +375,7 @@ const initAuth = () => {
         address: '',
         city: '',
         country: '',
-        provider: provider === 'google' ? 'google' : 'email',
+        provider: provider === 'google' ? 'google' : (provider === 'github' ? 'github' : 'email'),
         createdAt: serverTimestamp(),
         lastLogin: serverTimestamp(),
         profileComplete: false
@@ -418,7 +428,7 @@ const initAuth = () => {
         } else if (currentProvider === 'password') {
             normalized.provider = 'email';
             patch.provider = 'email';
-        } else if (currentProvider !== 'google' && currentProvider !== 'email') {
+        } else if (currentProvider !== 'google' && currentProvider !== 'github' && currentProvider !== 'email') {
             normalized.provider = detectProviderFromUser(user);
             patch.provider = normalized.provider;
         }
@@ -678,13 +688,7 @@ const initAuth = () => {
                 await sendEmailVerification(credential.user);
                 await signOut(auth);
 
-                setInputValue('reg-password', '');
-                setInputValue('reg-confirm-password', '');
-                showMsg('Verification email sent. Please verify before login.', false);
-
-                setTimeout(() => {
-                    window.location.href = resolvePath('login');
-                }, 1500);
+                window.location.href = `${resolvePath('login')}?msg=verify_email`;
             } catch (error) {
                 const safeCode = String(error.code || '');
                 const message = safeCode === 'auth/email-already-in-use'
@@ -724,6 +728,39 @@ const initAuth = () => {
             } catch (error) {
                 if (String(error.code || '') !== 'auth/popup-closed-by-user') {
                     showMsg('Google sign-in failed. Please try again.', true);
+                }
+            } finally {
+                isSubmitting = false;
+            }
+        });
+    }
+
+    if (btns.github) {
+        btns.github.addEventListener('click', async () => {
+            if (isSubmitting) return;
+
+            clearMsg();
+            isSubmitting = true;
+
+            try {
+                const result = await signInWithPopup(auth, new GithubAuthProvider());
+                const displayName = sanitizePlainText(result.user.displayName || 'User', 120);
+                const nameParts = displayName.split(/\s+/).filter(Boolean);
+                const firstName = sanitizeName(nameParts[0] || 'User');
+                const lastName = sanitizeName(nameParts.slice(1).join(' '));
+
+                await ensureUserDoc(result.user, baseUserPayload({
+                    firstName,
+                    lastName,
+                    email: result.user.email || '',
+                    phone: '',
+                    provider: 'github'
+                }));
+
+                window.location.href = resolveIntentRedirect();
+            } catch (error) {
+                if (String(error.code || '') !== 'auth/popup-closed-by-user') {
+                    showMsg('GitHub sign-in failed. Please try again.', true);
                 }
             } finally {
                 isSubmitting = false;
