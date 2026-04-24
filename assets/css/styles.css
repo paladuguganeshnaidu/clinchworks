@@ -346,6 +346,12 @@ img {
   -webkit-mask-image: radial-gradient(ellipse 72% 60% at 50% 38%, black 20%, transparent 100%);
   transform: translate3d(0, var(--parallax-grid, 0px), 0);
   opacity: 0.9;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
 }
 
 .c-glow {
@@ -370,19 +376,25 @@ img {
 .c-glow::before {
   border: 2px solid var(--glow-ring);
   border-right-color: transparent;
-  
+  animation: spinSlow 12s linear infinite;
 }
 
 .c-glow::after {
   inset: 12px;
   border: 1px solid var(--glow-ring-accent);
   border-left-color: transparent;
-  
+  animation: spinSlowReverse 8s linear infinite;
 }
 
-
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
+@keyframes spinSlowReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
 /* =========================================================
    Header and Navigation
    ========================================================= */
