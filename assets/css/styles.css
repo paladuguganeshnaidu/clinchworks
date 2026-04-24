@@ -217,17 +217,27 @@ body::before {
   top: -18vw;
   left: -12vw;
   background: var(--gold-accent);
-  
+  animation: floatOrb1 20s ease-in-out infinite alternate;
 }
 
 body::after {
   right: -14vw;
   bottom: -20vw;
   background: var(--gold-deep);
-  
+  animation: floatOrb2 25s ease-in-out infinite alternate;
 }
 
+@keyframes floatOrb1 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.26; }
+  50% { transform: translate(8vw, 12vw) scale(1.1); opacity: 0.4; }
+  100% { transform: translate(-4vw, 5vw) scale(0.95); opacity: 0.26; }
+}
 
+@keyframes floatOrb2 {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.26; }
+  50% { transform: translate(-10vw, -8vw) scale(1.15); opacity: 0.45; }
+  100% { transform: translate(5vw, -12vw) scale(0.9); opacity: 0.26; }
+}
 
   50% {
     transform: translate(18px, 12px) scale(1.05);
