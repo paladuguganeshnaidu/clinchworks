@@ -73,10 +73,9 @@ Linked from: Course page and dashboard learning actions.
     }
 
     .content-card {
-      max-width: 880px;
-      /* Fix: set margin-top to 0 to remove large blank space */
-      margin: 0 auto 60px;
-      padding: clamp(24px, 5vw, 48px);
+      max-width: 1300px;
+      margin: 40px auto 80px;
+      padding: 60px 80px;
       border-radius: 28px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(255, 255, 255, 0.02);
@@ -163,7 +162,7 @@ Linked from: Course page and dashboard learning actions.
     /* Code block and Typography fixes */
     #module-content {
       font-size: 17px;
-      line-height: 1.8;
+      line-height: 1.6;
       color: var(--text-secondary);
     }
 
@@ -171,42 +170,42 @@ Linked from: Course page and dashboard learning actions.
       font-size: 24px;
       font-weight: 800;
       color: white;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
+      margin-top: 1.6rem;
+      margin-bottom: 0.6rem;
     }
 
     #module-content h3 {
       font-size: 20px;
       font-weight: 700;
       color: var(--accent-soft);
-      margin-top: 2rem;
-      margin-bottom: 0.75rem;
+      margin-top: 1.3rem;
+      margin-bottom: 0.5rem;
     }
 
     #module-content p {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     #module-content ul,
     #module-content ol {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       padding-left: 1.5rem;
     }
 
     #module-content li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
 
     pre code {
       font-family: 'JetBrains Mono', monospace !important;
       font-size: 0.88rem !important;
-      line-height: 1.7 !important;
-      padding: 1.5rem !important;
+      line-height: 1.5 !important;
+      padding: 1.2rem !important;
       border-radius: 12px;
     }
 
     .clinch-code-block {
-      margin: 2rem 0;
+      margin: 1.3rem 0;
       border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 14px;
       overflow: hidden;
@@ -222,20 +221,6 @@ Linked from: Course page and dashboard learning actions.
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 1024px) {
-      #player-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .player-sidebar {
-        display: none;
-      }
-
-      .content-card {
-        margin: 20px 14px;
       }
     }
 
@@ -261,17 +246,17 @@ Linked from: Course page and dashboard learning actions.
 <body>
   <!-- Master Header -->
   <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-    <div class="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
+    <div class="w-full px-8 h-16 flex items-center justify-between relative">
 
       <!-- LOGO (Left Aligned) -->
       <a href="/" class="flex items-center gap-0 group z-10">
         <div
           class="flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
           <img src="/assets/images/logo.png?v=3" alt="Clinch Works Logo"
-            class="h-6 sm:h-8 w-auto object-contain rounded-[9px] border border-slate-200/50 shadow-sm"
+            class="h-8 w-auto object-contain rounded-[9px] border border-slate-200/50 shadow-sm"
             style="overflow: hidden;" />
         </div>
-        <span class="font-semibold text-sm sm:text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch
+        <span class="font-semibold text-[20px] tracking-wide ml-2" style="color: #c9a84c;">Clinch
           Works</span>
       </a>
 
@@ -286,7 +271,7 @@ Linked from: Course page and dashboard learning actions.
         </button>
 
         <!-- User Menu Trigger -->
-        <a id="nav-auth-btn" href="#" class="nav-user-trigger sm:flex" aria-label="User menu">
+        <a id="nav-auth-btn" href="#" class="nav-user-trigger flex" aria-label="User menu">
           <span class="nav-user-avatar-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21a8 8 0 0 0-16 0"></path>
@@ -297,24 +282,12 @@ Linked from: Course page and dashboard learning actions.
         </a>
 
         <a href="/book-call"
-          class="hidden sm:flex items-center justify-center text-xs sm:text-sm font-bold shadow-lg transition-transform hover:scale-105"
+          class="flex items-center justify-center text-sm font-bold shadow-lg transition-transform hover:scale-105"
           style="background: #F7C763; color: #0b1220; border-radius: 999px; padding: 8px 20px;">Book a Call</a>
-        <button id="hamburger" class="hamburger lg:hidden ml-2"
-          aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
 
     </div>
   </header>
-
-  <div id="mobile-menu" class="mobile-menu lg:hidden">
-    <!-- Fix: removed empty clearing div -->
-    <a href="/#about" data-section="about">About</a>
-    <a href="/services" data-section="services">Services</a>
-    <a href="/domain" data-section="training">Training</a>
-
-    <a href="/projects" data-section="projects">Projects</a>
-    <a href="/book-call" style="color: #F1AF2C; margin-top: 1rem;">Contact &rarr;</a>
-  </div>
 
 
   <div id="player-layout">
@@ -333,7 +306,7 @@ Linked from: Course page and dashboard learning actions.
     <main class="player-main">
       <div class="flex-shrink-0" style="height: var(--player-header-height);"></div>
       <div class="player-toolbar sticky z-30 border-b border-white/5 bg-[#0b0b0f]/80 backdrop-blur-md" style="top: var(--player-header-height);">
-        <div class="max-w-5xl mx-auto px-6 sm:px-10 py-4 flex items-center justify-between gap-6">
+        <div class="max-w-[1300px] mx-auto px-[80px] py-4 flex items-center justify-between gap-6">
           <div class="flex-1">
             <div class="flex items-center gap-4 mb-1">
               <span id="progress-percent" class="text-[10px] font-black uppercase tracking-widest">Progress:
@@ -344,7 +317,7 @@ Linked from: Course page and dashboard learning actions.
             </div>
             <p id="progress" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Module 0 of 0</p>
           </div>
-          <div class="flex items-center gap-4 sm:gap-6">
+          <div class="flex items-center gap-6">
             <button id="btn-prev"
               class="flex-shrink-0 p-2.5 rounded-xl border border-white/20 text-slate-300 hover:text-white hover:border-[#ffd54f] transition-all disabled:opacity-30">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -364,13 +337,13 @@ Linked from: Course page and dashboard learning actions.
 
       <div class="content-card">
         <h1 id="module-title"
-          class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 tracking-tight text-white">
+          class="text-5xl font-extrabold leading-tight mb-4 tracking-tight text-white">
           Synchronizing...
         </h1>
-        <div id="module-meta" class="flex flex-wrap items-center gap-3 mb-10 opacity-70">
+        <div id="module-meta" class="flex flex-wrap items-center gap-3 mb-6 opacity-70">
           <!-- Dynamic Meta Tags -->
         </div>
-        <div id="module-content" class="text-lg leading-relaxed space-y-6" style="color: var(--text-secondary);">
+        <div id="module-content" class="text-lg leading-relaxed space-y-4" style="color: var(--text-secondary);">
           <!-- Fix: removed leftover loader placeholder -->
         </div>
       </div>
