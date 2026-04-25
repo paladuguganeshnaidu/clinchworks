@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "course:init": "node tools/courseinit.js",
+    "exam:init": "node tools/examinit.js"
+  },
   "dependencies": {
     "puppeteer": "^24.42.0"
   }
