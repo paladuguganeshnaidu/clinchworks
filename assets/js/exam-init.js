@@ -54,19 +54,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  let state;
+  let state = {};
   try {
-    const stateResponse = await fetch(`/api/progress?courseId=${safeCourseId}`, { credentials: 'same-origin' });
-    if (stateResponse.status === 401 || stateResponse.status === 403) {
+    const uid = await getUid();
+    if (!uid) {
       const target = encodeURIComponent(window.location.pathname + window.location.search);
       showBlockedState('Login Required', 'Please log in to access the exam.', 'Log In', `/login?redirect=${target}`);
       return;
     }
-    if (stateResponse.ok) {
-      const statePayload = await stateResponse.json();
-      state = statePayload.state || {};
-    } else {
-      throw new Error("API failed");
+    const ref = doc(db, 'courses', uid);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      state = (snap.data().courses || {})[courseId] || {};
     }
   } catch (err) {
     console.warn("Exam progress check failed, using local fallback:", err);
@@ -241,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Persist progress state to Firestore!
           const uid = await getUid();
           if (uid) {
-              const ref = doc(db, 'users', uid);
+              const ref = doc(db, 'courses', uid);
               await setDoc(ref, {
                   courses: {
                       [courseId]: {

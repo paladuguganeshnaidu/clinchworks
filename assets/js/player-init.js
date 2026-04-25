@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         redirectToTrainingLogin();
         return false;
       }
-      const ref = doc(db, 'users', uid);
+      const ref = doc(db, 'courses', uid);
       const snap = await getDoc(ref);
       if (snap.exists()) {
         const data = snap.data();
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const uid = await getUid();
       if (!uid) return;
-      const ref = doc(db, 'users', uid);
+      const ref = doc(db, 'courses', uid);
       await setDoc(ref, {
         courses: {
           [courseId]: {

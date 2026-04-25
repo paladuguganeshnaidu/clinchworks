@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             const uid = await getUid();
             if (!uid) { window.location.href = '/login'; return; }
-            const ref = doc(db, 'users', uid);
+            const ref = doc(db, 'courses', uid);
             const snap = await getDoc(ref);
             if (!snap.exists()) throw new Error("No user");
             const data = snap.data();
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         
                         const uid = await getUid();
                         const newCertId = 'CW-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-                        await setDoc(doc(db, 'users', uid), {
+                        await setDoc(doc(db, 'courses', uid), {
                             courses: {
                                 [courseId]: {
                                     certificateIssued: true,

@@ -42,6 +42,11 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    match /courses/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+      allow read, write: if isAdmin();
+    }
+
     // Bookings: public create (lead form), staff-only read/update/delete.
     match /bookings/{bookingId} {
       allow create: if true;
