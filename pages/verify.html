@@ -12,30 +12,28 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'] },
-                    colors: { primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 900: '#0c4a6e' } }
-                }
-            }
-        }
-    </script>
+    <script src="/assets/js/tailwind-config.js"></script>
     
     <link rel="stylesheet" href="/assets/css/styles.css">
     
     <style>
         .verify-card {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(13, 9, 4, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(247, 199, 99, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .verify-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(247, 199, 99, 0.5), transparent);
         }
         .cert-result {
             display: none;
@@ -45,73 +43,104 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        .cw-input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(247, 199, 99, 0.3);
+            color: var(--white-text);
+            transition: all 0.3s ease;
+        }
+        .cw-input:focus {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 1px rgba(247, 199, 99, 0.5);
+            outline: none;
+        }
+        
+        .cw-btn {
+            background: var(--primary-gold);
+            color: #0b1220;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .cw-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(247, 199, 99, 0.2);
+            filter: brightness(1.1);
+        }
     </style>
 </head>
 
-<body class="bg-gray-900 text-gray-100 antialiased font-sans flex flex-col min-h-screen">
-    <div id="header-container"></div>
+<body class="w-full relative min-h-screen flex flex-col" style="background-color: var(--bg-primary); color: var(--text-primary);">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <!-- Reusing standard header via JS, keeping minimal container -->
+        <div id="header-container"></div>
+    </header>
 
-    <main class="flex-grow flex items-center justify-center py-20 px-4 relative">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gray-900"></div>
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px]"></div>
+    <main class="flex-grow flex items-center justify-center py-28 px-4 relative mt-16">
+        <!-- Animated Background Effects -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div id="tsparticles" class="absolute inset-0 z-0 opacity-40"></div>
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[120px]" style="background: rgba(247, 199, 99, 0.05);"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-[120px]" style="background: rgba(247, 199, 99, 0.08);"></div>
         </div>
 
         <div class="verify-card relative z-10 w-full max-w-lg rounded-2xl p-8 sm:p-10">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-display font-bold text-white mb-2">Verify Certificate</h1>
-                <p class="text-gray-400">Enter the unique ID to check authenticity.</p>
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-6" style="background: rgba(247, 199, 99, 0.1); border: 1px solid rgba(247, 199, 99, 0.2);">
+                    <svg class="w-8 h-8" style="color: var(--primary-gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <h1 class="text-3xl font-bold tracking-tight mb-2 uppercase" style="color: var(--white-text);">Verify <span style="color: var(--primary-gold);">Certificate</span></h1>
+                <p class="text-sm tracking-wide" style="color: var(--text-muted);">Enter the unique ID to check authenticity.</p>
             </div>
 
             <form id="verify-form" class="space-y-6">
                 <div>
-                    <label for="certId" class="block text-sm font-medium text-gray-300 mb-2">Certificate ID</label>
+                    <label for="certId" class="block text-xs font-bold tracking-widest uppercase mb-2" style="color: var(--text-muted);">Certificate ID</label>
                     <input type="text" id="certId" name="certId" placeholder="e.g. CW-XXXX-XXXX" required
-                        class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all uppercase placeholder-gray-500">
+                        class="cw-input w-full rounded-xl px-5 py-4 uppercase font-mono tracking-wider placeholder-gray-600 text-sm">
                 </div>
                 
                 <button type="submit" id="verify-submit"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                    <span>Verify Now</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    class="cw-btn w-full py-4 px-6 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-sm">
+                    <span>Verify Record</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
             </form>
 
-            <div id="loading-spinner" class="hidden justify-center mt-8">
-                <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <div id="loading-spinner" class="hidden justify-center mt-10">
+                <svg class="animate-spin h-8 w-8" style="color: var(--primary-gold);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
             </div>
 
-            <div id="result-container" class="cert-result mt-8 bg-gray-800/80 rounded-xl p-6 border border-gray-700">
-                <div class="flex items-center gap-3 mb-4 text-green-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <h3 class="text-xl font-bold">Verified Authentic</h3>
+            <div id="result-container" class="cert-result mt-10 rounded-xl p-6" style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
+                <div class="flex items-center gap-3 mb-6" style="color: #34d399;">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="text-lg font-bold uppercase tracking-wider">Verified Authentic</h3>
                 </div>
                 
-                <div class="space-y-3 text-sm">
-                    <div class="flex flex-col">
-                        <span class="text-gray-500">Recipient Name</span>
-                        <span id="res-name" class="font-semibold text-white text-base"></span>
+                <div class="space-y-4 text-sm">
+                    <div class="flex flex-col border-b border-gray-800 pb-3">
+                        <span class="text-xs uppercase tracking-widest font-bold mb-1" style="color: var(--text-muted);">Recipient Name</span>
+                        <span id="res-name" class="font-bold text-lg" style="color: var(--white-text);"></span>
+                    </div>
+                    <div class="flex flex-col border-b border-gray-800 pb-3">
+                        <span class="text-xs uppercase tracking-widest font-bold mb-1" style="color: var(--text-muted);">Course Completed</span>
+                        <span id="res-course" class="font-medium" style="color: var(--primary-gold);"></span>
+                    </div>
+                    <div class="flex flex-col border-b border-gray-800 pb-3">
+                        <span class="text-xs uppercase tracking-widest font-bold mb-1" style="color: var(--text-muted);">Date of Completion</span>
+                        <span id="res-date" class="font-medium" style="color: var(--white-text);"></span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-gray-500">Course Completed</span>
-                        <span id="res-course" class="font-medium text-gray-200"></span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-gray-500">Date of Completion</span>
-                        <span id="res-date" class="font-medium text-gray-200"></span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-gray-500">Certificate ID</span>
-                        <span id="res-id" class="font-mono text-gray-300"></span>
+                        <span class="text-xs uppercase tracking-widest font-bold mb-1" style="color: var(--text-muted);">Certificate ID</span>
+                        <span id="res-id" class="font-mono tracking-wider font-bold" style="color: var(--white-text);"></span>
                     </div>
                 </div>
             </div>
             
-            <div id="error-container" class="cert-result mt-8 bg-red-900/30 rounded-xl p-6 border border-red-800/50">
+            <div id="error-container" class="cert-result mt-10 rounded-xl p-6" style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2);">
                 <div class="flex items-center gap-3 text-red-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <h3 id="error-message" class="font-semibold">Certificate not found.</h3>
+                    <h3 id="error-message" class="font-bold tracking-wide">Certificate not found.</h3>
                 </div>
             </div>
 
@@ -120,8 +149,27 @@
 
     <div id="footer-container"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <script>
+      if (typeof tsParticles !== 'undefined') {
+        tsParticles.load("tsparticles", {
+          fpsLimit: 60,
+          particles: {
+            color: { value: "#E6C76B" },
+            links: { color: "#E6C76B", distance: 150, enable: true, opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 1, outModes: { default: "bounce" } },
+            number: { density: { enable: true, area: 800 }, value: 40 },
+            opacity: { value: 0.3 },
+            shape: { type: "circle" },
+            size: { value: { min: 1, max: 2 } }
+          }
+        });
+      }
+    </script>
+
     <script src="/assets/js/notification.js"></script>
     <script type="module" src="/assets/js/verify-init.js"></script>
     <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/footer-loader.js"></script>
 </body>
 </html>
