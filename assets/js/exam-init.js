@@ -6,7 +6,7 @@ function getUid() {
   return new Promise(resolve => {
     const unsub = onAuthStateChanged(auth, user => {
       unsub();
-      resolve(user ? user.uid : null);
+      resolve(user && user.email ? user.email.toLowerCase() : null);
     });
   });
 }

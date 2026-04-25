@@ -42,8 +42,8 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    match /courses/{uid} {
-      allow read, write: if signedIn() && request.auth.uid == uid;
+    match /courses/{emailId} {
+      allow read, write: if signedIn() && request.auth.token.email != null && request.auth.token.email.toLowerCase() == emailId.toLowerCase();
       allow read, write: if isAdmin();
     }
 
