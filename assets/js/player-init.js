@@ -147,10 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     } catch (err) {
       console.warn("Firestore progress fetch failed:", err);
-      return false;
-    }
-  } catch (err) {
-      console.warn("API progress fetch failed, trying localStorage:", err);
       const local = localStorage.getItem(`cw_progress_${courseId}`);
       if (local) {
         state = normalizeState(JSON.parse(local), state.totalModules);
