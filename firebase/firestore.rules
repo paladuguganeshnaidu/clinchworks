@@ -43,7 +43,7 @@ service cloud.firestore {
     }
 
     match /courses/{emailId} {
-      allow read, write: if signedIn() && request.auth.token.email != null && request.auth.token.email.toLowerCase() == emailId.toLowerCase();
+      allow read, write: if signedIn() && request.auth.token.email != null && request.auth.token.email.lower() == emailId.lower();
       allow read, write: if isAdmin();
     }
 
