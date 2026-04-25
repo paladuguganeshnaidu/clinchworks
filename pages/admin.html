@@ -110,9 +110,9 @@
             class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
 
             style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);">Refresh</button>
-          <button id="admin-email-selected"
+          <button id="admin-copy-mails"
             class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
-            style="background: #F7C763; color: #0b1220;">Email Selected</button>
+            style="background: #F7C763; color: #0b1220;">Copy Mails</button>
           <button id="admin-export-csv"
             class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
             style="background: var(--bg-secondary); border: 1px solid #10b981; color: #10b981;">Export CSV</button>
@@ -170,7 +170,7 @@
     const searchInput = document.getElementById('admin-search');
     const filterInput = document.getElementById('admin-filter');
     const refreshBtn = document.getElementById('admin-refresh');
-    const emailSelectedBtn = document.getElementById('admin-email-selected');
+    const copyMailsBtn = document.getElementById('admin-copy-mails');
     const exportCsvBtn = document.getElementById('admin-export-csv');
     const selectAllCheckbox = document.getElementById('admin-select-all');
     const loadingEl = document.getElementById('admin-loading');
@@ -461,19 +461,27 @@
       });
     }
 
-    if (emailSelectedBtn) {
-      emailSelectedBtn.addEventListener('click', () => {
+    if (copyMailsBtn) {
+      copyMailsBtn.addEventListener('click', async () => {
         const checkedBoxes = document.querySelectorAll('.admin-user-checkbox:checked');
         const emails = Array.from(checkedBoxes).map(cb => cb.value).filter(email => email && email !== 'N/A' && email !== '');
         
         if (emails.length === 0) {
-          showError('Please select at least one user to email.');
+          showError('Please select at least one user to copy.');
           setTimeout(clearError, 3000);
           return;
         }
         
-        const bccString = emails.join(',');
-        window.location.href = `mailto:?bcc=${encodeURIComponent(bccString)}&subject=${encodeURIComponent('Clinch Works Reminder')}`;
+        const bccString = emails.join(', ');
+        try {
+          await navigator.clipboard.writeText(bccString);
+          const originalText = copyMailsBtn.textContent;
+          copyMailsBtn.textContent = 'Copied!';
+          setTimeout(() => { copyMailsBtn.textContent = originalText; }, 2000);
+        } catch (err) {
+          showError('Failed to copy emails to clipboard.');
+          setTimeout(clearError, 3000);
+        }
       });
     }
 
