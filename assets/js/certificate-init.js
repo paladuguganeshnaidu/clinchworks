@@ -44,6 +44,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
                     resolvedName = String(statusResult.payload.username).trim();
                 }
+                
+                const certIdEl = document.getElementById('cert-id');
+                if (statusResult.payload.certificateId && certIdEl) {
+                    certIdEl.textContent = `ID: ${statusResult.payload.certificateId}`;
+                }
 
                 certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
             } else {
@@ -135,6 +140,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                         if (issueResult.response.ok) {
                             certificateAlreadyIssued = true;
+                            const certIdEl = document.getElementById('cert-id');
+                            if (issueResult.payload && issueResult.payload.certificateId && certIdEl) {
+                                certIdEl.textContent = `ID: ${issueResult.payload.certificateId}`;
+                            }
                             setButtonIssuedState(btn);
                             return;
                         }

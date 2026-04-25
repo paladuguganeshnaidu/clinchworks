@@ -1,4 +1,4 @@
-﻿const { onRequest, onCall, HttpsError } = require("firebase-functions/v2/https");
+const { onRequest, onCall, HttpsError } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
 
@@ -86,7 +86,8 @@ function normalizeProgressState(raw, totalModules) {
     totalModules: safeTotal,
     completed,
     examPassed: !!(raw && raw.examPassed),
-    certificateIssued: !!(raw && raw.certificateIssued)
+    certificateIssued: !!(raw && raw.certificateIssued),
+    certificateId: (raw && raw.certificateId) ? String(raw.certificateId) : null
   };
 }
 
@@ -183,12 +184,12 @@ exports.api = onRequest(
       if (!courseId) return sendJson(res, 400, { error: "courseId is required" });
 
       try {
-        const ref = db.collection("users").doc(uid).collection("progress").doc(courseId);
-        const snap = await ref.get();
+        const userSnap = await db.collection("users").doc(uid).get();
+        const userData = userSnap.data() || {};
+        const courseData = (userData.courses || {})[courseId] || {};
         const course = findCourse(courseId);
         const totalModules = course && Array.isArray(course.modules) ? course.modules.length : 0;
-
-        const state = snap.exists ? normalizeProgressState(snap.data() || {}, totalModules) : normalizeProgressState({}, totalModules);
+        const state = normalizeProgressState(courseData, totalModules);
         return sendJson(res, 200, { state });
       } catch (err) {
         logger.error("/api/progress GET failed", err);
@@ -214,14 +215,15 @@ exports.api = onRequest(
       const normalized = normalizeProgressState(incoming, totalModules);
 
       try {
-        const ref = db.collection("users").doc(uid).collection("progress").doc(courseId);
-        await ref.set(
-          {
-            ...normalized,
-            updatedAt: admin.firestore.FieldValue.serverTimestamp()
-          },
-          { merge: true }
-        );
+        const userRef = db.collection("users").doc(uid);
+        await userRef.set({
+          courses: {
+            [courseId]: {
+              ...normalized,
+              updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            }
+          }
+        }, { merge: true });
 
         return sendJson(res, 200, { state: normalized });
       } catch (err) {
@@ -232,15 +234,16 @@ exports.api = onRequest(
 
     if (method === "GET" && pathname === "/api/progress/all") {
       try {
-        const snap = await db.collection("users").doc(uid).collection("progress").get();
+        const snap = await db.collection("users").doc(uid).get();
+        const data = snap.data() || {};
+        const coursesMap = data.courses || {};
         const courses = {};
 
-        snap.forEach((docSnap) => {
-          const courseId = docSnap.id;
+        for (const [courseId, courseData] of Object.entries(coursesMap)) {
           const course = findCourse(courseId);
           const totalModules = course && Array.isArray(course.modules) ? course.modules.length : 0;
-          courses[courseId] = normalizeProgressState(docSnap.data() || {}, totalModules);
-        });
+          courses[courseId] = normalizeProgressState(courseData, totalModules);
+        }
 
         return sendJson(res, 200, { courses });
       } catch (err) {
@@ -257,10 +260,10 @@ exports.api = onRequest(
       if (!course) return sendJson(res, 404, { error: "Course not found" });
 
       try {
-        const progressRef = db.collection("users").doc(uid).collection("progress").doc(courseId);
-        const progressSnap = await progressRef.get();
+        const userSnap = await db.collection("users").doc(uid).get();
+        const courseData = (userSnap.data() || {}).courses || {};
         const totalModules = Array.isArray(course.modules) ? course.modules.length : 0;
-        const state = progressSnap.exists ? normalizeProgressState(progressSnap.data() || {}, totalModules) : normalizeProgressState({}, totalModules);
+        const state = normalizeProgressState(courseData[courseId] || {}, totalModules);
 
         if (!state.completed) {
           return sendJson(res, 403, { error: "Complete the course before taking the exam" });
@@ -310,10 +313,10 @@ exports.api = onRequest(
       if (!exam) return sendJson(res, 404, { error: "No exam found for this course" });
 
       try {
-        const progressRef = db.collection("users").doc(uid).collection("progress").doc(courseId);
-        const progressSnap = await progressRef.get();
+        const userSnap = await db.collection("users").doc(uid).get();
+        const courseData = (userSnap.data() || {}).courses || {};
         const totalModules = Array.isArray(course.modules) ? course.modules.length : 0;
-        const state = progressSnap.exists ? normalizeProgressState(progressSnap.data() || {}, totalModules) : normalizeProgressState({}, totalModules);
+        const state = normalizeProgressState(courseData[courseId] || {}, totalModules);
 
         if (!state.completed) {
           return sendJson(res, 403, { error: "Course must be completed before exam submission" });
@@ -348,14 +351,15 @@ exports.api = onRequest(
         const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
         const passed = percentage >= 60;
 
-        await progressRef.set(
-          {
-            examPassed: passed,
-            completed: passed || state.completed,
-            updatedAt: admin.firestore.FieldValue.serverTimestamp()
-          },
-          { merge: true }
-        );
+        await userRef.set({
+          courses: {
+            [courseId]: {
+              examPassed: passed,
+              completed: passed || state.completed,
+              updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            }
+          }
+        }, { merge: true });
 
         return sendJson(res, 200, { passed, score, total, percentage });
       } catch (err) {
@@ -372,15 +376,16 @@ exports.api = onRequest(
         const course = findCourse(courseId);
         const totalModules = course && Array.isArray(course.modules) ? course.modules.length : 0;
 
-        const progressRef = db.collection("users").doc(uid).collection("progress").doc(courseId);
-        const progressSnap = await progressRef.get();
-        const state = progressSnap.exists ? normalizeProgressState(progressSnap.data() || {}, totalModules) : normalizeProgressState({}, totalModules);
+        const userSnap = await db.collection("users").doc(uid).get();
+        const courseData = (userSnap.data() || {}).courses || {};
+        const state = normalizeProgressState(courseData[courseId] || {}, totalModules);
 
         const username = await resolveUsername(uid, decoded);
 
         return sendJson(res, 200, {
           examPassed: !!state.examPassed,
           certificateIssued: !!state.certificateIssued,
+          certificateId: state.certificateId,
           username
         });
       } catch (err) {
@@ -404,23 +409,26 @@ exports.api = onRequest(
       const totalModules = course && Array.isArray(course.modules) ? course.modules.length : 0;
 
       try {
-        const progressRef = db.collection("users").doc(uid).collection("progress").doc(courseId);
-        const progressSnap = await progressRef.get();
-        const state = progressSnap.exists ? normalizeProgressState(progressSnap.data() || {}, totalModules) : normalizeProgressState({}, totalModules);
+        const userSnap = await db.collection("users").doc(uid).get();
+        const courseData = (userSnap.data() || {}).courses || {};
+        const state = normalizeProgressState(courseData[courseId] || {}, totalModules);
 
         if (!state.examPassed) {
           return sendJson(res, 403, { error: "Exam must be passed before issuing certificate" });
         }
 
-        await progressRef.set(
-          {
-            certificateIssued: true,
-            updatedAt: admin.firestore.FieldValue.serverTimestamp()
-          },
-          { merge: true }
-        );
+        const newCertId = 'CW-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        await userRef.set({
+          courses: {
+            [courseId]: {
+              certificateIssued: true,
+              certificateId: newCertId,
+              updatedAt: admin.firestore.FieldValue.serverTimestamp()
+            }
+          }
+        }, { merge: true });
 
-        return sendJson(res, 200, { ok: true });
+        return sendJson(res, 200, { ok: true, certificateId: newCertId });
       } catch (err) {
         logger.error("/api/certificate/issue failed", err);
         return sendJson(res, 500, { error: "Server error" });
