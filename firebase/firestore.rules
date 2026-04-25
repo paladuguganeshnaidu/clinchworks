@@ -6,8 +6,12 @@ service cloud.firestore {
     }
 
     function hasRole(role) {
-      return signedIn() &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+      let r = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+      return signedIn() && (
+        r == role ||
+        (r is string && r.matches('(?i).*' + role + '.*')) ||
+        (r is list && role in r)
+      );
     }
 
     function isAdmin() {

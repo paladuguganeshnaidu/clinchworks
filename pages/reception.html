@@ -54,7 +54,10 @@
       </div>
 
       <div class="glass-strong rounded-3xl p-6 sm:p-8 section-reveal visible" style="border: 1px solid var(--border-color); background: var(--bg-surface);">
-        <div id="reception-status" class="text-sm font-semibold mb-4" style="color: var(--text-secondary);">Loadingâ€¦</div>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+          <div id="reception-status" class="text-sm font-semibold" style="color: var(--text-secondary);">Loading...</div>
+          <button id="reception-export-csv" class="px-6 py-2 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]" style="background: var(--bg-secondary); border: 1px solid #10b981; color: #10b981;">Export CSV</button>
+        </div>
 
         <div class="overflow-x-auto">
           <table class="min-w-[1100px] w-full text-left">
@@ -97,6 +100,7 @@
 
     const statusEl = document.getElementById('reception-status');
     const bodyEl = document.getElementById('bookings-body');
+    const exportCsvBtn = document.getElementById('reception-export-csv');
 
     const escapeHtml = (value) => {
       const s = String(value ?? '');
@@ -112,9 +116,9 @@
     const formatCreatedAt = (createdAt) => {
       try {
         const dt = createdAt && typeof createdAt.toDate === 'function' ? createdAt.toDate() : null;
-        return dt ? dt.toLocaleString() : 'â€”';
+        return dt ? dt.toLocaleString() : '—';
       } catch {
-        return 'â€”';
+        return '—';
       }
     };
 
@@ -189,6 +193,35 @@
 
     wireActions();
 
+    if (exportCsvBtn) {
+      exportCsvBtn.addEventListener('click', () => {
+        const rows = document.querySelectorAll('#bookings-body tr');
+        let csvContent = "Name,Service,Mobile,WhatsApp,Description,Status,Created\n";
+        
+        rows.forEach(row => {
+          if (row.cells.length >= 7 && !row.cells[0].hasAttribute('colspan')) {
+            const name = `"${row.cells[0].textContent.trim().replace(/"/g, '""')}"`;
+            const service = `"${row.cells[1].textContent.trim().replace(/"/g, '""')}"`;
+            const mobile = `"${row.cells[2].textContent.trim().replace(/"/g, '""')}"`;
+            const whatsapp = `"${row.cells[3].textContent.trim().replace(/"/g, '""')}"`;
+            const desc = `"${row.cells[4].textContent.trim().replace(/"/g, '""')}"`;
+            const status = `"${row.cells[5].textContent.trim().replace(/"/g, '""')}"`;
+            const created = `"${row.cells[6].textContent.trim().replace(/"/g, '""')}"`;
+            csvContent += `${name},${service},${mobile},${whatsapp},${desc},${status},${created}\n`;
+          }
+        });
+        
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'reception_bookings.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         const target = encodeURIComponent('/reception');
@@ -200,12 +233,12 @@
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         const role = userDoc.exists() ? String(userDoc.data().role || '').toLowerCase() : '';
 
-        if (role !== 'admin' && role !== 'reception') {
+        if (!role.includes('admin') && !role.includes('reception')) {
           document.body.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--danger);font-family:system-ui;'><h1 style='font-size:2rem;font-weight:800;'>403 Forbidden</h1><p style='margin-top:0.75rem;color:var(--text-secondary);'>Reception privileges required.</p></div>";
           return;
         }
 
-        setStatusText('Listening for live updatesâ€¦');
+        setStatusText('Listening for live updates...');
 
         const bookingsRef = collection(db, 'bookings');
         const q = query(bookingsRef, orderBy('createdAt', 'desc'));

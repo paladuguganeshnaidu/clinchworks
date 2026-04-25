@@ -103,10 +103,19 @@
             <option value="all">All Profiles</option>
             <option value="complete">Profile Complete</option>
             <option value="incomplete">Profile Incomplete</option>
+            <option value="admin">Admins</option>
+            <option value="reception">Receptionists</option>
           </select>
           <button id="admin-refresh"
             class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
-            style="background: #F7C763; color: #0b1220;">Refresh</button>
+
+            style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);">Refresh</button>
+          <button id="admin-email-selected"
+            class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
+            style="background: #F7C763; color: #0b1220;">Email Selected</button>
+          <button id="admin-export-csv"
+            class="w-full md:w-auto px-6 py-3 rounded-xl text-sm font-bold transition-all hover:scale-[1.02]"
+            style="background: var(--bg-secondary); border: 1px solid #10b981; color: #10b981;">Export CSV</button>
         </div>
 
         <div id="admin-msg" class="hidden mb-4 p-4 rounded-xl text-sm font-semibold"
@@ -119,9 +128,13 @@
             <table class="min-w-full text-sm">
               <thead>
                 <tr style="background: rgba(247, 199, 99, 0.15);">
+                  <th class="text-center px-4 py-3 w-12">
+                    <input type="checkbox" id="admin-select-all" class="w-4 h-4 rounded border-gray-300 text-[#F7C763] focus:ring-[#F7C763] bg-transparent cursor-pointer" />
+                  </th>
                   <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Name</th>
                   <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Email</th>
                   <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Phone</th>
+                  <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Role</th>
                   <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Profile Status</th>
                   <th class="text-left px-4 py-3 font-bold" style="color: var(--text-primary);">Action</th>
                 </tr>
@@ -157,6 +170,9 @@
     const searchInput = document.getElementById('admin-search');
     const filterInput = document.getElementById('admin-filter');
     const refreshBtn = document.getElementById('admin-refresh');
+    const emailSelectedBtn = document.getElementById('admin-email-selected');
+    const exportCsvBtn = document.getElementById('admin-export-csv');
+    const selectAllCheckbox = document.getElementById('admin-select-all');
     const loadingEl = document.getElementById('admin-loading');
     const msgEl = document.getElementById('admin-msg');
     const bodyEl = document.getElementById('admin-users-body');
@@ -212,9 +228,28 @@
         : '<span class="px-2 py-1 rounded text-xs font-bold" style="background: rgba(234, 179, 8, 0.18); color: #92400e;">Incomplete</span>';
     };
 
+    const updateSelectAllState = () => {
+      if (!selectAllCheckbox) return;
+      const checkboxes = document.querySelectorAll('.admin-user-checkbox');
+      const checkedBoxes = document.querySelectorAll('.admin-user-checkbox:checked');
+      if (checkboxes.length === 0) {
+        selectAllCheckbox.checked = false;
+        selectAllCheckbox.indeterminate = false;
+      } else if (checkedBoxes.length === checkboxes.length) {
+        selectAllCheckbox.checked = true;
+        selectAllCheckbox.indeterminate = false;
+      } else if (checkedBoxes.length > 0) {
+        selectAllCheckbox.checked = false;
+        selectAllCheckbox.indeterminate = true;
+      } else {
+        selectAllCheckbox.checked = false;
+        selectAllCheckbox.indeterminate = false;
+      }
+    };
+
     const renderRows = (users) => {
       if (!users.length) {
-        bodyEl.innerHTML = '<tr><td colspan="5" class="px-4 py-6 text-center" style="color: var(--text-faint);">No users found.</td></tr>';
+        bodyEl.innerHTML = '<tr><td colspan="7" class="px-4 py-6 text-center" style="color: var(--text-faint);">No users found.</td></tr>';
         return;
       }
 
@@ -223,12 +258,17 @@
         const email = escapeHtml(user.email || 'N/A');
         const phone = escapeHtml(user.phone || 'N/A');
         const uid = escapeHtml(user.uid || '');
+        const role = escapeHtml(user.role || 'student');
 
         return `
           <tr class="border-t" style="border-color: var(--border-color);">
+            <td class="px-4 py-3 text-center">
+              <input type="checkbox" class="admin-user-checkbox w-4 h-4 rounded border-gray-300 text-[#F7C763] focus:ring-[#F7C763] bg-transparent cursor-pointer" value="${email}" />
+            </td>
             <td class="px-4 py-3" style="color: var(--text-primary);">${name}</td>
             <td class="px-4 py-3" style="color: var(--text-primary);">${email}</td>
             <td class="px-4 py-3" style="color: var(--text-primary);">${phone}</td>
+            <td class="px-4 py-3"><span class="capitalize text-xs font-bold px-2 py-1 rounded" style="background: rgba(100,116,139,0.15); color: var(--text-secondary);">${role}</span></td>
             <td class="px-4 py-3">${profileStatusBadge(Boolean(user.profileComplete))}</td>
             <td class="px-4 py-3">
               <button class="view-user-btn px-3 py-2 rounded-lg text-xs font-bold" data-uid="${uid}" style="background: #F7C763; color: #0b1220;">View</button>
@@ -236,6 +276,7 @@
           </tr>
         `;
       }).join('');
+      updateSelectAllState();
     };
 
     const applyFilter = () => {
@@ -247,7 +288,9 @@
         const matchQuery = !query || haystack.includes(query);
         const matchStatus = status === 'all'
           || (status === 'complete' && user.profileComplete)
-          || (status === 'incomplete' && !user.profileComplete);
+          || (status === 'incomplete' && !user.profileComplete)
+          || (status === 'admin' && user.role.includes('admin'))
+          || (status === 'reception' && user.role.includes('reception'));
         return matchQuery && matchStatus;
       });
 
@@ -281,6 +324,7 @@
             name: (`${data.firstName || ''} ${data.lastName || ''}`.trim() || 'Student'),
             email: data.email || '',
             phone: data.phone || '',
+            role: String(data.role || 'student').toLowerCase().trim(),
             profileComplete: !!data.profileComplete
           });
         });
@@ -402,6 +446,64 @@
       });
     }
 
+    if (selectAllCheckbox) {
+      selectAllCheckbox.addEventListener('change', (e) => {
+        const checkboxes = document.querySelectorAll('.admin-user-checkbox');
+        checkboxes.forEach(cb => cb.checked = e.target.checked);
+      });
+    }
+
+    if (bodyEl) {
+      bodyEl.addEventListener('change', (e) => {
+        if (e.target.classList.contains('admin-user-checkbox')) {
+          updateSelectAllState();
+        }
+      });
+    }
+
+    if (emailSelectedBtn) {
+      emailSelectedBtn.addEventListener('click', () => {
+        const checkedBoxes = document.querySelectorAll('.admin-user-checkbox:checked');
+        const emails = Array.from(checkedBoxes).map(cb => cb.value).filter(email => email && email !== 'N/A' && email !== '');
+        
+        if (emails.length === 0) {
+          showError('Please select at least one user to email.');
+          setTimeout(clearError, 3000);
+          return;
+        }
+        
+        const bccString = emails.join(',');
+        window.location.href = `mailto:?bcc=${encodeURIComponent(bccString)}&subject=${encodeURIComponent('Clinch Works Reminder')}`;
+      });
+    }
+
+    if (exportCsvBtn) {
+      exportCsvBtn.addEventListener('click', () => {
+        const rows = document.querySelectorAll('#admin-users-body tr');
+        let csvContent = "Name,Email,Phone,Role,Profile Status\n";
+        
+        rows.forEach(row => {
+          if (row.cells.length >= 6 && !row.cells[0].hasAttribute('colspan')) {
+            const name = `"${row.cells[1].textContent.trim().replace(/"/g, '""')}"`;
+            const email = `"${row.cells[2].textContent.trim().replace(/"/g, '""')}"`;
+            const phone = `"${row.cells[3].textContent.trim().replace(/"/g, '""')}"`;
+            const role = `"${row.cells[4].textContent.trim().replace(/"/g, '""')}"`;
+            const status = `"${row.cells[5].textContent.trim().replace(/"/g, '""')}"`;
+            csvContent += `${name},${email},${phone},${role},${status}\n`;
+          }
+        });
+        
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'admin_users.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
+
     filterInput.addEventListener('change', applyFilter);
     refreshBtn.addEventListener('click', loadUsers);
     closeModalBtn.addEventListener('click', closeModal);
@@ -434,7 +536,8 @@
         const db = getFirestore();
         const userDoc = await getDoc(doc(db, 'users', user.uid));
 
-        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+        const userRole = userDoc.exists() ? String(userDoc.data().role || '').toLowerCase().trim() : '';
+        if (!userDoc.exists() || !userRole.includes('admin')) {
           throw new Error("Unauthorized");
         }
 
