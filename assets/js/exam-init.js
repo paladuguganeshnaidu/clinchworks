@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       try {
         let result = null;
-        try {
+
           const key = fullExam || (await (async () => {
             const localResp = await fetch('/examquestions.json', { cache: 'no-store' });
             if (!localResp.ok) return null;
@@ -261,7 +261,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (passedLocal) existing.completed = true;
             localStorage.setItem(progressKey, JSON.stringify(existing));
           } catch (storageErr) {}
-        }
 
         const score = Number.parseInt(result.score, 10) || 0;
         const totalQ = Number.parseInt(result.total, 10) || (mcqs.length + codingQs.length);
