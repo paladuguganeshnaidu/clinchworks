@@ -116,13 +116,38 @@ document.addEventListener("DOMContentLoaded", async () => {
         btn.addEventListener('mouseenter', () => btn.style.transform = 'translateY(-2px)');
         btn.addEventListener('mouseleave', () => btn.style.transform = 'translateY(0)');
 
-        btn.addEventListener('click', () => {
-            if (certificateAlreadyIssued) {
-                return;
-            }
-
+        btn.addEventListener('click', async () => {
             const btnArea = document.querySelector('.no-print');
             if (btnArea) btnArea.style.display = 'none';
+
+            if (!certificateAlreadyIssued && courseId) {
+                try {
+                    const uid = await getUid();
+                    // Generate a strong, non-double ID
+                    const newCertId = 'CW-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2, 4).toUpperCase();
+                    
+                    const certIdEl = document.getElementById('cert-id');
+                    if (certIdEl) certIdEl.textContent = `ID: ${newCertId}`;
+                    
+                    // Force DOM update
+                    await new Promise(resolve => setTimeout(resolve, 100));
+
+                    await setDoc(doc(db, 'courses', uid), {
+                        courses: {
+                            [courseId]: {
+                                certificateIssued: true,
+                                certificateId: newCertId,
+                                updatedAt: serverTimestamp()
+                            }
+                        }
+                    }, { merge: true });
+                    
+                    certificateAlreadyIssued = true;
+                    setButtonIssuedState(btn);
+                } catch (err) {
+                    console.warn('Certificate issue failed:', err);
+                }
+            }
 
             const element = document.querySelector('.certificate-container');
             const opt = {
@@ -133,44 +158,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
             };
 
-            html2pdf().set(opt).from(element).save().then(async () => {
+            html2pdf().set(opt).from(element).save().then(() => {
                 if (btnArea) btnArea.style.display = 'block';
-
-                if (courseId) {
-                    try {
-                        
-                        const uid = await getUid();
-                        const newCertId = 'CW-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-                        await setDoc(doc(db, 'courses', uid), {
-                            courses: {
-                                [courseId]: {
-                                    certificateIssued: true,
-                                    certificateId: newCertId,
-                                    updatedAt: serverTimestamp()
-                                }
-                            }
-                        }, { merge: true });
-                        certificateAlreadyIssued = true;
-                        const certIdEl = document.getElementById('cert-id');
-                        if (certIdEl) certIdEl.textContent = `ID: ${newCertId}`;
-                        setButtonIssuedState(btn);
-                        return; catch (err) {
-                        console.warn('Certificate issue API unavailable, storing local issued state:', err);
-
-                        try {
-                            const key = `cw_progress_${courseId}`;
-                            const raw = localStorage.getItem(key);
-                            const state = raw ? JSON.parse(raw) : {};
-                            state.certificateIssued = true;
-                            localStorage.setItem(key, JSON.stringify(state));
-                        } catch (storageErr) {
-                            console.warn('Unable to persist local certificateIssued flag:', storageErr);
-                        }
-
-                        certificateAlreadyIssued = true;
-                        setButtonIssuedState(btn);
-                    }
-                }
             }).catch(() => {
                 if (btnArea) btnArea.style.display = 'block';
             });
