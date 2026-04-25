@@ -217,6 +217,10 @@
       {
         "source": "/exam",
         "destination": "/pages/exam.html"
+      },
+      {
+        "source": "/verify",
+        "destination": "/pages/verify.html"
       }
     ]
   }

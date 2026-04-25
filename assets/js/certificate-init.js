@@ -142,6 +142,19 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }
                     }, { merge: true });
                     
+                    try {
+                        const email = await getUid(); // this is now email
+                        await setDoc(doc(db, 'certificates', newCertId), {
+                            email: email,
+                            name: resolvedName,
+                            courseId: courseId,
+                            courseName: courseNameEl ? courseNameEl.textContent : courseId,
+                            issuedAt: serverTimestamp()
+                        });
+                    } catch (certWriteErr) {
+                        console.warn('Failed to publish public certificate record:', certWriteErr);
+                    }
+                    
                     certificateAlreadyIssued = true;
                     setButtonIssuedState(btn);
                 } catch (err) {
