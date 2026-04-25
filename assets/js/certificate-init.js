@@ -1,3 +1,15 @@
+import { auth, db } from './firebase.js';
+import { doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+function getUid() {
+  return new Promise(resolve => {
+    const unsub = onAuthStateChanged(auth, user => {
+      unsub();
+      resolve(user ? user.uid : null);
+    });
+  });
+}
 async function fetchJson(url, options) {
     const response = await fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
     let payload = null;
@@ -30,30 +42,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (courseId) {
         try {
-            const statusResult = await fetchJson(`/api/certificate/status?courseId=${safeCourseId}`);
-            if (statusResult.response.ok && statusResult.payload) {
-                if (!statusResult.payload.examPassed) {
-                    await showModal("Final Exam Required", "You have not passed the final exam yet.", {
-                        type: "warning",
-                        confirmText: "Go to Exam"
-                    });
-                    window.location.href = `/exam?id=${safeCourseId}`;
-                    return;
-                }
-
-                if (statusResult.payload.username && String(statusResult.payload.username).trim()) {
-                    resolvedName = String(statusResult.payload.username).trim();
-                }
-                
-                const certIdEl = document.getElementById('cert-id');
-                if (statusResult.payload.certificateId && certIdEl) {
-                    certIdEl.textContent = `ID: ${statusResult.payload.certificateId}`;
-                }
-
-                certificateAlreadyIssued = !!statusResult.payload.certificateIssued;
-            } else {
-                throw new Error("API failed");
+            
+            const uid = await getUid();
+            if (!uid) { window.location.href = '/login'; return; }
+            const ref = doc(db, 'users', uid);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) throw new Error("No user");
+            const data = snap.data();
+            const state = (data.courses || {})[courseId] || {};
+            
+            if (!state.examPassed) {
+                await showModal("Final Exam Required", "You have not passed the final exam yet.", { type: "warning", confirmText: "Go to Exam" });
+                window.location.href = `/exam?id=${safeCourseId}`;
+                return;
             }
+            if (data.firstName || data.lastName) {
+                resolvedName = [data.firstName, data.lastName].filter(Boolean).join(' ');
+            }
+            const certIdEl = document.getElementById('cert-id');
+            if (state.certificateId && certIdEl) {
+                certIdEl.textContent = `ID: ${state.certificateId}`;
+            }
+            certificateAlreadyIssued = !!state.certificateIssued;
+
         } catch (err) {
             console.warn("Certificate API failed, checking local fallback:", err);
             const localPass = localStorage.getItem(`cw_exam_passed_${courseId}`);
@@ -77,12 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (resolvedName === "ClinchWorks Student") {
-        const sessionResult = await fetchJson('/api/session');
-        if (sessionResult.response.ok && sessionResult.payload && sessionResult.payload.username) {
-            const candidate = String(sessionResult.payload.username).trim();
-            if (candidate) {
-                resolvedName = candidate;
-            }
+        
         }
     }
 
@@ -132,23 +138,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 if (courseId) {
                     try {
-                        const issueResult = await fetchJson('/api/certificate/issue', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ courseId })
-                        });
-
-                        if (issueResult.response.ok) {
-                            certificateAlreadyIssued = true;
-                            const certIdEl = document.getElementById('cert-id');
-                            if (issueResult.payload && issueResult.payload.certificateId && certIdEl) {
-                                certIdEl.textContent = `ID: ${issueResult.payload.certificateId}`;
+                        
+                        const uid = await getUid();
+                        const newCertId = 'CW-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+                        await setDoc(doc(db, 'users', uid), {
+                            courses: {
+                                [courseId]: {
+                                    certificateIssued: true,
+                                    certificateId: newCertId,
+                                    updatedAt: serverTimestamp()
+                                }
                             }
-                            setButtonIssuedState(btn);
-                            return;
-                        }
-                        throw new Error('API issue failed');
-                    } catch (err) {
+                        }, { merge: true });
+                        certificateAlreadyIssued = true;
+                        const certIdEl = document.getElementById('cert-id');
+                        if (certIdEl) certIdEl.textContent = `ID: ${newCertId}`;
+                        setButtonIssuedState(btn);
+                        return; catch (err) {
                         console.warn('Certificate issue API unavailable, storing local issued state:', err);
 
                         try {

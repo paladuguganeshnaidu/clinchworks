@@ -1,3 +1,15 @@
+import { auth, db } from './firebase.js';
+import { doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+function getUid() {
+  return new Promise(resolve => {
+    const unsub = onAuthStateChanged(auth, user => {
+      unsub();
+      resolve(user ? user.uid : null);
+    });
+  });
+}
 document.addEventListener('DOMContentLoaded', () => {
 (function () {
   const params = new URLSearchParams(window.location.search);
@@ -118,20 +130,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchCourseState() {
     try {
-      const response = await fetch(`/api/progress?courseId=${encodedCourseId}`, { credentials: 'same-origin' });
-      if (response.status === 401 || response.status === 403) {
+      const uid = await getUid();
+      if (!uid) {
         redirectToTrainingLogin();
         return false;
       }
-
-      if (!response.ok) {
-        throw new Error('Server API failed');
+      const ref = doc(db, 'users', uid);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        const data = snap.data();
+        const courseData = (data.courses || {})[courseId] || {};
+        state = normalizeState(courseData, state.totalModules);
+      } else {
+        state = normalizeState({}, state.totalModules);
       }
-
-      const payload = await response.json();
-      state = normalizeState(payload.state || {}, state.totalModules);
       return true;
     } catch (err) {
+      console.warn("Firestore progress fetch failed:", err);
+      return false;
+    }
+  } catch (err) {
       console.warn("API progress fetch failed, trying localStorage:", err);
       const local = localStorage.getItem(`cw_progress_${courseId}`);
       if (local) {
@@ -145,38 +163,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function saveCourseState(partialState) {
     state = normalizeState(Object.assign({}, state, partialState), state.totalModules);
-
     try {
-      const response = await fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin',
-        body: JSON.stringify({
-          courseId,
-          state: {
+      const uid = await getUid();
+      if (!uid) return;
+      const ref = doc(db, 'users', uid);
+      await setDoc(ref, {
+        courses: {
+          [courseId]: {
             currentModule: state.currentModule,
             totalModules: state.totalModules,
-            completed: state.completed
+            completed: state.completed,
+            updatedAt: serverTimestamp()
           }
-        })
-      });
-
-      if (response.status === 401 || response.status === 403) {
-        redirectToTrainingLogin();
-        return;
-      }
-
-      if (response.ok) {
-        const payload = await response.json();
-        state = normalizeState(payload.state || state, state.totalModules);
-        return;
-      }
+        }
+      }, { merge: true });
     } catch (err) {
-      console.warn("API progress save failed, using localStorage:", err);
+      console.warn("Firestore progress save failed:", err);
     }
-
-    // Always sync with localStorage as fallback/backup
-    localStorage.setItem(`cw_progress_${courseId}`, JSON.stringify(state));
   }
 
   async function init() {

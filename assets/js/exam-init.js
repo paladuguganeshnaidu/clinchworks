@@ -1,3 +1,15 @@
+import { auth, db } from './firebase.js';
+import { doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+function getUid() {
+  return new Promise(resolve => {
+    const unsub = onAuthStateChanged(auth, user => {
+      unsub();
+      resolve(user ? user.uid : null);
+    });
+  });
+}
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -184,20 +196,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       try {
         let result = null;
         try {
-          const response = await fetch('/api/exam/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'same-origin',
-            body: JSON.stringify(payload)
-          });
-
-          if (response.ok) {
-            result = await response.json();
-          } else {
-            throw new Error('Submission failed');
-          }
-        } catch (apiErr) {
-          console.warn('Exam submit API unavailable, grading locally:', apiErr);
           const key = fullExam || (await (async () => {
             const localResp = await fetch('/examquestions.json', { cache: 'no-store' });
             if (!localResp.ok) return null;
@@ -240,19 +238,30 @@ document.addEventListener("DOMContentLoaded", async () => {
           const passedLocal = percentageLocal >= 60;
           result = { score: scoreLocal, total, percentage: percentageLocal, passed: passedLocal };
 
-          // Persist minimal progress state locally for compatibility with player/certificate flows.
+          // Persist progress state to Firestore!
+          const uid = await getUid();
+          if (uid) {
+              const ref = doc(db, 'users', uid);
+              await setDoc(ref, {
+                  courses: {
+                      [courseId]: {
+                          examPassed: !!passedLocal,
+                          completed: true,
+                          updatedAt: serverTimestamp()
+                      }
+                  }
+              }, { merge: true });
+          }
+
+          // Backup in localStorage
           try {
             const progressKey = `cw_progress_${courseId}`;
             const existingRaw = localStorage.getItem(progressKey);
             const existing = existingRaw ? JSON.parse(existingRaw) : {};
             existing.examPassed = !!passedLocal;
-            if (passedLocal) {
-              existing.completed = true;
-            }
+            if (passedLocal) existing.completed = true;
             localStorage.setItem(progressKey, JSON.stringify(existing));
-          } catch (storageErr) {
-            console.warn('Unable to persist local progress:', storageErr);
-          }
+          } catch (storageErr) {}
         }
 
         const score = Number.parseInt(result.score, 10) || 0;

@@ -627,38 +627,6 @@ function redirectPagesToCanonical(req, res, pathname, isHttps) {
 }
 
 async function handleApi(req, res, requestUrl, isHttps, sessionCtx) {
-  const method = (req.method || "GET").toUpperCase();
-  const pathname = requestUrl.pathname;
-  
-  if (pathname.startsWith('/api/')) {
-    const https = require('https');
-    return new Promise((resolve) => {
-      const options = {
-        hostname: 'clinchworks.web.app',
-        port: 443,
-        path: req.url,
-        method: req.method,
-        headers: { ...req.headers }
-      };
-      delete options.headers.host;
-      
-      const proxyReq = https.request(options, (proxyRes) => {
-        res.writeHead(proxyRes.statusCode, proxyRes.headers);
-        proxyRes.pipe(res);
-        proxyRes.on('end', resolve);
-      });
-      
-      proxyReq.on('error', (e) => {
-        console.error('Proxy Error:', e);
-        res.writeHead(500);
-        res.end(JSON.stringify({error: "Proxy error"}));
-        resolve();
-      });
-      
-      req.pipe(proxyReq);
-    });
-  }
-
   const { session } = sessionCtx;
   const method = (req.method || "GET").toUpperCase();
   const pathname = requestUrl.pathname;
