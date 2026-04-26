@@ -189,12 +189,7 @@ const initAuth = () => {
         'admin',
         'reception',
         'profile',
-        'dashboard',
-        'domain',
-        'course',
-        'player',
-        'exam',
-        'training'
+        'dashboard'
     ]);
 
     const isProtectedRoute = (pathname) => {

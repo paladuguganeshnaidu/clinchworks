@@ -32,7 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const sanitizedInlineCache = new Map();
   const moduleContentCache = new Map();
 
-  function redirectToTrainingLogin() {
+  async function redirectToTrainingLogin() {
+    if (typeof showModal === 'function') {
+      await showModal("Login Required", "Please log in to access this training material.", {
+        type: "warning",
+        confirmText: "Go to Login"
+      });
+    }
     const target = encodeURIComponent(window.location.pathname + window.location.search);
     window.location.href = `/login?redirect=${target}`;
   }
@@ -132,17 +138,34 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const uid = await getUid();
       if (!uid) {
-        redirectToTrainingLogin();
+        await redirectToTrainingLogin();
         return false;
       }
       const ref = doc(db, 'courses', uid);
       const snap = await getDoc(ref);
       if (snap.exists()) {
         const data = snap.data();
-        const courseData = (data.courses || {})[courseId] || {};
-        state = normalizeState(courseData, state.totalModules);
+        const courseProgress = (data.courses || {})[courseId];
+        if (!courseProgress) {
+          if (typeof showModal === 'function') {
+            await showModal("Enrollment Required", "You must start this course from the overview page first.", {
+              type: "warning",
+              confirmText: "View Course"
+            });
+          }
+          window.location.href = `/course?id=${encodedCourseId}`;
+          return false;
+        }
+        state = normalizeState(courseProgress, state.totalModules);
       } else {
-        state = normalizeState({}, state.totalModules);
+        if (typeof showModal === 'function') {
+          await showModal("Enrollment Required", "You must start this course from the overview page first.", {
+            type: "warning",
+            confirmText: "View Course"
+          });
+        }
+        window.location.href = `/course?id=${encodedCourseId}`;
+        return false;
       }
       return true;
     } catch (err) {

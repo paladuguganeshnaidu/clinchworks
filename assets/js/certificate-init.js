@@ -87,11 +87,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    if (resolvedName === "ClinchWorks Student") {
-        
-        }
-    }
-
     if (recipientNameEl) recipientNameEl.textContent = resolvedName;
 
     if (courseId) {
