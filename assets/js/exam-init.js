@@ -195,62 +195,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       try {
         let result = null;
 
-          const key = fullExam || (await (async () => {
-            const localResp = await fetch('/examquestions.json', { cache: 'no-store' });
-            if (!localResp.ok) return null;
-            const all = await localResp.json();
-            return all && all[courseId];
-          })());
+        const token = auth.currentUser ? await auth.currentUser.getIdToken() : null;
+        if (!token) throw new Error("Not authenticated");
 
-          if (!key) throw new Error('No local exam key available');
+        const resp = await fetch("/api/exam/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        });
 
-          const keyMcq = Array.isArray(key.mcq) ? key.mcq : [];
-          const keyCoding = Array.isArray(key.coding) ? key.coding : [];
-          const total = keyMcq.length + keyCoding.length;
-          let scoreLocal = 0;
+        if (!resp.ok) {
+            const errData = await resp.json().catch(() => ({}));
+            throw new Error(errData.error || `Server returned ${resp.status}`);
+        }
 
-          const submittedMcq = (payload.answers && Array.isArray(payload.answers.mcq)) ? payload.answers.mcq : [];
-          keyMcq.forEach((q, idx) => {
-            const ans = Number.parseInt(submittedMcq[idx], 10);
-            if (Number.isInteger(ans) && ans === Number.parseInt(q.ans, 10)) scoreLocal += 1;
-          });
-
-          const submittedCoding = (payload.answers && payload.answers.coding) ? payload.answers.coding : {};
-          keyCoding.forEach((q) => {
-            const rawAnswer = String(submittedCoding[q.id] || '');
-            const hay = rawAnswer.toLowerCase();
-            const keywords = Array.isArray(q.keywords) ? q.keywords : [];
-            const needed = Math.max(1, Math.ceil(keywords.length * 0.4));
-            let hits = 0;
-            keywords.forEach((kw) => {
-              const k = String(kw || '').toLowerCase();
-              if (k && hay.includes(k)) hits += 1;
-            });
-            if (keywords.length === 0) {
-              if (rawAnswer.trim().length > 0) scoreLocal += 1;
-            } else if (hits >= needed) {
-              scoreLocal += 1;
-            }
-          });
-
-          const percentageLocal = total > 0 ? Math.round((scoreLocal / total) * 100) : 0;
-          const passedLocal = percentageLocal >= 60;
-          result = { score: scoreLocal, total, percentage: percentageLocal, passed: passedLocal };
-
-          // Persist progress state to Firestore!
-          const uid = await getUid();
-          if (uid) {
-              const ref = doc(db, 'courses', uid);
-              await setDoc(ref, {
-                  courses: {
-                      [courseId]: {
-                          examPassed: !!passedLocal,
-                          completed: true,
-                          updatedAt: serverTimestamp()
-                      }
-                  }
-              }, { merge: true });
-          }
+        result = await resp.json();
+        const passedLocal = result.passed;
 
           // Backup in localStorage
           try {
